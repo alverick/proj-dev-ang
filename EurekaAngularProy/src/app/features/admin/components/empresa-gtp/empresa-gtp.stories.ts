@@ -1,24 +1,23 @@
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import {
+  applicationConfig,
+  type Meta,
+  moduleMetadata,
+  type StoryObj,
+} from '@storybook/angular';
 
 import { type ICompanyData } from '../../../../shared/models/company-data';
-import { SharedModule } from '../../../../shared/shared.module';
 import { EmpresaGTPComponent } from './empresa-gtp.component';
 
 const meta: Meta<EmpresaGTPComponent> = {
   title: 'Admin/UI/Empresa GTP',
   component: EmpresaGTPComponent,
   decorators: [
+    applicationConfig({ providers: [provideAnimations()] }),
     moduleMetadata({
       declarations: [],
-      imports: [
-        BrowserAnimationsModule,
-        HttpClientModule,
-        CommonModule,
-        SharedModule,
-      ],
+      imports: [HttpClientModule],
     }),
   ],
 };

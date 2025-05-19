@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   applicationConfig,
@@ -10,7 +9,6 @@ import {
 import { values } from 'ramda';
 
 import { messageModes } from '../../constants/messages';
-import { SharedModule } from '../../shared.module';
 import { MessageAlertComponent } from './message-alert.component';
 
 type MessageAlertAndMessage = MessageAlertComponent & { content: string };
@@ -24,7 +22,7 @@ const meta: Meta<MessageAlertAndMessage> = {
     }),
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, SharedModule],
+      imports: [],
     }),
   ],
   tags: ['autodocs'],

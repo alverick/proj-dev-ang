@@ -1,5 +1,4 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, NgModule, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, type FormGroup, Validators } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
@@ -14,15 +13,7 @@ import {
   errorsRegisterForm,
 } from '../../../../shared/constants/company-errors';
 import { emailRegex } from '../../../../shared/constants/patterns';
-import { SharedModule } from '../../../../shared/shared.module';
 import { CompanyUpdateFormComponent } from './company-update-form.component';
-
-@NgModule({
-  declarations: [CompanyUpdateFormComponent],
-  exports: [CompanyUpdateFormComponent],
-  imports: [CommonModule, SharedModule],
-})
-class FormDemoModule {}
 
 @Component({
   selector: 'cs-form-demo',
@@ -40,7 +31,7 @@ class FormDemoModule {}
       send form
     </button>`,
   standalone: true,
-  imports: [FormDemoModule],
+  imports: [CompanyUpdateFormComponent],
 })
 class FormDemoComponent {
   @Output() showPanel = new EventEmitter();
@@ -61,6 +52,7 @@ class FormDemoComponent {
       ],
       ruc: [{ value: '', disabled: true }],
       entry: [{ value: '', disabled: true }],
+      entryName: [{ value: '' }],
       documentType: [{ value: '', disabled: true }],
       documentNumber: [{ value: '', disabled: true }],
       email: [
@@ -107,8 +99,12 @@ const meta: Meta<CompanyUpdateFormComponent> = {
   title: 'Internal/Module/Company Form',
   decorators: [
     moduleMetadata({
-      declarations: [ValidationDefaultsComponent],
-      imports: [FormDemoComponent, BrowserAnimationsModule, SharedModule],
+      declarations: [],
+      imports: [
+        FormDemoComponent,
+        BrowserAnimationsModule,
+        ValidationDefaultsComponent,
+      ],
     }),
   ],
 };

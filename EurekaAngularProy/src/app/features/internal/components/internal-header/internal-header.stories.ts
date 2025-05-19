@@ -1,4 +1,4 @@
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
@@ -22,7 +22,6 @@ import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import { NotifyService } from '../../../../shared/services/notify.service';
 import { StorageService } from '../../../../shared/services/storage.service';
-import { SharedModule } from '../../../../shared/shared.module';
 import { InternalHeaderComponent } from './internal-header.component';
 
 const mockActivatedRoute = {
@@ -42,8 +41,6 @@ const meta: Meta<InternalHeaderComponent> = {
       declarations: [],
       imports: [
         HeaderComponent,
-        CommonModule,
-        SharedModule,
         HttpClientTestingModule,
         NgOptimizedImage,
         NgScrollbarModule,

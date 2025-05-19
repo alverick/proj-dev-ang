@@ -1,27 +1,26 @@
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import {
+  applicationConfig,
+  type Meta,
+  moduleMetadata,
+  type StoryObj,
+} from '@storybook/angular';
 import { http, HttpResponse } from 'msw';
 
 import { environment } from '../../../../../environments/environment';
 import { companyAccounts } from '../../../../shared/mocks/company';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
-import { SharedModule } from '../../../../shared/shared.module';
 import { ServicesGTPComponent } from './services-gtp.component';
 
 const meta: Meta<ServicesGTPComponent> = {
   title: 'Admin/UI/Services GTP',
   component: ServicesGTPComponent,
   decorators: [
+    applicationConfig({ providers: [provideAnimations()] }),
     moduleMetadata({
       declarations: [],
-      imports: [
-        BrowserAnimationsModule,
-        HttpClientModule,
-        CommonModule,
-        SharedModule,
-      ],
+      imports: [HttpClientModule],
       providers: [AfiliacionService],
     }),
   ],

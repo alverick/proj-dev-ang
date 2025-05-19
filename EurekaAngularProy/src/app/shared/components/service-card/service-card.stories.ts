@@ -1,22 +1,21 @@
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import {
+  applicationConfig,
+  type Meta,
+  moduleMetadata,
+  type StoryObj,
+} from '@storybook/angular';
 
-import { SharedModule } from '../../shared.module';
-import { type ServiceCardComponent } from './service-card.component';
+import { ServiceCardComponent } from './service-card.component';
 
 const meta: Meta<ServiceCardComponent> = {
   title: 'Shared/Molecules/Service card',
   decorators: [
+    applicationConfig({ providers: [provideAnimations()] }),
     moduleMetadata({
       declarations: [],
-      imports: [
-        BrowserAnimationsModule,
-        HttpClientModule,
-        CommonModule,
-        SharedModule,
-      ],
+      imports: [HttpClientModule, ServiceCardComponent],
     }),
   ],
   render: ({ ...args }) => ({

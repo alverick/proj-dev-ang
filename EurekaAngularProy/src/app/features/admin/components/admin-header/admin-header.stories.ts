@@ -1,4 +1,3 @@
-import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
@@ -10,11 +9,8 @@ import {
   moduleMetadata,
   type StoryObj,
 } from '@storybook/angular';
-import { NgScrollbarModule } from 'ngx-scrollbar';
-import { NgScrollReached } from 'ngx-scrollbar/reached-event';
 import { of } from 'rxjs';
 
-import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { initialState } from '../../../../shared/mocks/store';
 import { TrackingService } from '../../../../shared/services';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
@@ -22,7 +18,6 @@ import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import { NotifyService } from '../../../../shared/services/notify.service';
 import { StorageService } from '../../../../shared/services/storage.service';
-import { SharedModule } from '../../../../shared/shared.module';
 import { AdminHeaderComponent } from './admin-header.component';
 
 const mockActivatedRoute = {
@@ -40,15 +35,7 @@ const meta: Meta<AdminHeaderComponent> = {
     applicationConfig({ providers: [provideAnimations()] }),
     moduleMetadata({
       declarations: [],
-      imports: [
-        HeaderComponent,
-        CommonModule,
-        SharedModule,
-        HttpClientModule,
-        NgOptimizedImage,
-        NgScrollbarModule,
-        NgScrollReached,
-      ],
+      imports: [HttpClientModule],
       providers: [
         LoginService,
         AfiliacionService,
