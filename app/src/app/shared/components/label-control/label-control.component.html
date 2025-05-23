@@ -6,8 +6,10 @@
       [attr.aria-labelledby]="labelInputID"
       class="tw-flex tw-items-center tw-gap-1 tw-text-extended-grey-1"
       [ngClass]="{ 'tw-mb-2': labelRef.hasChildNodes() }"
-      ><ng-content></ng-content><ng-content select="[label]"></ng-content
-    ></label>
+    >
+      <ng-content></ng-content><ng-content select="[label]"></ng-content
+      ><span class="tw-hidden">data</span>
+    </label>
   }
   <div
     class="wrapper tw-flex tw-items-center"
