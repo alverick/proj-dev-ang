@@ -99,6 +99,8 @@
                         [showIcon]="true"
                         [(ngModel)]="itm.newDate"
                         (ngModelChange)="itm.errores.date = null"
+                        [minDate]="minDate"
+                        [maxDate]="maxDate"
                         appendTo="body"
                         dateFormat="dd/mm/yy"
                       ></p-calendar>
