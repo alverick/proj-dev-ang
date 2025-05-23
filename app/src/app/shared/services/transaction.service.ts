@@ -51,7 +51,7 @@ export class TransactionService {
     const processDate = (value: string | Date) => {
       return isNilOrEmpty(value)
         ? ''
-        : encodeURI(moment(value).format('YYYY/MM/DD'));
+        : encodeURI(moment(value).format('DD/MM/YYYY'));
     };
     const strDateFrom = processDate(filtro.dateFrom);
     const strDateTo = processDate(filtro.dateTo);
@@ -157,7 +157,7 @@ export class TransactionService {
   }: DebstFilter): Observable<any> {
     const url = `${this.URI_API}/debt/report`;
     const parseDate: (date: Date | string) => Date | string = (date) =>
-      isNilOrEmpty(date) ? '' : moment(date).format('YYYY/MM/DD');
+      isNilOrEmpty(date) ? '' : moment(date).format('DD/MM/YYYY');
 
     const filterRequest: DebstFilter = {
       pageNumber,

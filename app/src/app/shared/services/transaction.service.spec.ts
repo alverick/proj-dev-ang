@@ -151,10 +151,10 @@ describe('TransactionService', () => {
       expect(req.request.params.get('Status')).toBe('PENDIENTE');
       expect(req.request.params.get('DateForFilter')).toBe('emissionDate');
       expect(req.request.params.get('DateFrom')).toBe(
-        encodeURI(moment(mockFilter.dateFrom).format('YYYY/MM/DD')),
+        encodeURI(moment(mockFilter.dateFrom).format('DD/MM/YYYY')),
       );
       expect(req.request.params.get('DateTo')).toBe(
-        encodeURI(moment(mockFilter.dateTo).format('YYYY/MM/DD')),
+        encodeURI(moment(mockFilter.dateTo).format('DD/MM/YYYY')),
       );
 
       req.flush(clone(mockApiResponse));
@@ -433,8 +433,8 @@ describe('TransactionService', () => {
 
       const expectedBody: DebstFilter = {
         ...mockFilter,
-        dateFrom: moment(mockFilter.dateFrom).format('YYYY/MM/DD'),
-        dateTo: moment(mockFilter.dateTo).format('YYYY/MM/DD'),
+        dateFrom: moment(mockFilter.dateFrom).format('DD/MM/YYYY'),
+        dateTo: moment(mockFilter.dateTo).format('DD/MM/YYYY'),
       };
       expect(req.request.body).toEqual(expectedBody);
 

@@ -88,10 +88,10 @@ describe('GtpService', () => {
 
     it('should fetch enterprises with a given filter and update properties', (done) => {
       const expectedDateFrom = encodeURI(
-        moment(mockFilter.dateFrom).format('YYYY/MM/DD'),
+        moment(mockFilter.dateFrom).format('DD/MM/YYYY'),
       );
       const expectedDateTo = encodeURI(
-        moment(mockFilter.dateTo).format('YYYY/MM/DD'),
+        moment(mockFilter.dateTo).format('DD/MM/YYYY'),
       );
       const expectedUrl = `${baseApiUrl}/Company/GTP/list?PageNumber=${mockFilter.pageNumber}&ColumnName=${mockFilter.ColumnName}&Asc=${mockFilter.asc}&InputSearch=${mockFilter.inputSearch}&BusinessHeading=${mockFilter.BusinessHeading}&Status=${mockFilter.status}&Solicitud=${mockFilter.statusSolicitud}&DateFrom=${expectedDateFrom}&DateTo=${expectedDateTo}`;
 
@@ -111,10 +111,10 @@ describe('GtpService', () => {
     it('should use lastFilter if filter is null', (done) => {
       (service as any).lastFilter = mockFilter;
       const expectedDateFrom = encodeURI(
-        moment(mockFilter.dateFrom).format('YYYY/MM/DD'),
+        moment(mockFilter.dateFrom).format('DD/MM/YYYY'),
       );
       const expectedDateTo = encodeURI(
-        moment(mockFilter.dateTo).format('YYYY/MM/DD'),
+        moment(mockFilter.dateTo).format('DD/MM/YYYY'),
       );
       const expectedUrl = `${baseApiUrl}/Company/GTP/list?PageNumber=${mockFilter.pageNumber}&ColumnName=${mockFilter.ColumnName}&Asc=${mockFilter.asc}&InputSearch=${mockFilter.inputSearch}&BusinessHeading=${mockFilter.BusinessHeading}&Status=${mockFilter.status}&Solicitud=${mockFilter.statusSolicitud}&DateFrom=${expectedDateFrom}&DateTo=${expectedDateTo}`;
 

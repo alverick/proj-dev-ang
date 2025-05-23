@@ -67,10 +67,10 @@ export class GtpService {
     }
     const strDateFrom = isNilOrEmpty(filtro.dateFrom)
       ? ''
-      : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD'));
+      : encodeURI(moment(filtro.dateFrom).format('DD/MM/YYYY'));
     const strDateTo = isNilOrEmpty(filtro.dateTo)
       ? ''
-      : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD'));
+      : encodeURI(moment(filtro.dateTo).format('DD/MM/YYYY'));
 
     if (isNilOrEmpty(filtro.BusinessHeading)) {
       filtro.BusinessHeading = '';
@@ -255,9 +255,9 @@ export class GtpService {
     const strDateFrom =
       filtro.dateFrom === null
         ? ''
-        : moment(filtro.dateFrom).format('YYYY/MM/DD');
+        : moment(filtro.dateFrom).format('DD/MM/YYYY');
     const strDateTo =
-      filtro.dateTo === null ? '' : moment(filtro.dateTo).format('YYYY/MM/DD');
+      filtro.dateTo === null ? '' : moment(filtro.dateTo).format('DD/MM/YYYY');
     return this.http
       .post(
         url,
