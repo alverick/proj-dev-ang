@@ -17,8 +17,8 @@ import {
   AdobeLaunchProviderService,
   NewRelicProviderService,
 } from './shared/services';
-import { AppConfigActions } from './store/actions/app-config.actions';
 import { HotjarProviderService } from './shared/services/hotjar-provider.service';
+import { AppConfigActions } from './store/actions/app-config.actions';
 
 @Component({
   selector: 'cs-root',
