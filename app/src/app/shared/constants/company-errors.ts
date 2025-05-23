@@ -10,6 +10,7 @@ export const errorsLoginForm: IErrorMessages = {
     required: 'Debe ingresar una contraseña',
     length: 'Debes ingresar una contraseña entre 6 y 20 caracteres',
     minlength: 'La contraseña no es válida',
+    maxlength: 'La contraseña no es válida',
   },
   email: {
     required: 'El correo electrónico es obligatorio',
