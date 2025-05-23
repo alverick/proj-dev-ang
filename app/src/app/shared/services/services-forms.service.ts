@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, type FormControl, Validators } from '@angular/forms';
-import { isNil, isNotEmpty } from 'ramda';
+import { FormBuilder, Validators } from '@angular/forms';
+import { isNotEmpty } from 'ramda';
 
 import { ServiceTypes } from '../constants/services';
 import { type ServiceTypeType } from '../models';
 import { type ModelFormGroup } from '../models/forms';
 import { nameInvalid } from '../validators/name-invalid.validator';
+import {
+  notBlankSpaces,
+  onlyAlphaNumber,
+  serviceNameValidators,
+} from '../validators/service-validators';
 
 export type ServiceFormValue = {
   name: string;
@@ -61,18 +66,7 @@ export class ServicesFormsService {
 
   constructor(private readonly formBuilder: FormBuilder) {
     this.serviceForm = this.formBuilder.group({
-      name: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          onlyAlphaNumber,
-          notBlankSpaces,
-          Validators.pattern(
-            '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$',
-          ),
-        ],
-      ],
+      name: ['', serviceNameValidators],
       account: ['', [Validators.required]],
       idAccount: ['', [Validators.required]],
       currency: [''],
@@ -176,25 +170,4 @@ export class ServicesFormsService {
     }
     this.editServiceForm.get('name').setValidators(validators);
   }
-}
-
-function notBlankSpaces(control: FormControl<string>) {
-  if (isNil(control.value)) {
-    return null;
-  }
-  if (control.value.trim() === '') {
-    return { blankSpaces: true };
-  }
-  return null;
-}
-
-function onlyAlphaNumber(control: FormControl<string>) {
-  const regex = /[0-9a-zA-Z]-?/g;
-  if (isNil(control.value)) {
-    return null;
-  }
-  if (control.value && !regex.test(control.value)) {
-    return { alfa: true };
-  }
-  return null;
 }
