@@ -377,7 +377,6 @@ export class AffiliationService {
       ruc,
     } = this.registerForm.value;
 
-    const name = this.authForm.get('nameSelect').value;
     const { acceptTerms, entry, password, entrySelect } = this.authForm.value;
 
     return this.companyService
@@ -385,7 +384,6 @@ export class AffiliationService {
         documentType,
         documentNumber,
         ruc,
-        name,
         entry,
         entryName: entrySelect.name,
         email,
