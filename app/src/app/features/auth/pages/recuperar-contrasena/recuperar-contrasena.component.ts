@@ -25,6 +25,10 @@ import {
   TrackingService,
 } from '../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
+import {
+  emailValidators,
+  rucValidatorsComplete,
+} from '../../../../shared/validators/company-validators';
 import { authFullRoutingNames } from '../../auth-routing.names';
 import { LayoutFormComponent } from '../../components/layout-form/layout-form.component';
 
@@ -65,17 +69,8 @@ export class RecuperarContrasenaComponent implements OnInit {
 
   ngOnInit() {
     this.recupera = this.formBuilder.group({
-      ruc: new UntypedFormControl('', [
-        Validators.required,
-        Validators.pattern('[1-2]0[0-9]+?'),
-        Validators.minLength(11),
-      ]),
-      email: new UntypedFormControl('', [
-        Validators.required,
-        Validators.pattern(emailRegex),
-        Validators.minLength(10),
-        Validators.maxLength(100),
-      ]),
+      ruc: new FormControl('', rucValidatorsComplete),
+      email: new FormControl('', emailValidators),
     });
   }
 

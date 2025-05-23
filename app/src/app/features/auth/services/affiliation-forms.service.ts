@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { emailRegex } from '../../../shared/constants/patterns';
 import { type IEntryModel } from '../../../shared/models';
 import {
   type ModelFormGroup,
   type SimpleModelFormGroup,
 } from '../../../shared/models/forms';
+import {
+  authNameValidators,
+  emailValidators,
+  mobileValidators,
+  rucValidatorsComplete,
+} from '../../../shared/validators/company-validators';
 import { MustMatch } from '../../../shared/validators/must-match.validator';
 import { nameInvalid } from '../../../shared/validators/name-invalid.validator';
 import { passwordValidators } from '../../../shared/validators/password-validators';
@@ -43,42 +48,15 @@ export class AffiliationFormsService {
   registerForm: ModelFormGroup<RegisterForm>;
   authForm: SimpleModelFormGroup<AuthForm>;
 
-  authNameValidators = [
-    Validators.required,
-    Validators.minLength(3),
-    Validators.maxLength(80),
-  ];
-
   constructor(private readonly formBuilder: FormBuilder) {
-    const emailValidators = [
-      Validators.required,
-      Validators.pattern(emailRegex),
-      Validators.minLength(10),
-      Validators.maxLength(100),
-    ];
     this.registerForm = this.formBuilder.group(
       {
         documentType: ['', [Validators.required]],
         documentNumber: ['', [Validators.required]],
-        ruc: [
-          '',
-          [
-            Validators.required,
-            Validators.pattern('[1-2]0[0-9]+?'),
-            Validators.minLength(11),
-          ],
-        ],
+        ruc: ['', rucValidatorsComplete],
         email: ['', emailValidators],
         emailConfirm: ['', [Validators.required]],
-        movilNumber: [
-          '',
-          [
-            Validators.required,
-            Validators.pattern(/^9\d{8}$/),
-            Validators.minLength(9),
-            Validators.maxLength(9),
-          ],
-        ],
+        movilNumber: ['', mobileValidators],
         movilOperator: ['', [Validators.required]],
       },
       {
@@ -88,15 +66,8 @@ export class AffiliationFormsService {
 
     this.authForm = this.formBuilder.group(
       {
-        ruc: [
-          { value: '', disabled: true },
-          [
-            Validators.required,
-            Validators.pattern('[1-2]0[0-9]+?'),
-            Validators.minLength(11),
-          ],
-        ],
-        name: [{ value: '', disabled: true }, this.authNameValidators],
+        ruc: [{ value: '', disabled: true }, rucValidatorsComplete],
+        name: [{ value: '', disabled: true }, authNameValidators],
         nameSelect: ['', [Validators.required]],
         entry: ['', [Validators.required]],
         entrySelect: [null as IEntryModel, [Validators.required]],
@@ -118,6 +89,6 @@ export class AffiliationFormsService {
   setAuthFormNameValidator(name: string) {
     this.authForm
       .get('name')
-      .setValidators([...this.authNameValidators, nameInvalid(name)]);
+      .setValidators([...authNameValidators, nameInvalid(name)]);
   }
 }

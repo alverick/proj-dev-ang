@@ -35,6 +35,7 @@ import {
   TrackingService,
 } from '../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
+import { rucValidators } from '../../../../shared/validators/company-validators';
 import { appConfigFeature } from '../../../../store/reducers/app-config.reducer';
 import { authFullRoutingNames } from '../../auth-routing.names';
 import { LayoutFormComponent } from '../../components/layout-form/layout-form.component';
@@ -110,8 +111,8 @@ export class LoginPage implements OnInit {
     }
 
     this.loginForm = this.formBuilder.group({
-      ruc: [rucStr, [Validators.required, Validators.minLength(11)]],
-      psw: [userData[1], Validators.required],
+      ruc: [rucStr, rucValidators],
+      psw: [userData[1], [Validators.required, Validators.maxLength(25)]],
       rememberMe: [this.rememberMe, Validators.required],
     });
   }
