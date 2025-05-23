@@ -17,6 +17,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { KeyFilterModule } from 'primeng/keyfilter';
 import { Ripple } from 'primeng/ripple';
 import { Table, TableModule } from 'primeng/table';
 import { clone, forEachObjIndexed, has, isEmpty, pathEq } from 'ramda';
@@ -92,6 +93,7 @@ type TableCol = {
     GetLimitCurrencyPipe,
     NotEmptyPipe,
     ValidateLimitCurrencyPipe,
+    KeyFilterModule,
   ],
 })
 export class TableMovementsComponent implements OnInit, OnChanges {

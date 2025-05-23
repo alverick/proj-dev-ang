@@ -99,6 +99,9 @@
                         id="name"
                         name="name"
                         pInputText
+                        minlength="3"
+                        [pKeyFilter]="validNameRegex"
+                        [maxLength]="80"
                         type="text"
                         [(ngModel)]="rowData.firstName"
                         #name="ngModel"
@@ -128,6 +131,8 @@
                         appendTo="body"
                         [showIcon]="true"
                         dateFormat="dd/mm/y"
+                        [minDate]="minDate"
+                        [maxDate]="maxDate"
                         required
                       ></p-calendar>
                     </ng-template>
@@ -145,6 +150,8 @@
                           [(ngModel)]="rowData.dueDate"
                           appendTo="body"
                           [showIcon]="true"
+                          [minDate]="minDate"
+                          [maxDate]="maxDate"
                           dateFormat="dd/mm/y"
                           required
                         ></p-calendar>
@@ -425,6 +432,9 @@
             <input
               pInputText
               id="vin"
+              minlength="3"
+              [pKeyFilter]="validNameRegex"
+              [maxLength]="80"
               [(ngModel)]="editRowData.firstName"
               required
             />
@@ -444,6 +454,8 @@
               dateFormat="dd/mm/y"
               [touchUI]="true"
               [showIcon]="true"
+              [minDate]="minDate"
+              [maxDate]="maxDate"
               appendTo="body"
               required
             ></p-calendar>
@@ -463,6 +475,8 @@
               dateFormat="dd/mm/y"
               [touchUI]="true"
               [showIcon]="true"
+              [minDate]="minDate"
+              [maxDate]="maxDate"
               appendTo="body"
               required
             ></p-calendar>
