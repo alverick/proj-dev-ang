@@ -1,11 +1,9 @@
 import { Component, HostListener, type OnInit } from '@angular/core';
 import {
+  FormBuilder,
+  FormControl,
   FormsModule,
   ReactiveFormsModule,
-  UntypedFormBuilder,
-  UntypedFormControl,
-  type UntypedFormGroup,
-  Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
@@ -16,7 +14,7 @@ import { forEachObjIndexed } from 'ramda';
 
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { errorsLoginForm } from '../../../../shared/constants/company-errors';
-import { emailRegex } from '../../../../shared/constants/patterns';
+import { SimpleModelFormGroup } from '../../../../shared/models/forms';
 import { RecuperaService } from '../../../../shared/services/recupera.service';
 import {
   type ActionEventProperties,
@@ -31,6 +29,11 @@ import {
 } from '../../../../shared/validators/company-validators';
 import { authFullRoutingNames } from '../../auth-routing.names';
 import { LayoutFormComponent } from '../../components/layout-form/layout-form.component';
+
+interface RecoverForm {
+  ruc: string;
+  email: string;
+}
 
 @Component({
   selector: 'cs-recuperar-contrasena',
@@ -49,12 +52,12 @@ import { LayoutFormComponent } from '../../components/layout-form/layout-form.co
 })
 export class RecuperarContrasenaComponent implements OnInit {
   public formulario = true;
-  recupera: UntypedFormGroup;
+  recupera: SimpleModelFormGroup<RecoverForm>;
   public submitted = false;
   submittedRequired = false;
   protected readonly errorMessages = errorsLoginForm;
   constructor(
-    private readonly formBuilder: UntypedFormBuilder,
+    private readonly formBuilder: FormBuilder,
     private readonly recuperaService: RecuperaService,
     private readonly router: Router,
     protected tracking: TrackingService,
@@ -85,7 +88,7 @@ export class RecuperarContrasenaComponent implements OnInit {
       forEachObjIndexed((value, key) => {
         metadata.push({
           key: key as string,
-          value: value as string,
+          value: value,
         });
       }, this.recupera.value);
       const actionStep: Partial<ActionEventProperties> = {
