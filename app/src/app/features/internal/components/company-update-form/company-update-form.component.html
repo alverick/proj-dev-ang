@@ -20,6 +20,7 @@
             minlength="3"
             maxlength="80"
             formControlName="name"
+            autocomplete="off"
           />
           @if (inReview) {
             <div hint class="tw-text-error">
@@ -41,6 +42,7 @@
             pKeyFilter="pint"
             maxlength="11"
             formControlName="ruc"
+            autocomplete="off"
           />
         </cs-label-control>
         <cs-label-control
@@ -55,6 +57,7 @@
             pKeyFilter="pint"
             maxlength="200"
             formControlName="entryName"
+            autocomplete="off"
           />
         </cs-label-control>
       </div>
@@ -83,6 +86,7 @@
               [pKeyFilter]="documentNumberFilter"
               [maxlength]="documentNumberMax"
               formControlName="documentNumber"
+              autocomplete="off"
             />
             <val-errors validation-messages controlName="documentNumber">
               @for (
@@ -125,6 +129,7 @@
             pKeyFilter="pint"
             maxlength="9"
             formControlName="movilNumber"
+            autocomplete="off"
           />
         </cs-label-control>
       </div>
@@ -141,6 +146,7 @@
             minlength="10"
             maxlength="100"
             formControlName="email"
+            autocomplete="off"
           />
         </cs-label-control>
       </div>
