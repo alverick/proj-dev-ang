@@ -35,6 +35,11 @@ import {
   AdobeEvent,
   TrackingService,
 } from '../../../../../../shared/services/tracking.service';
+import {
+  debtMaxDate,
+  debtMinDate,
+  validNameRegex,
+} from '../../../../../../shared/validators/debt-validators';
 import { companyFeature } from '../../../../../../store/reducers/company.reducer';
 import { SelectAllTableService } from '../../../../services';
 
@@ -149,6 +154,9 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   dataSet = {};
   selectedAll = false;
   @ViewChild('table') table: Table;
+  public minDate = debtMinDate;
+  public maxDate = debtMaxDate;
+  protected readonly validNameRegex = validNameRegex;
 
   constructor(
     private readonly selectAllTable: SelectAllTableService,

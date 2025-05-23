@@ -21,6 +21,10 @@ import {
 } from '../../../../../../shared/services/tracking.service';
 import { TransactionService } from '../../../../../../shared/services/transaction.service';
 import { swalAlert } from '../../../../../../shared/utils/helpers/popups';
+import {
+  debtMaxDate,
+  debtMinDate,
+} from '../../../../../../shared/validators/debt-validators';
 import { companyFeature } from '../../../../../../store/reducers/company.reducer';
 
 @Component({
@@ -52,6 +56,8 @@ export class PaymentDetailComponent implements OnInit {
   useAmountLimits$ = this.store.select(companyFeature.selectUseAmountLimits);
   channelOptions = ['Efectivo', 'POS', 'BCP', 'BBVA', 'Otro banco'];
   protected readonly ServiceTypes = ServiceTypes;
+  public minDate = debtMinDate;
+  public maxDate = debtMaxDate;
 
   constructor(
     private readonly transaction: TransactionService,

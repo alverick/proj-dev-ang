@@ -37,6 +37,11 @@ import {
   TrackingService,
 } from '../../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../../shared/utils/helpers/popups';
+import {
+  debtMaxDate,
+  debtMinDate,
+  validNameRegex,
+} from '../../../../../shared/validators/debt-validators';
 
 export interface Debt {
   emissionDate: Date;
@@ -70,15 +75,15 @@ export interface Debt {
 export class DebtComponent implements OnInit {
   useAmountLimits = false;
   public grabado = false;
-  public minDate = new Date(2000, 0, 1);
-  public maxDate = new Date(2049, 11, 31);
+  public minDate = debtMinDate;
+  public maxDate = debtMaxDate;
   public isPartial = false;
   limitAmountMax: number = null;
   messageModes = messageModes;
   debtorExistent = signal(false);
   loaderDebtorCode = false;
   alphaNumSpaceRegex = /^[ 0-9a-zA-Z]+$/;
-  validNameRegex = /^[ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]+$/;
+  validNameRegex = validNameRegex;
   amountWithSymbolLabel = '';
   debtForm: FormModel<Debt> = this.fb.group({
     emissionDate: [
