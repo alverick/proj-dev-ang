@@ -21,6 +21,7 @@ import {
   AdobeLaunchProviderService,
   NewRelicProviderService,
 } from './shared/services';
+import { EncryptionService } from './shared/services/encryption.service';
 import { HotjarProviderService } from './shared/services/hotjar-provider.service';
 import { NotifyService } from './shared/services/notify.service';
 import { StorageService } from './shared/services/storage.service';
@@ -75,6 +76,7 @@ import { appConfigFeature } from './store/reducers/app-config.reducer';
       useClass: LoaderInterceptor,
       multi: true,
     },
+    EncryptionService,
     AdobeLaunchProviderService,
     NewRelicProviderService,
     HotjarProviderService,
