@@ -42,6 +42,7 @@ import { appConfigFeature } from '../../../../store/reducers/app-config.reducer'
 import { authFullRoutingNames } from '../../auth-routing.names';
 import { LayoutFormComponent } from '../../components/layout-form/layout-form.component';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
+import { RespuestaLogin } from '../../../../shared/models/respuestaLogin.model';
 
 const userData = environment.credentials[0];
 
@@ -162,7 +163,7 @@ export class LoginPage implements OnInit {
     const ruc = this.f.ruc.value;
     const password = this.f.psw.value;
 
-    const actionParams = this.buildTrackingParams(
+    const actionParams: ActionEventProperties = this.buildTrackingParams(
       ruc,
       this.passwordControl.unmasked,
     );
@@ -178,7 +179,10 @@ export class LoginPage implements OnInit {
       });
   }
 
-  private buildTrackingParams(ruc: string, unmasked: boolean) {
+  private buildTrackingParams(
+    ruc: string,
+    unmasked: boolean,
+  ): Partial<ActionEventProperties> {
     return {
       category: 'Login',
       action: 'Click',
@@ -192,7 +196,10 @@ export class LoginPage implements OnInit {
     };
   }
 
-  private handleLoginResponse(value: any, actionParams: any) {
+  private handleLoginResponse(
+    value: RespuestaLogin,
+    actionParams: Partial<ActionEventProperties>,
+  ) {
     this.intentos = value.paramNum;
     this.intentosRestantes = this.attemptsLimit - this.intentos;
     this.codRespuesta = value.codRespuesta;
@@ -220,7 +227,10 @@ export class LoginPage implements OnInit {
     this.handleFailedAttempt(actionParams);
   }
 
-  private showSessionActiveModal(value: any, actionParams: any) {
+  private showSessionActiveModal(
+    value: RespuestaLogin,
+    actionParams: Partial<ActionEventProperties>,
+  ) {
     this.showModal('Existe una sesión activa', '');
     this.sendAdobeTrack({
       ...actionParams,
@@ -229,7 +239,10 @@ export class LoginPage implements OnInit {
     });
   }
 
-  private async processSuccessfulLogin(value: any, actionParams: any) {
+  private async processSuccessfulLogin(
+    value: RespuestaLogin,
+    actionParams: Partial<ActionEventProperties>,
+  ) {
     if (this.f.rememberMe.value) {
       const expire = new Date();
       expire.setDate(expire.getDate() + 25);
@@ -256,7 +269,10 @@ export class LoginPage implements OnInit {
     this.tracking.trackEvent(AdobeEvent.successLogin);
   }
 
-  private handleBlockedUser(value: any, actionParams: any) {
+  private handleBlockedUser(
+    value: RespuestaLogin,
+    actionParams: Partial<ActionEventProperties>,
+  ) {
     this.showModal(
       'Contraseña Incorrecta',
       'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. ' +
@@ -271,7 +287,7 @@ export class LoginPage implements OnInit {
     });
   }
 
-  private handleFailedAttempt(actionParams: any) {
+  private handleFailedAttempt(actionParams: Partial<ActionEventProperties>) {
     if (this.codRespuesta === loginResultStatus.errorCredentials) {
       this.showModal(
         'Contraseña incorrecta',
@@ -297,7 +313,10 @@ export class LoginPage implements OnInit {
     }
   }
 
-  private handleLoginError(error: HttpErrorResponse, actionParams: any) {
+  private handleLoginError(
+    error: HttpErrorResponse,
+    actionParams: Partial<ActionEventProperties>,
+  ) {
     if (error.status === 500) {
       this.showModal(
         'Error',
