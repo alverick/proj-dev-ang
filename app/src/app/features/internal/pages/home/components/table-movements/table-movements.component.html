@@ -187,6 +187,7 @@
                           [(ngModel)]="rowData.amount"
                           [minFractionDigits]="2"
                           [maxFractionDigits]="2"
+                          [min]="0.01"
                           [maxAmountLimits]="maxAmountLimits"
                           [currencySymbol]="rowData.currency"
                           [useLimits]="useAmountLimits"
