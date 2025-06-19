@@ -3,6 +3,7 @@ import {
   type AfterViewInit,
   Component,
   HostListener,
+  inject,
   type OnDestroy,
   type OnInit,
   ViewChild,
@@ -91,7 +92,7 @@ export type DebtDialog = {
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  providers: [TransactionService, DatePipe],
+  providers: [DatePipe, TransactionService],
   imports: [
     BadgeModule,
     PaymentsFilterComponent,
@@ -197,6 +198,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   onResize() {
     this.updatePositionModal();
   }
+
+  datePipe = inject(DatePipe);
 
   constructor(
     private readonly storageService: StorageService,
@@ -823,8 +826,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       .then((result) => {
         if (result.value) {
           const debts = {
-            emissionDate: item.emissionDate,
-            dueDate: item.dueDate,
+            emissionDate: this.datePipe.transform(
+              item.emissionDate,
+              'dd/MM/yyyy',
+            ),
+            dueDate: this.datePipe.transform(item.dueDate, 'dd/MM/yyyy'),
             concept: item.concept,
             amount: item.amount,
             firstName: item.firstName,
