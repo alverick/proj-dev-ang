@@ -1,10 +1,10 @@
+import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import moment from 'moment';
 import { clone } from 'ramda';
 
 import { environment } from '../../../environments/environment';
@@ -53,11 +53,12 @@ describe('TransactionService', () => {
   let service: TransactionService;
   let httpMock: HttpTestingController;
   const apiUrl = environment.END_POINT;
+  let pipe: DatePipe;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [TransactionService],
+      providers: [TransactionService,DatePipe],
     });
     service = TestBed.inject(TransactionService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -68,6 +69,7 @@ describe('TransactionService', () => {
     service.itemsForDelete = [];
     service.pageMessage = 'Mostrando 0 de 0 elementos';
     (service as any).lastFilter = null;
+    pipe = new DatePipe('en-US');
   });
 
   afterEach(() => {
@@ -151,10 +153,10 @@ describe('TransactionService', () => {
       expect(req.request.params.get('Status')).toBe('PENDIENTE');
       expect(req.request.params.get('DateForFilter')).toBe('emissionDate');
       expect(req.request.params.get('DateFrom')).toBe(
-        encodeURI(moment(mockFilter.dateFrom).format('DD/MM/YYYY')),
+        encodeURI(pipe.transform(mockFilter.dateFrom, 'dd/MM/yyyy')),
       );
       expect(req.request.params.get('DateTo')).toBe(
-        encodeURI(moment(mockFilter.dateTo).format('DD/MM/YYYY')),
+        encodeURI(pipe.transform(mockFilter.dateTo, 'dd/MM/yyyy')),
       );
 
       req.flush(clone(mockApiResponse));
@@ -433,8 +435,8 @@ describe('TransactionService', () => {
 
       const expectedBody: DebstFilter = {
         ...mockFilter,
-        dateFrom: moment(mockFilter.dateFrom).format('DD/MM/YYYY'),
-        dateTo: moment(mockFilter.dateTo).format('DD/MM/YYYY'),
+        dateFrom: pipe.transform(mockFilter.dateFrom, 'dd/MM/yyyy'),
+        dateTo: pipe.transform(mockFilter.dateTo, 'dd/MM/yyyy'),
       };
       expect(req.request.body).toEqual(expectedBody);
 

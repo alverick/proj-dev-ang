@@ -1,5 +1,5 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { Component, type OnInit } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LetDirective } from '@ngrx/component';
 import { Store } from '@ngrx/store';
@@ -31,6 +31,7 @@ import { companyFeature } from '../../../../../../store/reducers/company.reducer
   selector: 'cs-payment-detail',
   templateUrl: './payment-detail.component.html',
   standalone: true,
+  providers: [DatePipe, TransactionService],
   imports: [
     ProgressSpinnerModule,
     InputNumberModule,
@@ -58,6 +59,7 @@ export class PaymentDetailComponent implements OnInit {
   protected readonly ServiceTypes = ServiceTypes;
   public minDate = debtMinDate;
   public maxDate = debtMaxDate;
+  datePipe = inject(DatePipe);
 
   constructor(
     private readonly transaction: TransactionService,
@@ -182,7 +184,7 @@ export class PaymentDetailComponent implements OnInit {
       .then((result) => {
         if (result.value) {
           const payment = {
-            date: itm.newDate,
+            date: this.datePipe.transform(itm.newDate, 'dd/MM/yyyy'),
             channel: itm.newChannel,
             amount: parseFloat(itm.newAmount.toString()),
           };

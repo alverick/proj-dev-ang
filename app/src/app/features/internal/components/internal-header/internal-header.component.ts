@@ -1,7 +1,12 @@
-import { NgClass, NgOptimizedImage } from '@angular/common';
+import {
+  DatePipe,
+  NgClass,
+  NgOptimizedImage,
+  registerLocaleData,
+} from '@angular/common';
+import localeEsPe from '@angular/common/locales/es-PE';
 import { Component, type OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import moment from 'moment';
 import { NgClickOutsideDirective } from 'ng-click-outside2';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { NgScrollReached } from 'ngx-scrollbar/reached-event';
@@ -27,10 +32,13 @@ import {
 import { authFullRoutingNames } from '../../../auth/auth-routing.names';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 
+registerLocaleData(localeEsPe, 'es-PE');
+
 @Component({
   selector: 'cs-internal-header',
   templateUrl: './internal-header.component.html',
   standalone: true,
+  providers: [DatePipe],
   imports: [
     HeaderComponent,
     NgClass,
@@ -78,6 +86,7 @@ export class InternalHeaderComponent implements OnInit {
     public afiliacionService: AfiliacionService,
     private readonly storage: StorageService,
     private readonly tracking: TrackingService,
+    private readonly datePipe: DatePipe,
   ) {}
 
   toggleMenu() {
@@ -115,7 +124,13 @@ export class InternalHeaderComponent implements OnInit {
   }
 
   getAgo(date: string): string {
-    return moment.utc(date).local().format('DD/MM/YY [a las] hh:mm a');
+    const utcDate = new Date(date + 'Z');
+    return this.datePipe.transform(
+      new Date(utcDate),
+      "dd/MM/yy 'a las' hh:mm a",
+      'America/Lima',
+      'es-PE',
+    );
   }
 
   public logout(): void {

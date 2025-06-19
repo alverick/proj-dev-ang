@@ -1,5 +1,11 @@
-import { CurrencyPipe } from '@angular/common';
-import { Component, type OnInit, signal, viewChild } from '@angular/core';
+import { CurrencyPipe, DatePipe } from '@angular/common';
+import {
+  Component,
+  inject,
+  type OnInit,
+  signal,
+  viewChild,
+} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -7,6 +13,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
   ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { FormModel } from 'ngx-mf';
@@ -55,7 +62,7 @@ export interface Debt {
 @Component({
   selector: 'cs-debt-form',
   templateUrl: './debt.component.html',
-  providers: [CurrencyPipe],
+  providers: [CurrencyPipe, DatePipe],
   standalone: true,
   imports: [
     FormsModule,
@@ -91,7 +98,10 @@ export class DebtComponent implements OnInit {
       Validators.required,
       this.limitYearValidator(),
     ],
-    dueDate: ['' as unknown as Date, Validators.required],
+    dueDate: [
+      '' as unknown as Date,
+      [Validators.required, this.dueDateAfterEmissionDate('emissionDate')],
+    ],
     code: [
       '',
       [
@@ -129,6 +139,7 @@ export class DebtComponent implements OnInit {
       required: 'Debe ingresar un valor',
       notValid: 'Fecha inválida',
       limitYear: 'Fecha inválida',
+      dueBeforeEmission: 'Debe ser igual o posterior a la fecha de emisión',
     },
     code: {
       required: 'Debe ingresar un valor',
@@ -146,6 +157,7 @@ export class DebtComponent implements OnInit {
     amount: { required: 'Debe ingresar un valor' },
   };
   formDirective = viewChild<FormGroupDirective>('formDirective');
+  datePipe: DatePipe = inject(DatePipe);
 
   constructor(
     public dialogRef: DynamicDialogRef<DebtComponent>,
@@ -198,6 +210,22 @@ export class DebtComponent implements OnInit {
       this.debtForm.controls.amount.disable();
     }
   }
+  dueDateAfterEmissionDate(emissionControlName: string): ValidatorFn {
+    return (control: AbstractControl<Date>) => {
+      if (!control.parent) return null;
+
+      const dueDate = control.value;
+      const emissionDate = control.parent.get(emissionControlName)
+        ?.value as Date;
+
+      if (!dueDate || !emissionDate) return null;
+
+      const due = new Date(dueDate);
+      const emission = new Date(emissionDate);
+
+      return due >= emission ? null : { dueBeforeEmission: true };
+    };
+  }
 
   buscarNewCode() {
     if (!this.debtForm.controls.code.valid) {
@@ -246,13 +274,13 @@ export class DebtComponent implements OnInit {
 
     const debt = this.isPartial
       ? {
-          emissionDate,
+          emissionDate: this.datePipe.transform(emissionDate, 'dd/MM/yyyy'),
           code,
           firstName,
         }
       : {
-          emissionDate,
-          dueDate,
+          emissionDate: this.datePipe.transform(emissionDate, 'dd/MM/yyyy'),
+          dueDate: this.datePipe.transform(dueDate, 'dd/MM/yyyy'),
           code,
           firstName,
           concept,

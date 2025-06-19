@@ -17,7 +17,6 @@ import {
   type ValidatorFn,
   Validators,
 } from '@angular/forms';
-import moment from 'moment';
 import { PrimeTemplate } from 'primeng/api';
 import { ButtonDirective } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -175,7 +174,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
         controlOrig: AbstractControl,
         isLower = false,
       ) =>
-      (value: moment.Moment) => {
+      (value: Date) => {
         if (all(isNotNil, [value, control.value]) && isObj(value)) {
           if (
             (!isLower && control.value < value) ||

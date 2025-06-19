@@ -1,10 +1,10 @@
+import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import moment from 'moment';
 
 import { environment } from '../../../environments/environment';
 import { type ICompanyData } from '../models/company-data';
@@ -18,14 +18,16 @@ describe('GtpService', () => {
   let service: GtpService;
   let httpMock: HttpTestingController;
   const baseApiUrl = environment.END_POINT;
+  let pipe: DatePipe;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [GtpService],
+      providers: [GtpService, DatePipe],
     });
     service = TestBed.inject(GtpService);
     httpMock = TestBed.inject(HttpTestingController);
+    pipe = new DatePipe('en-US');
   });
 
   afterEach(() => {
@@ -88,10 +90,10 @@ describe('GtpService', () => {
 
     it('should fetch enterprises with a given filter and update properties', (done) => {
       const expectedDateFrom = encodeURI(
-        moment(mockFilter.dateFrom).format('DD/MM/YYYY'),
+        pipe.transform(mockFilter.dateFrom, 'dd/MM/yyyy'),
       );
       const expectedDateTo = encodeURI(
-        moment(mockFilter.dateTo).format('DD/MM/YYYY'),
+        pipe.transform(mockFilter.dateTo, 'dd/MM/yyyy'),
       );
       const expectedUrl = `${baseApiUrl}/Company/GTP/list?PageNumber=${mockFilter.pageNumber}&ColumnName=${mockFilter.ColumnName}&Asc=${mockFilter.asc}&InputSearch=${mockFilter.inputSearch}&BusinessHeading=${mockFilter.BusinessHeading}&Status=${mockFilter.status}&Solicitud=${mockFilter.statusSolicitud}&DateFrom=${expectedDateFrom}&DateTo=${expectedDateTo}`;
 
@@ -111,10 +113,10 @@ describe('GtpService', () => {
     it('should use lastFilter if filter is null', (done) => {
       (service as any).lastFilter = mockFilter;
       const expectedDateFrom = encodeURI(
-        moment(mockFilter.dateFrom).format('DD/MM/YYYY'),
+        pipe.transform(mockFilter.dateFrom, 'dd/MM/yyyy'),
       );
       const expectedDateTo = encodeURI(
-        moment(mockFilter.dateTo).format('DD/MM/YYYY'),
+        pipe.transform(mockFilter.dateTo, 'dd/MM/yyyy'),
       );
       const expectedUrl = `${baseApiUrl}/Company/GTP/list?PageNumber=${mockFilter.pageNumber}&ColumnName=${mockFilter.ColumnName}&Asc=${mockFilter.asc}&InputSearch=${mockFilter.inputSearch}&BusinessHeading=${mockFilter.BusinessHeading}&Status=${mockFilter.status}&Solicitud=${mockFilter.statusSolicitud}&DateFrom=${expectedDateFrom}&DateTo=${expectedDateTo}`;
 
@@ -622,8 +624,8 @@ describe('GtpService', () => {
       dateTo: new Date('2023-02-28T23:59:59'),
     } as GtpFilter;
     const expectedPayload = {
-      inicio: '2023/02/01',
-      final: '2023/02/28',
+      inicio: '01/02/2023',
+      final: '28/02/2023',
     };
     const mockBlob = new Blob(['report data'], {
       type: 'application/octet-stream',
