@@ -1,6 +1,6 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import moment from 'moment';
+import { inject, Injectable } from '@angular/core';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -19,6 +19,7 @@ export class GtpService {
   private lastFilter: GtpFilter = null;
   private readonly URI_API: string = environment.END_POINT;
   public pageMessage = 'Mostrando 0 de 0 elementos';
+  datePipe = inject(DatePipe);
 
   constructor(private readonly http: HttpClient) {}
   /// para los servicios que estan en eprobacin
@@ -67,10 +68,10 @@ export class GtpService {
     }
     const strDateFrom = isNilOrEmpty(filtro.dateFrom)
       ? ''
-      : encodeURI(moment(filtro.dateFrom).format('DD/MM/YYYY'));
+      : encodeURI(this.datePipe.transform(filtro.dateFrom, 'dd/MM/yyyy'));
     const strDateTo = isNilOrEmpty(filtro.dateTo)
       ? ''
-      : encodeURI(moment(filtro.dateTo).format('DD/MM/YYYY'));
+      : encodeURI(this.datePipe.transform(filtro.dateTo, 'dd/MM/yyyy'));
 
     if (isNilOrEmpty(filtro.BusinessHeading)) {
       filtro.BusinessHeading = '';
@@ -255,9 +256,11 @@ export class GtpService {
     const strDateFrom =
       filtro.dateFrom === null
         ? ''
-        : moment(filtro.dateFrom).format('DD/MM/YYYY');
+        : this.datePipe.transform(filtro.dateFrom, 'dd/MM/yyyy');
     const strDateTo =
-      filtro.dateTo === null ? '' : moment(filtro.dateTo).format('DD/MM/YYYY');
+      filtro.dateTo === null
+        ? ''
+        : this.datePipe.transform(filtro.dateTo, 'dd/MM/yyyy');
     return this.http
       .post(
         url,
