@@ -1,0 +1,58 @@
+# Author: @Aldo Martinez
+# Project: DSO-FRONT
+name: "$(VersionCodeSWA).$(Rev:r)" # (Not change it)
+
+pr: "none"
+
+####################
+# Trigger after any commit to master or feature/** branch
+# tags: NO SUPPORTED BY BITBUCKET CLOUD
+####################
+trigger:
+  branches:
+    include:
+      - "refs/heads/master"
+      - "refs/heads/main"
+      - "refs/heads/hotfix/*"
+  paths:
+    include:
+      - "*"
+    exclude:
+      - "readme*"
+      - "README*"
+      - "Readme*"
+      - "docs/*"
+
+####################
+# Resources Repository
+# ibkteam/dso-template
+# branch: master ( Not change it)
+####################
+resources:
+  repositories:
+    - repository: "ibkAzTemplates"
+      type: "bitbucket"
+      endpoint: "bitbucket-generic-user"
+      name: "ibkteam/dso-frontend-template"
+      ref: "master"
+
+####################
+# Call the template of your preference
+# check the template out :
+# https://bitbucket.org/ibkteam/dso-frontend-template/src/master/
+####################
+extends:
+  template: "src/templates/node-swa/cicd-dev.yml@ibkAzTemplates"
+  parameters:
+    projectName: "CSE"
+    componentName: "eureca-frontend"
+    workingDir: "app"
+    buildOutputPath: "dist"
+    nodeVersion: "18.X"
+    # azSwaDeploymentEnvironment: 'dev'
+    flags:
+      unitTestsEnabled: false
+      sonarEnabled: false
+      sonarQualityGateEnabled: false
+      jFrogXrayEnabled: false
+      fluidAttacksEnabled: false
