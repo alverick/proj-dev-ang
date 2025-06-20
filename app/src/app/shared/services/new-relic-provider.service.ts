@@ -23,6 +23,36 @@ export class NewRelicProviderService implements ProviderService {
 
   constructor(public trackingService: TrackingService) {}
 
+  async initNewRelic() {
+    const nreum = {
+      init: {
+        distributed_tracing: { enabled: true },
+        privacy: { cookies_enabled: true },
+        ajax: { deny_list: ['bam.nr-data.net'] },
+      },
+      loader_config: {
+        accountID: '3805074',
+        trustKey: '2487962',
+        agentID: '601370524',
+        licenseKey: 'NRJS-9ac6e79e9c1a11dc310',
+        applicationID: '601370524',
+      },
+      info: {
+        beacon: 'bam.nr-data.net',
+        errorBeacon: 'bam.nr-data.net',
+        licenseKey: 'NRJS-9ac6e79e9c1a11dc310',
+        applicationID: '601370524',
+        sa: 1,
+      },
+    };
+    window['NREUM'] = nreum;
+
+    await import('@newrelic/browser-agent').then((newrelic1) => {
+      console.log(newrelic1, new newrelic1['Agent'](window['NREUM']));
+    });
+    console.log('loaded', window.newrelic);
+  }
+
   trackPage(payload: Partial<TrackEventProperties>) {
     this.runNewrelic(
       AdobeEvent.pageTrack,
@@ -47,27 +77,30 @@ export class NewRelicProviderService implements ProviderService {
   }
 
   startTracking(): void {
-    this.trackingService.eventSubject$
-      .pipe(
-        filter(
-          ({ event, payload }) =>
-            event === AdobeEvent.trackFormSubmit &&
-            (payload.action.step === 'Step2' ||
-              payload.action.step === 'Step5') &&
-            payload.page.module === 'Afiliación',
-        ),
-      )
-      .subscribe(({ event, payload }) => {
-        this.trackEvent(event, payload);
-      });
+    void this.initNewRelic().then(() => {
+      this.trackingService.eventSubject$
+        .pipe(
+          filter(
+            ({ event, payload }) =>
+              event === AdobeEvent.trackFormSubmit &&
+              (payload.action.step === 'Step2' ||
+                payload.action.step === 'Step5') &&
+              payload.page.module === 'Afiliación',
+          ),
+        )
+        .subscribe(({ event, payload }) => {
+          this.trackEvent(event, payload);
+        });
 
-    this.trackingService.pageSubject$
-      .pipe(filter(() => this.enabledPageRouting))
-      .subscribe((payload) => this.trackPage(payload));
+      this.trackingService.pageSubject$
+        .pipe(filter(() => this.enabledPageRouting))
+        .subscribe((payload) => this.trackPage(payload));
+    });
   }
 
   private runNewrelic(event: string, payload: object) {
     try {
+      console.log('runNewrelic', event, payload);
       if ('undefined' !== typeof window.newrelic && window.newrelic) {
         window.newrelic.addPageAction(event, payload);
       }

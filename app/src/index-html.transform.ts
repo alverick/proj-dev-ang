@@ -103,7 +103,7 @@ function includeScripts(configuration: EnvironmentType, indexHtml: string) {
 export default ({ configuration }: TargetOptions, indexHtml: string) => {
   const sameAsDefault = ['', 'hmr', 'local'];
   let parsedHtml = '';
-  [includeScripts, replaceDomainUrl].forEach((process) => {
+  [replaceDomainUrl].forEach((process) => {
     parsedHtml = process(
       (sameAsDefault.includes(configuration)
         ? 'default'

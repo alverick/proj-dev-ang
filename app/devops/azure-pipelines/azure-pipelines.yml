@@ -63,7 +63,7 @@ stages:
           - task: Npm@1
             displayName: 'Install npm'
             inputs:
-              workingDir: app
+              workingDir: EurekaAngularProy
               verbose: false
 
           - ${{ if eq(parameters.runSonarTask, true) }}:
@@ -73,7 +73,7 @@ stages:
                 NODE_OPTIONS: --max_old_space_size=16384
               inputs:
                 command: custom
-                workingDir: app
+                workingDir: EurekaAngularProy
                 verbose: false
                 customCommand: 'run test --coverage'
 
@@ -89,12 +89,12 @@ stages:
                 cliSources: '.'
                 extraProperties: |
                   sonar.sourceEncoding=UTF-8
-                  sonar.sources=$(System.DefaultWorkingDirectory)/app/src
+                  sonar.sources=$(System.DefaultWorkingDirectory)/EurekaAngularProy/src
                   sonar.exclusions = */node_modules/, */src/assets/*, */src/environments/*, */src/jest.config.ts, */src/main.ts, */src/assets/scripts/*, */src/assets/scripts/*, **/*.stories.ts
-                  sonar.tests=$(System.DefaultWorkingDirectory)/app/src
+                  sonar.tests=$(System.DefaultWorkingDirectory)/EurekaAngularProy/src
                   sonar.test.inclusions=**/*.spec.ts
                   sonar.test.exclusions=**/*.stories.ts
-                  sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/app/coverage/lcov.info
+                  sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/EurekaAngularProy/coverage/lcov.info
                   sonar.c.file.suffixes=-
                   sonar.cpp.file.suffixes=-
                   sonar.objc.file.suffixes=-
@@ -131,7 +131,7 @@ stages:
             displayName: 'Run build '
             inputs:
               command: custom
-              workingDir: app
+              workingDir: EurekaAngularProy
               verbose: false
               customCommand: 'run build -- --configuration ${{variables.mode}}'
 
@@ -141,17 +141,17 @@ stages:
               echo Move Directory Deploy
               cp -a dist/EurekaAngularProy/. Deploy/ClientApp/dist/
               ls Deploy/ClientApp/dist/
-            workingDirectory: app
+            workingDirectory: EurekaAngularProy
             displayName: 'Create directory'
 
-          - upload: app/dist/EurekaAngularProy
+          - upload: EurekaAngularProy/dist/EurekaAngularProy
             displayName: 'Publish dist'
             artifact: web-cobrosimple
 
           - task: ArchiveFiles@2
             displayName: 'Archive File'
             inputs:
-              rootFolderOrFile: app/Deploy
+              rootFolderOrFile: EurekaAngularProy/Deploy
               includeRootFolder: false
               archiveFile: '$(Build.ArtifactStagingDirectory)/ClientApp.zip'
 

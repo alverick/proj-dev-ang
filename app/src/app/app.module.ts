@@ -21,6 +21,7 @@ import {
   AdobeLaunchProviderService,
   NewRelicProviderService,
 } from './shared/services';
+import { HotjarProviderService } from './shared/services/hotjar-provider.service';
 import { NotifyService } from './shared/services/notify.service';
 import { StorageService } from './shared/services/storage.service';
 import { AppConfigEffects } from './store/effects/app-config.effects';
@@ -76,6 +77,7 @@ import { appConfigFeature } from './store/reducers/app-config.reducer';
     },
     AdobeLaunchProviderService,
     NewRelicProviderService,
+    HotjarProviderService,
     NotifyService,
     StorageService,
     provideAnimationsAsync(),

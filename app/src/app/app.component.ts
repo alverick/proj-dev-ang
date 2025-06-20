@@ -18,6 +18,7 @@ import {
   NewRelicProviderService,
 } from './shared/services';
 import { AppConfigActions } from './store/actions/app-config.actions';
+import { HotjarProviderService } from './shared/services/hotjar-provider.service';
 
 @Component({
   selector: 'cs-root',
@@ -38,10 +39,12 @@ export class AppComponent implements OnInit, OnDestroy {
   private readonly primengConfig = inject(PrimeNGConfig);
   private readonly adobeLaunch = inject(AdobeLaunchProviderService);
   private readonly newrelic = inject(NewRelicProviderService);
+  private readonly hotjar = inject(HotjarProviderService);
 
   constructor() {
     this.adobeLaunch.startTracking();
     this.newrelic.startTracking();
+    this.hotjar.startTracking();
   }
 
   ngOnInit() {
