@@ -8,6 +8,7 @@ import {
 } from '../../features/auth/services/affiliation-forms.service';
 import { type IServiceRemoteModel, type ServicePostData } from '../models';
 import { type IAccountStateDetails } from '../models/company';
+import { type CompanyChangePasswordForm } from '../models/company-forms';
 import { type IDataEnterpriseModel } from '../models/data-enterprise.model';
 import { type FingerPrintData } from './digital-data.service';
 
@@ -52,6 +53,11 @@ export class CompanyService {
 
   updateCompany(data: UpdateCompanyData) {
     const url = `${environment.END_POINT}/company`;
+    return this.http.put<ICompanyResult>(url, data);
+  }
+
+  updateCompanyPassword(data: CompanyChangePasswordForm) {
+    const url = `${environment.END_POINT}/company/UpdatePasswordAffiliate`;
     return this.http.put<ICompanyResult>(url, data);
   }
 
