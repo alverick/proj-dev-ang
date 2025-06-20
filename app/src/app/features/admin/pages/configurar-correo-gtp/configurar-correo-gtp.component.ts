@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
 import {
   FormsModule,
@@ -22,6 +23,7 @@ import { drawPopup } from '../../../../shared/utils/helpers/popups';
   templateUrl: './configurar-correo-gtp.component.html',
   styleUrls: ['./configurar-correo-gtp.component.scss'],
   standalone: true,
+  providers: [GtpService, DatePipe],
   imports: [
     ButtonDirective,
     Ripple,
