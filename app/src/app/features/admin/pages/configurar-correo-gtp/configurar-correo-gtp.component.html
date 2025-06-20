@@ -76,17 +76,19 @@
             class="p-button-text tw-mx-auto lg:tw-w-56"
             label="Agregar otro mail"
           ></button>
-          <button
-            pButton
-            pRipple
-            type="button"
-            [disabled]="Formulario"
-            (click)="onGrabarCorreo()"
-            class="p-button tw-hidden tw-w-56 lg:tw-block"
-            [class.btn-disabled]="Formulario"
-            icon="pi pi-send"
-            label="FINALIZAR"
-          ></button>
+          @if (showButton) {
+            <button
+              pButton
+              pRipple
+              type="button"
+              [disabled]="Formulario"
+              (click)="onGrabarCorreo()"
+              class="p-button tw-hidden tw-w-56 lg:tw-block"
+              [class.btn-disabled]="Formulario"
+              icon="pi pi-send"
+              label="FINALIZAR"
+            ></button>
+          }
         </div>
       </div>
     </div>
@@ -109,17 +111,21 @@
               Cerrar
             </button>
           </div>
-          <form [formGroup]="frmCorreoGtp" novalidate>
+          <form [formGroup]="frmCorreoGtp" novalidate (submit)="onGrabar()">
             <div class="form-group">
               <cs-label-control
                 class="tw-w-full"
                 formControlName="correo"
                 [errorMessages]="errorsForm.correo"
-                ><ng-container label>E-mail</ng-container
-                ><input
+              >
+                <ng-container label>E-mail </ng-container>
+                <input
                   type="text"
                   class="tw-w-full"
                   pInputText
+                  minlength="10"
+                  maxlength="100"
+                  autocomplete="off"
                   formControlName="correo"
                 />
               </cs-label-control>
@@ -128,9 +134,8 @@
               <button
                 pButton
                 pRipple
-                type="button"
+                type="submit"
                 class="p-button"
-                (click)="onGrabar()"
                 [label]="titlebtn"
               ></button>
             </div>
@@ -141,17 +146,19 @@
     <div class="tw-col-span-5">
       <div class="widget lista tw-py-5">
         <div class="tw-text-center lg:tw-hidden">
-          <button
-            pButton
-            pRipple
-            type="button"
-            [disabled]="Formulario"
-            (click)="onGrabarCorreo()"
-            class="p-button lg:tw-w-56"
-            [class.btn-disabled]="Formulario"
-            icon="pi pi-send"
-            label="FINALIZAR"
-          ></button>
+          @if (showButton) {
+            <button
+              pButton
+              pRipple
+              type="button"
+              [disabled]="Formulario"
+              (click)="onGrabarCorreo()"
+              class="p-button lg:tw-w-56"
+              [class.btn-disabled]="Formulario"
+              icon="pi pi-send"
+              label="FINALIZAR"
+            ></button>
+          }
         </div>
         <br /><br />
       </div>
