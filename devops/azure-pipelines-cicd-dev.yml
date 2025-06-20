@@ -42,14 +42,17 @@ resources:
 # https://bitbucket.org/ibkteam/dso-frontend-template/src/master/
 ####################
 extends:
-  template: "src/templates/node-swa/cicd-dev.yml@ibkAzTemplates"
+  template: "src/templates/node-appservice/cicd-dev.yml@ibkAzTemplates"
   parameters:
     projectName: "CSE"
     componentName: "eureca-frontend"
     workingDir: "app"
     buildOutputPath: "dist"
     nodeVersion: "18.X"
-    # azSwaDeploymentEnvironment: 'dev'
+    azAppServiceSubscription: "sceu2c011dsosnbx01"
+    azAppServiceAppType: "webAppLinux"
+    azAppServiceAppName: "wappeu2c003eurcdev01"
+    azAppServiceRuntimeStack: "NODE:18-lts"
     flags:
       unitTestsEnabled: false
       sonarEnabled: false
