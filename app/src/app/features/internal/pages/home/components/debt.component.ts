@@ -90,6 +90,7 @@ export class DebtComponent implements OnInit {
   debtorExistent = signal(false);
   loaderDebtorCode = false;
   alphaNumSpaceRegex = /^[ 0-9a-zA-Z]+$/;
+  alphaNumRegex = /^[0-9a-zA-Z]+$/;
   validNameRegex = validNameRegex;
   amountWithSymbolLabel = '';
   debtForm: FormModel<Debt> = this.fb.group({
@@ -107,7 +108,7 @@ export class DebtComponent implements OnInit {
       [
         Validators.required,
         Validators.minLength(1),
-        Validators.pattern('[\\w]*'),
+        Validators.pattern(this.alphaNumRegex),
       ],
     ],
     firstName: [
