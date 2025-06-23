@@ -184,7 +184,7 @@
                           placeholder="1.00"
                           locale="es-PE"
                           #amount="ngModel"
-                          [prefix]="rowData.currency + ' '"
+                          [prefix]="rowData.currency"
                           [(ngModel)]="rowData.amount"
                           [minFractionDigits]="2"
                           [maxFractionDigits]="2"
@@ -500,7 +500,7 @@
               csAmountMaxValidate
               placeholder="1.00"
               locale="es-PE"
-              [prefix]="editRowData.currency + ' '"
+              [prefix]="editRowData.currency"
               [(ngModel)]="editRowData.amount"
               [minFractionDigits]="2"
               [maxFractionDigits]="2"
