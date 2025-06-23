@@ -65,6 +65,7 @@ export class ServiceDebtFormComponent
   showArrearsFields = false;
   unitAmount = 'S/ ';
   maxAmount = 1000;
+  minAmount = 0.01;
   onTouched: () => void = () => {};
 
   ngOnInit() {
@@ -100,6 +101,7 @@ export class ServiceDebtFormComponent
   setAmountProps(val) {
     this.unitAmount = val === 'M' ? this.currency : '% ';
     this.maxAmount = val === 'M' ? 1000 : 100;
+    this.minAmount = val === 'M' ? 0.5 : 0.01;
   }
 
   listenForms() {
