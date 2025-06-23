@@ -40,7 +40,7 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
         Validators.required,
         Validators.pattern(emailRegex),
         Validators.minLength(10),
-        Validators.maxLength(100),
+        Validators.maxLength(50),
       ],
     ],
   });
