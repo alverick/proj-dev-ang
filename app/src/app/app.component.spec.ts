@@ -15,6 +15,7 @@ import {
   NewRelicProviderService,
   TrackingService,
 } from './shared/services';
+import { HotjarProviderService } from './shared/services/hotjar-provider.service';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -40,6 +41,7 @@ describe('AppComponent', () => {
         MockProvider(PrimeNGConfig),
         MockProvider(AdobeLaunchProviderService),
         MockProvider(NewRelicProviderService),
+        MockProvider(HotjarProviderService),
         MockProvider(TrackingService),
         { provide: Router, useValue: { events: routerEvents$.asObservable() } },
         { provide: Store, useValue: storeMock },
