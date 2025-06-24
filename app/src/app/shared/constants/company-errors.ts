@@ -55,7 +55,7 @@ export const errorRegisterAuth: IErrorMessages = {
     required: 'El nombre comercial es obligatorio',
     blankSpaces: 'El nombre comercial es obligatorio',
     pattern: 'Ingrese un nombre valido',
-    minlength: 'El nombre debe tener mínimo 3 dígitos',
+    minlength: 'El nombre debe tener mínimo 3 caracteres',
     change: 'Escribe un nuevo nombre de la empresa',
   },
   entry: {
