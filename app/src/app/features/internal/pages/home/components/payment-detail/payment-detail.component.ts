@@ -22,6 +22,7 @@ import {
 import { TransactionService } from '../../../../../../shared/services/transaction.service';
 import { swalAlert } from '../../../../../../shared/utils/helpers/popups';
 import {
+  debtMaxAmount,
   debtMaxDate,
   debtMinDate,
 } from '../../../../../../shared/validators/debt-validators';
@@ -59,6 +60,7 @@ export class PaymentDetailComponent implements OnInit {
   protected readonly ServiceTypes = ServiceTypes;
   public minDate = debtMinDate;
   public maxDate = debtMaxDate;
+  protected readonly debtMaxAmount = debtMaxAmount;
   datePipe = inject(DatePipe);
 
   constructor(

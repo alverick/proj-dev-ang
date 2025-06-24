@@ -45,6 +45,7 @@ import {
 } from '../../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../../shared/utils/helpers/popups';
 import {
+  debtMaxAmount,
   debtMaxDate,
   debtMinDate,
   validNameRegex,
@@ -85,7 +86,7 @@ export class DebtComponent implements OnInit {
   public minDate = debtMinDate;
   public maxDate = debtMaxDate;
   public isPartial = false;
-  limitAmountMax: number = null;
+  limitAmountMax: number = debtMaxAmount;
   messageModes = messageModes;
   debtorExistent = signal(false);
   loaderDebtorCode = false;

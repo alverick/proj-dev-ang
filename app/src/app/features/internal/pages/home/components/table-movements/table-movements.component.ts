@@ -37,6 +37,7 @@ import {
   TrackingService,
 } from '../../../../../../shared/services/tracking.service';
 import {
+  debtMaxAmount,
   debtMaxDate,
   debtMinDate,
   validNameRegex,
@@ -159,6 +160,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   public minDate = debtMinDate;
   public maxDate = debtMaxDate;
   protected readonly validNameRegex = validNameRegex;
+  protected readonly debtMaxAmount = debtMaxAmount;
 
   constructor(
     private readonly selectAllTable: SelectAllTableService,
