@@ -184,6 +184,8 @@
                           placeholder="1.00"
                           locale="es-PE"
                           #amount="ngModel"
+                          maxlength="19"
+                          minlength="6"
                           [prefix]="rowData.currency"
                           [(ngModel)]="rowData.amount"
                           [minFractionDigits]="2"
