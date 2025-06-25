@@ -108,8 +108,8 @@ export const errorRegisterAuth: IErrorMessages = {
 };
 export const errorServiceInformation: IErrorMessages = {
   name: {
-    required: 'Ingresa el concepto de cobro',
-    blankSpaces: 'Ingresa el concepto de cobro',
+    required: 'Ingresa el nombre del servicio',
+    blankSpaces: 'Ingresa el nombre del servicio',
     pattern: 'Ingrese un nombre correcto',
     minlength: 'El nombre no puede tener menos de 3 caracteres',
     maxlength: 'El nombre no puede tener mas de 80 caracteres',
