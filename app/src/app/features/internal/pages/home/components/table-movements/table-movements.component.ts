@@ -416,12 +416,19 @@ export class TableMovementsComponent implements OnInit, OnChanges {
 
     for (const field of fields) {
       if (
+        field.checkEditableField === 'canEditFirstName' &&
+        data.firstName.length < 3
+      ) {
+        return false;
+      }
+      if (
         field.checkEditableField === 'canEditAmount' &&
         this.useAmountLimits &&
         data.amount > this.getLimit(data.currency)
       ) {
         return false;
       }
+
       if (isNilOrEmpty(data[field.field])) {
         return false;
       }
