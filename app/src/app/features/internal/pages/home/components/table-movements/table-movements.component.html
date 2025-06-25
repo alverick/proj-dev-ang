@@ -113,6 +113,9 @@
                           @if (name.errors?.required) {
                             <div>Cliente es requerido.</div>
                           }
+                          @if (name.errors?.minlength) {
+                            <div>El nombre debe tener mínimo 3 caracteres</div>
+                          }
                         </div>
                       }
                     </ng-template>
