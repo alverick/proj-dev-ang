@@ -31,3 +31,5 @@ export const authNameValidators = [
   Validators.minLength(3),
   Validators.maxLength(80),
 ];
+
+export const namePattern = /[^-.\dA-Za-z ]*/g;

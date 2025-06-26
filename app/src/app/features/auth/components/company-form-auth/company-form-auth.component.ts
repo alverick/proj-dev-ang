@@ -35,6 +35,7 @@ import {
   SimpleModelFormGroup,
 } from '../../../../shared/models/forms';
 import { DynamicDialogService } from '../../../../shared/services/dynamic-dialog.service';
+import { namePattern } from '../../../../shared/validators/company-validators';
 import { messageErrorNewPasswords } from '../../../../shared/validators/password-validators';
 import {
   type AuthForm,
@@ -73,6 +74,7 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   @Input() errorMessages: IErrorMessages;
   @Input() passwordNoEditable = false;
   protected readonly messageErrorNewPasswords = messageErrorNewPasswords;
+  namePattern = namePattern;
 
   constructor(public dialogService: DynamicDialogService) {}
 

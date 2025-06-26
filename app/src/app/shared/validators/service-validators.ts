@@ -32,3 +32,5 @@ export function onlyAlphaNumber(control: FormControl<string>) {
   }
   return null;
 }
+
+export const namePattern = /[^-\dA-Za-z ]*/g;

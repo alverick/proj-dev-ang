@@ -1,10 +1,12 @@
-import { Directive, HostListener } from '@angular/core';
+import { Directive, HostListener, Input } from '@angular/core';
 
 @Directive({
   selector: '[csInputWithoutSpaces]',
   standalone: true,
 })
 export class InputWithoutSpacesDirective {
+  @Input() csFilter = /[^\dA-Za-z ]*/g;
+
   @HostListener('input', ['$event'])
   onInputChange(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -42,6 +44,6 @@ export class InputWithoutSpacesDirective {
   }
 
   private sanitize(value: string): string {
-    return value.replace(/\s{2,}/g, ' ').replace(/[^-\dA-Za-z ]*/g, '');
+    return value.replace(/\s{2,}/g, ' ').replace(this.csFilter, '');
   }
 }
