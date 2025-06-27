@@ -15,7 +15,7 @@ export const errorsLoginForm: IErrorMessages = {
   email: {
     required: 'El correo electrónico es obligatorio',
     pattern: 'Ingresa un correo electrónico válido',
-    minlength: 'El correo electrónico debe tener mínimo 10 dígitos',
+    minlength: 'El correo electrónico debe tener mínimo 10 caracteres',
   },
 };
 
@@ -35,7 +35,7 @@ export const errorsRegisterForm: IErrorMessages = {
   email: {
     required: 'El correo electrónico es obligatorio',
     pattern: 'Ingresa un correo electrónico válido',
-    minlength: 'El correo electrónico debe tener mínimo 10 dígitos',
+    minlength: 'El correo electrónico debe tener mínimo 10 caracteres',
   },
   emailConfirm: {
     required: 'Confirmar correo electrónico es obligatorio',

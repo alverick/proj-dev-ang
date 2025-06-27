@@ -53,7 +53,7 @@ export class EmpresaGTPComponent implements OnInit {
     email: {
       required: 'El correo electrónico  es obligatorio',
       pattern: 'Ingrese un correo electrónico  válido',
-      minlength: 'El correo electrónico debe tener mínimo 10 dígitos',
+      minlength: 'El correo electrónico debe tener mínimo 10 caracteres',
     },
     movilNumber: {
       required: 'Teléfono o celular es obligatorio',
