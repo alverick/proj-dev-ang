@@ -70,7 +70,7 @@ export class CompanyFormRegistrationComponent implements OnInit {
     const isCE = documentType === 'CE';
     const isPASS = documentType === 'PASS';
 
-    this.documentNumberFilter = isDNI ? 'int' : this.blockSpecial;
+    this.documentNumberFilter = isDNI ? 'pint' : this.blockSpecial;
     const validators = [
       Validators.required,
       Validators.maxLength(parseInt(this.documentNumberMax, 10)),
