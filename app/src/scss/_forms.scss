@@ -62,6 +62,10 @@ a {
     opacity: 1;
     background-color: #e2e8f0;
     color: #64748b;
+
+    p-inputtext {
+      color: #64748b;
+    }
   }
 }
 
@@ -262,12 +266,11 @@ a {
 
 .p-button {
   border-radius: 4px;
-  transition:
-    background-color 0.2s,
-    color 0.2s,
-    border-color 0.2s,
-    box-shadow 0.2s,
-    color 0.2s;
+  transition: background-color 0.2s,
+  color 0.2s,
+  border-color 0.2s,
+  box-shadow 0.2s,
+  color 0.2s;
   color: var(--ibk-white);
   background: var(--primary-green-1);
   border: 1px solid var(--primary-green-1);
@@ -835,6 +838,7 @@ a {
     }
   }
 }
+
 .progress-spinner {
   .p-progress-spinner-circle {
     stroke: var(--ibk-black);
