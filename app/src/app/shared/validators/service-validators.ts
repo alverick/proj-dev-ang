@@ -6,9 +6,6 @@ export const serviceNameValidators = [
   Validators.minLength(3),
   onlyAlphaNumber,
   notBlankSpaces,
-  Validators.pattern(
-    '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$',
-  ),
 ];
 
 export function notBlankSpaces(control: FormControl<string>) {
