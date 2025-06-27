@@ -8,7 +8,6 @@ import { type ModelFormGroup } from '../models/forms';
 import { nameInvalid } from '../validators/name-invalid.validator';
 import {
   notBlankSpaces,
-  onlyAlphaNumber,
   serviceNameValidators,
 } from '../validators/service-validators';
 
@@ -55,14 +54,7 @@ export class ServicesFormsService {
   editServiceForm: ModelFormGroup<ServiceEditForm>;
   defaultServiceType: ServiceTypeType = ServiceTypes.withoutData;
 
-  editNameValidators = [
-    Validators.required,
-    Validators.minLength(3),
-    onlyAlphaNumber,
-    Validators.pattern(
-      '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$',
-    ),
-  ];
+  editNameValidators = serviceNameValidators;
 
   constructor(private readonly formBuilder: FormBuilder) {
     this.serviceForm = this.formBuilder.group({
