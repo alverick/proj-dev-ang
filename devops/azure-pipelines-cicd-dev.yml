@@ -49,7 +49,7 @@ extends:
     workingDir: "app"
     buildOutputPath: "dist"
     nodeVersion: "18.X"
-    azAppServiceSubscription: "gr2c003eurcdev01"
+    azAppServiceSubscription: "RG_EU2_C003_EURC_DEV_01"
     azAppServiceAppType: "webAppLinux"
     azAppServiceAppName: "wappeu2c003eurcdev01"
     azAppServiceRuntimeStack: "NODE:18-lts"
