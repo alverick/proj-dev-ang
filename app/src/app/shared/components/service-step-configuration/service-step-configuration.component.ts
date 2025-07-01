@@ -58,7 +58,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
   @Input() chargeTypeOptions: ISelectOptions[];
   @Input() interestTypeOptions: ISelectOptions[];
   @Input() showCancel = false;
-  @Input() showAllTypes = true;
+  @Input() showAllTypes = false;
   @Input() currency = '';
   debtForm: ModelFormGroup<ServiceDebt>;
   showDebtFields = false;

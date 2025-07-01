@@ -15,6 +15,6 @@ import { CurrencyWithLimit } from '../../constants/currencies';
 export class SidebarServiceComponent {
   @Input() position: number;
   @Input() existServices = false;
-  @Input() showAllTypes = true;
+  @Input() showAllTypes = false;
   @Input() currency: CurrencyWithLimit = null;
 }

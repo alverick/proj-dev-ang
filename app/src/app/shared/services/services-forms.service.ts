@@ -52,7 +52,7 @@ export class ServicesFormsService {
   serviceForm: ModelFormGroup<ServiceFormValue>;
   serviceConfigForm: ModelFormGroup<ServiceConfigurationForm>;
   editServiceForm: ModelFormGroup<ServiceEditForm>;
-  defaultServiceType: ServiceTypeType = ServiceTypes.withoutData;
+  defaultServiceType: ServiceTypeType = ServiceTypes.complete;
 
   editNameValidators = serviceNameValidators;
 
