@@ -19,7 +19,7 @@ resources:
       ref: "master"
 
   pipelines:
-    - pipeline: "EURECA-FE-CD-DEV"
+    - pipeline: "pipelineorigindev"
       source: "eureca-frontend_cicd-dev"
       project: "dopjeu2c003eurcpv01"
       trigger:
