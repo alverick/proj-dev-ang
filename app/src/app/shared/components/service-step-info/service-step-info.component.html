@@ -1,0 +1,142 @@
+<form
+  [formGroup]="form"
+  novalidate
+  (submit)="onSubmit()"
+  autocomplete="off"
+  class="tw-max-w-3xl"
+>
+  <div
+    class="form-container tw-rounded tw-border tw-border-solid tw-border-extended-grey-3 tw-px-5 tw-py-14 md:tw-px-10 xl:tw-px-16"
+  >
+    <h2 class="tw-mb-7 tw-text-2xl tw-font-medium">
+      Completa la información de tu servicio
+    </h2>
+    <div class="form-controls tw-max-w-xl">
+      <div class="form-elm">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="name"
+          [errorMessages]="errorMessages?.name"
+          >Nombre del servicio<input
+            type="text"
+            class="tw-w-full"
+            pInputText
+            csInputWithoutSpaces
+            [csFilter]="namePattern"
+            autocomplete="off"
+            minlength="3"
+            formControlName="name"
+          />
+        </cs-label-control>
+      </div>
+    </div>
+    <div class="form-controls tw-max-w-xl">
+      <cs-label-control
+        class="tw-w-full"
+        formControlName="account"
+        [errorMessages]="errorMessages?.account"
+        >Selecciona la cuenta que se asociará al servicio<p-dropdown
+          [options]="accounts"
+          optionLabel="number"
+          optionValue="id"
+          class="tw-w-full"
+          styleClass="tw-w-full"
+          formControlName="account"
+          placeholder="Selecciona"
+        ></p-dropdown>
+      </cs-label-control>
+    </div>
+    <div class="form-controls tw-max-w-xl">
+      <div class="tw-font-medium tw-text-extended-grey-1">
+        Selecciona los canales de pago por los cuales tus clientes podrán
+        pagarte.
+      </div>
+      <div class="form-elm">
+        <cs-label-control
+          [onlyControl]="true"
+          class="tw-w-full"
+          formControlName="useAppWeb"
+        >
+          <p-checkbox
+            class="tw-mr-1"
+            [binary]="true"
+            formControlName="useAppWeb"
+          >
+          </p-checkbox>
+          <ng-container label-inline>
+            <cs-service-channel-chip amount="S/ 2.00">
+              <div class="tw-text-base">Canales Digitales</div>
+              <div class="sub">
+                Interbank APP y Banca por Internet
+              </div></cs-service-channel-chip
+            >
+          </ng-container>
+        </cs-label-control>
+      </div>
+      <div class="form-elm">
+        <cs-label-control
+          [onlyControl]="true"
+          class="tw-w-full"
+          formControlName="useAgent"
+        >
+          <p-checkbox
+            class="tw-mr-1"
+            [binary]="true"
+            formControlName="useAgent"
+          >
+          </p-checkbox>
+          <ng-container label-inline
+            ><cs-service-channel-chip amount="S/ 1.50">
+              <div class="tw-text-base">Agentes</div>
+              <div class="sub">Lima y provincia</div></cs-service-channel-chip
+            >
+          </ng-container>
+        </cs-label-control>
+      </div>
+      <div class="form-elm tw-pt-6">
+        <cs-message-alert class="" mode="info"
+          ><div class="tw-text-xs">
+            En el caso de canales digitales, se aplicará una comisión de S/2.00
+            por operación en tu cuenta. Para obtener más información, consulta
+            nuestros Términos y Condiciones.
+          </div></cs-message-alert
+        >
+      </div>
+      @if (disclaimerCommissionDollars) {
+        <div class="form-elm tw-pt-6">
+          <cs-message-alert class="" mode="info"
+            ><div class="tw-text-xs">
+              Para el caso de cuentas en dólares, se aplicará la comisión según
+              el tipo de cambio vigente.
+            </div></cs-message-alert
+          >
+        </div>
+      }
+    </div>
+  </div>
+  <div
+    class="tw-mt-10 tw-flex tw-gap-2"
+    [ngClass]="{
+      'tw-justify-between': showCancel,
+      'tw-justify-end': !showCancel,
+    }"
+  >
+    @if (showCancel) {
+      <button
+        pButton
+        pRipple
+        class="p-button-outlined tw-w-full md:tw-w-56"
+        type="button"
+        (click)="onCancel()"
+        label="Cancelar"
+      ></button>
+    }
+    <button
+      pButton
+      pRipple
+      class="tw-w-full md:tw-w-56"
+      type="submit"
+      label="Siguiente"
+    ></button>
+  </div>
+</form>

@@ -1,0 +1,117 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+import { environment } from '../../../environments/environment';
+import {
+  type AuthForm,
+  type RegisterForm,
+} from '../../features/auth/services/affiliation-forms.service';
+import { type IServiceRemoteModel, type ServicePostData } from '../models';
+import { type IAccountStateDetails } from '../models/company';
+import { type CompanyChangePasswordForm } from '../models/company-forms';
+import { type IDataEnterpriseModel } from '../models/data-enterprise.model';
+import { type FingerPrintData } from './digital-data.service';
+
+export interface ICompanyResult {
+  success: boolean;
+  code?: number;
+  message?: string;
+  details?: string;
+  id?: number;
+  tradeName?: string;
+  fullName?: string;
+}
+
+export interface CompanyAccounts {
+  currency: string;
+  number: string;
+  id: string;
+}
+
+type SaveCompanyData = Partial<RegisterForm> &
+  Partial<AuthForm> & { entryName: string };
+type UpdateCompanyData = Partial<RegisterForm> & Partial<AuthForm>;
+type CompanyServicesData = ServicePostData & { sdk: FingerPrintData };
+
+@Injectable()
+export class CompanyService {
+  constructor(private readonly http: HttpClient) {}
+
+  public validateCompany(data: Partial<RegisterForm>) {
+    return this.http.post<ICompanyResult>(
+      `${environment.END_POINT}/company/validate`,
+      data,
+    );
+  }
+
+  public saveCompany(data: SaveCompanyData) {
+    return this.http.post<ICompanyResult>(
+      `${environment.END_POINT}/company`,
+      data,
+    );
+  }
+
+  updateCompany(data: UpdateCompanyData) {
+    const url = `${environment.END_POINT}/company`;
+    return this.http.put<ICompanyResult>(url, data);
+  }
+
+  updateCompanyPassword(data: CompanyChangePasswordForm) {
+    const url = `${environment.END_POINT}/company/UpdatePasswordAffiliate`;
+    return this.http.put<ICompanyResult>(url, data);
+  }
+
+  saveServices(data: CompanyServicesData) {
+    return this.http.post<ICompanyResult>(
+      `${environment.END_POINT}/company/service`,
+      data,
+    );
+  }
+
+  getCompanyAccountsById(idCompany: number) {
+    return this.http.get<CompanyAccounts[]>(
+      `${environment.END_POINT}/company/${idCompany}/cards`,
+    );
+  }
+
+  getCompanyAccounts() {
+    return this.http.get<CompanyAccounts[]>(
+      `${environment.END_POINT}/company/cards`,
+    );
+  }
+
+  sendUpdateCompanyData(data) {
+    return this.http.post<boolean>(
+      `${environment.END_POINT}/company/gtp/client/update`,
+      data,
+    );
+  }
+
+  getCompanyData() {
+    const url = `${environment.END_POINT}/company/getafiliate`;
+    return this.http.get<IDataEnterpriseModel>(url);
+  }
+
+  getAccountStateDetails(idCompany: string) {
+    return this.http.get<IAccountStateDetails>(
+      `${environment.END_POINT}/company/GTP/accountStateDetails/${idCompany}`,
+    );
+  }
+
+  getAccountStateDetailsList() {
+    return this.http.get(
+      `${environment.END_POINT}/company/GTP/AccountStateDetailsList`,
+      {
+        responseType: 'blob',
+      },
+    );
+  }
+
+  getCompanyServices(incDeactivates: boolean = false) {
+    return this.http.get<IServiceRemoteModel[]>(
+      `${
+        environment.END_POINT
+      }/company/service?incDeactivates=${incDeactivates.toString()}`,
+    );
+  }
+}

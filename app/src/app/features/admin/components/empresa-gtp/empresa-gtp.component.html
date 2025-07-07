@@ -1,0 +1,139 @@
+<form
+  [formGroup]="formGroup"
+  novalidate
+  (submit)="onSubmitEmpresa()"
+  class="form"
+>
+  <div class="form-row">
+    <cs-label-control class="tw-w-full" formControlName="ruc"
+      >RUC de la empresa<input
+        type="text"
+        class="tw-w-full"
+        pInputText
+        pKeyFilter="pint"
+        maxlength="11"
+        formControlName="ruc"
+      />
+    </cs-label-control>
+  </div>
+  <div class="form-row tw-flex tw-gap-4">
+    <cs-label-control class="tw-w-full" formControlName="newName">
+      Nuevo Nombre de la empresa
+      <textarea
+        control
+        cols="30"
+        rows="1"
+        class="tw-w-full"
+        pInputTextarea
+        [autoResize]="true"
+        formControlName="newName"
+        placeholder="Nuevo Nombre de la empresa"
+      ></textarea>
+    </cs-label-control>
+    @if (
+      enterprise.newNameGTPStatus === statusCodes.NEW ||
+      enterprise.newNameGTPStatus === statusCodes.EDITED
+    ) {
+      <div class="form-group tw-w-40 tw-shrink-0 tw-pr-2">
+        <div class="form-elm tw-flex tw-items-center tw-gap-4 tw-pt-10">
+          <cs-label-control [onlyControl]="true" class="tw-w-full">
+            <p-radioButton
+              name="NewNameApproved"
+              value="S"
+              formControlName="NewNameApproved"
+            ></p-radioButton>
+            <ng-container label-inline>
+              <div class="tw-font-light">
+                <div class="tw-text-base">SI</div>
+              </div>
+            </ng-container>
+          </cs-label-control>
+          <cs-label-control [onlyControl]="true" class="tw-w-full">
+            <p-radioButton
+              name="NewNameApproved"
+              value="N"
+              formControlName="NewNameApproved"
+            ></p-radioButton>
+            <ng-container label-inline>
+              <div class="tw-font-light">
+                <div class="tw-text-base">NO</div>
+              </div>
+            </ng-container>
+          </cs-label-control>
+        </div>
+        @if (
+          formGroup.get('NewNameApproved').invalid &&
+          formGroup.get('NewNameApproved').hasError('required') &&
+          (enterprise.newNameGTPStatus === statusCodes.NEW ||
+            enterprise.newNameGTPStatus === statusCodes.EDITED)
+        ) {
+          <div class="tw-whitespace-nowrap tw-text-xxs tw-text-error">
+            Debe seleccionar una opción
+          </div>
+        }
+      </div>
+    }
+  </div>
+  <div class="form-row">
+    <cs-label-control class="tw-w-full" formControlName="entry"
+      >Rubro<input
+        control
+        type="text"
+        class="tw-w-full"
+        pInputText
+        formControlName="entry"
+      />
+    </cs-label-control>
+  </div>
+  <div class="form-row">
+    <cs-label-control class="tw-w-full" formControlName="email"
+      >E-mail<input
+        control
+        type="email"
+        class="tw-w-full"
+        autocomplete="off"
+        pInputText
+        minlength="10"
+        maxlength="50"
+        formControlName="email"
+      />
+    </cs-label-control>
+  </div>
+  <div class="form-row">
+    <cs-label-control class="tw-w-full" formControlName="movilNumber"
+      >Teléfono o celular<input
+        control
+        type="text"
+        class="tw-w-full"
+        pInputText
+        formControlName="movilNumber"
+      />
+    </cs-label-control>
+  </div>
+  <div class="form-row">
+    <cs-label-control class="tw-w-full" formControlName="movilOperator"
+      >Operador<input
+        control
+        type="text"
+        class="tw-w-full"
+        pInputText
+        formControlName="movilOperator"
+      />
+    </cs-label-control>
+  </div>
+  @if (
+    enterprise.newNameGTPStatus === statusCodes.NEW ||
+    enterprise.newNameGTPStatus === statusCodes.APPROVED ||
+    enterprise.newNameGTPStatus === statusCodes.EDITED
+  ) {
+    <div class="tw-mt-4 tw-pb-4 tw-text-center">
+      <button
+        pButton
+        pRipple
+        type="submit"
+        label="Guardar"
+        class="tw-w-36"
+      ></button>
+    </div>
+  }
+</form>

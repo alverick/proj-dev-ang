@@ -1,0 +1,167 @@
+<div class="tw-mx-auto tw-max-w-6xl">
+  <div class="tw-gap-2 lg:tw-grid lg:tw-grid-cols-12">
+    <div class="tw-col-span-5">
+      <div class="texto-azul mb-4">Lista de correo</div>
+      <div class="widget lista tw-pt-5">
+        <div class="content box-shadow">
+          <section class="lista">
+            <br />
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="c1">
+                      <div class="text">Correo</div>
+                    </th>
+                    <th class="c2" style="text-align: right">
+                      <div class="text">Editar</div>
+                    </th>
+                  </tr>
+                </thead>
+              </table>
+              <div class="ps-body tw-overflow-auto">
+                <table class="table">
+                  <thead class="tw-hidden">
+                    <tr>
+                      <th class="c1" scope="col">Correo</th>
+                      <th class="c2" scope="col">Editar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (cor of correos; track cor; let i = $index) {
+                      <tr
+                        class="border-item"
+                        [class.actual]="indiceActual === i"
+                      >
+                        <td class="tw-w-full">{{ cor.correo }}</td>
+                        <td class="tw-flex tw-gap-2">
+                          <button
+                            pButton
+                            pRipple
+                            type="button"
+                            class="p-button p-button-outlined p-button-icon-only"
+                            icon="pi pi-pen-to-square"
+                            (click)="onEditar(cor, i)"
+                            [disabled]="Formulario"
+                          ></button>
+                          <button
+                            pButton
+                            pRipple
+                            type="button"
+                            class="p-button p-button-outlined p-button-icon-only"
+                            icon="pi pi-trash"
+                            (click)="onEliminar(i)"
+                            [disabled]="Formulario"
+                          ></button>
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br />
+          </section>
+        </div>
+        <div
+          class="tw-mt-6 tw-flex tw-flex-col tw-items-center tw-gap-4 tw-text-center"
+        >
+          <button
+            pButton
+            pRipple
+            type="button"
+            [disabled]="Formulario"
+            (click)="onAgregar()"
+            icon="pi pi-plus-circle"
+            class="p-button-text tw-mx-auto lg:tw-w-56"
+            label="Agregar otro mail"
+          ></button>
+          @if (showButton) {
+            <button
+              pButton
+              pRipple
+              type="button"
+              [disabled]="Formulario"
+              (click)="onGrabarCorreo()"
+              class="p-button tw-hidden tw-w-56 lg:tw-block"
+              [class.btn-disabled]="Formulario"
+              icon="pi pi-send"
+              label="FINALIZAR"
+            ></button>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="tw-col-span-5 tw-col-start-8 tw-pb-6 tw-pt-10">
+      @if (Formulario) {
+        <div class="box-shadow tw-p-4">
+          <div
+            class="tw-relative tw-mb-2 tw-text-center tw-text-lg tw-text-secondary-blue-1"
+          >
+            {{ titleCorreo }}
+            <button
+              (click)="Formulario = false; indiceActual = -1"
+              class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-1 tw-text-xxs tw-text-extended-grey-2"
+            >
+              <img
+                class="tw-inline"
+                src="/assets/images/cerrar.svg"
+                alt="Cerrar"
+              />
+              Cerrar
+            </button>
+          </div>
+          <form [formGroup]="frmCorreoGtp" novalidate (submit)="onGrabar()">
+            <div class="form-group">
+              <cs-label-control
+                class="tw-w-full"
+                formControlName="correo"
+                [errorMessages]="errorsForm.correo"
+              >
+                <ng-container label>E-mail </ng-container>
+                <input
+                  type="text"
+                  class="tw-w-full"
+                  pInputText
+                  minlength="10"
+                  maxlength="50"
+                  autocomplete="off"
+                  formControlName="correo"
+                />
+              </cs-label-control>
+            </div>
+            <div class="bnt-cont-reg">
+              <button
+                pButton
+                pRipple
+                type="submit"
+                class="p-button"
+                [label]="titlebtn"
+              ></button>
+            </div>
+          </form>
+        </div>
+      }
+    </div>
+    <div class="tw-col-span-5">
+      <div class="widget lista tw-py-5">
+        <div class="tw-text-center lg:tw-hidden">
+          @if (showButton) {
+            <button
+              pButton
+              pRipple
+              type="button"
+              [disabled]="Formulario"
+              (click)="onGrabarCorreo()"
+              class="p-button lg:tw-w-56"
+              [class.btn-disabled]="Formulario"
+              icon="pi pi-send"
+              label="FINALIZAR"
+            ></button>
+          }
+        </div>
+        <br /><br />
+      </div>
+    </div>
+  </div>
+</div>

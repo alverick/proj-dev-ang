@@ -1,0 +1,81 @@
+<cs-layout-form>
+  <div
+    class="ibk-box-rounded tw-min-w-[320px] tw-bg-white tw-p-8 sm:tw-min-w-[450px]"
+  >
+    @if (!formulario) {
+      <div class="texto-azul mb-4">¡Listo!</div>
+      <div class="texto-azul-text pb-4">
+        Hemos enviado las instrucciones a tu <br />correo electrónico
+      </div>
+      <div class="reenviar mb-4">
+        Reenviar correo en <small>3:00 minutos</small>
+      </div>
+      <div class="d-flex justify-content-center">
+        <button
+          type="button"
+          (click)="Reenviar()"
+          class="mano focus-elements btn-eureca-green"
+        >
+          Reenviar correo
+        </button>
+      </div>
+    }
+    @if (formulario) {
+      <div
+        class="tw-mb-6 tw-text-center tw-text-2xl tw-font-medium tw-text-secondary-blue-1 lg:tw-text-3xl"
+      >
+        Recuperar contraseña
+      </div>
+      <div class="tw-mb-6 tw-text-center tw-text-secondary-blue-1">
+        ¡No te preocupes! <br />
+        Todos nos olvidamos de algo alguna vez.
+      </div>
+      <form [formGroup]="recupera" (ngSubmit)="SubmitRecupera()">
+        <div class="form-elm">
+          <cs-label-control
+            class="tw-w-full"
+            formControlName="ruc"
+            [errorMessages]="errorMessages.ruc"
+            ><i class="pi pi-user tw-text-primary-green-1"></i> RUC
+            <input
+              type="text"
+              class="tw-w-full"
+              pInputText
+              pKeyFilter="pint"
+              maxlength="11"
+              formControlName="ruc"
+              autocomplete="off"
+            />
+          </cs-label-control>
+        </div>
+        <div class="form-elm">
+          <cs-label-control
+            class="tw-w-full"
+            formControlName="email"
+            [errorMessages]="errorMessages.email"
+            ><i class="pi pi-envelope tw-text-primary-green-1"></i> Ingresa tu
+            correo electrónico
+            <input
+              type="text"
+              class="tw-w-full"
+              pInputText
+              minlength="10"
+              maxlength="50"
+              formControlName="email"
+              autocomplete="off"
+            />
+          </cs-label-control>
+        </div>
+        <div class="tw-mt-6">
+          <button
+            pButton
+            pRipple
+            type="submit"
+            class="p-button-sm tw-mx-auto tw-mb-6 tw-flex tw-w-72 tw-justify-center"
+            label="Enviar"
+          ></button>
+        </div>
+      </form>
+    }
+  </div>
+</cs-layout-form>
