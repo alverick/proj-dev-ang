@@ -47,9 +47,11 @@ export class NewRelicProviderService implements ProviderService {
     };
     window['NREUM'] = nreum;
 
-    await import('@newrelic/browser-agent').then((newrelic1) => {
-      console.log(newrelic1, new newrelic1['Agent'](window['NREUM']));
-    });
+    await import('@newrelic/browser-agent/loaders/browser-agent').then(
+      (newrelic1) => {
+        console.log(newrelic1, new newrelic1['Agent'](window['NREUM']));
+      },
+    );
     console.log('loaded', window.newrelic);
   }
 

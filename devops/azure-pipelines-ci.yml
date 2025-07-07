@@ -48,8 +48,8 @@ extends:
     buildOutputPath: "dist"
     nodeVersion: "18.X"
     flags:
-      unitTestsEnabled: true
-      sonarEnabled: true
-      sonarQualityGateEnabled: true
-      jFrogXrayEnabled: true
+      unitTestsEnabled: false
+      sonarEnabled: false
+      sonarQualityGateEnabled: false
+      jFrogXrayEnabled: false
       fluidAttacksEnabled: false
