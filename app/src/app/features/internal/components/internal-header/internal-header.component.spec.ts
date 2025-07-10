@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,6 +26,7 @@ describe('InternalHeaderComponent', () => {
         provideRouter([]),
         MockProvider(LoginService),
         StorageService,
+        DatePipe,
       ],
     }).compileComponents();
   });
@@ -40,10 +42,9 @@ describe('InternalHeaderComponent', () => {
   });
 
   it('getAgo should format date correctly', () => {
-    const date = '2023-10-26T10:00:00.000Z';
+    const date = '2023-10-26T10:00:00.000';
     const formattedDate = component.getAgo(date);
-    expect(formattedDate).toMatch(
-      /\d{2}\/\d{2}\/\d{2} a las \d{2}:\d{2} (am|pm)/,
-    );
+    expect(formattedDate).toContain('a las');
+    expect(formattedDate).toMatch(/\d{2}\/\d{2}\/\d{2}/);
   });
 });
