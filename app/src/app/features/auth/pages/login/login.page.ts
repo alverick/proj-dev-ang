@@ -28,6 +28,7 @@ import { AFFILIATION_SUSPENDED } from '../../../../shared/constants/message-serv
 import { loginResultStatus } from '../../../../shared/constants/session';
 import { ModelFormGroup } from '../../../../shared/models/forms';
 import { LoginService } from '../../../../shared/services/login.service';
+import { RecaptchaProviderService } from '../../../../shared/services/recaptcha-provider.service';
 import { StorageService } from '../../../../shared/services/storage.service';
 import {
   type ActionEventProperties,
@@ -39,7 +40,6 @@ import { rucValidators } from '../../../../shared/validators/company-validators'
 import { appConfigFeature } from '../../../../store/reducers/app-config.reducer';
 import { authFullRoutingNames } from '../../auth-routing.names';
 import { LayoutFormComponent } from '../../components/layout-form/layout-form.component';
-import { RecaptchaProviderService } from '../../../../shared/services/recaptcha-provider.service';
 
 const userData = environment.credentials[0];
 
