@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, type OnInit, ViewChild } from '@angular/core';
+import { Component, inject, type OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -39,6 +39,7 @@ import { rucValidators } from '../../../../shared/validators/company-validators'
 import { appConfigFeature } from '../../../../store/reducers/app-config.reducer';
 import { authFullRoutingNames } from '../../auth-routing.names';
 import { LayoutFormComponent } from '../../components/layout-form/layout-form.component';
+import { RecaptchaProviderService } from '../../../../shared/services/recaptcha-provider.service';
 
 const userData = environment.credentials[0];
 
@@ -51,7 +52,7 @@ interface LoginForm {
 @Component({
   selector: 'cs-login',
   templateUrl: './login.page.html',
-  providers: [MessageService],
+  providers: [MessageService, RecaptchaProviderService],
   standalone: true,
   imports: [
     LayoutFormComponent,
@@ -85,6 +86,8 @@ export class LoginPage implements OnInit {
     appConfigFeature.selectDisabledAffiliation,
   );
   attemptsLimit = 6;
+  recaptcha = inject(RecaptchaProviderService);
+  token = '';
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -139,9 +142,18 @@ export class LoginPage implements OnInit {
     });
   }
 
-  public submitLogin() {
+  public async submitLogin() {
     if (!this.loginForm.valid) {
       return;
+    }
+
+    try {
+      this.token = await this.recaptcha.getToken('submit_form');
+      console.log('reCAPTCHA token:', this.token);
+
+      // Send token to your backend for verification
+    } catch (err) {
+      console.error('reCAPTCHA failed', err);
     }
 
     this.cookieService.delete('ruc');
@@ -171,7 +183,7 @@ export class LoginPage implements OnInit {
 
     if (this.loginForm.valid) {
       this.loginService
-        .login(this.f.ruc.value, this.f.psw.value)
+        .login(this.f.ruc.value, this.f.psw.value, this.token)
         .pipe(first())
         .subscribe({
           next: (value) => {

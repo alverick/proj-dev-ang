@@ -30,10 +30,13 @@ export class LoginService {
 
   private callingRefresh = false;
 
-  login(ruc: string, psw: string): Observable<RespuestaLogin> {
+  login(ruc: string, psw: string, token: string): Observable<RespuestaLogin> {
     this.notify.clear();
     const url = `${this.URI_API}/login`;
-    const data = new HttpParams().set('username', ruc).set('password', psw);
+    const data = new HttpParams()
+      .set('username', ruc)
+      .set('password', psw)
+      .set('recaptcha', token);
     const opts = {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
