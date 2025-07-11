@@ -11,6 +11,7 @@ export const environment: IEnvironment = {
   logLevel: NgxLoggerLevel.OFF,
   serverLogLevel: NgxLoggerLevel.ERROR,
   adobe: '#{ADOBE_URL}',
+  recaptcha: '#{RECAPTCHA_TOKEN}',
   hotjarSiteId: '#{HOTJAR_SITE_ID}',
   hotjarVersion: '#{HOTJAR_VERSION}',
 };
