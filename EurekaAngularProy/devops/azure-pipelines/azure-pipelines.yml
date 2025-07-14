@@ -23,19 +23,30 @@ parameters:
     type: boolean
 
 variables:
-  vmImageName: 'ubuntu-latest'
+  - group: sonar
 
-  ${{ if or(contains(variables['Build.SourceBranchName'], 'dev'),eq(parameters.destiny,'dev')) }}:
-    mode: 'dev'
-    appServiceConnection: 'gr2c003eurcdev01'
-    groupName: 'RG_EU2_C003_EURC_DEV_01'
-    appServiceName: 'wappeu2c003eurcdev01'
+  - name: vmImageName
+    value: 'ubuntu-latest'
+
+  ${{ if or(contains(variables['Build.SourceBranchName'], 'dev'), eq(parameters.destiny, 'dev')) }}:    
+    - name: mode
+      value: 'dev'
+    - name: appServiceConnection
+      value: 'gr2c003eurcdev01'
+    - name: groupName
+      value: 'RG_EU2_C003_EURC_DEV_01'
+    - name: appServiceName
+      value: 'wappeu2c003eurcdev01'
 
   ${{ elseif or(contains(variables['Build.SourceBranchName'], 'uat'),eq(parameters.destiny,'uat')) }}:
-    mode: 'uat'
-    appServiceConnection: 'RG_EU2_C003_EURC_UAT_01'
-    groupName: 'rg_eu2_c003_eurc_uat_01'
-    appServiceName: 'wappeu2c003eurcuat01'
+    - name: mode
+      value: 'uat'
+    - name: appServiceConnection
+      value: 'RG_EU2_C003_EURC_UAT_01'
+    - name: groupName
+      value: 'rg_eu2_c003_eurc_uat_01'
+    - name: appServiceName
+      value: 'wappeu2c003eurcuat01'    
 
 stages:
   - stage: Build
