@@ -13,7 +13,7 @@ export interface AppConfigState {
 
 export const initialState: AppConfigState = {
   loaded: false,
-  disabledAffiliation: false,
+  disabledAffiliation: true,
   showedCommission: false,
   showLoader: true,
 };
