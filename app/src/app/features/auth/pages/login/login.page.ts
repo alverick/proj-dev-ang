@@ -163,10 +163,8 @@ export class LoginPage implements OnInit {
     const ruc = this.f.ruc.value;
     const password = this.f.psw.value;
 
-    const actionParams: ActionEventProperties = this.buildTrackingParams(
-      ruc,
-      this.passwordControl.unmasked,
-    );
+    const actionParams: Partial<ActionEventProperties> =
+      this.buildTrackingParams(ruc, this.passwordControl.unmasked);
     this.tracking.setRuc(ruc);
 
     this.loginService
