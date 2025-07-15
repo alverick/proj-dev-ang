@@ -7,4 +7,5 @@ export interface RespuestaLogin {
   rfs?: string;
   paramNum?: number;
   prfl?: number;
+  id?: string;
 }

@@ -42,6 +42,7 @@ describe('AppComponent', () => {
         MockProvider(AdobeLaunchProviderService),
         MockProvider(HotjarProviderService),
         MockProvider(NewRelicProviderService),
+        MockProvider(HotjarProviderService),
         MockProvider(TrackingService),
         { provide: Router, useValue: { events: routerEvents$.asObservable() } },
         { provide: Store, useValue: storeMock },
