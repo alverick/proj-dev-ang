@@ -51,8 +51,8 @@ stages:
         displayName: Build
         pool:
           vmImage: $(vmImageName)
-        variables:
-          - group: sonar
+#        variables:
+#          - group: sonar
         steps:
           - task: NodeTool@0
             displayName: 'Install Node.js'
