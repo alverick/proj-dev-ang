@@ -16,7 +16,7 @@ parameters:
     type: boolean
 
 variables:
-  vmImageName: 'ubuntu-20.04'
+  vmImageName: 'ubuntu-latest'
   mode: 'production'
   appServiceConnection: 'SC_RG_EU2_C003_EURC_PRD_01'
   groupName: 'rg_eu2_c003_eurc_prd_01'
