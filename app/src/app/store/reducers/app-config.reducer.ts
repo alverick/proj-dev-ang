@@ -4,14 +4,14 @@ import { AppConfigActions } from '../actions/app-config.actions';
 
 export const appConfigFeatureKey = 'appConfig';
 
-export interface State {
+export interface AppConfigState {
   loaded: boolean;
   disabledAffiliation: boolean;
   showedCommission: boolean;
   showLoader: boolean;
 }
 
-export const initialState: State = {
+export const initialState: AppConfigState = {
   loaded: false,
   disabledAffiliation: true,
   showedCommission: false,
@@ -20,17 +20,26 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(AppConfigActions.loadConfig, (state): State => state),
-  on(AppConfigActions.resetConfig, (): State => initialState),
-  on(AppConfigActions.loadConfigSuccess, (state, action): State => state),
-  on(AppConfigActions.loadConfigFailure, (state, action): State => state),
+  on(AppConfigActions.loadConfig, (state): AppConfigState => state),
+  on(AppConfigActions.resetConfig, (): AppConfigState => initialState),
+  on(
+    AppConfigActions.loadConfigSuccess,
+    (state, action): AppConfigState => state,
+  ),
+  on(
+    AppConfigActions.loadConfigFailure,
+    (state, action): AppConfigState => state,
+  ),
   on(
     AppConfigActions.setModalCommissions,
-    (state, action): State => ({ ...state, showedCommission: action.showed }),
+    (state, action): AppConfigState => ({
+      ...state,
+      showedCommission: action.showed,
+    }),
   ),
   on(
     AppConfigActions.setLoader,
-    (state, action): State => ({ ...state, showLoader: action.show }),
+    (state, action): AppConfigState => ({ ...state, showLoader: action.show }),
   ),
 );
 

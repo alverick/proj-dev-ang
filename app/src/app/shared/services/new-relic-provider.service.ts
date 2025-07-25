@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AgentOptions } from '@newrelic/browser-agent/loaders/agent';
 import { type BrowserAgent } from '@newrelic/browser-agent/loaders/browser-agent';
 import dot from 'dot-object';
 import { hasPath, path, pathOr } from 'ramda';
@@ -15,6 +16,7 @@ import {
 
 declare const window: {
   newrelic: BrowserAgent;
+  NREUM: AgentOptions;
 } & Window;
 
 @Injectable()
@@ -45,14 +47,11 @@ export class NewRelicProviderService implements ProviderService {
         sa: 1,
       },
     };
-    window['NREUM'] = nreum;
+    window['NREUM'] = nreum as AgentOptions;
 
-    await import('@newrelic/browser-agent/loaders/browser-agent').then(
-      (newrelic1) => {
-        console.log(newrelic1, new newrelic1['Agent'](window['NREUM']));
-      },
-    );
-    console.log('loaded', window.newrelic);
+    await import('@newrelic/browser-agent').then((newrelic1) => {
+      new newrelic1['Agent'](window['NREUM']);
+    });
   }
 
   trackPage(payload: Partial<TrackEventProperties>) {

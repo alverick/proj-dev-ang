@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 
+import { companyDocumentStorageName } from '../constants/company';
 import { type Session } from '../models/session.model';
 import { type User } from '../models/user.model';
 
 @Injectable()
 export class StorageService {
-  private readonly localStorageService;
+  private readonly sessionStorageService: Storage;
   private currentSession: Session = null;
 
   constructor(private readonly cookieStorage: CookieService) {
-    this.localStorageService = window.sessionStorage;
+    this.sessionStorageService = window.sessionStorage;
     this.currentSession = this.loadSessionData();
   }
 
@@ -23,17 +24,17 @@ export class StorageService {
     ) {
       return;
     } else {
-      this.localStorageService.setItem('tk', session.token);
-      this.localStorageService.setItem('exp', session.expire);
-      this.localStorageService.setItem('rfs', session.refresh);
-      this.localStorageService.setItem('prfl', session.prfl);
+      this.sessionStorageService.setItem('tk', session.token);
+      this.sessionStorageService.setItem('exp', session.expire);
+      this.sessionStorageService.setItem('rfs', session.refresh);
+      this.sessionStorageService.setItem('prfl', String(session.prfl));
     }
   }
 
   loadSessionData(): Session {
-    if (this.cookieStorage.check('ruc')) {
+    if (this.cookieStorage.check(companyDocumentStorageName)) {
       return {
-        user: { ruc: this.cookieStorage.get('ruc') },
+        user: { ruc: this.cookieStorage.get(companyDocumentStorageName) },
         isAuthenticate: false,
         token: null,
       };
@@ -43,26 +44,26 @@ export class StorageService {
 
   getCurrentSession(): Session {
     if (this.currentSession === null || this.currentSession === undefined) {
-      const tk = this.localStorageService.getItem('tk');
+      const tk = this.sessionStorageService.getItem('tk');
       this.currentSession = {
         user: { ruc: '' },
         isAuthenticate: tk !== null && tk !== undefined && tk !== '',
         token: tk,
-        expire: this.localStorageService.getItem('exp'),
-        refresh: this.localStorageService.getItem('rfs'),
+        expire: this.sessionStorageService.getItem('exp'),
+        refresh: this.sessionStorageService.getItem('rfs'),
       };
     }
     return this.currentSession;
   }
 
   isValidSession(): boolean {
-    return this.isAuthenticated() && this.getPerfil().toString() === '0';
+    return this.isAuthenticated() && this.getPerfil() === '0';
   }
 
   removeCurrentSession(): void {
-    this.localStorageService.removeItem('tk');
-    this.localStorageService.removeItem('exp');
-    this.localStorageService.removeItem('rfs');
+    this.sessionStorageService.removeItem('tk');
+    this.sessionStorageService.removeItem('exp');
+    this.sessionStorageService.removeItem('rfs');
     this.currentSession = null;
   }
 
@@ -75,20 +76,7 @@ export class StorageService {
     return this.currentSession?.isAuthenticate;
   }
 
-  getCurrentToken(): string {
-    const session = this.getCurrentSession();
-    return session?.token ?? null;
-  }
-
-  setIntentos(intentos: number): void {
-    this.localStorageService.setItem('intento', intentos);
-  }
-
-  getIntentos(): number {
-    return this.localStorageService.getItem('intento');
-  }
-
-  getPerfil(): number {
-    return this.localStorageService.getItem('prfl');
+  getPerfil() {
+    return this.sessionStorageService.getItem('prfl');
   }
 }
