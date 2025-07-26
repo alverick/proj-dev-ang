@@ -94,8 +94,8 @@ export type IEnvironment = {
    * @example "adobe-client-id-12345"
    */
   adobe: string;
-  hotjarSiteId: number;
-  hotjarVersion: number;
+  hotjarSiteId: string;
+  hotjarVersion: string;
 };
 
 export const environmentDefault: IEnvironment = {
