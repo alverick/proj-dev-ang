@@ -46,7 +46,7 @@ stages:
           - task: Npm@1
             displayName: 'Install npm'
             inputs:
-              workingDir: EurekaAngularProy
+              workingDir: app
               verbose: false
 
           - ${{ if eq(parameters.runSonarTask, true) }}:
@@ -56,7 +56,7 @@ stages:
                   NODE_OPTIONS: --max_old_space_size=16384
                 inputs:
                   command: custom
-                  workingDir: EurekaAngularProy
+                  workingDir: app
                   verbose: false
                   customCommand: 'run test --coverage'
 
@@ -72,11 +72,11 @@ stages:
                   cliSources: '.'
                   extraProperties: |
                     sonar.sourceEncoding=UTF-8
-                    sonar.sources=$(System.DefaultWorkingDirectory)/EurekaAngularProy/src
+                    sonar.sources=$(System.DefaultWorkingDirectory)/app/src
                     sonar.exclusions = */node_modules/, */src/assets/*, */src/environments/*, */src/jest.config.ts, */src/main.ts, */src/assets/scripts/*
-                    sonar.tests=$(System.DefaultWorkingDirectory)/EurekaAngularProy/src
+                    sonar.tests=$(System.DefaultWorkingDirectory)/app/src
                     sonar.test.inclusions=**/*.spec.ts
-                    sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/EurekaAngularProy/coverage/lcov.info
+                    sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/app/coverage/lcov.info
                     sonar.c.file.suffixes=-
                     sonar.cpp.file.suffixes=-
                     sonar.objc.file.suffixes=-
@@ -113,7 +113,7 @@ stages:
             displayName: 'Run build '
             inputs:
               command: custom
-              workingDir: EurekaAngularProy
+              workingDir: app
               verbose: false
               customCommand: 'run build -- --configuration ${{variables.mode}}'
 
@@ -123,17 +123,17 @@ stages:
               echo Move Directory Deploy
               cp -a dist/EurekaAngularProy/. Deploy/ClientApp/dist/
               ls Deploy/ClientApp/dist/
-            workingDirectory: EurekaAngularProy
+            workingDirectory: app
             displayName: 'Create directory'
 
-          - upload: EurekaAngularProy/dist/EurekaAngularProy
+          - upload: app/dist/EurekaAngularProy
             displayName: 'Publish dist'
             artifact: web-cobrosimple
 
           - task: ArchiveFiles@2
             displayName: 'Archive File'
             inputs:
-              rootFolderOrFile: EurekaAngularProy/Deploy
+              rootFolderOrFile: app/Deploy
               includeRootFolder: false
               archiveFile: '$(Build.ArtifactStagingDirectory)/ClientApp.zip'
 
