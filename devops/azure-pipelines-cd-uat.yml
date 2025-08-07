@@ -42,5 +42,5 @@ extends:
     buildOutputPath: "dist"
     azAppServiceSubscription: "RG_EU2_C003_EURC_UAT_01"
     azAppServiceAppType: "webAppLinux"
-    azAppServiceAppName: "aappeu2c011dsouat01"
+    azAppServiceAppName: "wappeu2c003eurcuat01"
     azAppServiceRuntimeStack: "NODE:18-lts"
