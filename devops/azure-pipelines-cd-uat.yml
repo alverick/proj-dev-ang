@@ -43,4 +43,4 @@ extends:
     azAppServiceSubscription: "RG_EU2_C003_EURC_UAT_01"
     azAppServiceAppType: "webAppLinux"
     azAppServiceAppName: "wappeu2c003eurcuat01"
-    azAppServiceRuntimeStack: "NODE:18-lts"
+    azAppServiceRuntimeStack: "NODE|18-lts"
