@@ -17,7 +17,6 @@ import {
   type ValidatorFn,
   Validators,
 } from '@angular/forms';
-import moment from 'moment';
 import { PrimeTemplate } from 'primeng/api';
 import { ButtonDirective } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -34,6 +33,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { type DateList } from '../../models/dateList';
 import { type StatesGtp } from '../../models/states-gtp';
 import { type WayPay } from '../../models/way-pay';
+import { debtMaxDate, debtMinDate } from '../../validators/debt-validators';
 import { LabelControlComponent } from '../label-control/label-control.component';
 
 const errorMessageDates: Record<string, string> = {
@@ -84,10 +84,10 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
   @Output() sendForm = new EventEmitter<object>();
   @Output() resetForm = new EventEmitter();
 
-  minDate = new Date(2000, 0, 1);
-  maxDate = new Date(2050, 0, 1);
-  minDateTo = new Date(2000, 0, 1);
-  maxDateFrom = new Date(2050, 0, 1);
+  minDate = debtMinDate;
+  maxDate = debtMaxDate;
+  minDateTo = debtMinDate;
+  maxDateFrom = debtMaxDate;
   formSubmitted = false;
   formFilled = false;
   errorDateFrom = '';
@@ -174,7 +174,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
         controlOrig: AbstractControl,
         isLower = false,
       ) =>
-      (value: moment.Moment) => {
+      (value: Date) => {
         if (all(isNotNil, [value, control.value]) && isObj(value)) {
           if (
             (!isLower && control.value < value) ||

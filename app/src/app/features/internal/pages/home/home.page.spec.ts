@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgZone } from '@angular/core';
 import {
   type ComponentFixture,
@@ -270,7 +271,7 @@ describe('HomePage', () => {
     storeMock = { dispatch: jest.fn() };
 
     await TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([]), HomePage],
+      imports: [RouterModule.forRoot([]), HomePage, HttpClientModule],
       providers: [
         { provide: ShepherdService, useValue: mockShepherdService },
         { provide: HomeService, useValue: mockHomeService },

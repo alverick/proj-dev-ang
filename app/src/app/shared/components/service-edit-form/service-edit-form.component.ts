@@ -30,6 +30,7 @@ import { InputWithoutSpacesDirective } from '../../directives/input-without-spac
 import { IServiceRemoteModelForms } from '../../models';
 import { IErrorMessages } from '../../models/forms';
 import { ServicesFormsService } from '../../services';
+import { namePattern } from '../../validators/service-validators';
 import { LabelControlComponent } from '../label-control/label-control.component';
 import { ServiceChannelChipComponent } from '../service-channel-chip/service-channel-chip.component';
 import { ServiceDebtFormComponent } from '../service-debt-form/service-debt-form.component';
@@ -71,6 +72,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   submittedForm = false;
   formLoaded = false;
   showDebtFields = false;
+  protected readonly namePattern = namePattern;
   constructor(private readonly servicesForms: ServicesFormsService) {}
 
   ngOnInit() {

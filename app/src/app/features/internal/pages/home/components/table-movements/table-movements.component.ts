@@ -17,6 +17,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { KeyFilterModule } from 'primeng/keyfilter';
 import { Ripple } from 'primeng/ripple';
 import { Table, TableModule } from 'primeng/table';
 import { clone, forEachObjIndexed, has, isEmpty, pathEq } from 'ramda';
@@ -35,6 +36,12 @@ import {
   AdobeEvent,
   TrackingService,
 } from '../../../../../../shared/services/tracking.service';
+import {
+  debtMaxAmount,
+  debtMaxDate,
+  debtMinDate,
+  validNameRegex,
+} from '../../../../../../shared/validators/debt-validators';
 import { companyFeature } from '../../../../../../store/reducers/company.reducer';
 import { SelectAllTableService } from '../../../../services';
 
@@ -87,6 +94,7 @@ type TableCol = {
     GetLimitCurrencyPipe,
     NotEmptyPipe,
     ValidateLimitCurrencyPipe,
+    KeyFilterModule,
   ],
 })
 export class TableMovementsComponent implements OnInit, OnChanges {
@@ -149,6 +157,10 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   dataSet = {};
   selectedAll = false;
   @ViewChild('table') table: Table;
+  public minDate = debtMinDate;
+  public maxDate = debtMaxDate;
+  protected readonly validNameRegex = validNameRegex;
+  protected readonly debtMaxAmount = debtMaxAmount;
 
   constructor(
     private readonly selectAllTable: SelectAllTableService,
@@ -404,12 +416,19 @@ export class TableMovementsComponent implements OnInit, OnChanges {
 
     for (const field of fields) {
       if (
+        field.checkEditableField === 'canEditFirstName' &&
+        data.firstName.length < 3
+      ) {
+        return false;
+      }
+      if (
         field.checkEditableField === 'canEditAmount' &&
         this.useAmountLimits &&
         data.amount > this.getLimit(data.currency)
       ) {
         return false;
       }
+
       if (isNilOrEmpty(data[field.field])) {
         return false;
       }

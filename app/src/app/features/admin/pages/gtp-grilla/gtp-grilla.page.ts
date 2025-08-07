@@ -28,6 +28,7 @@ import { adminFullRoutingNames } from '../../admin-routing.names';
   templateUrl: './gtp-grilla.page.html',
   styleUrls: ['./gtp-grilla.page.scss'],
   standalone: true,
+  providers: [GtpService, DatePipe],
   imports: [
     PaymentsFilterComponent,
     SplitButtonModule,

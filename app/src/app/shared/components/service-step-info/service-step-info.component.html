@@ -22,8 +22,9 @@
             class="tw-w-full"
             pInputText
             csInputWithoutSpaces
+            [csFilter]="namePattern"
+            autocomplete="off"
             minlength="3"
-            maxlength="80"
             formControlName="name"
           />
         </cs-label-control>

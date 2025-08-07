@@ -99,6 +99,10 @@
                         id="name"
                         name="name"
                         pInputText
+                        autocomplete="off"
+                        minlength="3"
+                        [pKeyFilter]="validNameRegex"
+                        [maxLength]="80"
                         type="text"
                         [(ngModel)]="rowData.firstName"
                         #name="ngModel"
@@ -108,6 +112,9 @@
                         <div class="tw-text-xxs tw-text-extended-watermelon-1">
                           @if (name.errors?.required) {
                             <div>Cliente es requerido.</div>
+                          }
+                          @if (name.errors?.minlength) {
+                            <div>El nombre debe tener mínimo 3 caracteres</div>
                           }
                         </div>
                       }
@@ -128,6 +135,8 @@
                         appendTo="body"
                         [showIcon]="true"
                         dateFormat="dd/mm/y"
+                        [minDate]="minDate"
+                        [maxDate]="maxDate"
                         required
                       ></p-calendar>
                     </ng-template>
@@ -145,6 +154,8 @@
                           [(ngModel)]="rowData.dueDate"
                           appendTo="body"
                           [showIcon]="true"
+                          [minDate]="minDate"
+                          [maxDate]="maxDate"
                           dateFormat="dd/mm/y"
                           required
                         ></p-calendar>
@@ -176,10 +187,14 @@
                           placeholder="1.00"
                           locale="es-PE"
                           #amount="ngModel"
-                          [prefix]="rowData.currency + ' '"
+                          maxlength="19"
+                          minlength="6"
+                          [prefix]="rowData.currency"
                           [(ngModel)]="rowData.amount"
                           [minFractionDigits]="2"
                           [maxFractionDigits]="2"
+                          [min]="0.01"
+                          [max]="debtMaxAmount"
                           [maxAmountLimits]="maxAmountLimits"
                           [currencySymbol]="rowData.currency"
                           [useLimits]="useAmountLimits"
@@ -424,7 +439,11 @@
           <div class="field">
             <input
               pInputText
+              autocomplete="off"
               id="vin"
+              minlength="3"
+              [pKeyFilter]="validNameRegex"
+              [maxLength]="80"
               [(ngModel)]="editRowData.firstName"
               required
             />
@@ -444,6 +463,8 @@
               dateFormat="dd/mm/y"
               [touchUI]="true"
               [showIcon]="true"
+              [minDate]="minDate"
+              [maxDate]="maxDate"
               appendTo="body"
               required
             ></p-calendar>
@@ -463,6 +484,8 @@
               dateFormat="dd/mm/y"
               [touchUI]="true"
               [showIcon]="true"
+              [minDate]="minDate"
+              [maxDate]="maxDate"
               appendTo="body"
               required
             ></p-calendar>
@@ -483,10 +506,14 @@
               csAmountMaxValidate
               placeholder="1.00"
               locale="es-PE"
-              [prefix]="editRowData.currency + ' '"
+              maxlength="19"
+              minlength="6"
+              [prefix]="editRowData.currency"
               [(ngModel)]="editRowData.amount"
               [minFractionDigits]="2"
               [maxFractionDigits]="2"
+              [min]="0.01"
+              [max]="debtMaxAmount"
               [maxAmountLimits]="maxAmountLimits"
               [currencySymbol]="editRowData.currency"
               [useLimits]="useAmountLimits"

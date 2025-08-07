@@ -27,6 +27,7 @@ import {
   IErrorMessages,
   type SimpleModelFormGroup,
 } from '../../../../shared/models/forms';
+import { namePattern } from '../../../../shared/validators/company-validators';
 
 @Component({
   selector: 'cs-company-update-form',
@@ -59,6 +60,7 @@ export class CompanyUpdateFormComponent implements OnInit, OnChanges {
   @Output() showPanel = new EventEmitter<any>();
   @ViewChild('formElm') htmlForm: NgForm;
   showDocumentFields = false;
+  protected readonly namePattern = namePattern;
 
   ngOnInit() {
     const { documentType, documentNumber } = this.form.getRawValue();

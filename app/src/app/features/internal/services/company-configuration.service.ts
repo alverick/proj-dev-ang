@@ -72,9 +72,6 @@ export class CompanyConfigurationService {
     };
     const enterprise = {
       ruc: this.companyData.ruc,
-      password: '',
-      newPassword: '',
-      confirmNewPassword: '',
       ...companyDataUpdated,
     };
 
@@ -143,23 +140,6 @@ export class CompanyConfigurationService {
   }
 
   savePassword() {
-    const { password, newPassword, confirmNewPassword } =
-      this.passwordForm.value;
-    const { email, movilNumber, movilOperator, name } = this.companyData;
-    const companyDataUpdated = {
-      newName: name,
-      email,
-      movilNumber,
-      movilOperator,
-    };
-    const enterprise = {
-      ruc: this.companyData.ruc,
-      password,
-      newPassword,
-      confirmNewPassword,
-      ...companyDataUpdated,
-    };
-
     const actionStep: Partial<ActionEventProperties> = {
       category: 'Empresa',
       action: 'Click',
@@ -168,11 +148,15 @@ export class CompanyConfigurationService {
       step: 'Not available',
       state: 'Envío exitoso',
     };
-    return this.companyService.updateCompany(enterprise).pipe(
-      tap((response) => {
-        this.handleSuccessResponse(response, actionStep);
-      }),
-    );
+    return this.companyService
+      .updateCompanyPassword(
+        this.passwordForm.value as CompanyChangePasswordForm,
+      )
+      .pipe(
+        tap((response) => {
+          this.handleSuccessResponse(response, actionStep);
+        }),
+      );
   }
 
   private handleSuccessResponse(

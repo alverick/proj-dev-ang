@@ -15,10 +15,9 @@ import {
 import { primeng } from './shared/lang/es';
 import {
   AdobeLaunchProviderService,
-  NewRelicProviderService,
 } from './shared/services';
-import { AppConfigActions } from './store/actions/app-config.actions';
 import { HotjarProviderService } from './shared/services/hotjar-provider.service';
+import { AppConfigActions } from './store/actions/app-config.actions';
 
 @Component({
   selector: 'cs-root',
@@ -38,12 +37,10 @@ export class AppComponent implements OnInit, OnDestroy {
   private readonly store = inject(Store);
   private readonly primengConfig = inject(PrimeNGConfig);
   private readonly adobeLaunch = inject(AdobeLaunchProviderService);
-  private readonly newrelic = inject(NewRelicProviderService);
   private readonly hotjar = inject(HotjarProviderService);
 
   constructor() {
     this.adobeLaunch.startTracking();
-    this.newrelic.startTracking();
     this.hotjar.startTracking();
   }
 

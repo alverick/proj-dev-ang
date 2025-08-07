@@ -65,7 +65,8 @@
               type="text"
               class="tw-w-full"
               pInputText
-              pKeyFilter="alphanum"
+              autocomplete="off"
+              [pKeyFilter]="alphaNumRegex"
               [maxLength]="20"
               formControlName="code"
             />
@@ -99,6 +100,7 @@
               type="text"
               class="tw-w-full"
               pInputText
+              autocomplete="off"
               minlength="3"
               [pKeyFilter]="validNameRegex"
               [maxLength]="80"
@@ -133,6 +135,7 @@
               type="text"
               class="tw-w-full"
               pInputText
+              autocomplete="off"
               [pKeyFilter]="alphaNumSpaceRegex"
               minlength="2"
               [maxLength]="16"
@@ -151,7 +154,9 @@
               class="tw-w-full"
               styleClass="tw-w-full"
               mode="decimal"
-              [min]="0"
+              maxlength="19"
+              minlength="6"
+              [min]="0.01"
               [max]="limitAmountMax"
               [prefix]="excelService.service.currencySymbol"
               [minFractionDigits]="2"

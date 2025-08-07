@@ -10,11 +10,12 @@ export const errorsLoginForm: IErrorMessages = {
     required: 'Debe ingresar una contraseña',
     length: 'Debes ingresar una contraseña entre 6 y 20 caracteres',
     minlength: 'La contraseña no es válida',
+    maxlength: 'La contraseña no es válida',
   },
   email: {
     required: 'El correo electrónico es obligatorio',
     pattern: 'Ingresa un correo electrónico válido',
-    minlength: 'El correo electrónico debe tener mínimo 10 dígitos',
+    minlength: 'El correo electrónico debe tener mínimo 10 caracteres',
   },
 };
 
@@ -34,7 +35,7 @@ export const errorsRegisterForm: IErrorMessages = {
   email: {
     required: 'El correo electrónico es obligatorio',
     pattern: 'Ingresa un correo electrónico válido',
-    minlength: 'El correo electrónico debe tener mínimo 10 dígitos',
+    minlength: 'El correo electrónico debe tener mínimo 10 caracteres',
   },
   emailConfirm: {
     required: 'Confirmar correo electrónico es obligatorio',
@@ -54,7 +55,7 @@ export const errorRegisterAuth: IErrorMessages = {
     required: 'El nombre comercial es obligatorio',
     blankSpaces: 'El nombre comercial es obligatorio',
     pattern: 'Ingrese un nombre valido',
-    minlength: 'El nombre debe tener mínimo 3 dígitos',
+    minlength: 'El nombre debe tener mínimo 3 caracteres',
     change: 'Escribe un nuevo nombre de la empresa',
   },
   entry: {
@@ -107,8 +108,8 @@ export const errorRegisterAuth: IErrorMessages = {
 };
 export const errorServiceInformation: IErrorMessages = {
   name: {
-    required: 'Ingresa el concepto de cobro',
-    blankSpaces: 'Ingresa el concepto de cobro',
+    required: 'Ingresa el nombre del servicio',
+    blankSpaces: 'Ingresa el nombre del servicio',
     pattern: 'Ingrese un nombre correcto',
     minlength: 'El nombre no puede tener menos de 3 caracteres',
     maxlength: 'El nombre no puede tener mas de 80 caracteres',

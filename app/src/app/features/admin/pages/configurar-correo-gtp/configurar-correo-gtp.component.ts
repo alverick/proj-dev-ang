@@ -1,27 +1,28 @@
+import { DatePipe } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
 import {
+  FormBuilder,
   FormsModule,
   ReactiveFormsModule,
-  UntypedFormBuilder,
-  type UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { Ripple } from 'primeng/ripple';
-import Swal from 'sweetalert2';
+import { clone, equals } from 'ramda';
 
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { emailRegex } from '../../../../shared/constants/patterns';
 import { type CorreoGtpModel } from '../../../../shared/models/data-correoGtp';
 import { GtpService } from '../../../../shared/services/gtp.service';
-import { drawPopup } from '../../../../shared/utils/helpers/popups';
+import { swalAlert } from '../../../../shared/utils/helpers/popups';
 
 @Component({
   selector: 'cs-configurar-correo-gtp',
   templateUrl: './configurar-correo-gtp.component.html',
   styleUrls: ['./configurar-correo-gtp.component.scss'],
   standalone: true,
+  providers: [GtpService, DatePipe],
   imports: [
     ButtonDirective,
     Ripple,
@@ -32,39 +33,41 @@ import { drawPopup } from '../../../../shared/utils/helpers/popups';
   ],
 })
 export class ConfigurarCorreoGtpComponent implements OnInit {
-  frmCorreoGtp: UntypedFormGroup;
+  frmCorreoGtp = this.formBuilder.group({
+    correo: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(emailRegex),
+        Validators.minLength(10),
+        Validators.maxLength(50),
+      ],
+    ],
+  });
   Formulario = false;
+  showButton = false;
   titleCorreo = 'Agregar E-mail';
   titlebtn = 'Agregar';
   summited = false;
   public _service: CorreoGtpModel;
   public correos: CorreoGtpModel[] = [];
+  public emailOriginal: CorreoGtpModel[] = [];
   public indiceActual = -1;
   errorsForm = {
     correo: {
       minLength: 'El e-mail debe tener al menos 10 carácteres',
+      required: 'Ingrese un e-mail válido',
       pattern: 'Ingrese un e-mail válido',
     },
   };
 
   // correoGtp: CorreoGtpModel;
   constructor(
-    private readonly formBuilder: UntypedFormBuilder,
+    private readonly formBuilder: FormBuilder,
     public gtpService: GtpService,
   ) {}
 
   ngOnInit() {
-    this.frmCorreoGtp = this.formBuilder.group({
-      correo: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(emailRegex),
-          Validators.minLength(10),
-          Validators.maxLength(100),
-        ],
-      ],
-    });
     this.onListarCorreoGTP();
   }
   get f(): any {
@@ -72,26 +75,29 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
   }
 
   onListarCorreoGTP() {
-    this.gtpService.GetCorreoGtp().subscribe((r) => (this.correos = r));
+    this.gtpService.GetCorreoGtp().subscribe((r) => {
+      this.emailOriginal = clone(r);
+      this.correos = r;
+    });
   }
 
   onGrabarCorreo() {
     if (this.correos.length === 0) {
-      Swal.fire({
+      swalAlert.fire({
         text: 'Debe ingresar al menos 1 e-mail',
-        onOpen: drawPopup,
       });
       return;
     }
     this.gtpService.PostConfigurarCorreoGtp(this.correos).subscribe((r) => {
-      Swal.fire({
+      this.emailOriginal = clone(this.correos);
+      this.checkListEmails();
+      swalAlert.fire({
         title: 'Grabar',
         text: 'Los emails han sido guardados',
         showCloseButton: true,
         showCancelButton: false,
         showConfirmButton: true,
         confirmButtonText: 'Cerrar',
-        onOpen: drawPopup,
       });
     });
   }
@@ -106,19 +112,21 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
   }
 
   onEliminar(index: number) {
-    Swal.fire({
-      text: 'Se va a eliminar el e-mail.',
-      title: 'Eliminar',
-      showCancelButton: true,
-      showConfirmButton: true,
-      confirmButtonText: 'Confirmar',
-      cancelButtonText: 'Cancelar',
-      onOpen: drawPopup,
-    }).then((r) => {
-      if (r.value) {
-        this.correos.splice(index, 1);
-      }
-    });
+    swalAlert
+      .fire({
+        text: 'Se va a eliminar el e-mail.',
+        title: 'Eliminar',
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
+      })
+      .then((r) => {
+        if (r.value) {
+          this.correos.splice(index, 1);
+          this.checkListEmails();
+        }
+      });
   }
 
   onAgregar() {
@@ -129,57 +137,37 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
     this.titlebtn = 'Agregar';
   }
 
-  getCorreoError() {
-    if (this.f.correo.invalid) {
-      if (this.f.correo.hasError('minlength')) {
-        return 'El e-mail debe tener al menos 10 carácteres';
-      }
-      if (this.f.correo.hasError('pattern')) {
-        return 'Ingrese un e-mail válido';
-      }
-    }
-    return '';
-  }
-
   onGrabar() {
     this.summited = true;
-    if (this.frmCorreoGtp.valid) {
-      if (this.indiceActual >= 0) {
-        if (
-          this.correos.find(
-            (s, i) =>
-              s.correo.toUpperCase() ===
-                this.frmCorreoGtp.value.correo.toUpperCase() &&
-              i !== this.indiceActual,
-          )
-        ) {
-          Swal.fire({
-            text: 'Ya existe un E-mail con este nombre',
-            onOpen: drawPopup,
-          });
-          return;
-        } else {
-          this.correos[this.indiceActual].correo =
-            this.frmCorreoGtp.value.correo;
-        }
-      } else if (
-        this.correos.find(
-          (s, i) =>
-            s.correo.toUpperCase() ===
-              this.frmCorreoGtp.value.correo.toUpperCase() &&
-            i !== this.indiceActual,
-        )
-      ) {
-        Swal.fire({
-          text: 'Ya existe un E-mail con este nombre',
-          onOpen: drawPopup,
-        });
-        return;
-      } else {
-        this.correos.push({ correo: this.frmCorreoGtp.value.correo });
-      }
-      this.indiceActual = -1;
-      this.Formulario = false;
+    if (!this.frmCorreoGtp.valid) return;
+
+    const correoValue = this.frmCorreoGtp.value.correo?.toUpperCase();
+
+    if (this.isDuplicateCorreo(correoValue, this.indiceActual)) {
+      swalAlert.fire({
+        text: 'Ya existe un E-mail con este nombre',
+      });
+      return;
     }
+
+    if (this.indiceActual >= 0) {
+      this.correos[this.indiceActual].correo = this.frmCorreoGtp.value.correo;
+    } else {
+      this.correos.push({ correo: this.frmCorreoGtp.value.correo });
+    }
+
+    this.checkListEmails();
+    this.indiceActual = -1;
+    this.Formulario = false;
+  }
+
+  private checkListEmails() {
+    this.showButton = !equals(this.emailOriginal, this.correos);
+  }
+
+  private isDuplicateCorreo(correo: string, excludeIndex: number) {
+    return this.correos.some(
+      (s, i) => s.correo.toUpperCase() === correo && i !== excludeIndex,
+    );
   }
 }

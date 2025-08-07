@@ -40,6 +40,7 @@ describe('AppComponent', () => {
       providers: [
         MockProvider(PrimeNGConfig),
         MockProvider(AdobeLaunchProviderService),
+        MockProvider(HotjarProviderService),
         MockProvider(NewRelicProviderService),
         MockProvider(HotjarProviderService),
         MockProvider(TrackingService),

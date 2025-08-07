@@ -1,5 +1,11 @@
-import { CurrencyPipe } from '@angular/common';
-import { Component, type OnInit, signal, viewChild } from '@angular/core';
+import { CurrencyPipe, DatePipe } from '@angular/common';
+import {
+  Component,
+  inject,
+  type OnInit,
+  signal,
+  viewChild,
+} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -7,6 +13,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
   ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { FormModel } from 'ngx-mf';
@@ -37,6 +44,12 @@ import {
   TrackingService,
 } from '../../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../../shared/utils/helpers/popups';
+import {
+  debtMaxAmount,
+  debtMaxDate,
+  debtMinDate,
+  validNameRegex,
+} from '../../../../../shared/validators/debt-validators';
 
 export interface Debt {
   emissionDate: Date;
@@ -50,7 +63,7 @@ export interface Debt {
 @Component({
   selector: 'cs-debt-form',
   templateUrl: './debt.component.html',
-  providers: [CurrencyPipe],
+  providers: [CurrencyPipe, DatePipe],
   standalone: true,
   imports: [
     FormsModule,
@@ -70,15 +83,16 @@ export interface Debt {
 export class DebtComponent implements OnInit {
   useAmountLimits = false;
   public grabado = false;
-  public minDate = new Date(2000, 0, 1);
-  public maxDate = new Date(2049, 11, 31);
+  public minDate = debtMinDate;
+  public maxDate = debtMaxDate;
   public isPartial = false;
-  limitAmountMax: number = null;
+  limitAmountMax: number = debtMaxAmount;
   messageModes = messageModes;
   debtorExistent = signal(false);
   loaderDebtorCode = false;
   alphaNumSpaceRegex = /^[ 0-9a-zA-Z]+$/;
-  validNameRegex = /^[ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]+$/;
+  alphaNumRegex = /^[0-9a-zA-Z]+$/;
+  validNameRegex = validNameRegex;
   amountWithSymbolLabel = '';
   debtForm: FormModel<Debt> = this.fb.group({
     emissionDate: [
@@ -86,13 +100,16 @@ export class DebtComponent implements OnInit {
       Validators.required,
       this.limitYearValidator(),
     ],
-    dueDate: ['' as unknown as Date, Validators.required],
+    dueDate: [
+      '' as unknown as Date,
+      [Validators.required, this.dueDateAfterEmissionDate('emissionDate')],
+    ],
     code: [
       '',
       [
         Validators.required,
         Validators.minLength(1),
-        Validators.pattern('[\\w]*'),
+        Validators.pattern(this.alphaNumRegex),
       ],
     ],
     firstName: [
@@ -124,6 +141,7 @@ export class DebtComponent implements OnInit {
       required: 'Debe ingresar un valor',
       notValid: 'Fecha inválida',
       limitYear: 'Fecha inválida',
+      dueBeforeEmission: 'Debe ser igual o posterior a la fecha de emisión',
     },
     code: {
       required: 'Debe ingresar un valor',
@@ -141,6 +159,7 @@ export class DebtComponent implements OnInit {
     amount: { required: 'Debe ingresar un valor' },
   };
   formDirective = viewChild<FormGroupDirective>('formDirective');
+  datePipe: DatePipe = inject(DatePipe);
 
   constructor(
     public dialogRef: DynamicDialogRef<DebtComponent>,
@@ -193,6 +212,22 @@ export class DebtComponent implements OnInit {
       this.debtForm.controls.amount.disable();
     }
   }
+  dueDateAfterEmissionDate(emissionControlName: string): ValidatorFn {
+    return (control: AbstractControl<Date>) => {
+      if (!control.parent) return null;
+
+      const dueDate = control.value;
+      const emissionDate = control.parent.get(emissionControlName)
+        ?.value as Date;
+
+      if (!dueDate || !emissionDate) return null;
+
+      const due = new Date(dueDate);
+      const emission = new Date(emissionDate);
+
+      return due >= emission ? null : { dueBeforeEmission: true };
+    };
+  }
 
   buscarNewCode() {
     if (!this.debtForm.controls.code.valid) {
@@ -241,13 +276,13 @@ export class DebtComponent implements OnInit {
 
     const debt = this.isPartial
       ? {
-          emissionDate,
+          emissionDate: this.datePipe.transform(emissionDate, 'dd/MM/yyyy'),
           code,
           firstName,
         }
       : {
-          emissionDate,
-          dueDate,
+          emissionDate: this.datePipe.transform(emissionDate, 'dd/MM/yyyy'),
+          dueDate: this.datePipe.transform(dueDate, 'dd/MM/yyyy'),
           code,
           firstName,
           concept,

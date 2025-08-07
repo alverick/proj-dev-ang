@@ -66,9 +66,8 @@
                         <p-inputNumber
                           type="text"
                           [(ngModel)]="itm.newAmount"
-                          maxlength="12"
-                          minlength="4"
                           [min]="0.01"
+                          [max]="debtMaxAmount"
                           (blur)="amountBlur(itm)"
                           [minFractionDigits]="2"
                           [maxFractionDigits]="2"
@@ -99,6 +98,8 @@
                         [showIcon]="true"
                         [(ngModel)]="itm.newDate"
                         (ngModelChange)="itm.errores.date = null"
+                        [minDate]="minDate"
+                        [maxDate]="maxDate"
                         appendTo="body"
                         dateFormat="dd/mm/yy"
                       ></p-calendar>

@@ -22,6 +22,7 @@ import { InputWithoutSpacesDirective } from '../../directives/input-without-spac
 import { IErrorMessages, type ModelFormGroup } from '../../models/forms';
 import { type CompanyAccounts } from '../../services/company.service';
 import { type ServiceFormValue } from '../../services/services-forms.service';
+import { namePattern } from '../../validators/service-validators';
 import { LabelControlComponent } from '../label-control/label-control.component';
 import { MessageAlertComponent } from '../message-alert/message-alert.component';
 import { ServiceChannelChipComponent } from '../service-channel-chip/service-channel-chip.component';
@@ -54,6 +55,7 @@ export class ServiceStepInfoComponent implements OnInit, OnDestroy {
   @Input() errorMessages: IErrorMessages;
   @Input() accounts: CompanyAccounts[];
   @Input() showCancel = false;
+  protected readonly namePattern = namePattern;
 
   ngOnInit() {
     this.form

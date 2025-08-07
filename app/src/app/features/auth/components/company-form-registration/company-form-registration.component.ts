@@ -65,16 +65,30 @@ export class CompanyFormRegistrationComponent implements OnInit {
   }
 
   setDocumentNumberProps() {
-    const isDNI = this.registerForm?.value.documentType === 'DNI';
-    this.documentNumberMax = isDNI ? '8' : '12';
-    this.documentNumberFilter = isDNI ? 'int' : this.blockSpecial;
+    const documentType = this.registerForm?.value.documentType;
+    const isDNI = documentType === 'DNI';
+    const isCE = documentType === 'CE';
+    const isPASS = documentType === 'PASS';
+
+    this.documentNumberFilter = isDNI ? 'pint' : this.blockSpecial;
     const validators = [
       Validators.required,
       Validators.maxLength(parseInt(this.documentNumberMax, 10)),
     ];
+
     if (isDNI) {
       validators.push(Validators.minLength(8));
+      this.documentNumberMax = '8';
+    } else if (isCE) {
+      validators.push(Validators.minLength(4));
+      validators.push(Validators.maxLength(11));
+      this.documentNumberMax = '11';
+    } else if (isPASS) {
+      validators.push(Validators.minLength(7));
+      validators.push(Validators.maxLength(12));
+      this.documentNumberMax = '12';
     }
+
     this.registerForm?.get('documentNumber').setValidators(validators);
   }
 

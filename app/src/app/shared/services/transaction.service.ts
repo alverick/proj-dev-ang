@@ -1,6 +1,6 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import moment from 'moment';
+import { inject, Injectable } from '@angular/core';
 import { clone, isNil } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { type Observable, throwError } from 'rxjs';
@@ -15,6 +15,7 @@ import { type DebstFilter } from '../models/debts-filter.model';
 export class TransactionService {
   private readonly URI_API: string = environment.END_POINT;
   private lastFilter: DebstFilter = null;
+  datePipe = inject(DatePipe);
 
   constructor(public http: HttpClient) {}
 
@@ -51,7 +52,7 @@ export class TransactionService {
     const processDate = (value: string | Date) => {
       return isNilOrEmpty(value)
         ? ''
-        : encodeURI(moment(value).format('YYYY/MM/DD'));
+        : encodeURI(this.datePipe.transform(value, 'dd/MM/yyyy'));
     };
     const strDateFrom = processDate(filtro.dateFrom);
     const strDateTo = processDate(filtro.dateTo);
@@ -157,7 +158,7 @@ export class TransactionService {
   }: DebstFilter): Observable<any> {
     const url = `${this.URI_API}/debt/report`;
     const parseDate: (date: Date | string) => Date | string = (date) =>
-      isNilOrEmpty(date) ? '' : moment(date).format('YYYY/MM/DD');
+      isNilOrEmpty(date) ? '' : this.datePipe.transform(date, 'dd/MM/yyyy');
 
     const filterRequest: DebstFilter = {
       pageNumber,

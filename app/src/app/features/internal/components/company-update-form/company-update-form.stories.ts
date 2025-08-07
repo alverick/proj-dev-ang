@@ -1,7 +1,17 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, type FormGroup, Validators } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  importProvidersFrom,
+  Output,
+} from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
+import {
+  applicationConfig,
+  Meta,
+  moduleMetadata,
+  StoryObj,
+} from '@storybook/angular';
 
 import { ValidationDefaultsComponent } from '../../../../shared/components/validation-defaults/validation-defaults.component';
 import {
@@ -13,6 +23,8 @@ import {
   errorsRegisterForm,
 } from '../../../../shared/constants/company-errors';
 import { emailRegex } from '../../../../shared/constants/patterns';
+import { CompanyForm } from '../../../../shared/models/company-forms';
+import type { SimpleModelFormGroup } from '../../../../shared/models/forms';
 import { CompanyUpdateFormComponent } from './company-update-form.component';
 
 @Component({
@@ -35,7 +47,7 @@ import { CompanyUpdateFormComponent } from './company-update-form.component';
 })
 class FormDemoComponent {
   @Output() showPanel = new EventEmitter();
-  registerForm: FormGroup;
+  registerForm: SimpleModelFormGroup<CompanyForm>;
   errors = { ...errorsRegisterForm, ...errorRegisterAuth };
   operators = mobileOperators;
   documentTypes = documentTypes;
@@ -52,7 +64,7 @@ class FormDemoComponent {
       ],
       ruc: [{ value: '', disabled: true }],
       entry: [{ value: '', disabled: true }],
-      entryName: [{ value: '' }],
+      entryName: [{ value: '', disabled: true }],
       documentType: [{ value: '', disabled: true }],
       documentNumber: [{ value: '', disabled: true }],
       email: [
@@ -79,16 +91,12 @@ class FormDemoComponent {
       ruc: '20000000005',
       name: 'demo 5',
       entry: '01',
+      entryName: 'Nombre de rubro',
       email: 'mnieva@gmail.com',
       movilNumber: '123456',
       movilOperator: 'C',
       documentType: 'DNI',
       documentNumber: '28235624',
-      newName: null,
-      newNameGTPStatus: 1,
-      status: 'Pendiente',
-      inReview: true,
-      requestDate: '2019-12-16T23:03:16.675169',
     });
   }
   onShowPanel() {
@@ -98,13 +106,12 @@ class FormDemoComponent {
 const meta: Meta<CompanyUpdateFormComponent> = {
   title: 'Internal/Module/Company Form',
   decorators: [
+    applicationConfig({
+      providers: [importProvidersFrom(BrowserAnimationsModule)],
+    }),
     moduleMetadata({
       declarations: [],
-      imports: [
-        FormDemoComponent,
-        BrowserAnimationsModule,
-        ValidationDefaultsComponent,
-      ],
+      imports: [FormDemoComponent, ValidationDefaultsComponent],
     }),
   ],
 };

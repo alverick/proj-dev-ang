@@ -17,10 +17,7 @@ import { FabWhatsappComponent } from './shared/components/fab-whatsapp/fab-whats
 import { ValidationDefaultsComponent } from './shared/components/validation-defaults/validation-defaults.component';
 import { AuthInterceptorService } from './shared/interceptors/auth-interceptor.service';
 import { LoaderInterceptor } from './shared/interceptors/loader.interceptor';
-import {
-  AdobeLaunchProviderService,
-  NewRelicProviderService,
-} from './shared/services';
+import { AdobeLaunchProviderService } from './shared/services';
 import { HotjarProviderService } from './shared/services/hotjar-provider.service';
 import { NotifyService } from './shared/services/notify.service';
 import { StorageService } from './shared/services/storage.service';
@@ -76,7 +73,6 @@ import { appConfigFeature } from './store/reducers/app-config.reducer';
       multi: true,
     },
     AdobeLaunchProviderService,
-    NewRelicProviderService,
     HotjarProviderService,
     NotifyService,
     StorageService,

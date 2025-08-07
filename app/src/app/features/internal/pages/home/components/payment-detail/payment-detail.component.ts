@@ -1,5 +1,5 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { Component, type OnInit } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LetDirective } from '@ngrx/component';
 import { Store } from '@ngrx/store';
@@ -21,12 +21,18 @@ import {
 } from '../../../../../../shared/services/tracking.service';
 import { TransactionService } from '../../../../../../shared/services/transaction.service';
 import { swalAlert } from '../../../../../../shared/utils/helpers/popups';
+import {
+  debtMaxAmount,
+  debtMaxDate,
+  debtMinDate,
+} from '../../../../../../shared/validators/debt-validators';
 import { companyFeature } from '../../../../../../store/reducers/company.reducer';
 
 @Component({
   selector: 'cs-payment-detail',
   templateUrl: './payment-detail.component.html',
   standalone: true,
+  providers: [DatePipe, TransactionService],
   imports: [
     ProgressSpinnerModule,
     InputNumberModule,
@@ -52,6 +58,10 @@ export class PaymentDetailComponent implements OnInit {
   useAmountLimits$ = this.store.select(companyFeature.selectUseAmountLimits);
   channelOptions = ['Efectivo', 'POS', 'BCP', 'BBVA', 'Otro banco'];
   protected readonly ServiceTypes = ServiceTypes;
+  public minDate = debtMinDate;
+  public maxDate = debtMaxDate;
+  protected readonly debtMaxAmount = debtMaxAmount;
+  datePipe = inject(DatePipe);
 
   constructor(
     private readonly transaction: TransactionService,
@@ -176,7 +186,7 @@ export class PaymentDetailComponent implements OnInit {
       .then((result) => {
         if (result.value) {
           const payment = {
-            date: itm.newDate,
+            date: this.datePipe.transform(itm.newDate, 'dd/MM/yyyy'),
             channel: itm.newChannel,
             amount: parseFloat(itm.newAmount.toString()),
           };

@@ -23,7 +23,7 @@ parameters:
     type: boolean
 
 variables:
-  vmImageName: 'ubuntu-20.04'
+  vmImageName: 'ubuntu-latest'
 
   ${{ if or(contains(variables['Build.SourceBranchName'], 'dev'),eq(parameters.destiny,'dev')) }}:
     mode: 'dev'
@@ -45,8 +45,6 @@ stages:
         displayName: Build
         pool:
           vmImage: $(vmImageName)
-        variables:
-          - group: sonar
         steps:
           - task: NodeTool@0
             displayName: 'Install Node.js'

@@ -31,6 +31,7 @@
             type="text"
             class="tw-w-full"
             pInputText
+            autocomplete="off"
             [pKeyFilter]="documentNumberFilter"
             [maxlength]="documentNumberMax"
             formControlName="documentNumber"
@@ -60,7 +61,8 @@
             type="text"
             class="tw-w-full"
             pInputText
-            pKeyFilter="int"
+            autocomplete="off"
+            pKeyFilter="pint"
             maxlength="11"
             formControlName="ruc"
           />
@@ -75,9 +77,10 @@
             type="text"
             class="tw-w-full"
             pInputText
+            autocomplete="off"
             csInputTrimSpaces
             minlength="10"
-            maxlength="100"
+            maxlength="50"
             formControlName="email"
           />
         </cs-label-control>
@@ -91,6 +94,7 @@
             type="text"
             class="tw-w-full"
             pInputText
+            autocomplete="off"
             csInputTrimSpaces
             minlength="10"
             maxlength="100"
@@ -119,7 +123,8 @@
             type="text"
             class="tw-w-full"
             pInputText
-            pKeyFilter="int"
+            autocomplete="off"
+            pKeyFilter="pint"
             maxlength="9"
             formControlName="movilNumber"
           />
