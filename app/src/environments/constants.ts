@@ -95,8 +95,8 @@ export type IEnvironment = {
    */
   adobe: string;
   recaptcha: string;
-  hotjarSiteId: number;
-  hotjarVersion: number;
+  hotjarSiteId: string;
+  hotjarVersion: string;
 };
 
 export const environmentDefault: IEnvironment = {
