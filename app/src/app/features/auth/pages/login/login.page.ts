@@ -141,14 +141,15 @@ export class LoginPage implements OnInit {
     return this.loginForm.controls;
   }
 
-  showModal(title: string, text: string, confirmText = '') {
+  showModal(title: string, text: string, confirmText = '', additional = {}) {
     void swalAlert.fire({
       title,
       text,
-      showCloseButton: true,
+      showCloseButton: false,
       showConfirmButton: true,
       allowOutsideClick: false,
       confirmButtonText: confirmText || 'Cerrar',
+      ...additional,
     });
 
     this.tracking.trackEvent(AdobeEvent.trackView, {
@@ -295,29 +296,59 @@ export class LoginPage implements OnInit {
   }
 
   private handleFailedAttempt(actionParams: Partial<ActionEventProperties>) {
-    if (this.codRespuesta === loginResultStatus.errorCredentials) {
-      this.showModal(
-        'Contraseña incorrecta',
-        `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes ${this.intentosRestantes} intentos restantes.`,
-      );
-      this.sendAdobeTrack({
-        ...actionParams,
-        state: 'Intención de envío',
-        typeError: 'Contraseña incorrecta',
-      });
-    } else if (this.codRespuesta === loginResultStatus.userInactive) {
-      this.showModal(
-        'Tu cuenta está siendo procesada',
-        'Estamos procesando la información de tu registro, esto puede tomar un máximo 24 horas hábiles. ' +
-          'Cuando esté lista te enviaremos un mail de Bienvenida.',
-        'Entendido',
-      );
-      this.sendAdobeTrack({
-        ...actionParams,
-        state: 'Intención de envío',
-        typeError: 'Tu cuenta está siendo procesada',
-      });
-    }
+    type ModalArgs = Parameters<typeof this.showModal>;
+
+    const errorMap: Record<
+      string,
+      {
+        modal: ModalArgs;
+        adobeTrack: Partial<ActionEventProperties>;
+      }
+    > = {
+      [loginResultStatus.errorCredentials]: {
+        modal: [
+          'Contraseña incorrecta',
+          `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes ${this.intentosRestantes} intentos restantes.`,
+        ],
+        adobeTrack: {
+          state: 'Intención de envío',
+          typeError: 'Contraseña incorrecta',
+        },
+      },
+      [loginResultStatus.userError]: {
+        modal: [
+          'No se pudo iniciar sesión',
+          'No logramos confirmar tu información. Inténtalo nuevamente.',
+          'Vuelve a intentarlo',
+          {
+            iconHtml:
+              '<img alt="" class="tw-w-20 tw-max-w-none" src="assets/images/icon-error-login.svg"/>',
+          },
+        ],
+        adobeTrack: {
+          state: 'Intención de envío',
+          typeError: 'Tu cuenta está siendo procesada',
+        },
+      },
+      [loginResultStatus.userInactive]: {
+        modal: [
+          'Tu cuenta está siendo procesada',
+          'Estamos procesando la información de tu registro, esto puede tomar un máximo 24 horas hábiles. ' +
+            'Cuando esté lista te enviaremos un mail de Bienvenida.',
+          'Entendido',
+        ],
+        adobeTrack: {
+          state: 'Intención de envío',
+          typeError: 'Tu cuenta está siendo procesada',
+        },
+      },
+    };
+
+    const config = errorMap[this.codRespuesta];
+    if (!config) return;
+
+    this.showModal(...config.modal);
+    this.sendAdobeTrack({ ...actionParams, ...config.adobeTrack });
   }
 
   private handleLoginError(
