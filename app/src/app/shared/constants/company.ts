@@ -15,3 +15,5 @@ export const documentTypes: ISelectOptions[] = [
   { value: 'CE', label: 'Carnet de extranjería' },
   { value: 'PASS', label: 'Pasaporte' },
 ];
+
+export const companyDocumentStorageName = 'ddmk';

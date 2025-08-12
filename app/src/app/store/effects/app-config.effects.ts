@@ -7,7 +7,10 @@ import { debounce, EMPTY, of, timer } from 'rxjs';
 import { catchError, concatMap, filter, map, tap } from 'rxjs/operators';
 
 import { AppConfigActions } from '../actions/app-config.actions';
-import { appConfigFeature, State } from '../reducers/app-config.reducer';
+import {
+  appConfigFeature,
+  AppConfigState,
+} from '../reducers/app-config.reducer';
 
 @Injectable()
 export class AppConfigEffects {
@@ -61,7 +64,7 @@ export class AppConfigEffects {
 
   constructor(
     private readonly actions$: Actions,
-    private readonly store: Store<State>,
+    private readonly store: Store<AppConfigState>,
     private readonly spinner: NgxSpinnerService,
   ) {}
 }

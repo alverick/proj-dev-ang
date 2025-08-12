@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AgentOptions } from '@newrelic/browser-agent/loaders/agent';
 import { type BrowserAgent } from '@newrelic/browser-agent/loaders/browser-agent';
 import dot from 'dot-object';
 import { hasPath, path, pathOr } from 'ramda';
@@ -15,6 +16,7 @@ import {
 
 declare const window: {
   newrelic: BrowserAgent;
+  NREUM: AgentOptions;
 } & Window;
 
 @Injectable()

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { catchError, concatMap, map, tap } from 'rxjs/operators';
+import { catchError, concatMap, map } from 'rxjs/operators';
 
 import { CompanyService } from '../../shared/services';
 import { CompanyActions } from '../actions/company.actions';
@@ -14,7 +14,11 @@ export class CompanyEffects {
       ofType(CompanyActions.loadCompany),
       concatMap(() =>
         this.companyService.getCompanyData().pipe(
-          map((data) => CompanyActions.loadCompanySuccess({ data })),
+          map((data) =>
+            CompanyActions.setCurrencyLimits({
+              amountLimits: data.amountLimits,
+            }),
+          ),
           catchError((error) =>
             of(CompanyActions.loadCompanyFailure({ error })),
           ),
@@ -22,17 +26,6 @@ export class CompanyEffects {
       ),
     );
   });
-  loadCompanySuccess$ = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(CompanyActions.loadCompanySuccess),
-        tap(() => {
-          this.store.dispatch(CompanyActions.setCurrencyLimits());
-        }),
-      );
-    },
-    { dispatch: false },
-  );
 
   constructor(
     private readonly actions$: Actions,
