@@ -1,5 +1,4 @@
 import { type TargetOptions } from '@angular-builders/custom-webpack';
-import { forEachObjIndexed, isEmpty } from 'ramda';
 
 const defaultRootUrl = 'https://cobrosimple.dev.interbank.pe';
 
@@ -11,12 +10,7 @@ const defaultRootUrl = 'https://cobrosimple.dev.interbank.pe';
  * - `production` - Production environment with optimizations.
  * - `uat` - User Acceptance Testing (UAT) environment for validation.
  */
-type EnvironmentType =
-  | 'default'
-  | 'dev'
-  | 'production'
-  | 'legacy-production'
-  | 'uat';
+type EnvironmentType = 'default' | 'dev' | 'production' | 'uat';
 
 /**
  * Configuration settings for each environment.
@@ -43,9 +37,6 @@ const settings: Record<EnvironmentType, EnvironmentConfig> = {
   production: {
     url: 'https://cobrosimple.interbank.pe',
   },
-  'legacy-production': {
-    url: 'https://cobrosimple.interbank.pe',
-  },
 };
 
 function replaceDomainUrl(configuration: EnvironmentType, indexHtml: string) {
@@ -56,15 +47,22 @@ function replaceDomainUrl(configuration: EnvironmentType, indexHtml: string) {
 }
 
 export default ({ configuration }: TargetOptions, indexHtml: string) => {
-  const sameAsDefault = ['', 'hmr', 'local'];
-  let parsedHtml = '';
-  [replaceDomainUrl].forEach((process) => {
-    parsedHtml = process(
-      (sameAsDefault.includes(configuration)
-        ? 'default'
-        : configuration) as EnvironmentType,
-      isEmpty(parsedHtml) ? indexHtml : parsedHtml,
-    );
-  });
-  return parsedHtml;
+  const localEnvironments = ['', 'hmr', 'local'];
+
+  let effectiveConfig: EnvironmentType;
+
+  if (localEnvironments.includes(configuration)) {
+    effectiveConfig = 'default';
+  } else if (configuration === 'legacy-production') {
+    effectiveConfig = 'production';
+  } else {
+    effectiveConfig = configuration as EnvironmentType;
+  }
+
+  const processors = [replaceDomainUrl];
+
+  return processors.reduce(
+    (html, process) => process(effectiveConfig, html),
+    indexHtml,
+  );
 };
