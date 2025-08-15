@@ -25,7 +25,7 @@ export class NewRelicProviderService implements ProviderService {
 
   constructor(public trackingService: TrackingService) {}
 
-  async initNewRelic() {
+  initNewRelic() {
     const nreum = {
       init: {
         distributed_tracing: { enabled: true },
@@ -47,11 +47,7 @@ export class NewRelicProviderService implements ProviderService {
         sa: 1,
       },
     };
-    window['NREUM'] = nreum as AgentOptions;
-
-    await import('@newrelic/browser-agent').then((newrelic1) => {
-      new newrelic1['Agent'](window['NREUM']);
-    });
+    window['NREUM'] = nreum;
   }
 
   trackPage(payload: Partial<TrackEventProperties>) {
@@ -77,27 +73,7 @@ export class NewRelicProviderService implements ProviderService {
     });
   }
 
-  startTracking(): void {
-    void this.initNewRelic().then(() => {
-      this.trackingService.eventSubject$
-        .pipe(
-          filter(
-            ({ event, payload }) =>
-              event === AdobeEvent.trackFormSubmit &&
-              (payload.action.step === 'Step2' ||
-                payload.action.step === 'Step5') &&
-              payload.page.module === 'Afiliación',
-          ),
-        )
-        .subscribe(({ event, payload }) => {
-          this.trackEvent(event, payload);
-        });
-
-      this.trackingService.pageSubject$
-        .pipe(filter(() => this.enabledPageRouting))
-        .subscribe((payload) => this.trackPage(payload));
-    });
-  }
+  startTracking(): void {}
 
   private runNewrelic(event: string, payload: object) {
     try {

@@ -1,14 +1,14 @@
-# Author: @Aldo Martinez Alarcon
+# Author: @Aldo Martinez
 # Project: DSO-FRONT
-name: "$(VersionCodeSWA).$(Rev:r)" # (Not change it)
+name: "1.0.$(Rev:r)" # (Do not change it)
 
 trigger: "none"
 pr: "none"
 
 ####################
 # Resources Repository
-# ibkteam/dso-template
-# branch: master (Not change it)
+# ibkteam/dso-frontend-template
+# branch: master (Do not change it)
 ####################
 resources:
   repositories:
@@ -19,9 +19,9 @@ resources:
       ref: "master"
 
   pipelines:
-    - pipeline: "pipelineoriginuat" # Name of the pipeline resource #  (Not change it)
-      source: '\PREV\Deployment\dso-angular-swa-sample-web\dso-angular-swa-sample-web_cd-uat' # Name of the triggering pipeline
-      project: "dopjeu2c011dsoapv01"
+    - pipeline: "pipelineoriginuat"
+      source: "eureca-frontend_cd-uat"
+      project: "dopjeu2c003eurcpv01"
       trigger:
         branches:
           include:
@@ -35,9 +35,12 @@ resources:
 # https://bitbucket.org/ibkteam/dso-frontend-template/src/master/
 ####################
 extends:
-  template: "src/templates/node-swa/cd-prd.yml@ibkAzTemplates"
+  template: "src/templates/node-appservice/cd-prd.yml@ibkAzTemplates"
   parameters:
-    projectName: "DSO"
-    componentName: "dso-angular-swa-sample-web"
-    workingDir: "app"
+    projectName: "CSE"
+    componentName: "eureca-frontend"
     buildOutputPath: "dist"
+    azAppServiceSubscription: "SC_RG_EU2_C003_EURC_PRD_01"
+    azAppServiceAppType: "webAppLinux"
+    azAppServiceAppName: "wappeu2c003eurcprd01"
+    azAppServiceRuntimeStack: "NODE|18-lts"
