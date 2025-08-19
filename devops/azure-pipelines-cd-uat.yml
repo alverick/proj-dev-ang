@@ -21,7 +21,7 @@ resources:
   pipelines:
     - pipeline: "pipelineorigindev"
       source: "eureca-frontend_cicd-dev"
-      project: "dopjeu2c003eurcpv01"
+      project: "dopjeu2eurcpv01"
       trigger:
         branches:
           include:
