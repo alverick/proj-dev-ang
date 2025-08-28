@@ -58,4 +58,4 @@ extends:
       sonarEnabled: false
       sonarQualityGateEnabled: false
       jFrogXrayEnabled: false
-      fluidAttacksEnabled: false
+      fluidAttacksEnabled: true
