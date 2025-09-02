@@ -43,13 +43,13 @@ extends:
   template: "src/templates/node/ci.yml@ibkAzTemplates"
   parameters:
     projectName: "CSE"
-    componentName: "cse-angular-web"
+    componentName: "eureca-frontend"
     workingDir: "app"
     buildOutputPath: "dist"
     nodeVersion: "18.X"
     flags:
-      unitTestsEnabled: false
+      unitTestsEnabled: true
       sonarEnabled: false
       sonarQualityGateEnabled: false
       jFrogXrayEnabled: false
-      fluidAttacksEnabled: false
+      fluidAttacksEnabled: true
