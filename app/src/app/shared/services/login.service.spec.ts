@@ -39,6 +39,7 @@ describe('LoginService', () => {
 
   const testRuc = '12345678901';
   const testPsw = 'password123';
+  const tokenRecaptcha = 'password123as34kdjd62jdhas';
   const apiBaseUrl = environment.END_POINT;
 
   beforeEach(() => {
@@ -73,7 +74,8 @@ describe('LoginService', () => {
     const loginUrl = `${apiBaseUrl}/login`;
     const expectedData = new HttpParams()
       .set('username', testRuc)
-      .set('password', testPsw);
+      .set('password', testPsw)
+      .set('recaptcha', tokenRecaptcha);
     const expectedOpts = {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -96,7 +98,9 @@ describe('LoginService', () => {
 
       let result: RespuestaLogin | undefined;
 
-      service.login(testRuc, testPsw).subscribe((res) => (result = res));
+      service
+        .login(testRuc, testPsw, tokenRecaptcha)
+        .subscribe((res) => (result = res));
       flush();
 
       expect(notifyServiceMock.clear).toHaveBeenCalledTimes(1);
@@ -135,7 +139,9 @@ describe('LoginService', () => {
 
       let result: RespuestaLogin | undefined;
 
-      service.login(testRuc, testPsw).subscribe((res) => (result = res));
+      service
+        .login(testRuc, testPsw, tokenRecaptcha)
+        .subscribe((res) => (result = res));
       flush();
 
       expect(notifyServiceMock.clear).toHaveBeenCalledTimes(1);
@@ -156,7 +162,7 @@ describe('LoginService', () => {
       httpClientMock.post.mockReturnValue(of(mockSuccessResponse));
       storageServiceMock.isValidSession.mockReturnValue(false);
 
-      service.login(testRuc, testPsw).subscribe();
+      service.login(testRuc, testPsw, tokenRecaptcha).subscribe();
       flush();
 
       expect(storageServiceMock.setCurrentSession).toHaveBeenCalledTimes(1);
@@ -175,7 +181,7 @@ describe('LoginService', () => {
 
       let receivedError: HttpErrorResponse | undefined;
 
-      service.login(testRuc, testPsw).subscribe({
+      service.login(testRuc, testPsw, tokenRecaptcha).subscribe({
         error: (err) => (receivedError = err),
       });
       flush();
