@@ -48,7 +48,7 @@ extends:
     buildOutputPath: "dist"
     nodeVersion: "18.X"
     flags:
-      unitTestsEnabled: false
+      unitTestsEnabled: true
       sonarEnabled: false
       sonarQualityGateEnabled: false
       jFrogXrayEnabled: false
