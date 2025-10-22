@@ -108,7 +108,10 @@ const config: Config = {
     [
       'jest-junit',
       {
-        outputName: 'unit-test-result.xml',
+        outputDirectory: 'testresults/sonar',
+
+        outputName: 'sonar-report.xml',
+
         ancestorSeparator: ' › ',
         usePathForSuiteName: 'true',
       },
