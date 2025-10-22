@@ -49,7 +49,7 @@ extends:
     nodeVersion: "18.X"
     flags:
       unitTestsEnabled: true
-      sonarEnabled: false
-      sonarQualityGateEnabled: false
+      sonarEnabled: true
+      sonarQualityGateEnabled: true
       jFrogXrayEnabled: false
       fluidAttacksEnabled: true

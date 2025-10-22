@@ -8,6 +8,7 @@ export const environment: IEnvironment = {
   development: false,
   production: true,
   END_POINT: serverUrl.prod,
+  recaptcha: '6LcLkqsrAAAAAGecQmU5cy0JCRr484i5Np6cIGpC',
   logLevel: NgxLoggerLevel.OFF,
   serverLogLevel: NgxLoggerLevel.ERROR,
   adobe:
