@@ -131,8 +131,9 @@
   },
   "overrides": {
     "jest-environment-jsdom": {
-      "jsdom": "25.0.1",
-      "rrweb-cssom": "0.8.0"
+      "jsdom": "27.0.1",
+      "rrweb-cssom": "0.8.0",
+      "cssstyle": "5.3.1"
     }
   }
 }
