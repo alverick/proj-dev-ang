@@ -9,7 +9,7 @@
     "build": "ng build",
     "build:stats": "ng build --stats-json",
     "analyze": "webpack-bundle-analyzer dist/EurekaAngularProy/stats-latest.json",
-    "test": "jest",
+    "test": "node --max_old_space_size=8192 jest",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "storybook": "ng run EurekaAngularProy:storybook",
