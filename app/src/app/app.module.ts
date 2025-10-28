@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,61 +25,52 @@ import { StorageService } from './shared/services/storage.service';
 import { AppConfigEffects } from './store/effects/app-config.effects';
 import { appConfigFeature } from './store/reducers/app-config.reducer';
 
-@NgModule({
-  declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    NgxSpinnerModule,
-    HttpClientModule,
-    LoggerModule.forRoot({
-      level: environment.logLevel,
-      serverLogLevel: environment.serverLogLevel,
-      disableConsoleLogging: false,
-      enableSourceMaps: true,
-    }),
-    ValdemortModule,
-    StoreModule.forRoot(
-      {},
-      {
-        runtimeChecks: {
-          strictStateImmutability: true,
-          strictActionImmutability: true,
-          strictStateSerializability: true,
-          strictActionSerializability: true,
+@NgModule({ declarations: [AppComponent],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        NgxSpinnerModule,
+        LoggerModule.forRoot({
+            level: environment.logLevel,
+            serverLogLevel: environment.serverLogLevel,
+            disableConsoleLogging: false,
+            enableSourceMaps: true,
+        }),
+        ValdemortModule,
+        StoreModule.forRoot({}, {
+            runtimeChecks: {
+                strictStateImmutability: true,
+                strictActionImmutability: true,
+                strictStateSerializability: true,
+                strictActionSerializability: true,
+            },
+        }),
+        StoreModule.forFeature(appConfigFeature),
+        EffectsModule.forRoot([]),
+        EffectsModule.forFeature([AppConfigEffects]),
+        StoreDevtoolsModule.instrument({
+            maxAge: 25,
+            logOnly: environment.production,
+            connectInZone: true,
+        }),
+        ValidationDefaultsComponent,
+        FabWhatsappComponent], providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptorService,
+            multi: true,
         },
-      },
-    ),
-    StoreModule.forFeature(appConfigFeature),
-    EffectsModule.forRoot([]),
-    EffectsModule.forFeature([AppConfigEffects]),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-      logOnly: environment.production,
-      connectInZone: true,
-    }),
-    ValidationDefaultsComponent,
-    FabWhatsappComponent,
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
-      multi: true,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoaderInterceptor,
-      multi: true,
-    },
-    EncryptionService,
-    AdobeLaunchProviderService,
-    HotjarProviderService,
-    NotifyService,
-    StorageService,
-    provideAnimationsAsync(),
-  ],
-  bootstrap: [AppComponent],
-})
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: LoaderInterceptor,
+            multi: true,
+        },
+        EncryptionService,
+        AdobeLaunchProviderService,
+        HotjarProviderService,
+        NotifyService,
+        StorageService,
+        provideAnimationsAsync(),
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {}
