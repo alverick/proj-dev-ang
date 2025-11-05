@@ -3,16 +3,20 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
-import { hmrBootstrap } from './hmr';
 
 const { production, hmr: hmrValue = false } = environment;
+
 if (production) {
   enableProdMode();
 }
 
+// Function to start the application (standard bootstrap)
 const bootstrap = () => platformBrowserDynamic().bootstrapModule(AppModule);
 
-if (hmrValue) {
+// --- MSW Setup ---
+// Run MSW worker start unconditionally if it's not a production build
+// This setup is moved outside the legacy HMR block.
+if (hmrValue || !production) {
   import('./mocks/browser')
     .then(({ worker }) => {
       return worker.start({
@@ -20,12 +24,8 @@ if (hmrValue) {
       });
     })
     .catch((err) => console.error('Failed to start MSW', err));
-  if ((module as any).hot) {
-    hmrBootstrap(module, bootstrap);
-  } else {
-    console.error('HMR is not enabled for webpack-dev-server!');
-    console.log('Are you using the --hmr flag for ng serve?');
-  }
-} else {
-  bootstrap().catch((err) => console.log(err));
 }
+// --- MSW Setup End ---
+
+// Standard application bootstrap
+bootstrap().catch((err) => console.log(err));
