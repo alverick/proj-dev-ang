@@ -42,7 +42,7 @@
     "@ngrx/store": "^18.1.1",
     "@ngrx/store-devtools": "^18.1.1",
     "@uiowa/digit-only": "^3.2.1",
-    "angular-shepherd": "^17.0.0",
+    "angular-shepherd": "^18.0.2",
     "bootstrap": "^5.3.3",
     "dompurify": "^3.1.7",
     "dot-object": "^2.1.5",
