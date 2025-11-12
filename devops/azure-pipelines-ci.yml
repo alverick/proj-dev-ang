@@ -43,7 +43,7 @@ extends:
   template: "src/templates/node/ci.yml@ibkAzTemplates"
   parameters:
     projectName: "CSE"
-    componentName: "eureca-frontend"
+    componentName: "cse-eureca-frontend"
     workingDir: "app"
     buildOutputPath: "dist"
     nodeVersion: "18.X"
