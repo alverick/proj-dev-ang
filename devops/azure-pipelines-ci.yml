@@ -32,7 +32,7 @@ resources:
       type: "bitbucket"
       endpoint: "bitbucket-generic-user"
       name: "ibkteam/dso-frontend-template"
-      ref: "master"
+      ref: "cse-usergen"
 
 ####################
 # Call the template of your preference
