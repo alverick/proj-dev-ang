@@ -54,8 +54,8 @@ extends:
     azAppServiceAppName: "wappeu2c003eurcdev01"
     azAppServiceRuntimeStack: "NODE|18-lts"
     flags:
-      unitTestsEnabled: false
-      sonarEnabled: false
-      sonarQualityGateEnabled: false
-      jFrogXrayEnabled: false
+      unitTestsEnabled: true
+      sonarEnabled: true
+      sonarQualityGateEnabled: true
+      jFrogXrayEnabled: true
       fluidAttacksEnabled: true
