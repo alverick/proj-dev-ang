@@ -1,14 +1,12 @@
-@import "configuration";
-
 body {
   background: var(--ibk-white) !important;
 }
 
 small {
-  @include font-text(14px, $weight: 500 !important);
   color: var(--primary-green-1);
   text-decoration: underline;
   cursor: pointer;
+  @apply tw-text-sm tw-font-medium;
 }
 
 .ps-body {
@@ -39,16 +37,16 @@ small {
   margin-left: auto;
   margin-right: auto;
   .title {
-    @include font-text(18px, 500);
     padding: 20px 15px 10px 15px;
     color: var(--ibk-black);
+    @apply tw-text-lg tw-font-medium;
   }
   .content {
     width: 100%;
     min-height: 15px;
-    @include border-radius(5px);
     background-color: var(--ibk-white);
     padding: 5px 15px;
+    @apply tw-rounded-md;
   }
 }
 
@@ -59,9 +57,9 @@ small {
       tr {
         border-bottom: solid 1px #f0f0f0;
         th {
-          @include font-text(12px, 500);
           color: var(--secondary-blue-1);
           padding: 2px;
+          @apply tw-text-xs tw-font-medium;
           .text {
             display: inline-block;
             height: 30px;
@@ -75,10 +73,10 @@ small {
       tr {
         border-bottom: solid 1px #f0f0f0;
         td {
-          @include font-text(12px);
           color: var(--ibk-black);
           padding: 8px 3px;
           text-overflow: ellipsis;
+          @apply tw-text-xs;
         }
       }
     }

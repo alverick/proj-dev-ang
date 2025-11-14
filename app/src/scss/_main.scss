@@ -1,5 +1,5 @@
 body {
-  font-family: $primary-font-family;
+  font-family: var(--font-family);
   color: var(--ibk-black);
 }
 
@@ -43,8 +43,8 @@ button:focus {
 }
 
 .messsage-error {
-  @include font-text(12px, 500);
   color: var(--extended-palette-watermelon-1) !important;
+  @apply tw-text-xs tw-font-medium;
 }
 
 .w-35 {
@@ -63,24 +63,24 @@ button:focus {
 }
 
 .texto-azul {
-  @include font-text(32px, $weight: 500);
   color: var(--secondary-blue-1);
+  @apply tw-text-3xl tw-font-medium;
 }
 
 .font-black {
-  @include font-text(18px, $weight: 600);
   color: var(--ibk-black);
+  @apply tw-text-lg tw-font-semibold;
 }
 
 .swal2-content {
-  @include font-text(16px, $weight: 500);
   color: var(--ibk-black) !important;
   text-align: center;
+  @apply tw-text-base tw-font-medium;
 }
 
 .input-text {
-  @include font-text(16px !important, normal !important);
   color: var(--ibk-black) !important;
+  @apply tw-text-base tw-font-medium;
 }
 
 .swal2-styled {

@@ -1,17 +1,17 @@
-@import "configuration";
+@use "configuration" as *;
 
 :host {
   text-align: center;
 }
 
 .titulo {
-  @include font-text(24px, normal);
   margin-bottom: 15px;
+  @apply tw-text-2xl;
 }
 
 .subtitulo {
-  @include font-text(16px, normal);
   margin-bottom: 15px;
+  @apply tw-text-base;
 }
 
 .opciones {
@@ -32,7 +32,7 @@
     }
 
     .btn-subtext {
-      @include font-text(11px, 400);
+      @apply tw-text-xs tw-font-normal;
     }
   }
 }
