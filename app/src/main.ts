@@ -1,7 +1,8 @@
 import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { bootstrapApplication } from '@angular/platform-browser';
 
-import { AppModule } from './app/app.module';
+import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
 import { environment } from './environments/environment';
 
 const { production, hmr: hmrValue = false } = environment;
@@ -9,9 +10,6 @@ const { production, hmr: hmrValue = false } = environment;
 if (production) {
   enableProdMode();
 }
-
-// Function to start the application (standard bootstrap)
-const bootstrap = () => platformBrowserDynamic().bootstrapModule(AppModule);
 
 // --- MSW Setup ---
 // Run MSW worker start unconditionally if it's not a production build
@@ -28,4 +26,4 @@ if (hmrValue || !production) {
 // --- MSW Setup End ---
 
 // Standard application bootstrap
-bootstrap().catch((err) => console.log(err));
+bootstrapApplication(AppComponent, appConfig).catch((err) => console.log(err));

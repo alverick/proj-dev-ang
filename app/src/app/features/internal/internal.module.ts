@@ -18,7 +18,6 @@ import { LoadBarService } from '../../shared/services/load-bar.service';
 import { LoadFileService } from '../../shared/services/load-file.service';
 import { TransactionService } from '../../shared/services/transaction.service';
 import { SharedModule } from '../../shared/shared.module';
-import { EntityStoreModule } from '../../store/entity-store.module';
 import { CompanyPasswordFormComponent } from './components/company-password-form/company-password-form.component';
 import { CompanyUpdateFormComponent } from './components/company-update-form/company-update-form.component';
 import { InternalHeaderComponent } from './components/internal-header/internal-header.component';
@@ -42,7 +41,6 @@ import { SERVICES } from './services';
     CommonModule,
     InternalRoutingModule,
     HeaderComponent,
-    EntityStoreModule,
     SharedModule,
     PushPipe,
     LetDirective,
