@@ -16,7 +16,7 @@ import {
 } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextarea } from 'primeng/inputtextarea';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { Ripple } from 'primeng/ripple';
@@ -39,7 +39,7 @@ import { ICompanyData } from '../../../../shared/models/company-data';
     LabelControlComponent,
     InputTextModule,
     KeyFilterModule,
-    InputTextareaModule,
+    InputTextarea,
     RadioButtonModule,
     ButtonDirective,
     Ripple,

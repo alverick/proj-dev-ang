@@ -3,7 +3,7 @@ import { ReactiveFormsModule, type UntypedFormControl } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonDirective } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextarea } from 'primeng/inputtextarea';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { Ripple } from 'primeng/ripple';
@@ -39,7 +39,7 @@ describe('EmpresaGTPComponent', () => {
         NoopAnimationsModule,
         InputTextModule,
         KeyFilterModule,
-        InputTextareaModule,
+        InputTextarea,
         RadioButtonModule,
         ButtonDirective,
         Ripple,

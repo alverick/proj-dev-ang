@@ -16,7 +16,7 @@ import {
 } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextarea } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { Ripple } from 'primeng/ripple';
 import { isNil } from 'ramda';
@@ -40,7 +40,7 @@ import { type CompanyAccounts } from '../../../../shared/services/company.servic
     FormsModule,
     ReactiveFormsModule,
     LabelControlComponent,
-    InputTextareaModule,
+    InputTextarea,
     RadioButtonModule,
     InputTextModule,
     ButtonDirective,

@@ -15,7 +15,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ChipModule } from 'primeng/chip';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
-import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { DynamicDialog } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputGroupModule } from 'primeng/inputgroup';
@@ -24,7 +24,6 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { MenuModule } from 'primeng/menu';
 import { MessageModule } from 'primeng/message';
@@ -79,13 +78,12 @@ const PRIMENG_MODULES = [
   ChipModule,
   DialogModule,
   DropdownModule,
-  DynamicDialogModule,
+  DynamicDialog,
   IconFieldModule,
   InputIconModule,
   InputMaskModule,
   InputNumberModule,
   InputTextModule,
-  InputTextareaModule,
   InputGroupModule,
   InputGroupAddonModule,
   KeyFilterModule,
