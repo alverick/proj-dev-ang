@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, CommonModule } from '@angular/common';
 import { Component, HostListener, type OnDestroy } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet, Scroll } from '@angular/router';
 import { StepsModule } from 'primeng/steps';
@@ -12,7 +12,8 @@ import { AffiliationService } from '../../services';
 @Component({
     selector: 'cs-service-add',
     templateUrl: './service-add.page.html',
-    imports: [SidebarServiceComponent, NgClass, StepsModule, RouterOutlet]
+    standalone: true,
+    imports: [CommonModule, SidebarServiceComponent, NgClass, StepsModule, RouterOutlet]
 })
 export class ServiceAddPage implements OnDestroy {
   destroy$ = new Subject();

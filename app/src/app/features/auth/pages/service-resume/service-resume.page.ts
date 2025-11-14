@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SidebarModule } from 'primeng/sidebar';
@@ -26,7 +27,9 @@ import { AffiliationService } from '../../services';
     host: { class: 'tw-w-full' },
     selector: 'cs-service-resume',
     templateUrl: './service-resume.page.html',
+    standalone: true,
     imports: [
+        CommonModule,
         ServicesListComponent,
         ServiceCardComponent,
         SidebarModule,

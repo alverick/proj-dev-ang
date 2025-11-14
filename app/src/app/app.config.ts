@@ -2,6 +2,7 @@ import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { BrowserModule } from '@angular/platform-browser';
 import { provideStore } from '@ngrx/store';
 import { provideState } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
@@ -22,14 +23,12 @@ import { NotifyService } from './shared/services/notify.service';
 import { StorageService } from './shared/services/storage.service';
 import { entityStoreConfig } from './store/entity-store.config';
 import { providePrimeNG } from "primeng/config";
-import Lara from '@primeng/themes/lara';
 import Aura from '@primeng/themes/aura';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })),
     provideHttpClient(withInterceptorsFromDi()),
-    provideAnimationsAsync(),
     providePrimeNG({
       theme: {
         preset: Aura,
@@ -39,6 +38,7 @@ export const appConfig: ApplicationConfig = {
       },
       ripple: true
     }),
+    provideAnimationsAsync(),
     provideStore(
       {},
       {
@@ -59,6 +59,7 @@ export const appConfig: ApplicationConfig = {
       connectInZone: true,
     }),
     importProvidersFrom(
+      BrowserModule,
       LoggerModule.forRoot({
         level: environment.logLevel,
         serverLogLevel: environment.serverLogLevel,

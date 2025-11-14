@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -34,7 +35,9 @@ export type FormChangePassword = {
 @Component({
     selector: 'cs-cambia-contrasena',
     templateUrl: './cambia-contrasena.component.html',
+    standalone: true,
     imports: [
+        CommonModule,
         LayoutFormComponent,
         FormsModule,
         ReactiveFormsModule,

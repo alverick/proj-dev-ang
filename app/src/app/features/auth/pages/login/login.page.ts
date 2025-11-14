@@ -57,6 +57,7 @@ interface LoginForm {
     selector: 'cs-login',
     templateUrl: './login.page.html',
     providers: [MessageService, RecaptchaProviderService],
+    standalone: true,
     imports: [
         LayoutFormComponent,
         FormsModule,

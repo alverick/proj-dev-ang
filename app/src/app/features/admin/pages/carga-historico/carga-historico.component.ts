@@ -1,4 +1,4 @@
-import { DatePipe, DecimalPipe } from '@angular/common';
+import { DatePipe, DecimalPipe, CommonModule } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { saveAs } from 'file-saver';
@@ -16,7 +16,9 @@ import { swalAlert } from '../../../../shared/utils/helpers/popups';
     selector: 'cs-carga-historico',
     templateUrl: './carga-historico.component.html',
     styleUrls: ['./carga-historico.component.scss'],
+    standalone: true,
     imports: [
+        CommonModule,
         ButtonDirective,
         Ripple,
         TooltipModule,

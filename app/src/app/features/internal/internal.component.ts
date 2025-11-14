@@ -14,6 +14,7 @@ import { InternalHeaderComponent } from './components/internal-header/internal-h
     selector: 'cs-internal',
     templateUrl: './internal.component.html',
     animations: [fadeAnimation],
+    standalone: true,
     imports: [InternalHeaderComponent, NgClass, RouterOutlet, FooterComponent]
 })
 export class InternalComponent {

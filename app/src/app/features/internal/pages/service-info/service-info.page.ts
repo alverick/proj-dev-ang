@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -18,7 +19,8 @@ import {
     selector: 'cs-internal-service-info',
     templateUrl: './service-info.page.html',
     styleUrls: ['./service-info.page.scss'],
-    imports: [ServiceStepInfoComponent]
+    standalone: true,
+    imports: [CommonModule, ServiceStepInfoComponent]
 })
 export class ServiceInfoPage {
   accounts: CompanyAccounts[];

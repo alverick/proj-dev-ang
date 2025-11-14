@@ -1,4 +1,4 @@
-import { DatePipe, DecimalPipe } from '@angular/common';
+import { DatePipe, DecimalPipe, CommonModule } from '@angular/common';
 import { Component, type OnDestroy, type OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { saveAs } from 'file-saver';
@@ -28,7 +28,9 @@ import { adminFullRoutingNames } from '../../admin-routing.names';
     templateUrl: './gtp-grilla.page.html',
     styleUrls: ['./gtp-grilla.page.scss'],
     providers: [GtpService, DatePipe],
+    standalone: true,
     imports: [
+        CommonModule,
         PaymentsFilterComponent,
         SplitButtonModule,
         ButtonDirective,

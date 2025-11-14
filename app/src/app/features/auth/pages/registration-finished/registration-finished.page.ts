@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
 
 import { AffiliationService } from '../../services';
@@ -6,6 +7,7 @@ import { AffiliationService } from '../../services';
   selector: 'cs-registration-finished',
   templateUrl: './registration-finished.page.html',
   standalone: true,
+  imports: [CommonModule]
 })
 export class RegistrationFinishedPage implements OnInit {
   email = '';

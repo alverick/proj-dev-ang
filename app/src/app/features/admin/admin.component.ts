@@ -6,6 +6,7 @@ import { AdminHeaderComponent } from './components/admin-header/admin-header.com
 @Component({
     selector: 'cs-admin',
     templateUrl: './admin.component.html',
+    standalone: true,
     imports: [AdminHeaderComponent, RouterOutlet]
 })
 export class AdminComponent {}

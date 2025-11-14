@@ -1,4 +1,4 @@
-import { DatePipe, NgClass } from '@angular/common';
+import { DatePipe, NgClass, CommonModule } from '@angular/common';
 import {
   type AfterViewInit,
   Component,
@@ -92,7 +92,9 @@ export type DebtDialog = {
     templateUrl: './home.page.html',
     styleUrls: ['./home.page.scss'],
     providers: [DatePipe, TransactionService],
+    standalone: true,
     imports: [
+        CommonModule,
         BadgeModule,
         PaymentsFilterComponent,
         NgClass,

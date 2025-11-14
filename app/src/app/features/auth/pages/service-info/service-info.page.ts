@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -16,7 +17,8 @@ import { AffiliationService } from '../../services';
     selector: 'cs-service-info',
     templateUrl: './service-info.page.html',
     styleUrls: ['./service-info.page.scss'],
-    imports: [ServiceStepInfoComponent]
+    standalone: true,
+    imports: [CommonModule, ServiceStepInfoComponent]
 })
 export class ServiceInfoPage implements OnInit {
   accounts: CompanyAccounts[];

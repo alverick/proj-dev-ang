@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
@@ -23,7 +24,8 @@ import { CompanyServicesService } from '../../services';
     selector: 'cs-service-configuration',
     templateUrl: './service-configuration.page.html',
     styleUrls: ['./service-configuration.page.scss'],
-    imports: [ServiceStepConfigurationComponent]
+    standalone: true,
+    imports: [CommonModule, ServiceStepConfigurationComponent]
 })
 export class ServiceConfigurationPage {
   errorMessagesServiceConfig = errorServiceConfiguration;

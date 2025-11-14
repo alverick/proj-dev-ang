@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -11,7 +12,8 @@ import { AffiliationService } from '../../services';
 @Component({
     selector: 'cs-update-company',
     templateUrl: './update-company.page.html',
-    imports: [SidebarCompanyComponent, CompanyFormAuthComponent]
+    standalone: true,
+    imports: [CommonModule, SidebarCompanyComponent, CompanyFormAuthComponent]
 })
 export class UpdateCompanyPage implements OnInit {
   entryOptions: IEntryModel[] = [];

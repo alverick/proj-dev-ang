@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, CommonModule } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -22,7 +22,9 @@ import { swalAlert } from '../../../../shared/utils/helpers/popups';
     templateUrl: './configurar-correo-gtp.component.html',
     styleUrls: ['./configurar-correo-gtp.component.scss'],
     providers: [GtpService, DatePipe],
+    standalone: true,
     imports: [
+        CommonModule,
         ButtonDirective,
         Ripple,
         FormsModule,

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
@@ -31,7 +32,9 @@ import { CompanyServicesService } from '../../services';
     host: { class: 'tw-w-full' },
     selector: 'cs-company-services',
     templateUrl: './company-services.page.html',
+    standalone: true,
     imports: [
+        CommonModule,
         ServicesListComponent,
         ServiceCardComponent,
         SidebarModule,

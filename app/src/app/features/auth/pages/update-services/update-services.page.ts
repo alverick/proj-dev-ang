@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SidebarModule } from 'primeng/sidebar';
@@ -22,7 +23,9 @@ import { AffiliationService } from '../../services';
 @Component({
     selector: 'cs-update-services',
     templateUrl: './update-services.page.html',
+    standalone: true,
     imports: [
+        CommonModule,
         StepsModule,
         ServicesListComponent,
         ServiceCardComponent,

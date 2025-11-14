@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 @Component({
     selector: 'cs-internal-service-add',
     templateUrl: './service-add.page.html',
+    standalone: true,
     imports: [RouterOutlet]
 })
 export class ServiceAddPage {

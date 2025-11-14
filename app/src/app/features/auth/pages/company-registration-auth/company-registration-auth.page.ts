@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -15,7 +16,8 @@ import { AffiliationService } from '../../services';
     selector: 'cs-company-registration-auth',
     templateUrl: './company-registration-auth.page.html',
     styleUrls: ['./company-registration-auth.page.scss'],
-    imports: [SidebarCompanyComponent, CompanyFormAuthComponent]
+    standalone: true,
+    imports: [CommonModule, SidebarCompanyComponent, CompanyFormAuthComponent]
 })
 export class CompanyRegistrationAuthPage implements OnInit {
   entryOptions: IEntryModel[] = [];

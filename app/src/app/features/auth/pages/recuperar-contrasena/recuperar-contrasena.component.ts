@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, HostListener, type OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -38,7 +39,9 @@ interface RecoverForm {
 @Component({
     selector: 'cs-recuperar-contrasena',
     templateUrl: './recuperar-contrasena.component.html',
+    standalone: true,
     imports: [
+        CommonModule,
         LayoutFormComponent,
         FormsModule,
         ReactiveFormsModule,

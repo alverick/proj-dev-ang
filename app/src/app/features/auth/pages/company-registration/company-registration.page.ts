@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
-import { type UntypedFormGroup } from '@angular/forms';
+import { type UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { pathEq } from 'ramda';
 
@@ -17,7 +18,8 @@ import { AffiliationService } from '../../services';
     selector: 'cs-company-registration',
     templateUrl: './company-registration.page.html',
     styleUrls: ['./company-registration.page.scss'],
-    imports: [SidebarCompanyComponent, CompanyFormRegistrationComponent]
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, SidebarCompanyComponent, CompanyFormRegistrationComponent]
 })
 export class CompanyRegistrationPage implements OnInit {
   registerForm: UntypedFormGroup;

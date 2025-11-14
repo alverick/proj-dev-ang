@@ -1,4 +1,4 @@
-import { DatePipe, NgClass } from '@angular/common';
+import { DatePipe, NgClass, CommonModule } from '@angular/common';
 import { Component, HostListener, type OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
@@ -27,7 +27,9 @@ import { ServicesGTPComponent } from '../../components/services-gtp/services-gtp
     selector: 'cs-aprobaciones',
     templateUrl: './aprobaciones.page.html',
     providers: [GtpService, DatePipe],
+    standalone: true,
     imports: [
+        CommonModule,
         NgClass,
         TagModule,
         ButtonDirective,
