@@ -1,3 +1,5 @@
+@import "configuration";
+
 body {
   background: var(--ibk-white) !important;
 }
@@ -26,131 +28,12 @@ body {
   }
 }
 
-.widget.filtros {
-  .content {
-    .mat-mdc-form-field.f1 {
-      width: 236px;
-    }
-    .mat-mdc-form-field.f2 {
-      margin-left: 10px;
-      width: 116px;
-    }
-    .f3 {
-      width: 140px;
-      margin-left: 8px;
-      height: 32px;
-    }
-  }
-}
-
 .widget.lista {
   .content {
     padding-left: 0;
     padding-right: 0;
-    .actions {
-      height: 51px;
-      padding-left: 15px;
-      padding-right: 15px;
-      border-bottom: solid 1px #f0f0f0;
-      .al-left {
-        display: flex;
-        padding-top: 12px;
-        .lnk-label {
-          display: inline;
-          @include font-text(14px, 500);
-          color: var(--primary-green-1);
-          margin-left: 20px;
-          cursor: pointer;
-        }
-        .sobresale {
-          position: absolute;
-          right: 20px;
-          background-color: white;
-          z-index: 99;
-          .card {
-            padding: 8px;
-            .selecciona-servicio {
-              @include font-text(10px!important, 500!important);
-              color: var(--ibk-black) !important;
-              padding: 6px 2px;
-            }
-            .option-item {
-              @include font-text(14px);
-              color: var(--ibk-black) !important;
-              width: 100%;
-              padding: 6px;
-              .mano {
-                cursor: pointer;
-              }
-            }
-          }
-        }
-      }
-      .al-right {
-        padding-top: 12px;
-        .lnk-label {
-          display: inline;
-          @include font-text(14px, 500);
-          color: var(--primary-green-1);
-          margin-left: 20px;
-          cursor: pointer;
-        }
-        .sobresale {
-          position: absolute;
-          right: 20px;
-          background-color: white;
-          z-index: 99;
-          .card {
-            padding: 8px;
-            .selecciona-servicio {
-              @include font-text(10px!important, 500!important);
-              color: var(--ibk-black) !important;
-              padding: 6px 2px;
-            }
-            .option-item {
-              @include font-text(14px);
-              color: var(--ibk-black) !important;
-              width: 100%;
-              padding: 6px;
-              .mano {
-                cursor: pointer;
-              }
-            }
-          }
-        }
-      }
-    }
-    .counter {
-      height: 51px;
-      padding: 15px;
-      border-bottom: solid 1px #f0f0f0;
-      text-align: center;
-      .text {
-        @include font-text(14px);
-        color: var(--ibk-black);
-        .btn-select-all {
-          padding: 5px 10px;
-          font-weight: 500;
-          color: var(--primary-green-1) !important;
-          background-color: var(--ibk-white);
-          @include border-radius(4px);
-          border: 0;
-          &:hover {
-            background-color: rgba(5, 190, 80, 0.2);
-          }
-        }
-      }
-    }
     .lista {
       padding-top: 8px;
-      .head-fixed {
-        position: fixed;
-        top: 0;
-        background-color: white;
-        width: 1200px;
-        z-index: 1;
-        padding-top: 10px;
-      }
       table {
         width: 100%;
         thead {
@@ -166,97 +49,17 @@ body {
                 vertical-align: middle;
                 text-align: center;
               }
-              .ord {
-                margin-left: 5px;
-                display: inline-block;
-                .up {
-                  display: block;
-                  margin-bottom: 5px;
-                  cursor: pointer;
-                  width: 0;
-                  height: 0;
-                  border-left: 5px solid transparent;
-                  border-right: 5px solid transparent;
-                  border-bottom: 5px solid var(--secondary-blue-1);
-                  &.seleccionado {
-                    border-bottom: 5px solid var(--grises-grey-1);
-                  }
-                }
-                .down {
-                  display: block;
-                  margin-bottom: 5px;
-                  cursor: pointer;
-                  width: 0;
-                  height: 0;
-                  border-left: 5px solid transparent;
-                  border-right: 5px solid transparent;
-                  border-top: 5px solid var(--secondary-blue-1);
-                  &.seleccionado {
-                    border-top: 5px solid var(--grises-grey-1);
-                  }
-                }
-              }
             }
           }
         }
         tbody {
           tr {
             border-bottom: solid 1px #f0f0f0;
-            &.seleccionado {
-              background-color: rgba(0, 169, 79, 0.05);
-              td {
-                color: var(--ibk-black) !important;
-              }
-            }
-            &.edit-pago {
-              background-color: rgba(0, 169, 79, 0.05);
-            }
             td {
               @include font-text(12px);
               color: var(--ibk-black);
               padding: 8px 3px;
               text-overflow: ellipsis;
-              &.texto-after {
-                @include font-text(28px, 500);
-                text-align: center;
-                height: 300px;
-                color: var(--ibk-black) !important;
-                img {
-                  position: absolute;
-                  top: 15px;
-                  right: 10%;
-                }
-              }
-              .cnt-status {
-                position: relative;
-                .lnk-status {
-                  cursor: pointer;
-                }
-              }
-              .msg-error {
-                margin-top: 0;
-              }
-              .btn-edit {
-                cursor: pointer;
-                img {
-                  width: 15px;
-                  height: 15px;
-                }
-              }
-              .btn-ok {
-                cursor: pointer;
-                img {
-                  width: 20px;
-                  height: 20px;
-                }
-              }
-              .btn-cancel {
-                cursor: pointer;
-                img {
-                  width: 20px;
-                  height: 20px;
-                }
-              }
             }
           }
         }
@@ -290,11 +93,6 @@ body {
       text-align: right;
       width: 100%;
       padding: 8px 15px 0 8px;
-      .text {
-        float: right;
-        color: var(--grises-grey-1);
-        @include font-text(14px, 500);
-      }
       .ctrl {
         float: right;
       }
@@ -328,47 +126,6 @@ body {
     font-weight: 500;
     font-size: 14px;
   }
-}
-
-.mat-mdc-form-field {
-  .msg-error {
-    @include font-text(10px, 500);
-    position: absolute;
-    color: var(--extended-palette-watermelon-1);
-    margin-top: 10px;
-    width: 200px;
-  }
-  .msg-error-filtro {
-    @include font-text(10px, 500);
-    position: absolute;
-    color: var(--extended-palette-watermelon-1);
-    margin-top: 10px;
-    width: 200px;
-    background-color: var(--ibk-white);
-  }
-}
-
-.btn-eureca-green {
-  @include font-text(12px !important, 500 !important);
-}
-
-.btn-eureca-yellow {
-  @include font-text(12px !important, 500 !important);
-}
-
-.text-danger {
-  @include font-text(12px, 500);
-  color: var(--extended-palette-watermelon-1) !important;
-}
-
-.input-text {
-  @include font-text(14px !important, normal);
-  color: var(--ibk-black) !important;
-}
-
-.input-text-dash {
-  @include font-text(12px !important, normal);
-  color: var(--ibk-black) !important;
 }
 
 .content-container {
@@ -445,70 +202,6 @@ body {
   margin-left: 0.5rem;
 }
 
-.ngx-pagination .show-for-sr {
-  position: absolute !important;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-}
-
-.ngx-pagination .small-screen {
-  display: none;
-}
-
-@media screen and (max-width: 601px) {
-  .ngx-pagination.responsive .small-screen {
-    display: inline-block;
-  }
-  .ngx-pagination.responsive
-    li:not(.small-screen):not(.pagination-previous):not(.pagination-next) {
-    display: none;
-  }
-}
-
-.btn {
-  @include font-text(14px, 500 !important);
-  font-weight: 400;
-  color: var(--primary-green-1);
-}
-
-.dropdown-toggle::after {
-  color: var(--ibk-white);
-}
-
-.addDeuda {
-  float: right;
-  padding-top: 10px;
-  cursor: pointer;
-}
-
-.selecciona-servicio {
-  @include font-text(10px!important, 500!important);
-  color: var(--ibk-black) !important;
-  padding: 8px 2px;
-}
-
-.servicio-Opern {
-  @include font-text(14px!important, normal!important);
-  color: var(--ibk-black) !important;
-  padding-bottom: 10px;
-}
-
-.btn-calendar {
-  background-image: url(/assets/images/calendar.svg);
-}
-
 .numpag {
   color: var(--grises-grey-1) !important;
-}
-
-.chk-vertical {
-  margin-left: -10px !important;
-}
-
-///TAGS
-:host ::ng-deep .badge-primary {
-  color: var(--ibk-white);
-  background-color: var(--extended-palette-watermelon-1);
 }
