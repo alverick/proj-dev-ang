@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { applicationConfig, moduleMetadata } from '@storybook/angular';
 
 import { ValidationDefaultsComponent } from '../../../../shared/components/validation-defaults/validation-defaults.component';

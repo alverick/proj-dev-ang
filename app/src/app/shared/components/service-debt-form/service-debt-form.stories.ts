@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { type UntypedFormGroup } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 import { moduleMetadata } from '@storybook/angular';
 
 import { errorServiceConfiguration } from '../../constants/company-errors';
