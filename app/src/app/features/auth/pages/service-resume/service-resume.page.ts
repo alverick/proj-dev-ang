@@ -23,16 +23,15 @@ import {
 import { AffiliationService } from '../../services';
 
 @Component({
-  host: { class: 'tw-w-full' },
-  selector: 'cs-service-resume',
-  templateUrl: './service-resume.page.html',
-  standalone: true,
-  imports: [
-    ServicesListComponent,
-    ServiceCardComponent,
-    SidebarModule,
-    ServiceEditFormComponent,
-  ],
+    host: { class: 'tw-w-full' },
+    selector: 'cs-service-resume',
+    templateUrl: './service-resume.page.html',
+    imports: [
+        ServicesListComponent,
+        ServiceCardComponent,
+        SidebarModule,
+        ServiceEditFormComponent,
+    ]
 })
 export class ServiceResumePage {
   showSidebar = false;

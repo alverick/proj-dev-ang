@@ -20,11 +20,10 @@ import { internalFullRoutingNames } from '../../internal-routing.names';
 import { CompanyServicesService } from '../../services';
 
 @Component({
-  selector: 'cs-service-configuration',
-  templateUrl: './service-configuration.page.html',
-  styleUrls: ['./service-configuration.page.scss'],
-  standalone: true,
-  imports: [ServiceStepConfigurationComponent],
+    selector: 'cs-service-configuration',
+    templateUrl: './service-configuration.page.html',
+    styleUrls: ['./service-configuration.page.scss'],
+    imports: [ServiceStepConfigurationComponent]
 })
 export class ServiceConfigurationPage {
   errorMessagesServiceConfig = errorServiceConfiguration;

@@ -36,19 +36,18 @@ interface RecoverForm {
 }
 
 @Component({
-  selector: 'cs-recuperar-contrasena',
-  templateUrl: './recuperar-contrasena.component.html',
-  standalone: true,
-  imports: [
-    LayoutFormComponent,
-    FormsModule,
-    ReactiveFormsModule,
-    LabelControlComponent,
-    InputTextModule,
-    KeyFilterModule,
-    ButtonDirective,
-    Ripple,
-  ],
+    selector: 'cs-recuperar-contrasena',
+    templateUrl: './recuperar-contrasena.component.html',
+    imports: [
+        LayoutFormComponent,
+        FormsModule,
+        ReactiveFormsModule,
+        LabelControlComponent,
+        InputTextModule,
+        KeyFilterModule,
+        ButtonDirective,
+        Ripple,
+    ]
 })
 export class RecuperarContrasenaComponent implements OnInit {
   public formulario = true;

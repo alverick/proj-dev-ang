@@ -30,15 +30,14 @@ import { CompanyUpdateFormComponent } from '../../components/company-update-form
 import { CompanyConfigurationService } from '../../services';
 
 @Component({
-  selector: 'cs-company-configuration',
-  templateUrl: './company-configuration.page.html',
-  standalone: true,
-  imports: [
-    NgClass,
-    CompanyUpdateFormComponent,
-    SidebarModule,
-    CompanyPasswordFormComponent,
-  ],
+    selector: 'cs-company-configuration',
+    templateUrl: './company-configuration.page.html',
+    imports: [
+        NgClass,
+        CompanyUpdateFormComponent,
+        SidebarModule,
+        CompanyPasswordFormComponent,
+    ]
 })
 export class CompanyConfigurationPage implements OnInit {
   companyForm: SimpleModelFormGroup<CompanyForm>;

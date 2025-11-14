@@ -6,11 +6,10 @@ import { PrimeTemplate } from 'primeng/api';
 import { CurrencyWithLimit } from '../../constants/currencies';
 
 @Component({
-  selector: 'cs-sidebar-service',
-  templateUrl: './sidebar-service.component.html',
-  styleUrls: ['./sidebar-service.component.scss'],
-  standalone: true,
-  imports: [AccordionModule, PrimeTemplate, CurrencyPipe],
+    selector: 'cs-sidebar-service',
+    templateUrl: './sidebar-service.component.html',
+    styleUrls: ['./sidebar-service.component.scss'],
+    imports: [AccordionModule, PrimeTemplate, CurrencyPipe]
 })
 export class SidebarServiceComponent {
   @Input() position: number;

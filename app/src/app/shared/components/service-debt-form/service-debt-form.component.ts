@@ -27,26 +27,25 @@ import { type ServiceDebt } from '../../services/services-forms.service';
 import { LabelControlComponent } from '../label-control/label-control.component';
 
 @Component({
-  selector: 'cs-service-debt-form',
-  templateUrl: './service-debt-form.component.html',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: ServiceDebtFormComponent,
-      multi: true,
-    },
-  ],
-  standalone: true,
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    LabelControlComponent,
-    DropdownModule,
-    RadioButtonModule,
-    InputNumberModule,
-    InputMoneyDirective,
-    CurrencyPipe,
-  ],
+    selector: 'cs-service-debt-form',
+    templateUrl: './service-debt-form.component.html',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: ServiceDebtFormComponent,
+            multi: true,
+        },
+    ],
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        LabelControlComponent,
+        DropdownModule,
+        RadioButtonModule,
+        InputNumberModule,
+        InputMoneyDirective,
+        CurrencyPipe,
+    ]
 })
 export class ServiceDebtFormComponent
   implements OnInit, OnChanges, AfterViewInit, ControlValueAccessor

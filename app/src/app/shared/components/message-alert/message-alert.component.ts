@@ -10,10 +10,9 @@ import {
  * Message alert component for disclaimers
  */
 @Component({
-  selector: 'cs-message-alert',
-  templateUrl: './message-alert.component.html',
-  standalone: true,
-  imports: [NgClass],
+    selector: 'cs-message-alert',
+    templateUrl: './message-alert.component.html',
+    imports: [NgClass]
 })
 export class MessageAlertComponent implements OnChanges {
   /**

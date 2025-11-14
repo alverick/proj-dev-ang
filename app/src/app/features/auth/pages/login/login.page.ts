@@ -54,25 +54,24 @@ interface LoginForm {
 }
 
 @Component({
-  selector: 'cs-login',
-  templateUrl: './login.page.html',
-  providers: [MessageService, RecaptchaProviderService],
-  standalone: true,
-  imports: [
-    LayoutFormComponent,
-    FormsModule,
-    ReactiveFormsModule,
-    LabelControlComponent,
-    InputTextModule,
-    KeyFilterModule,
-    CheckboxModule,
-    PasswordModule,
-    RouterLink,
-    ButtonDirective,
-    Ripple,
-    LetDirective,
-    ToastModule,
-  ],
+    selector: 'cs-login',
+    templateUrl: './login.page.html',
+    providers: [MessageService, RecaptchaProviderService],
+    imports: [
+        LayoutFormComponent,
+        FormsModule,
+        ReactiveFormsModule,
+        LabelControlComponent,
+        InputTextModule,
+        KeyFilterModule,
+        CheckboxModule,
+        PasswordModule,
+        RouterLink,
+        ButtonDirective,
+        Ripple,
+        LetDirective,
+        ToastModule,
+    ]
 })
 export class LoginPage implements OnInit {
   public loginForm: ModelFormGroup<LoginForm>;

@@ -33,20 +33,19 @@ import { AfiliacionService } from '../../../../shared/services/afiliacion.servic
 import { type CompanyAccounts } from '../../../../shared/services/company.service';
 
 @Component({
-  selector: 'cs-services-gtp',
-  templateUrl: './services-gtp.component.html',
-  standalone: true,
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    LabelControlComponent,
-    InputTextarea,
-    RadioButtonModule,
-    InputTextModule,
-    ButtonDirective,
-    Ripple,
-    CurrencyPipe,
-  ],
+    selector: 'cs-services-gtp',
+    templateUrl: './services-gtp.component.html',
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        LabelControlComponent,
+        InputTextarea,
+        RadioButtonModule,
+        InputTextModule,
+        ButtonDirective,
+        Ripple,
+        CurrencyPipe,
+    ]
 })
 export class ServicesGTPComponent implements OnInit {
   codDeudor = this.afiliacionService.codDeudor;

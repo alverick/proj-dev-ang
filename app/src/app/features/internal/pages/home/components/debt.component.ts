@@ -61,24 +61,23 @@ export interface Debt {
 }
 
 @Component({
-  selector: 'cs-debt-form',
-  templateUrl: './debt.component.html',
-  providers: [CurrencyPipe, DatePipe],
-  standalone: true,
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    LabelControlComponent,
-    CalendarModule,
-    InputTextModule,
-    KeyFilterModule,
-    InputNumberModule,
-    ButtonDirective,
-    Ripple,
-    IconFieldModule,
-    InputIconModule,
-    MessageAlertComponent,
-  ],
+    selector: 'cs-debt-form',
+    templateUrl: './debt.component.html',
+    providers: [CurrencyPipe, DatePipe],
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        LabelControlComponent,
+        CalendarModule,
+        InputTextModule,
+        KeyFilterModule,
+        InputNumberModule,
+        ButtonDirective,
+        Ripple,
+        IconFieldModule,
+        InputIconModule,
+        MessageAlertComponent,
+    ]
 })
 export class DebtComponent implements OnInit {
   useAmountLimits = false;

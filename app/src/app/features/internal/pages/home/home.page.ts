@@ -88,20 +88,19 @@ export type DebtDialog = {
 };
 
 @Component({
-  selector: 'cs-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
-  standalone: true,
-  providers: [DatePipe, TransactionService],
-  imports: [
-    BadgeModule,
-    PaymentsFilterComponent,
-    NgClass,
-    ButtonDirective,
-    Ripple,
-    SplitButtonModule,
-    TableMovementsComponent,
-  ],
+    selector: 'cs-home',
+    templateUrl: './home.page.html',
+    styleUrls: ['./home.page.scss'],
+    providers: [DatePipe, TransactionService],
+    imports: [
+        BadgeModule,
+        PaymentsFilterComponent,
+        NgClass,
+        ButtonDirective,
+        Ripple,
+        SplitButtonModule,
+        TableMovementsComponent,
+    ]
 })
 export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   ref: DynamicDialogRef;

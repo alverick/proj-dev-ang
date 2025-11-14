@@ -28,23 +28,22 @@ import { MessageAlertComponent } from '../message-alert/message-alert.component'
 import { ServiceChannelChipComponent } from '../service-channel-chip/service-channel-chip.component';
 
 @Component({
-  selector: 'cs-service-step-info',
-  templateUrl: './service-step-info.component.html',
-  standalone: true,
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    LabelControlComponent,
-    InputTextModule,
-    InputWithoutSpacesDirective,
-    DropdownModule,
-    CheckboxModule,
-    ServiceChannelChipComponent,
-    MessageAlertComponent,
-    NgClass,
-    ButtonDirective,
-    Ripple,
-  ],
+    selector: 'cs-service-step-info',
+    templateUrl: './service-step-info.component.html',
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        LabelControlComponent,
+        InputTextModule,
+        InputWithoutSpacesDirective,
+        DropdownModule,
+        CheckboxModule,
+        ServiceChannelChipComponent,
+        MessageAlertComponent,
+        NgClass,
+        ButtonDirective,
+        Ripple,
+    ]
 })
 export class ServiceStepInfoComponent implements OnInit, OnDestroy {
   $destroy = new Subject();

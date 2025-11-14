@@ -11,11 +11,10 @@ import { pathEq } from 'ramda';
 import { AdobeEvent, TrackingService } from '../../services/tracking.service';
 
 @Component({
-  selector: 'cs-fab-whatsapp',
-  templateUrl: './fab-whatsapp.component.html',
-  styleUrls: ['./fab-whatsapp.component.scss'],
-  standalone: true,
-  imports: [NgClass],
+    selector: 'cs-fab-whatsapp',
+    templateUrl: './fab-whatsapp.component.html',
+    styleUrls: ['./fab-whatsapp.component.scss'],
+    imports: [NgClass]
 })
 export class FabWhatsappComponent implements OnChanges {
   @Input() showButton = true;

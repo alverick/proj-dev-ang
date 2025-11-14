@@ -53,24 +53,23 @@ const labelNamesGtp = {
 };
 
 @Component({
-  selector: 'cs-payments-filter',
-  templateUrl: './payments-filter.component.html',
-  styleUrls: ['./payments-filter.component.scss'],
-  standalone: true,
-  imports: [
-    FormsModule,
-    NgClass,
-    ReactiveFormsModule,
-    LabelControlComponent,
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule,
-    DropdownModule,
-    PrimeTemplate,
-    CalendarModule,
-    ButtonDirective,
-    Ripple,
-  ],
+    selector: 'cs-payments-filter',
+    templateUrl: './payments-filter.component.html',
+    styleUrls: ['./payments-filter.component.scss'],
+    imports: [
+        FormsModule,
+        NgClass,
+        ReactiveFormsModule,
+        LabelControlComponent,
+        IconFieldModule,
+        InputIconModule,
+        InputTextModule,
+        DropdownModule,
+        PrimeTemplate,
+        CalendarModule,
+        ButtonDirective,
+        Ripple,
+    ]
 })
 export class PaymentsFilterComponent implements OnInit, OnDestroy {
   @Input() gtpMode = false;

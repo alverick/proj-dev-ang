@@ -9,10 +9,9 @@ import { errorRegisterAuth } from '../../constants';
 import { AffiliationService } from '../../services';
 
 @Component({
-  selector: 'cs-update-company',
-  templateUrl: './update-company.page.html',
-  standalone: true,
-  imports: [SidebarCompanyComponent, CompanyFormAuthComponent],
+    selector: 'cs-update-company',
+    templateUrl: './update-company.page.html',
+    imports: [SidebarCompanyComponent, CompanyFormAuthComponent]
 })
 export class UpdateCompanyPage implements OnInit {
   entryOptions: IEntryModel[] = [];

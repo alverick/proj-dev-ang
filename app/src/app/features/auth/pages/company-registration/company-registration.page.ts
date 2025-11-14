@@ -14,11 +14,10 @@ import {
 import { AffiliationService } from '../../services';
 
 @Component({
-  selector: 'cs-company-registration',
-  templateUrl: './company-registration.page.html',
-  styleUrls: ['./company-registration.page.scss'],
-  standalone: true,
-  imports: [SidebarCompanyComponent, CompanyFormRegistrationComponent],
+    selector: 'cs-company-registration',
+    templateUrl: './company-registration.page.html',
+    styleUrls: ['./company-registration.page.scss'],
+    imports: [SidebarCompanyComponent, CompanyFormRegistrationComponent]
 })
 export class CompanyRegistrationPage implements OnInit {
   registerForm: UntypedFormGroup;

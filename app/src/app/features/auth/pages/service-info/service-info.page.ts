@@ -13,11 +13,10 @@ import { errorServiceInformation } from '../../constants';
 import { AffiliationService } from '../../services';
 
 @Component({
-  selector: 'cs-service-info',
-  templateUrl: './service-info.page.html',
-  styleUrls: ['./service-info.page.scss'],
-  standalone: true,
-  imports: [ServiceStepInfoComponent],
+    selector: 'cs-service-info',
+    templateUrl: './service-info.page.html',
+    styleUrls: ['./service-info.page.scss'],
+    imports: [ServiceStepInfoComponent]
 })
 export class ServiceInfoPage implements OnInit {
   accounts: CompanyAccounts[];

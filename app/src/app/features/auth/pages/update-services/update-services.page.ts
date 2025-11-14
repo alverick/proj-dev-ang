@@ -20,16 +20,15 @@ import {
 import { AffiliationService } from '../../services';
 
 @Component({
-  selector: 'cs-update-services',
-  templateUrl: './update-services.page.html',
-  standalone: true,
-  imports: [
-    StepsModule,
-    ServicesListComponent,
-    ServiceCardComponent,
-    SidebarModule,
-    ServiceEditFormComponent,
-  ],
+    selector: 'cs-update-services',
+    templateUrl: './update-services.page.html',
+    imports: [
+        StepsModule,
+        ServicesListComponent,
+        ServiceCardComponent,
+        SidebarModule,
+        ServiceEditFormComponent,
+    ]
 })
 export class UpdateServicesPage {
   position = 0;

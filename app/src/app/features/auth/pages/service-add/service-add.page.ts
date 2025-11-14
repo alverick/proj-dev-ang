@@ -10,10 +10,9 @@ import { authFullRoutingChildNames } from '../../auth-routing.names';
 import { AffiliationService } from '../../services';
 
 @Component({
-  selector: 'cs-service-add',
-  templateUrl: './service-add.page.html',
-  standalone: true,
-  imports: [SidebarServiceComponent, NgClass, StepsModule, RouterOutlet],
+    selector: 'cs-service-add',
+    templateUrl: './service-add.page.html',
+    imports: [SidebarServiceComponent, NgClass, StepsModule, RouterOutlet]
 })
 export class ServiceAddPage implements OnDestroy {
   destroy$ = new Subject();

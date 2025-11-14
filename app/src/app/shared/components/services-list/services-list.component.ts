@@ -13,11 +13,10 @@ import { ButtonDirective } from 'primeng/button';
 import { Ripple } from 'primeng/ripple';
 
 @Component({
-  selector: 'cs-services-list',
-  templateUrl: './services-list.component.html',
-  styleUrls: ['./services-list.component.scss'],
-  standalone: true,
-  imports: [ButtonDirective, Ripple],
+    selector: 'cs-services-list',
+    templateUrl: './services-list.component.html',
+    styleUrls: ['./services-list.component.scss'],
+    imports: [ButtonDirective, Ripple]
 })
 export class ServicesListComponent implements AfterViewInit, AfterViewChecked {
   @Input() onlyEdit = false;

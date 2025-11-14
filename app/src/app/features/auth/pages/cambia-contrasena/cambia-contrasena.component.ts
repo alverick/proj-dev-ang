@@ -32,20 +32,19 @@ export type FormChangePassword = {
 };
 
 @Component({
-  selector: 'cs-cambia-contrasena',
-  templateUrl: './cambia-contrasena.component.html',
-  standalone: true,
-  imports: [
-    LayoutFormComponent,
-    FormsModule,
-    ReactiveFormsModule,
-    LabelControlComponent,
-    PasswordModule,
-    PrimeTemplate,
-    ControlRulesPoliciesComponent,
-    ButtonDirective,
-    Ripple,
-  ],
+    selector: 'cs-cambia-contrasena',
+    templateUrl: './cambia-contrasena.component.html',
+    imports: [
+        LayoutFormComponent,
+        FormsModule,
+        ReactiveFormsModule,
+        LabelControlComponent,
+        PasswordModule,
+        PrimeTemplate,
+        ControlRulesPoliciesComponent,
+        ButtonDirective,
+        Ripple,
+    ]
 })
 export class CambiaContrasenaComponent implements OnInit {
   public llave: string;

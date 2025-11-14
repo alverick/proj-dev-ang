@@ -18,19 +18,18 @@ import { GtpService } from '../../../../shared/services/gtp.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 
 @Component({
-  selector: 'cs-configurar-correo-gtp',
-  templateUrl: './configurar-correo-gtp.component.html',
-  styleUrls: ['./configurar-correo-gtp.component.scss'],
-  standalone: true,
-  providers: [GtpService, DatePipe],
-  imports: [
-    ButtonDirective,
-    Ripple,
-    FormsModule,
-    ReactiveFormsModule,
-    LabelControlComponent,
-    InputTextModule,
-  ],
+    selector: 'cs-configurar-correo-gtp',
+    templateUrl: './configurar-correo-gtp.component.html',
+    styleUrls: ['./configurar-correo-gtp.component.scss'],
+    providers: [GtpService, DatePipe],
+    imports: [
+        ButtonDirective,
+        Ripple,
+        FormsModule,
+        ReactiveFormsModule,
+        LabelControlComponent,
+        InputTextModule,
+    ]
 })
 export class ConfigurarCorreoGtpComponent implements OnInit {
   frmCorreoGtp = this.formBuilder.group({

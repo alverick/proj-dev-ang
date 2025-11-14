@@ -30,22 +30,21 @@ import {
 import { namePattern } from '../../../../shared/validators/company-validators';
 
 @Component({
-  selector: 'cs-company-update-form',
-  templateUrl: './company-update-form.component.html',
-  standalone: true,
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    LabelControlComponent,
-    InputTextModule,
-    InputWithoutSpacesDirective,
-    KeyFilterModule,
-    DropdownModule,
-    ValidationErrorsComponent,
-    ValidationErrorDirective,
-    InputTrimSpacesDirective,
-    KeyValuePipe,
-  ],
+    selector: 'cs-company-update-form',
+    templateUrl: './company-update-form.component.html',
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        LabelControlComponent,
+        InputTextModule,
+        InputWithoutSpacesDirective,
+        KeyFilterModule,
+        DropdownModule,
+        ValidationErrorsComponent,
+        ValidationErrorDirective,
+        InputTrimSpacesDirective,
+        KeyValuePipe,
+    ]
 })
 export class CompanyUpdateFormComponent implements OnInit, OnChanges {
   documentNumberMax = '8';

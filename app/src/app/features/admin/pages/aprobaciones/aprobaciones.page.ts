@@ -24,19 +24,18 @@ import { EmpresaGTPComponent } from '../../components/empresa-gtp/empresa-gtp.co
 import { ServicesGTPComponent } from '../../components/services-gtp/services-gtp.component';
 
 @Component({
-  selector: 'cs-aprobaciones',
-  templateUrl: './aprobaciones.page.html',
-  standalone: true,
-  providers: [GtpService, DatePipe],
-  imports: [
-    NgClass,
-    TagModule,
-    ButtonDirective,
-    Ripple,
-    EmpresaGTPComponent,
-    ServicesGTPComponent,
-    NotEmptyPipe,
-  ],
+    selector: 'cs-aprobaciones',
+    templateUrl: './aprobaciones.page.html',
+    providers: [GtpService, DatePipe],
+    imports: [
+        NgClass,
+        TagModule,
+        ButtonDirective,
+        Ripple,
+        EmpresaGTPComponent,
+        ServicesGTPComponent,
+        NotEmptyPipe,
+    ]
 })
 export class AprobacionesPage implements OnInit {
   public Formulario = false;

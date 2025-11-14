@@ -24,23 +24,22 @@ import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { adminFullRoutingNames } from '../../admin-routing.names';
 
 @Component({
-  selector: 'cs-gtp-grilla',
-  templateUrl: './gtp-grilla.page.html',
-  styleUrls: ['./gtp-grilla.page.scss'],
-  standalone: true,
-  providers: [GtpService, DatePipe],
-  imports: [
-    PaymentsFilterComponent,
-    SplitButtonModule,
-    ButtonDirective,
-    Ripple,
-    TooltipModule,
-    RouterLink,
-    NgxPaginationModule,
-    FooterComponent,
-    DecimalPipe,
-    DatePipe,
-  ],
+    selector: 'cs-gtp-grilla',
+    templateUrl: './gtp-grilla.page.html',
+    styleUrls: ['./gtp-grilla.page.scss'],
+    providers: [GtpService, DatePipe],
+    imports: [
+        PaymentsFilterComponent,
+        SplitButtonModule,
+        ButtonDirective,
+        Ripple,
+        TooltipModule,
+        RouterLink,
+        NgxPaginationModule,
+        FooterComponent,
+        DecimalPipe,
+        DatePipe,
+    ]
 })
 export class GtpGrillaPage implements OnInit, OnDestroy {
   messageTable = '';

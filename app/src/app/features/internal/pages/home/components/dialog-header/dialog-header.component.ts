@@ -6,10 +6,9 @@ import { TimesIcon } from 'primeng/icons/times';
 import { ExcelService } from '../../../../../../shared/services/excel.service';
 
 @Component({
-  selector: 'cs-dialog-header',
-  standalone: true,
-  imports: [NgClass, TimesIcon],
-  templateUrl: './dialog-header.component.html',
+    selector: 'cs-dialog-header',
+    imports: [NgClass, TimesIcon],
+    templateUrl: './dialog-header.component.html'
 })
 export class DialogHeaderComponent {
   @HostBinding('class') class = 'tw-w-full';

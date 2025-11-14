@@ -22,11 +22,10 @@ import { FabWhatsappComponent } from './shared/components/fab-whatsapp/fab-whats
 import { ValidationDefaultsComponent } from './shared/components/validation-defaults/validation-defaults.component';
 
 @Component({
-  selector: 'cs-root',
-  templateUrl: './app.component.html',
-  animations: [fadeAnimation],
-  standalone: true,
-  imports: [RouterModule, NgxSpinnerModule, FabWhatsappComponent, ValidationDefaultsComponent],
+    selector: 'cs-root',
+    templateUrl: './app.component.html',
+    animations: [fadeAnimation],
+    imports: [RouterModule, NgxSpinnerModule, FabWhatsappComponent, ValidationDefaultsComponent]
 })
 export class AppComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();

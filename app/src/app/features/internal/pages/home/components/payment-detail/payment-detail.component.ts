@@ -29,22 +29,21 @@ import {
 import { companyFeature } from '../../../../../../store/reducers/company.reducer';
 
 @Component({
-  selector: 'cs-payment-detail',
-  templateUrl: './payment-detail.component.html',
-  standalone: true,
-  providers: [DatePipe, TransactionService],
-  imports: [
-    ProgressSpinnerModule,
-    InputNumberModule,
-    FormsModule,
-    CalendarModule,
-    DropdownModule,
-    LetDirective,
-    ButtonDirective,
-    Ripple,
-    DecimalPipe,
-    DatePipe,
-  ],
+    selector: 'cs-payment-detail',
+    templateUrl: './payment-detail.component.html',
+    providers: [DatePipe, TransactionService],
+    imports: [
+        ProgressSpinnerModule,
+        InputNumberModule,
+        FormsModule,
+        CalendarModule,
+        DropdownModule,
+        LetDirective,
+        ButtonDirective,
+        Ripple,
+        DecimalPipe,
+        DatePipe,
+    ]
 })
 export class PaymentDetailComponent implements OnInit {
   items: any[] = [];

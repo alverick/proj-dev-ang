@@ -11,11 +11,10 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
 import { InternalHeaderComponent } from './components/internal-header/internal-header.component';
 
 @Component({
-  selector: 'cs-internal',
-  templateUrl: './internal.component.html',
-  animations: [fadeAnimation],
-  standalone: true,
-  imports: [InternalHeaderComponent, NgClass, RouterOutlet, FooterComponent],
+    selector: 'cs-internal',
+    templateUrl: './internal.component.html',
+    animations: [fadeAnimation],
+    imports: [InternalHeaderComponent, NgClass, RouterOutlet, FooterComponent]
 })
 export class InternalComponent {
   isAnimating = false;

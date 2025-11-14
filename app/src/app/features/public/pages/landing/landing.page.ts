@@ -34,21 +34,20 @@ interface ItemLanding {
 }
 
 @Component({
-  selector: 'cs-landing',
-  templateUrl: './landing.page.html',
-  styleUrls: ['./landing.page.scss'],
-  providers: [DynamicDialogService, MessageService],
-  standalone: true,
-  imports: [
-    HeaderComponent,
-    NgOptimizedImage,
-    LetDirective,
-    ButtonDirective,
-    Ripple,
-    CarouselModule,
-    PrimeTemplate,
-    ToastModule,
-  ],
+    selector: 'cs-landing',
+    templateUrl: './landing.page.html',
+    styleUrls: ['./landing.page.scss'],
+    providers: [DynamicDialogService, MessageService],
+    imports: [
+        HeaderComponent,
+        NgOptimizedImage,
+        LetDirective,
+        ButtonDirective,
+        Ripple,
+        CarouselModule,
+        PrimeTemplate,
+        ToastModule,
+    ]
 })
 export class LandingPage implements OnDestroy {
   ref: DynamicDialogRef;

@@ -13,19 +13,18 @@ import { ProcessService } from '../../../../shared/services/process.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 
 @Component({
-  selector: 'cs-carga-historico',
-  templateUrl: './carga-historico.component.html',
-  styleUrls: ['./carga-historico.component.scss'],
-  standalone: true,
-  imports: [
-    ButtonDirective,
-    Ripple,
-    TooltipModule,
-    NgxPaginationModule,
-    FooterComponent,
-    DecimalPipe,
-    DatePipe,
-  ],
+    selector: 'cs-carga-historico',
+    templateUrl: './carga-historico.component.html',
+    styleUrls: ['./carga-historico.component.scss'],
+    imports: [
+        ButtonDirective,
+        Ripple,
+        TooltipModule,
+        NgxPaginationModule,
+        FooterComponent,
+        DecimalPipe,
+        DatePipe,
+    ]
 })
 export class CargaHistoricoComponent implements OnInit {
   items: any[] = [];

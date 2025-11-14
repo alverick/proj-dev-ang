@@ -46,22 +46,21 @@ import { swalAlert } from '../../../../../../shared/utils/helpers/popups';
 type withoutData = 'S';
 
 @Component({
-  selector: 'cs-dialog',
-  templateUrl: 'dialog.component.html',
-  styleUrls: ['dialog.component.scss'],
-  standalone: true,
-  imports: [
-    MessageAlertComponent,
-    ProgressBarModule,
-    FileUploadModule,
-    PrimeTemplate,
-    ButtonDirective,
-    Ripple,
-    CurrencyPipe,
-    DecimalPipe,
-    NgClass,
-    SingleClickDirective,
-  ],
+    selector: 'cs-dialog',
+    templateUrl: 'dialog.component.html',
+    styleUrls: ['dialog.component.scss'],
+    imports: [
+        MessageAlertComponent,
+        ProgressBarModule,
+        FileUploadModule,
+        PrimeTemplate,
+        ButtonDirective,
+        Ripple,
+        CurrencyPipe,
+        DecimalPipe,
+        NgClass,
+        SingleClickDirective,
+    ]
 })
 export class DialogComponent implements OnInit {
   useAmountLimits = false;

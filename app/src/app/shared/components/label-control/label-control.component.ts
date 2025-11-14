@@ -16,15 +16,14 @@ import {
 } from 'ngx-valdemort';
 
 @Component({
-  selector: 'cs-label-control',
-  templateUrl: './label-control.component.html',
-  standalone: true,
-  imports: [
-    NgClass,
-    ValidationErrorsComponent,
-    ValidationErrorDirective,
-    KeyValuePipe,
-  ],
+    selector: 'cs-label-control',
+    templateUrl: './label-control.component.html',
+    imports: [
+        NgClass,
+        ValidationErrorsComponent,
+        ValidationErrorDirective,
+        KeyValuePipe,
+    ]
 })
 export class LabelControlComponent
   implements AfterViewInit, AfterContentInit, ControlValueAccessor

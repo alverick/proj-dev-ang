@@ -29,23 +29,22 @@ import { MessageAlertComponent } from '../message-alert/message-alert.component'
 import { ServiceDebtFormComponent } from '../service-debt-form/service-debt-form.component';
 
 @Component({
-  selector: 'cs-service-step-configuration',
-  templateUrl: './service-step-configuration.component.html',
-  standalone: true,
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    LabelControlComponent,
-    RadioButtonModule,
-    DropdownModule,
-    InputTextModule,
-    InputWithoutSpacesDirective,
-    ButtonDirective,
-    Ripple,
-    MessageAlertComponent,
-    ServiceDebtFormComponent,
-    NgClass,
-  ],
+    selector: 'cs-service-step-configuration',
+    templateUrl: './service-step-configuration.component.html',
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        LabelControlComponent,
+        RadioButtonModule,
+        DropdownModule,
+        InputTextModule,
+        InputWithoutSpacesDirective,
+        ButtonDirective,
+        Ripple,
+        MessageAlertComponent,
+        ServiceDebtFormComponent,
+        NgClass,
+    ]
 })
 export class ServiceStepConfigurationComponent implements OnInit {
   @Output() sendForm = new EventEmitter<object>();
