@@ -23,6 +23,7 @@ import { NotifyService } from './shared/services/notify.service';
 import { StorageService } from './shared/services/storage.service';
 import { entityStoreConfig } from './store/entity-store.config';
 import { providePrimeNG } from "primeng/config";
+import { LogoutGuard } from './shared/guards/logout.guard';
 import Aura from '@primeng/themes/aura';
 
 export const appConfig: ApplicationConfig = {
@@ -84,5 +85,6 @@ export const appConfig: ApplicationConfig = {
     NotifyService,
     StorageService,
     CompanyService,
+    LogoutGuard,
   ],
 };
