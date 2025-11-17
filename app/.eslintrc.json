@@ -16,7 +16,7 @@
         "plugin:@angular-eslint/template/process-inline-templates",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "plugin:prettier/recommended",
-        "plugin:@ngrx/recommended-requiring-type-checking",
+        "plugin:@ngrx/all",
         "plugin:sonarjs/recommended-legacy"
       ],
       "plugins": [
@@ -25,7 +25,8 @@
         "simple-import-sort",
         "unused-imports",
         "prettier",
-        "sonarjs"
+        "sonarjs",
+        "@ngrx/eslint-plugin" // Ensure the plugin is listed here
       ],
       "rules": {
         "@angular-eslint/component-selector": [
