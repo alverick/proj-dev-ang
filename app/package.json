@@ -57,7 +57,7 @@
     "ngx-pagination": "^6.0.3",
     "ngx-scrollbar": "^16.0.0",
     "ngx-spinner": "^17.0.0",
-    "ngx-valdemort": "^13.0.0",
+    "ngx-valdemort": "^14.0.0",
     "primeicons": "^7.0.0",
     "primeng": "^19.1.4",
     "ramda": "^0.30.1",
