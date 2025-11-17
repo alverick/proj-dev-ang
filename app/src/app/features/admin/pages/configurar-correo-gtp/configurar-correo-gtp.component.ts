@@ -1,4 +1,4 @@
-import { DatePipe, CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -24,14 +24,13 @@ import { swalAlert } from '../../../../shared/utils/helpers/popups';
     providers: [GtpService, DatePipe],
     standalone: true,
     imports: [
-        CommonModule,
-        ButtonDirective,
-        Ripple,
-        FormsModule,
-        ReactiveFormsModule,
-        LabelControlComponent,
-        InputTextModule,
-    ]
+    ButtonDirective,
+    Ripple,
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    InputTextModule
+]
 })
 export class ConfigurarCorreoGtpComponent implements OnInit {
   frmCorreoGtp = this.formBuilder.group({

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
@@ -34,12 +34,11 @@ import { CompanyServicesService } from '../../services';
     templateUrl: './company-services.page.html',
     standalone: true,
     imports: [
-        CommonModule,
-        ServicesListComponent,
-        ServiceCardComponent,
-        SidebarModule,
-        ServiceEditFormComponent,
-    ]
+    ServicesListComponent,
+    ServiceCardComponent,
+    SidebarModule,
+    ServiceEditFormComponent
+]
 })
 export class CompanyServicesPage {
   showSidebar = false;

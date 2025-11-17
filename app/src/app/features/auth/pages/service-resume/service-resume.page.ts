@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SidebarModule } from 'primeng/sidebar';
@@ -29,12 +29,11 @@ import { AffiliationService } from '../../services';
     templateUrl: './service-resume.page.html',
     standalone: true,
     imports: [
-        CommonModule,
-        ServicesListComponent,
-        ServiceCardComponent,
-        SidebarModule,
-        ServiceEditFormComponent,
-    ]
+    ServicesListComponent,
+    ServiceCardComponent,
+    SidebarModule,
+    ServiceEditFormComponent
+]
 })
 export class ServiceResumePage {
   showSidebar = false;

@@ -1,4 +1,4 @@
-import { NgOptimizedImage, CommonModule } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { Component, type OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { LetDirective } from '@ngrx/component';
@@ -41,17 +41,15 @@ interface ItemLanding {
     providers: [DynamicDialogService, MessageService],
     standalone: true,
     imports: [
-        CommonModule,
-        HeaderComponent,
-        NgOptimizedImage,
-        LetDirective,
-        ButtonDirective,
-        Ripple,
-        CarouselModule,
-        PrimeTemplate,
-        ToastModule,
-        // REMOVED: BadgeModule,
-    ]
+    HeaderComponent,
+    NgOptimizedImage,
+    LetDirective,
+    ButtonDirective,
+    Ripple,
+    CarouselModule,
+    PrimeTemplate,
+    ToastModule
+]
 })
 export class LandingPage implements OnDestroy {
   ref: DynamicDialogRef;

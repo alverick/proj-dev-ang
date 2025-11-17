@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -20,7 +20,7 @@ import {
     templateUrl: './service-info.page.html',
     styleUrls: ['./service-info.page.scss'],
     standalone: true,
-    imports: [CommonModule, ServiceStepInfoComponent]
+    imports: [ServiceStepInfoComponent]
 })
 export class ServiceInfoPage {
   accounts: CompanyAccounts[];

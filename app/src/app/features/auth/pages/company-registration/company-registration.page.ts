@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, type OnInit } from '@angular/core';
 import { type UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,7 +19,7 @@ import { AffiliationService } from '../../services';
     templateUrl: './company-registration.page.html',
     styleUrls: ['./company-registration.page.scss'],
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, SidebarCompanyComponent, CompanyFormRegistrationComponent]
+    imports: [ReactiveFormsModule, SidebarCompanyComponent, CompanyFormRegistrationComponent]
 })
 export class CompanyRegistrationPage implements OnInit {
   registerForm: UntypedFormGroup;

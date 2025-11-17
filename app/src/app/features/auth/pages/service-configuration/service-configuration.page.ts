@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -20,7 +20,7 @@ import { AffiliationService } from '../../services';
     templateUrl: './service-configuration.page.html',
     styleUrls: ['./service-configuration.page.scss'],
     standalone: true,
-    imports: [CommonModule, ServiceStepConfigurationComponent]
+    imports: [ServiceStepConfigurationComponent]
 })
 export class ServiceConfigurationPage {
   errorMessagesServiceConfig = errorServiceConfiguration;

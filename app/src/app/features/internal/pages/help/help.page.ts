@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { type AfterViewInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccordionModule } from 'primeng/accordion';
@@ -19,7 +19,7 @@ import { internalFullRoutingNames } from '../../internal-routing.names';
     selector: 'cs-help',
     templateUrl: './help.page.html',
     standalone: true,
-    imports: [CommonModule, AccordionModule]
+    imports: [AccordionModule]
 })
 export class HelpPage implements AfterViewInit {
   /**

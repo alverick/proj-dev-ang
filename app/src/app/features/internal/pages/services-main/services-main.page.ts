@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, type OnDestroy, type OnInit } from '@angular/core';
 import {
   ActivatedRoute,
@@ -34,7 +34,7 @@ import { CompanyServicesService } from '../../services';
     selector: 'cs-internal-services-main',
     templateUrl: './services-main.page.html',
     standalone: true,
-    imports: [CommonModule, SidebarServiceComponent, RouterOutlet]
+    imports: [SidebarServiceComponent, RouterOutlet]
 })
 export class ServicesMainPage implements OnInit, OnDestroy {
   destroy$ = new Subject();

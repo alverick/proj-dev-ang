@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, type OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -37,17 +37,16 @@ export type FormChangePassword = {
     templateUrl: './cambia-contrasena.component.html',
     standalone: true,
     imports: [
-        CommonModule,
-        LayoutFormComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        LabelControlComponent,
-        PasswordModule,
-        PrimeTemplate,
-        ControlRulesPoliciesComponent,
-        ButtonDirective,
-        Ripple,
-    ]
+    LayoutFormComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    PasswordModule,
+    PrimeTemplate,
+    ControlRulesPoliciesComponent,
+    ButtonDirective,
+    Ripple
+]
 })
 export class CambiaContrasenaComponent implements OnInit {
   public llave: string;
