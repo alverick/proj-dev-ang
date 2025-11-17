@@ -69,7 +69,7 @@
     "zone.js": "~0.15.1"
   },
   "devDependencies": {
-    "@angular-builders/custom-webpack": "^19.0.1",
+    "@angular-builders/custom-webpack": "^20.0.0",
     "@angular-devkit/build-angular": "^20.3.10",
     "@angular-eslint/builder": "^19.8.1",
     "@angular-eslint/eslint-plugin": "^19.8.1",
