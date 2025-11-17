@@ -52,7 +52,7 @@
     "file-saver": "^2.0.5",
     "font-awesome": "^4.7.0",
     "ng-click-outside2": "^15.0.1",
-    "ngx-cookie-service": "^18.0.0",
+    "ngx-cookie-service": "^19.1.2",
     "ngx-logger": "^5.0.12",
     "ngx-pagination": "^6.0.3",
     "ngx-scrollbar": "^16.0.0",
