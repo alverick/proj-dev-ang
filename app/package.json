@@ -44,7 +44,7 @@
     "@ngrx/store-devtools": "^19.2.1",
     "@primeng/themes": "^19.1.4",
     "@uiowa/digit-only": "^3.2.1",
-    "angular-shepherd": "^18.0.2",
+    "angular-shepherd": "^19.0.2",
     "bootstrap": "^5.3.3",
     "dompurify": "^3.1.7",
     "dot-object": "^2.1.5",
