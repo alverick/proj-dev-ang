@@ -13,6 +13,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
 import { ButtonDirective } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { InputGroup } from 'primeng/inputgroup';
+import { InputGroupAddon } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { type Password, PasswordModule } from 'primeng/password';
@@ -54,25 +56,27 @@ interface LoginForm {
 }
 
 @Component({
-    selector: 'cs-login',
-    templateUrl: './login.page.html',
-    providers: [MessageService, RecaptchaProviderService],
-    standalone: true,
-    imports: [
-        LayoutFormComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        LabelControlComponent,
-        InputTextModule,
-        KeyFilterModule,
-        CheckboxModule,
-        PasswordModule,
-        RouterLink,
-        ButtonDirective,
-        Ripple,
-        LetDirective,
-        ToastModule,
-    ]
+  selector: 'cs-login',
+  templateUrl: './login.page.html',
+  providers: [MessageService, RecaptchaProviderService],
+  standalone: true,
+  imports: [
+    LayoutFormComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    InputTextModule,
+    KeyFilterModule,
+    CheckboxModule,
+    PasswordModule,
+    RouterLink,
+    ButtonDirective,
+    Ripple,
+    LetDirective,
+    ToastModule,
+    InputGroup,
+    InputGroupAddon,
+  ],
 })
 export class LoginPage implements OnInit {
   public loginForm: ModelFormGroup<LoginForm>;
