@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SidebarModule } from 'primeng/sidebar';
@@ -24,16 +23,16 @@ import {
 import { AffiliationService } from '../../services';
 
 @Component({
-    host: { class: 'tw-w-full' },
-    selector: 'cs-service-resume',
-    templateUrl: './service-resume.page.html',
-    standalone: true,
-    imports: [
+  host: { class: 'tw-w-full' },
+  selector: 'cs-service-resume',
+  templateUrl: './service-resume.page.html',
+  standalone: true,
+  imports: [
     ServicesListComponent,
     ServiceCardComponent,
     SidebarModule,
-    ServiceEditFormComponent
-]
+    ServiceEditFormComponent,
+  ],
 })
 export class ServiceResumePage {
   showSidebar = false;

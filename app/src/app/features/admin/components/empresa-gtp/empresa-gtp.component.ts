@@ -30,19 +30,19 @@ import { statusCodes } from '../../../../shared/constants/services';
 import { ICompanyData } from '../../../../shared/models/company-data';
 
 @Component({
-    selector: 'cs-empresa-gtp',
-    templateUrl: './empresa-gtp.component.html',
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        LabelControlComponent,
-        InputTextModule,
-        KeyFilterModule,
-        InputTextarea,
-        RadioButtonModule,
-        ButtonDirective,
-        Ripple,
-    ]
+  selector: 'cs-empresa-gtp',
+  templateUrl: './empresa-gtp.component.html',
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    InputTextModule,
+    KeyFilterModule,
+    InputTextarea,
+    RadioButtonModule,
+    ButtonDirective,
+    Ripple,
+  ],
 })
 export class EmpresaGTPComponent implements OnInit {
   formGroup: UntypedFormGroup;

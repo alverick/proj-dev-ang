@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SidebarModule } from 'primeng/sidebar';
@@ -21,16 +20,16 @@ import {
 import { AffiliationService } from '../../services';
 
 @Component({
-    selector: 'cs-update-services',
-    templateUrl: './update-services.page.html',
-    standalone: true,
-    imports: [
+  selector: 'cs-update-services',
+  templateUrl: './update-services.page.html',
+  standalone: true,
+  imports: [
     StepsModule,
     ServicesListComponent,
     ServiceCardComponent,
     SidebarModule,
-    ServiceEditFormComponent
-]
+    ServiceEditFormComponent,
+  ],
 })
 export class UpdateServicesPage {
   position = 0;

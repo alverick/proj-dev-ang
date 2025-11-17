@@ -1,4 +1,4 @@
-import { DatePipe, DecimalPipe, CommonModule } from '@angular/common';
+import { CommonModule, DatePipe, DecimalPipe } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { saveAs } from 'file-saver';
@@ -13,20 +13,20 @@ import { ProcessService } from '../../../../shared/services/process.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 
 @Component({
-    selector: 'cs-carga-historico',
-    templateUrl: './carga-historico.component.html',
-    styleUrls: ['./carga-historico.component.scss'],
-    standalone: true,
-    imports: [
-        CommonModule,
-        ButtonDirective,
-        Ripple,
-        TooltipModule,
-        NgxPaginationModule,
-        FooterComponent,
-        DecimalPipe,
-        DatePipe,
-    ]
+  selector: 'cs-carga-historico',
+  templateUrl: './carga-historico.component.html',
+  styleUrls: ['./carga-historico.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ButtonDirective,
+    Ripple,
+    TooltipModule,
+    NgxPaginationModule,
+    FooterComponent,
+    DecimalPipe,
+    DatePipe,
+  ],
 })
 export class CargaHistoricoComponent implements OnInit {
   items: any[] = [];

@@ -72,29 +72,29 @@ type TableCol = {
 };
 
 @Component({
-    selector: 'cs-table-movements',
-    templateUrl: './table-movements.component.html',
-    styleUrls: ['./table-movements.component.scss'],
-    imports: [
-        TableModule,
-        PrimeTemplate,
-        NgClass,
-        FormsModule,
-        InputTextModule,
-        CalendarModule,
-        InputNumberModule,
-        InputMoneyDirective,
-        AmountMaxValidateDirective,
-        ButtonDirective,
-        Ripple,
-        DialogModule,
-        CurrencyPipe,
-        DatePipe,
-        GetLimitCurrencyPipe,
-        NotEmptyPipe,
-        ValidateLimitCurrencyPipe,
-        KeyFilterModule,
-    ]
+  selector: 'cs-table-movements',
+  templateUrl: './table-movements.component.html',
+  styleUrls: ['./table-movements.component.scss'],
+  imports: [
+    TableModule,
+    PrimeTemplate,
+    NgClass,
+    FormsModule,
+    InputTextModule,
+    CalendarModule,
+    InputNumberModule,
+    InputMoneyDirective,
+    AmountMaxValidateDirective,
+    ButtonDirective,
+    Ripple,
+    DialogModule,
+    CurrencyPipe,
+    DatePipe,
+    GetLimitCurrencyPipe,
+    NotEmptyPipe,
+    ValidateLimitCurrencyPipe,
+    KeyFilterModule,
+  ],
 })
 export class TableMovementsComponent implements OnInit, OnChanges {
   cols: Partial<TableCol>[] = [

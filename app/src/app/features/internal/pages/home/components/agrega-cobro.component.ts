@@ -8,10 +8,10 @@ import type { CurrencyWithLimit } from '../../../../../shared/constants/currenci
 import { ExcelService } from '../../../../../shared/services/excel.service';
 
 @Component({
-    selector: 'cs-agrega-cobro',
-    templateUrl: './agrega-cobro.component.html',
-    styleUrls: ['./agrega-cobro.component.scss'],
-    imports: [MessageAlertComponent, CurrencyPipe]
+  selector: 'cs-agrega-cobro',
+  templateUrl: './agrega-cobro.component.html',
+  styleUrls: ['./agrega-cobro.component.scss'],
+  imports: [MessageAlertComponent, CurrencyPipe],
 })
 export class AgregaCobroComponent {
   limitAmountMax: number = null;

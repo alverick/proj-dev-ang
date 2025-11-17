@@ -16,10 +16,10 @@ import { type IServiceRemoteModelForms } from '../../models';
 import { NotEmptyPipe } from '../../pipes/not-empty.pipe';
 
 @Component({
-    selector: 'cs-service-card',
-    templateUrl: './service-card.component.html',
-    styleUrls: ['./service-card.component.scss'],
-    imports: [NgClass, NotEmptyPipe]
+  selector: 'cs-service-card',
+  templateUrl: './service-card.component.html',
+  styleUrls: ['./service-card.component.scss'],
+  imports: [NgClass, NotEmptyPipe],
 })
 export class ServiceCardComponent implements OnInit, OnChanges {
   @Input() serviceData: Partial<IServiceRemoteModelForms>;

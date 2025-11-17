@@ -1,4 +1,4 @@
-import { DatePipe, NgClass, CommonModule } from '@angular/common';
+import { CommonModule, DatePipe, NgClass } from '@angular/common';
 import { Component, HostListener, type OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
@@ -24,20 +24,20 @@ import { EmpresaGTPComponent } from '../../components/empresa-gtp/empresa-gtp.co
 import { ServicesGTPComponent } from '../../components/services-gtp/services-gtp.component';
 
 @Component({
-    selector: 'cs-aprobaciones',
-    templateUrl: './aprobaciones.page.html',
-    providers: [GtpService, DatePipe],
-    standalone: true,
-    imports: [
-        CommonModule,
-        NgClass,
-        TagModule,
-        ButtonDirective,
-        Ripple,
-        EmpresaGTPComponent,
-        ServicesGTPComponent,
-        NotEmptyPipe,
-    ]
+  selector: 'cs-aprobaciones',
+  templateUrl: './aprobaciones.page.html',
+  providers: [GtpService, DatePipe],
+  standalone: true,
+  imports: [
+    CommonModule,
+    NgClass,
+    TagModule,
+    ButtonDirective,
+    Ripple,
+    EmpresaGTPComponent,
+    ServicesGTPComponent,
+    NotEmptyPipe,
+  ],
 })
 export class AprobacionesPage implements OnInit {
   public Formulario = false;

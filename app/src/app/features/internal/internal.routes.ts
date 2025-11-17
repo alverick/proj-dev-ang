@@ -23,8 +23,7 @@ import {
   CompanyAccountsResolver,
   CompanyDataResolver,
   CompanyServicesResolver,
-}
-from './resolvers';
+} from './resolvers';
 
 export const INTERNAL_ROUTES: Routes = [
   {

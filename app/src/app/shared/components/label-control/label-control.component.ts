@@ -16,18 +16,17 @@ import {
 } from 'ngx-valdemort';
 
 @Component({
-    selector: 'cs-label-control',
-    templateUrl: './label-control.component.html',
-    imports: [
-        NgClass,
-        ValidationErrorsComponent,
-        ValidationErrorDirective,
-        KeyValuePipe,
-    ]
+  selector: 'cs-label-control',
+  templateUrl: './label-control.component.html',
+  imports: [
+    NgClass,
+    ValidationErrorsComponent,
+    ValidationErrorDirective,
+    KeyValuePipe,
+  ],
 })
 export class LabelControlComponent
-  implements AfterViewInit, AfterContentInit, ControlValueAccessor
-{
+  implements AfterViewInit, AfterContentInit, ControlValueAccessor {
   private static labelCounter = 0;
   useDefaultContent = false;
   useGap = false;

@@ -1,4 +1,8 @@
-import { HttpClient, type HttpErrorResponse, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  type HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { type Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';

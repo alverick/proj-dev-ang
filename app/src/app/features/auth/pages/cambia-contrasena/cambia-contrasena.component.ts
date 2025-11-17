@@ -1,4 +1,3 @@
-
 import { Component, type OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -33,10 +32,10 @@ export type FormChangePassword = {
 };
 
 @Component({
-    selector: 'cs-cambia-contrasena',
-    templateUrl: './cambia-contrasena.component.html',
-    standalone: true,
-    imports: [
+  selector: 'cs-cambia-contrasena',
+  templateUrl: './cambia-contrasena.component.html',
+  standalone: true,
+  imports: [
     LayoutFormComponent,
     FormsModule,
     ReactiveFormsModule,
@@ -45,8 +44,8 @@ export type FormChangePassword = {
     PrimeTemplate,
     ControlRulesPoliciesComponent,
     ButtonDirective,
-    Ripple
-]
+    Ripple,
+  ],
 })
 export class CambiaContrasenaComponent implements OnInit {
   public llave: string;

@@ -11,9 +11,9 @@ import { authFullRoutingNames } from '../../../auth/auth-routing.names';
 import { adminFullRoutingNames } from '../../admin-routing.names';
 
 @Component({
-    selector: 'cs-admin-header',
-    templateUrl: './admin-header.component.html',
-    imports: [HeaderComponent, NgOptimizedImage, MenuModule]
+  selector: 'cs-admin-header',
+  templateUrl: './admin-header.component.html',
+  imports: [HeaderComponent, NgOptimizedImage, MenuModule],
 })
 export class AdminHeaderComponent {
   items: MenuItem[] = [

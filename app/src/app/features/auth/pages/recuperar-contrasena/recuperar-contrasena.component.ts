@@ -1,4 +1,3 @@
-
 import { Component, HostListener, type OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -37,10 +36,10 @@ interface RecoverForm {
 }
 
 @Component({
-    selector: 'cs-recuperar-contrasena',
-    templateUrl: './recuperar-contrasena.component.html',
-    standalone: true,
-    imports: [
+  selector: 'cs-recuperar-contrasena',
+  templateUrl: './recuperar-contrasena.component.html',
+  standalone: true,
+  imports: [
     LayoutFormComponent,
     FormsModule,
     ReactiveFormsModule,
@@ -48,8 +47,8 @@ interface RecoverForm {
     InputTextModule,
     KeyFilterModule,
     ButtonDirective,
-    Ripple
-]
+    Ripple,
+  ],
 })
 export class RecuperarContrasenaComponent implements OnInit {
   public formulario = true;

@@ -43,25 +43,25 @@ import {
 } from '../../services/affiliation-forms.service';
 
 @Component({
-    selector: 'cs-company-form-auth',
-    templateUrl: './company-form-auth.component.html',
-    providers: [DynamicDialogService],
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        LabelControlComponent,
-        InputTextModule,
-        KeyFilterModule,
-        InputWithoutSpacesDirective,
-        DropdownModule,
-        PrimeTemplate,
-        MessageAlertComponent,
-        PasswordModule,
-        ControlRulesPoliciesComponent,
-        CheckboxModule,
-        ButtonDirective,
-        Ripple,
-    ]
+  selector: 'cs-company-form-auth',
+  templateUrl: './company-form-auth.component.html',
+  providers: [DynamicDialogService],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    InputTextModule,
+    KeyFilterModule,
+    InputWithoutSpacesDirective,
+    DropdownModule,
+    PrimeTemplate,
+    MessageAlertComponent,
+    PasswordModule,
+    ControlRulesPoliciesComponent,
+    CheckboxModule,
+    ButtonDirective,
+    Ripple,
+  ],
 })
 export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   $destroy = new Subject();

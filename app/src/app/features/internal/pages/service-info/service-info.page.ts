@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -16,11 +15,11 @@ import {
 } from '../../internal-routing.names';
 
 @Component({
-    selector: 'cs-internal-service-info',
-    templateUrl: './service-info.page.html',
-    styleUrls: ['./service-info.page.scss'],
-    standalone: true,
-    imports: [ServiceStepInfoComponent]
+  selector: 'cs-internal-service-info',
+  templateUrl: './service-info.page.html',
+  styleUrls: ['./service-info.page.scss'],
+  standalone: true,
+  imports: [ServiceStepInfoComponent],
 })
 export class ServiceInfoPage {
   accounts: CompanyAccounts[];

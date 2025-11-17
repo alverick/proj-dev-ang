@@ -2,9 +2,9 @@ import { type AnimationEvent } from '@angular/animations';
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { isNil, isNotEmpty } from 'ramda';
 import { filter, Subject, takeUntil } from 'rxjs';
-import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { environment } from '../environments/environment';
 import { appFullRoutingNames } from './app-routing.names';
@@ -12,20 +12,22 @@ import {
   fadeAnimation,
   phasesStateName,
 } from './shared/animations/page-transitions';
-import { primeng } from './shared/lang/es';
-import {
-  AdobeLaunchProviderService,
-} from './shared/services';
-import { HotjarProviderService } from './shared/services/hotjar-provider.service';
-import { AppConfigActions } from './store/actions/app-config.actions';
 import { FabWhatsappComponent } from './shared/components/fab-whatsapp/fab-whatsapp.component';
 import { ValidationDefaultsComponent } from './shared/components/validation-defaults/validation-defaults.component';
+import { AdobeLaunchProviderService } from './shared/services';
+import { HotjarProviderService } from './shared/services/hotjar-provider.service';
+import { AppConfigActions } from './store/actions/app-config.actions';
 
 @Component({
-    selector: 'cs-root',
-    templateUrl: './app.component.html',
-    animations: [fadeAnimation],
-    imports: [RouterModule, NgxSpinnerModule, FabWhatsappComponent, ValidationDefaultsComponent]
+  selector: 'cs-root',
+  templateUrl: './app.component.html',
+  animations: [fadeAnimation],
+  imports: [
+    RouterModule,
+    NgxSpinnerModule,
+    FabWhatsappComponent,
+    ValidationDefaultsComponent,
+  ],
 })
 export class AppComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
@@ -47,7 +49,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),

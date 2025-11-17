@@ -1,4 +1,4 @@
-import { NgClass, CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SidebarModule } from 'primeng/sidebar';
@@ -30,16 +30,16 @@ import { CompanyUpdateFormComponent } from '../../components/company-update-form
 import { CompanyConfigurationService } from '../../services';
 
 @Component({
-    selector: 'cs-company-configuration',
-    templateUrl: './company-configuration.page.html',
-    standalone: true,
-    imports: [
-        CommonModule,
-        NgClass,
-        CompanyUpdateFormComponent,
-        SidebarModule,
-        CompanyPasswordFormComponent,
-    ]
+  selector: 'cs-company-configuration',
+  templateUrl: './company-configuration.page.html',
+  standalone: true,
+  imports: [
+    CommonModule,
+    NgClass,
+    CompanyUpdateFormComponent,
+    SidebarModule,
+    CompanyPasswordFormComponent,
+  ],
 })
 export class CompanyConfigurationPage implements OnInit {
   companyForm: SimpleModelFormGroup<CompanyForm>;

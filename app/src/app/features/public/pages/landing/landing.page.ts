@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { LetDirective } from '@ngrx/component';
 import { Store } from '@ngrx/store';
 import { MessageService, PrimeTemplate } from 'primeng/api';
-// import { BadgeModule } from 'primeng/badge'; // REMOVED: Import BadgeModule
 import { ButtonDirective } from 'primeng/button';
 import { CarouselModule } from 'primeng/carousel';
 import { type DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -35,12 +34,12 @@ interface ItemLanding {
 }
 
 @Component({
-    selector: 'cs-landing',
-    templateUrl: './landing.page.html',
-    styleUrls: ['./landing.page.scss'],
-    providers: [DynamicDialogService, MessageService],
-    standalone: true,
-    imports: [
+  selector: 'cs-landing',
+  templateUrl: './landing.page.html',
+  styleUrls: ['./landing.page.scss'],
+  providers: [DynamicDialogService, MessageService],
+  standalone: true,
+  imports: [
     HeaderComponent,
     NgOptimizedImage,
     LetDirective,
@@ -48,8 +47,8 @@ interface ItemLanding {
     Ripple,
     CarouselModule,
     PrimeTemplate,
-    ToastModule
-]
+    ToastModule,
+  ],
 })
 export class LandingPage implements OnDestroy {
   ref: DynamicDialogRef;

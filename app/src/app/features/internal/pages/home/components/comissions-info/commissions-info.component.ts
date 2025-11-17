@@ -8,9 +8,9 @@ import { pathOr } from 'ramda';
 import { TrackingService } from '../../../../../../shared/services';
 
 @Component({
-    selector: 'cs-commissions-info',
-    templateUrl: './commissions-info.component.html',
-    imports: [ButtonDirective, Ripple]
+  selector: 'cs-commissions-info',
+  templateUrl: './commissions-info.component.html',
+  imports: [ButtonDirective, Ripple],
 })
 export class CommissionsInfoComponent {
   showed = false;

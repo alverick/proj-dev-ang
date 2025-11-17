@@ -35,23 +35,23 @@ import { internalFullRoutingNames } from '../../internal-routing.names';
 registerLocaleData(localeEsPe, 'es-PE');
 
 @Component({
-    selector: 'cs-internal-header',
-    templateUrl: './internal-header.component.html',
-    providers: [DatePipe],
-    imports: [
-        HeaderComponent,
-        NgClass,
-        NgClickOutsideDirective,
-        RouterLinkActive,
-        RouterLink,
-        BadgeModule,
-        NgScrollbar,
-        NgScrollReached,
-        NgOptimizedImage,
-        MenuModule,
-        ButtonDirective,
-        Ripple,
-    ]
+  selector: 'cs-internal-header',
+  templateUrl: './internal-header.component.html',
+  providers: [DatePipe],
+  imports: [
+    HeaderComponent,
+    NgClass,
+    NgClickOutsideDirective,
+    RouterLinkActive,
+    RouterLink,
+    BadgeModule,
+    NgScrollbar,
+    NgScrollReached,
+    NgOptimizedImage,
+    MenuModule,
+    ButtonDirective,
+    Ripple,
+  ],
 })
 export class InternalHeaderComponent implements OnInit {
   isExpanded = false;

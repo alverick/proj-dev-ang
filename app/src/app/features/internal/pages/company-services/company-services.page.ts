@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
@@ -29,16 +28,16 @@ import { internalFullRoutingChildNames } from '../../internal-routing.names';
 import { CompanyServicesService } from '../../services';
 
 @Component({
-    host: { class: 'tw-w-full' },
-    selector: 'cs-company-services',
-    templateUrl: './company-services.page.html',
-    standalone: true,
-    imports: [
+  host: { class: 'tw-w-full' },
+  selector: 'cs-company-services',
+  templateUrl: './company-services.page.html',
+  standalone: true,
+  imports: [
     ServicesListComponent,
     ServiceCardComponent,
     SidebarModule,
-    ServiceEditFormComponent
-]
+    ServiceEditFormComponent,
+  ],
 })
 export class CompanyServicesPage {
   showSidebar = false;

@@ -13,16 +13,16 @@ import {
 import { messageErrorNewPasswords } from '../../../../shared/validators/password-validators';
 
 @Component({
-    selector: 'cs-company-password-form',
-    templateUrl: './company-password-form.component.html',
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        LabelControlComponent,
-        PasswordModule,
-        PrimeTemplate,
-        ControlRulesPoliciesComponent,
-    ]
+  selector: 'cs-company-password-form',
+  templateUrl: './company-password-form.component.html',
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    PasswordModule,
+    PrimeTemplate,
+    ControlRulesPoliciesComponent,
+  ],
 })
 export class CompanyPasswordFormComponent {
   @Input() form: ModelFormGroup<CompanyChangePasswordForm>;

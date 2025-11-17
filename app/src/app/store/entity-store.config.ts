@@ -1,5 +1,6 @@
-import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
+import { provideState } from '@ngrx/store';
+
 import { CompanyEffects } from './effects/company.effects';
 import { companyFeature } from './reducers/company.reducer';
 

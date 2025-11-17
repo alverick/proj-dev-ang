@@ -1,4 +1,4 @@
-import { DatePipe, NgClass, CommonModule } from '@angular/common';
+import { CommonModule, DatePipe, NgClass } from '@angular/common';
 import {
   type AfterViewInit,
   Component,
@@ -88,21 +88,21 @@ export type DebtDialog = {
 };
 
 @Component({
-    selector: 'cs-home',
-    templateUrl: './home.page.html',
-    styleUrls: ['./home.page.scss'],
-    providers: [DatePipe, TransactionService],
-    standalone: true,
-    imports: [
-        CommonModule,
-        BadgeModule,
-        PaymentsFilterComponent,
-        NgClass,
-        ButtonDirective,
-        Ripple,
-        SplitButtonModule,
-        TableMovementsComponent,
-    ]
+  selector: 'cs-home',
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss'],
+  providers: [DatePipe, TransactionService],
+  standalone: true,
+  imports: [
+    CommonModule,
+    BadgeModule,
+    PaymentsFilterComponent,
+    NgClass,
+    ButtonDirective,
+    Ripple,
+    SplitButtonModule,
+    TableMovementsComponent,
+  ],
 })
 export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   ref: DynamicDialogRef;

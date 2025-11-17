@@ -26,22 +26,22 @@ import {
 import { type RegisterForm } from '../../services/affiliation-forms.service';
 
 @Component({
-    selector: 'cs-company-form-registration',
-    templateUrl: './company-form-registration.component.html',
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        LabelControlComponent,
-        DropdownModule,
-        InputTextModule,
-        KeyFilterModule,
-        ValidationErrorsComponent,
-        ValidationErrorDirective,
-        InputTrimSpacesDirective,
-        ButtonDirective,
-        Ripple,
-        KeyValuePipe,
-    ]
+  selector: 'cs-company-form-registration',
+  templateUrl: './company-form-registration.component.html',
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    DropdownModule,
+    InputTextModule,
+    KeyFilterModule,
+    ValidationErrorsComponent,
+    ValidationErrorDirective,
+    InputTrimSpacesDirective,
+    ButtonDirective,
+    Ripple,
+    KeyValuePipe,
+  ],
 })
 export class CompanyFormRegistrationComponent implements OnInit {
   @Output() sendForm = new EventEmitter<Partial<RegisterForm>>();

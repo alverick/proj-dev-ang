@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -16,11 +15,11 @@ import {
 import { AffiliationService } from '../../services';
 
 @Component({
-    selector: 'cs-service-configuration',
-    templateUrl: './service-configuration.page.html',
-    styleUrls: ['./service-configuration.page.scss'],
-    standalone: true,
-    imports: [ServiceStepConfigurationComponent]
+  selector: 'cs-service-configuration',
+  templateUrl: './service-configuration.page.html',
+  styleUrls: ['./service-configuration.page.scss'],
+  standalone: true,
+  imports: [ServiceStepConfigurationComponent],
 })
 export class ServiceConfigurationPage {
   errorMessagesServiceConfig = errorServiceConfiguration;

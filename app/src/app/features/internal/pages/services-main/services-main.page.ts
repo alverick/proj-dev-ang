@@ -1,4 +1,3 @@
-
 import { Component, type OnDestroy, type OnInit } from '@angular/core';
 import {
   ActivatedRoute,
@@ -31,10 +30,10 @@ import {
 import { CompanyServicesService } from '../../services';
 
 @Component({
-    selector: 'cs-internal-services-main',
-    templateUrl: './services-main.page.html',
-    standalone: true,
-    imports: [SidebarServiceComponent, RouterOutlet]
+  selector: 'cs-internal-services-main',
+  templateUrl: './services-main.page.html',
+  standalone: true,
+  imports: [SidebarServiceComponent, RouterOutlet],
 })
 export class ServicesMainPage implements OnInit, OnDestroy {
   destroy$ = new Subject();

@@ -1,4 +1,3 @@
-
 import { Component, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -13,11 +12,11 @@ import { errorRegisterAuth } from '../../constants';
 import { AffiliationService } from '../../services';
 
 @Component({
-    selector: 'cs-company-registration-auth',
-    templateUrl: './company-registration-auth.page.html',
-    styleUrls: ['./company-registration-auth.page.scss'],
-    standalone: true,
-    imports: [SidebarCompanyComponent, CompanyFormAuthComponent]
+  selector: 'cs-company-registration-auth',
+  templateUrl: './company-registration-auth.page.html',
+  styleUrls: ['./company-registration-auth.page.scss'],
+  standalone: true,
+  imports: [SidebarCompanyComponent, CompanyFormAuthComponent],
 })
 export class CompanyRegistrationAuthPage implements OnInit {
   entryOptions: IEntryModel[] = [];

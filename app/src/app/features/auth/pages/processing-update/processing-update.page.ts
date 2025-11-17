@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -9,7 +8,7 @@ import { AffiliationService } from '../../services';
   selector: 'cs-processing-update',
   templateUrl: './processing-update.page.html',
   standalone: true,
-  imports: []
+  imports: [],
 })
 export class ProcessingUpdatePage implements OnInit {
   public email: string;

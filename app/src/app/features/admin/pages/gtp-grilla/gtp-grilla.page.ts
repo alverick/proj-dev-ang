@@ -1,4 +1,4 @@
-import { DatePipe, DecimalPipe, CommonModule } from '@angular/common';
+import { CommonModule, DatePipe, DecimalPipe } from '@angular/common';
 import { Component, type OnDestroy, type OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { saveAs } from 'file-saver';
@@ -24,24 +24,24 @@ import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { adminFullRoutingNames } from '../../admin-routing.names';
 
 @Component({
-    selector: 'cs-gtp-grilla',
-    templateUrl: './gtp-grilla.page.html',
-    styleUrls: ['./gtp-grilla.page.scss'],
-    providers: [GtpService, DatePipe],
-    standalone: true,
-    imports: [
-        CommonModule,
-        PaymentsFilterComponent,
-        SplitButtonModule,
-        ButtonDirective,
-        Ripple,
-        TooltipModule,
-        RouterLink,
-        NgxPaginationModule,
-        FooterComponent,
-        DecimalPipe,
-        DatePipe,
-    ]
+  selector: 'cs-gtp-grilla',
+  templateUrl: './gtp-grilla.page.html',
+  styleUrls: ['./gtp-grilla.page.scss'],
+  providers: [GtpService, DatePipe],
+  standalone: true,
+  imports: [
+    CommonModule,
+    PaymentsFilterComponent,
+    SplitButtonModule,
+    ButtonDirective,
+    Ripple,
+    TooltipModule,
+    RouterLink,
+    NgxPaginationModule,
+    FooterComponent,
+    DecimalPipe,
+    DatePipe,
+  ],
 })
 export class GtpGrillaPage implements OnInit, OnDestroy {
   messageTable = '';

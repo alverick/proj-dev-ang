@@ -36,23 +36,23 @@ import { ServiceChannelChipComponent } from '../service-channel-chip/service-cha
 import { ServiceDebtFormComponent } from '../service-debt-form/service-debt-form.component';
 
 @Component({
-    selector: 'cs-service-edit-form',
-    templateUrl: './service-edit-form.component.html',
-    styleUrls: ['./service-edit-form.component.scss'],
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        LabelControlComponent,
-        InputTextModule,
-        MessageModule,
-        DropdownModule,
-        InputWithoutSpacesDirective,
-        ButtonDirective,
-        ServiceDebtFormComponent,
-        CheckboxModule,
-        ServiceChannelChipComponent,
-        Ripple,
-    ]
+  selector: 'cs-service-edit-form',
+  templateUrl: './service-edit-form.component.html',
+  styleUrls: ['./service-edit-form.component.scss'],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    InputTextModule,
+    MessageModule,
+    DropdownModule,
+    InputWithoutSpacesDirective,
+    ButtonDirective,
+    ServiceDebtFormComponent,
+    CheckboxModule,
+    ServiceChannelChipComponent,
+    Ripple,
+  ],
 })
 export class ServiceEditFormComponent implements OnInit, OnChanges {
   @Output() sendForm = new EventEmitter<object>();

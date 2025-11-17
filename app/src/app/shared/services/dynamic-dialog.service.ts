@@ -1,11 +1,10 @@
-
 import {
   ApplicationRef,
+  DOCUMENT,
   Inject,
   Injectable,
   Injector,
   type Type,
-  DOCUMENT
 } from '@angular/core';
 import {
   DialogService,

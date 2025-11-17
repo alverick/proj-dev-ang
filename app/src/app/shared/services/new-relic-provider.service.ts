@@ -3,7 +3,6 @@ import { AgentOptions } from '@newrelic/browser-agent/loaders/agent';
 import { type BrowserAgent } from '@newrelic/browser-agent/loaders/browser-agent';
 import dot from 'dot-object';
 import { hasPath, path, pathOr } from 'ramda';
-import { filter } from 'rxjs/operators';
 
 import { type ProviderService } from './provider.service';
 import {

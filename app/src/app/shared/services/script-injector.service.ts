@@ -1,5 +1,4 @@
-
-import { Inject, Injectable, DOCUMENT } from '@angular/core';
+import { DOCUMENT, Inject, Injectable } from '@angular/core';
 import { type Observable, ReplaySubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',

@@ -5,9 +5,9 @@ import { UntypedFormControl } from '@angular/forms';
 import { type PasswordRulesMessage } from '../../validators/password-validators';
 
 @Component({
-    selector: 'cs-control-rules-policies',
-    templateUrl: './control-rules-policies.component.html',
-    imports: [NgClass]
+  selector: 'cs-control-rules-policies',
+  templateUrl: './control-rules-policies.component.html',
+  imports: [NgClass],
 })
 export class ControlRulesPoliciesComponent {
   @Input() control: UntypedFormControl;

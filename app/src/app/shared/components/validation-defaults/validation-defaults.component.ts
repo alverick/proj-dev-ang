@@ -8,13 +8,13 @@ import {
 } from 'ngx-valdemort';
 
 @Component({
-    selector: 'cs-validation-defaults',
-    templateUrl: './validation-defaults.component.html',
-    imports: [
-        DefaultValidationErrorsDirective,
-        ValidationErrorDirective,
-        DecimalPipe,
-    ]
+  selector: 'cs-validation-defaults',
+  templateUrl: './validation-defaults.component.html',
+  imports: [
+    DefaultValidationErrorsDirective,
+    ValidationErrorDirective,
+    DecimalPipe,
+  ],
 })
 export class ValidationDefaultsComponent {
   constructor(config: ValdemortConfig) {
