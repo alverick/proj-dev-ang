@@ -28,7 +28,7 @@ export class AffiliationResumeExitGuard {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const currentNavigation = this.router.getCurrentNavigation();
+    const currentNavigation = this.router.currentNavigation();
     if (pathEq(true, ['extras', 'state', 'navigateValid'], currentNavigation)) {
       return true;
     }

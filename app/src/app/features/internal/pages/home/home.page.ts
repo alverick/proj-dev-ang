@@ -219,7 +219,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     public settings: SettingsStorageService,
   ) {
     transactionService.itemsForDelete = [];
-    const navigation = this.router.getCurrentNavigation();
+    const navigation = this.router.currentNavigation();
     let form = pathOr(null, ['extras', 'state', 'filter'], navigation);
     if (isNotNil(form)) {
       form = { ...form, payment: form.payment.code };

@@ -31,7 +31,7 @@ export class HelpPage implements AfterViewInit {
     private readonly router: Router,
     protected tracking: TrackingService,
   ) {
-    const navigation = this.router.getCurrentNavigation();
+    const navigation = this.router.currentNavigation();
     const section = pathOr<string>(
       null,
       ['extras', 'state', 'section'],
