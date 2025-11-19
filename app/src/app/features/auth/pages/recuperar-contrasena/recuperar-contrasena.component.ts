@@ -49,6 +49,7 @@ interface RecoverForm {
     ButtonDirective,
     Ripple,
   ],
+  providers: [RecuperaService],
 })
 export class RecuperarContrasenaComponent implements OnInit {
   public formulario = true;

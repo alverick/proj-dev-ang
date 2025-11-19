@@ -8,7 +8,7 @@ describe('DashboardGraphComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [DashboardGraphComponent],
+      imports: [DashboardGraphComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardGraphComponent);

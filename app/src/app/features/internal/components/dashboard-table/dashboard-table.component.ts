@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 import { TopClient } from '../../../../store/entities';
@@ -15,6 +16,7 @@ export interface Customer {
   selector: 'cs-dashboard-table',
   templateUrl: './dashboard-table.component.html',
   styleUrls: ['./dashboard-table.component.scss'],
+  imports: [NgClass],
 })
 export class DashboardTableComponent {
   @Input() printMode = false;
