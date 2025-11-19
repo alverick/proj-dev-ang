@@ -8,10 +8,10 @@ import {
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { Ripple } from 'primeng/ripple';
+import { Select } from 'primeng/select';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -36,7 +36,6 @@ import { ServiceDebtFormComponent } from '../service-debt-form/service-debt-form
     ReactiveFormsModule,
     LabelControlComponent,
     RadioButtonModule,
-    DropdownModule,
     InputTextModule,
     InputWithoutSpacesDirective,
     ButtonDirective,
@@ -44,6 +43,7 @@ import { ServiceDebtFormComponent } from '../service-debt-form/service-debt-form
     MessageAlertComponent,
     ServiceDebtFormComponent,
     NgClass,
+    Select,
   ],
 })
 export class ServiceStepConfigurationComponent implements OnInit {

@@ -5,13 +5,13 @@
       formControlName="paymentType"
       [errorMessages]="errorMessages.paymentType"
       >¿En qué orden te podrán pagar tus clientes?
-      <p-dropdown
+      <p-select
         [options]="paymentTypeOptions"
         class="tw-w-full"
         styleClass="tw-w-full"
         formControlName="paymentType"
         placeholder="Selecciona"
-      ></p-dropdown>
+      ></p-select>
     </cs-label-control>
   </div>
   <div class="form-elm tw-mb-5">
@@ -95,13 +95,13 @@
           formControlName="chargeType"
           [errorMessages]="errorMessages.chargeType"
           >Tipo de cobro
-          <p-dropdown
+          <p-select
             [options]="chargeTypeOptions"
             class="tw-w-full"
             styleClass="tw-w-full"
             formControlName="chargeType"
             placeholder="Selecciona"
-          ></p-dropdown>
+          ></p-select>
         </cs-label-control>
       }
     </div>
@@ -128,13 +128,13 @@
           formControlName="interestType"
           [errorMessages]="errorMessages.interestType"
           >Tipo de cálculo
-          <p-dropdown
+          <p-select
             [options]="interestTypeOptions"
             class="tw-w-full"
             styleClass="tw-w-full"
             formControlName="interestType"
             placeholder="Selecciona"
-          ></p-dropdown>
+          ></p-select>
         </cs-label-control>
         <cs-label-control
           class="tw-w-full"

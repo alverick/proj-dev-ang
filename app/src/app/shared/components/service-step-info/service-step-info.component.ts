@@ -10,9 +10,9 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
-import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { Ripple } from 'primeng/ripple';
+import { Select } from 'primeng/select';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -36,13 +36,13 @@ import { ServiceChannelChipComponent } from '../service-channel-chip/service-cha
     LabelControlComponent,
     InputTextModule,
     InputWithoutSpacesDirective,
-    DropdownModule,
     CheckboxModule,
     ServiceChannelChipComponent,
     MessageAlertComponent,
     NgClass,
     ButtonDirective,
     Ripple,
+    Select,
   ],
 })
 export class ServiceStepInfoComponent implements OnInit, OnDestroy {

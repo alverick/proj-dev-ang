@@ -16,10 +16,10 @@ import {
 } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextarea } from 'primeng/inputtextarea';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { Ripple } from 'primeng/ripple';
+import { TextareaModule } from 'primeng/textarea';
 import { forEachObjIndexed } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 
@@ -38,7 +38,7 @@ import { ICompanyData } from '../../../../shared/models/company-data';
     LabelControlComponent,
     InputTextModule,
     KeyFilterModule,
-    InputTextarea,
+    TextareaModule,
     RadioButtonModule,
     ButtonDirective,
     Ripple,

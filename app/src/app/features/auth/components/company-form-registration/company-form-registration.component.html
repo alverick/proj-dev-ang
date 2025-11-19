@@ -15,13 +15,13 @@
           class="tw-w-1/2 tw-shrink-0"
           formControlName="documentType"
           [errorMessages]="errorMessages.documentType"
-          >Tipo de documento<p-dropdown
+          >Tipo de documento<p-select
             [options]="documentTypes"
             class="tw-w-full"
             styleClass="tw-w-full"
             formControlName="documentType"
             placeholder="Selecciona"
-          ></p-dropdown>
+          ></p-select>
         </cs-label-control>
         <cs-label-control
           class="tw-w-1/2 tw-shrink-0"
@@ -107,13 +107,13 @@
           class="tw-w-full"
           formControlName="movilOperator"
           [errorMessages]="errorMessages.movilOperator"
-          >Operador<p-dropdown
+          >Operador<p-select
             [options]="operators"
             class="tw-w-full"
             styleClass="tw-w-full"
             formControlName="movilOperator"
             placeholder="Selecciona"
-          ></p-dropdown>
+          ></p-select>
         </cs-label-control>
         <cs-label-control
           class="tw-w-full"

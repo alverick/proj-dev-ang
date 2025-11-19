@@ -4,7 +4,6 @@ import { Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MockProvider } from 'ng-mocks';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { PrimeNGConfig } from 'primeng/api';
 import { Subject } from 'rxjs';
 
 import { AppComponent } from './app.component';
@@ -29,8 +28,8 @@ describe('AppComponent', () => {
     storeMock = { dispatch: jest.fn() };
 
     await TestBed.configureTestingModule({
-      declarations: [AppComponent],
       imports: [
+        AppComponent,
         BrowserAnimationsModule,
         RouterModule,
         ValidationDefaultsComponent,
@@ -38,7 +37,6 @@ describe('AppComponent', () => {
         FabWhatsappComponent,
       ],
       providers: [
-        MockProvider(PrimeNGConfig),
         MockProvider(AdobeLaunchProviderService),
         MockProvider(HotjarProviderService),
         MockProvider(NewRelicProviderService),

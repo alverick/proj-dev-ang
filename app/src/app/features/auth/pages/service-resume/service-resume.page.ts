@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { SidebarModule } from 'primeng/sidebar';
+import { Drawer } from 'primeng/drawer';
 
 import { ServiceCardComponent } from '../../../../shared/components/service-card/service-card.component';
 import { ServiceEditFormComponent } from '../../../../shared/components/service-edit-form/service-edit-form.component';
@@ -30,8 +30,8 @@ import { AffiliationService } from '../../services';
   imports: [
     ServicesListComponent,
     ServiceCardComponent,
-    SidebarModule,
     ServiceEditFormComponent,
+    Drawer,
   ],
 })
 export class ServiceResumePage {

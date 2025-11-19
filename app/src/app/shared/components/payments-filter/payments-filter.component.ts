@@ -19,12 +19,12 @@ import {
 } from '@angular/forms';
 import { PrimeTemplate } from 'primeng/api';
 import { ButtonDirective } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
-import { DropdownModule } from 'primeng/dropdown';
+import { DatePickerModule } from 'primeng/datepicker';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { Ripple } from 'primeng/ripple';
+import { Select } from 'primeng/select';
 import { all, forEachObjIndexed, isNil, keys, mapObjIndexed } from 'ramda';
 import { isNilOrEmpty, isNotNil, isNotNilOrEmpty, isObj } from 'ramda-adjunct';
 import { combineLatest, Subject } from 'rxjs';
@@ -64,11 +64,11 @@ const labelNamesGtp = {
     IconFieldModule,
     InputIconModule,
     InputTextModule,
-    DropdownModule,
     PrimeTemplate,
-    CalendarModule,
+    DatePickerModule,
     ButtonDirective,
     Ripple,
+    Select,
   ],
 })
 export class PaymentsFilterComponent implements OnInit, OnDestroy {

@@ -14,10 +14,10 @@ import {
 } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
-import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { Ripple } from 'primeng/ripple';
+import { Select } from 'primeng/select';
 import { has, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { throttleTime } from 'rxjs/operators';
@@ -45,13 +45,13 @@ import { ServiceDebtFormComponent } from '../service-debt-form/service-debt-form
     LabelControlComponent,
     InputTextModule,
     MessageModule,
-    DropdownModule,
     InputWithoutSpacesDirective,
     ButtonDirective,
     ServiceDebtFormComponent,
     CheckboxModule,
     ServiceChannelChipComponent,
     Ripple,
+    Select,
   ],
 })
 export class ServiceEditFormComponent implements OnInit, OnChanges {

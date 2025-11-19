@@ -15,7 +15,7 @@
         [errorMessages]="formErrors.emissionDate"
       >
         Fecha de emisión
-        <p-calendar
+        <p-date-picker
           control
           class="tw-w-full"
           styleClass="tw-w-full"
@@ -26,7 +26,7 @@
           formControlName="emissionDate"
           appendTo="body"
           dateFormat="dd/mm/yy"
-        ></p-calendar
+        ></p-date-picker
       ></cs-label-control>
       @if (!isPartial) {
         <cs-label-control
@@ -35,7 +35,7 @@
           [errorMessages]="formErrors.dueDate"
         >
           Fecha de vencimiento
-          <p-calendar
+          <p-date-picker
             control
             class="tw-w-full"
             styleClass="tw-w-full"
@@ -46,7 +46,7 @@
             appendTo="body"
             formControlName="dueDate"
             dateFormat="dd/mm/yy"
-          ></p-calendar
+          ></p-date-picker
         ></cs-label-control>
       }
     </div>

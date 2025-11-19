@@ -27,7 +27,7 @@
     ></cs-company-update-form>
   </div>
 </div>
-<p-sidebar
+<p-drawer
   [(visible)]="showSidebar"
   [dismissible]="false"
   [closeOnEscape]="false"
@@ -45,4 +45,4 @@
       (sendForm)="onSendForm()"
     ></cs-company-password-form>
   }
-</p-sidebar>
+</p-drawer>

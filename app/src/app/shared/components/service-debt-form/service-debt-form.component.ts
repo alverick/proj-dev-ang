@@ -15,9 +15,9 @@ import {
   NgForm,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { Select } from 'primeng/select';
 import { pathEq } from 'ramda';
 
 import { ISelectOptions } from '../../constants/company';
@@ -40,11 +40,11 @@ import { LabelControlComponent } from '../label-control/label-control.component'
     FormsModule,
     ReactiveFormsModule,
     LabelControlComponent,
-    DropdownModule,
     RadioButtonModule,
     InputNumberModule,
     InputMoneyDirective,
     CurrencyPipe,
+    Select,
   ],
 })
 export class ServiceDebtFormComponent

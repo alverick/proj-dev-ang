@@ -12,10 +12,10 @@ import {
   ValidationErrorsComponent,
 } from 'ngx-valdemort';
 import { ButtonDirective } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule, KeyFilterPattern } from 'primeng/keyfilter';
 import { Ripple } from 'primeng/ripple';
+import { Select } from 'primeng/select';
 
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { InputTrimSpacesDirective } from '../../../../shared/directives/input-trim-spaces.directive';
@@ -32,7 +32,6 @@ import { type RegisterForm } from '../../services/affiliation-forms.service';
     FormsModule,
     ReactiveFormsModule,
     LabelControlComponent,
-    DropdownModule,
     InputTextModule,
     KeyFilterModule,
     ValidationErrorsComponent,
@@ -41,6 +40,7 @@ import { type RegisterForm } from '../../services/affiliation-forms.service';
     ButtonDirective,
     Ripple,
     KeyValuePipe,
+    Select,
   ],
 })
 export class CompanyFormRegistrationComponent implements OnInit {

@@ -1,7 +1,7 @@
 import { CommonModule, NgClass } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SidebarModule } from 'primeng/sidebar';
+import { Drawer } from 'primeng/drawer';
 import { type Observable } from 'rxjs';
 
 import {
@@ -37,8 +37,8 @@ import { CompanyConfigurationService } from '../../services';
     CommonModule,
     NgClass,
     CompanyUpdateFormComponent,
-    SidebarModule,
     CompanyPasswordFormComponent,
+    Drawer,
   ],
 })
 export class CompanyConfigurationPage implements OnInit {

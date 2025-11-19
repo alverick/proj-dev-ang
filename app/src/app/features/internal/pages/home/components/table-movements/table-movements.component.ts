@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { type LazyLoadEvent, PrimeTemplate } from 'primeng/api';
 import { ButtonDirective } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
+import { DatePicker } from 'primeng/datepicker';
 import { DialogModule } from 'primeng/dialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
@@ -81,7 +81,6 @@ type TableCol = {
     NgClass,
     FormsModule,
     InputTextModule,
-    CalendarModule,
     InputNumberModule,
     InputMoneyDirective,
     AmountMaxValidateDirective,
@@ -94,6 +93,7 @@ type TableCol = {
     NotEmptyPipe,
     ValidateLimitCurrencyPipe,
     KeyFilterModule,
+    DatePicker,
   ],
 })
 export class TableMovementsComponent implements OnInit, OnChanges {

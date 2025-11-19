@@ -14,9 +14,9 @@ import {
   ValidationErrorDirective,
   ValidationErrorsComponent,
 } from 'ngx-valdemort';
-import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { Select } from 'primeng/select';
 import { isNil, pathEq } from 'ramda';
 
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
@@ -39,11 +39,11 @@ import { namePattern } from '../../../../shared/validators/company-validators';
     InputTextModule,
     InputWithoutSpacesDirective,
     KeyFilterModule,
-    DropdownModule,
     ValidationErrorsComponent,
     ValidationErrorDirective,
     InputTrimSpacesDirective,
     KeyValuePipe,
+    Select,
   ],
 })
 export class CompanyUpdateFormComponent implements OnInit, OnChanges {

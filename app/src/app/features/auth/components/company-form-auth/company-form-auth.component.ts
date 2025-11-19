@@ -12,12 +12,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrimeTemplate } from 'primeng/api';
 import { ButtonDirective } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
-import { DropdownModule } from 'primeng/dropdown';
 import { type DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { PasswordModule } from 'primeng/password';
 import { Ripple } from 'primeng/ripple';
+import { Select } from 'primeng/select';
 import { has } from 'ramda';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
@@ -53,7 +53,6 @@ import {
     InputTextModule,
     KeyFilterModule,
     InputWithoutSpacesDirective,
-    DropdownModule,
     PrimeTemplate,
     MessageAlertComponent,
     PasswordModule,
@@ -61,6 +60,7 @@ import {
     CheckboxModule,
     ButtonDirective,
     Ripple,
+    Select,
   ],
 })
 export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
@@ -114,10 +114,10 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
 
   private setForm() {
     ['password', 'passwordConfirm', 'acceptTerms'].forEach((field) => {
-      if (!this.passwordNoEditable) {
-        this.companyForm?.get(field).enable();
-      } else {
+      if (this.passwordNoEditable) {
         this.companyForm?.get(field).disable();
+      } else {
+        this.companyForm?.get(field).enable();
       }
     });
   }

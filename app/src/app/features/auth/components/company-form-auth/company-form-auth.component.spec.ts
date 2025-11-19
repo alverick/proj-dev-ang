@@ -1,9 +1,5 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MockBuilder } from 'ng-mocks';
-import { CheckboxModule } from 'primeng/checkbox';
-import { DropdownModule } from 'primeng/dropdown';
-import { PasswordModule } from 'primeng/password';
 
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { MessageAlertComponent } from '../../../../shared/components/message-alert/message-alert.component';
@@ -66,13 +62,7 @@ describe('CompanyFormAuthComponent', () => {
       .keep(AffiliationFormsService)
       .mock(LabelControlComponent)
       .mock(MessageAlertComponent)
-      .mock(TrackingService)
-      .mock(DropdownModule)
-      .mock(PasswordModule)
-      .keep(FormsModule)
-      .keep(FormBuilder)
-      .keep(ReactiveFormsModule)
-      .mock(CheckboxModule),
+      .mock(TrackingService),
   );
   beforeEach(() => {
     service = TestBed.inject(AffiliationFormsService);

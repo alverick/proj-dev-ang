@@ -1,12 +1,5 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule, type UntypedFormControl } from '@angular/forms';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ButtonDirective } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextarea } from 'primeng/inputtextarea';
-import { KeyFilterModule } from 'primeng/keyfilter';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { Ripple } from 'primeng/ripple';
+import { type UntypedFormControl } from '@angular/forms';
 
 import { mobileOperators } from '../../../../shared/constants/company';
 import { statusCodes } from '../../../../shared/constants/services';
@@ -33,17 +26,7 @@ describe('EmpresaGTPComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        EmpresaGTPComponent,
-        ReactiveFormsModule,
-        NoopAnimationsModule,
-        InputTextModule,
-        KeyFilterModule,
-        InputTextarea,
-        RadioButtonModule,
-        ButtonDirective,
-        Ripple,
-      ],
+      imports: [EmpresaGTPComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EmpresaGTPComponent);

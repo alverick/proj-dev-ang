@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { SidebarModule } from 'primeng/sidebar';
+import { Drawer } from 'primeng/drawer';
 import { StepsModule } from 'primeng/steps';
 
 import { ServiceCardComponent } from '../../../../shared/components/service-card/service-card.component';
@@ -27,8 +27,8 @@ import { AffiliationService } from '../../services';
     StepsModule,
     ServicesListComponent,
     ServiceCardComponent,
-    SidebarModule,
     ServiceEditFormComponent,
+    Drawer,
   ],
 })
 export class UpdateServicesPage {

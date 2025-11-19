@@ -10,11 +10,11 @@ import { ValdemortModule } from 'ngx-valdemort';
 import { AccordionModule } from 'primeng/accordion';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ChipModule } from 'primeng/chip';
+import { DatePickerModule } from 'primeng/datepicker';
 import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
+import { DrawerModule } from 'primeng/drawer';
 import { DynamicDialog } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -34,7 +34,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
-import { SidebarModule } from 'primeng/sidebar';
+import { SelectModule } from 'primeng/select';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { StepsModule } from 'primeng/steps';
 import { TableModule } from 'primeng/table';
@@ -73,11 +73,10 @@ const PRIMENG_MODULES = [
   AccordionModule,
   BadgeModule,
   ButtonModule,
-  CalendarModule,
   CheckboxModule,
   ChipModule,
+  DatePickerModule,
   DialogModule,
-  DropdownModule,
   DynamicDialog,
   IconFieldModule,
   InputIconModule,
@@ -97,7 +96,7 @@ const PRIMENG_MODULES = [
   ProgressBarModule,
   ProgressSpinnerModule,
   RippleModule,
-  SidebarModule,
+  DrawerModule,
   TieredMenuModule,
   SplitButtonModule,
   StepsModule,
@@ -105,6 +104,7 @@ const PRIMENG_MODULES = [
   TagModule,
   ToastModule,
   TooltipModule,
+  SelectModule,
 ];
 const UI_MODULES = [FontAwesomeModule, OverlayModule];
 

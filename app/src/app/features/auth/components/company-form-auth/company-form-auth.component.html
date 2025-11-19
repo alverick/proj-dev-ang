@@ -43,7 +43,7 @@
             />
           }
           @if (nameOptions?.length >= 2) {
-            <p-dropdown
+            <p-select
               [options]="nameOptions"
               optionLabel="label"
               optionValue="value"
@@ -59,7 +59,7 @@
                   <div class="tw-text-xxs">{{ option.description }}</div>
                 </div>
               </ng-template>
-            </p-dropdown>
+            </p-select>
           }
         </cs-label-control>
       </div>
@@ -77,14 +77,14 @@
           formControlName="entrySelect"
           [errorMessages]="errorMessages?.entrySelect"
           >Rubro de tu empresa
-          <p-dropdown
+          <p-select
             [options]="categories"
             optionLabel="name"
             class="tw-w-full"
             styleClass="tw-w-full"
             formControlName="entrySelect"
             placeholder="Selecciona"
-          ></p-dropdown>
+          ></p-select>
         </cs-label-control>
       </div>
       @if (!passwordNoEditable) {

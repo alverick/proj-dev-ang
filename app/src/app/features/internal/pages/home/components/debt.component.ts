@@ -18,7 +18,7 @@ import {
 } from '@angular/forms';
 import { FormModel } from 'ngx-mf';
 import { ButtonDirective } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
+import { DatePicker } from 'primeng/datepicker';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -68,7 +68,6 @@ export interface Debt {
     FormsModule,
     ReactiveFormsModule,
     LabelControlComponent,
-    CalendarModule,
     InputTextModule,
     KeyFilterModule,
     InputNumberModule,
@@ -77,6 +76,7 @@ export interface Debt {
     IconFieldModule,
     InputIconModule,
     MessageAlertComponent,
+    DatePicker,
   ],
 })
 export class DebtComponent implements OnInit {

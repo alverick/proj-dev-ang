@@ -6,8 +6,8 @@
 >
   <div class="form-elm">
     <cs-label-control class="tw-w-full" formControlName="inputSearch">
-      <p-iconField class="tw-w-full" iconPosition="left" control>
-        <p-inputIcon styleClass="pi pi-search" />
+      <p-icon-field class="tw-w-full" iconPosition="left" control>
+        <p-inputicon class="pi pi-search" />
         <input
           [ngClass]="{ 'lg:tw-w-72': !gtpMode, 'lg:tw-w-80': gtpMode }"
           type="text"
@@ -19,12 +19,12 @@
           formControlName="inputSearch"
           variant="filled"
         />
-      </p-iconField>
+      </p-icon-field>
     </cs-label-control>
   </div>
   <div class="form-elm">
     <cs-label-control class="tw-w-full" formControlName="service">
-      <p-dropdown
+      <p-select
         formControlName="service"
         [options]="services"
         class="tw-w-full"
@@ -40,12 +40,12 @@
         <ng-template let-service pTemplate="item">
           {{ (service.code ? service.code + ' - ' : '') + service.name }}
         </ng-template>
-      </p-dropdown>
+      </p-select>
     </cs-label-control>
   </div>
   <div class="form-elm">
     <cs-label-control formControlName="status">
-      <p-dropdown
+      <p-select
         control
         formControlName="status"
         [options]="stateList"
@@ -56,13 +56,13 @@
         placeholder="Estado"
         [optionValue]="gtpMode ? 'idState' : 'idWayPay'"
       >
-      </p-dropdown
+      </p-select
     ></cs-label-control>
   </div>
   @if (stateTypeList) {
     <div class="form-elm">
       <cs-label-control formControlName="statusSolicitud">
-        <p-dropdown
+        <p-select
           control
           formControlName="statusSolicitud"
           [options]="stateTypeList"
@@ -73,7 +73,7 @@
           placeholder="Tipo de solicitud"
           optionValue="idState"
         >
-        </p-dropdown>
+        </p-select>
       </cs-label-control>
     </div>
   }
@@ -87,7 +87,7 @@
   @if (dateList) {
     <div class="form-elm">
       <cs-label-control formControlName="dateForFilter">
-        <p-dropdown
+        <p-select
           control
           formControlName="dateForFilter"
           [options]="dateList"
@@ -98,7 +98,7 @@
           placeholder="Fecha"
           optionValue="idDate"
         >
-        </p-dropdown>
+        </p-select>
       </cs-label-control>
     </div>
   } @else {
@@ -110,7 +110,7 @@
       formControlName="dateFrom"
       [errorMessages]="errorMessageDates"
     >
-      <p-calendar
+      <p-date-picker
         control
         formControlName="dateFrom"
         class="tw-w-full lg:tw-w-36"
@@ -121,7 +121,7 @@
         placeholder="Desde"
         appendTo="body"
         dateFormat="d/m/yy"
-      ></p-calendar
+      ></p-date-picker
     ></cs-label-control>
   </div>
   <div class="form-elm tw-w-full lg:tw-w-auto">
@@ -130,7 +130,7 @@
       formControlName="dateTo"
       [errorMessages]="errorMessageDates"
     >
-      <p-calendar
+      <p-date-picker
         control
         formControlName="dateTo"
         class="tw-w-full lg:tw-w-36"
@@ -142,7 +142,7 @@
         placeholder="Hasta"
         appendTo="body"
         dateFormat="d/m/yy"
-      ></p-calendar
+      ></p-date-picker
     ></cs-label-control>
   </div>
   <div
