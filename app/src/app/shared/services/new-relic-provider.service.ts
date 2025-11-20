@@ -77,7 +77,6 @@ export class NewRelicProviderService implements ProviderService {
 
   private runNewrelic(event: string, payload: object) {
     try {
-      console.log('runNewrelic', event, payload);
       if ('undefined' !== typeof window.newrelic && window.newrelic) {
         window.newrelic.addPageAction(event, payload);
       }

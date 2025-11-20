@@ -67,8 +67,8 @@ stages:
                   organization: 'interbank'
                   scannerMode: 'CLI'
                   configMode: 'manual'
-                  cliProjectKey: 'bie-pe.interbank.bie.cs-frontend:bie-cs-frontend'
-                  cliProjectName: 'bie-pe.interbank.bie.cs-frontend:bie-cs-frontend'
+                  cliProjectKey: 'cse-pe.interbank:cse-eureca-frontend'
+                  cliProjectName: 'cse-pe.interbank:cse-eureca-frontend'
                   cliSources: '.'
                   extraProperties: |
                     sonar.sourceEncoding=UTF-8
@@ -97,7 +97,7 @@ stages:
                   $basicAuth = [string]::Format("Basic {0}", $base64)
                   $headers = @{ Authorization = $basicAuth }
 
-                  $result = Invoke-RestMethod -Method Get -Uri https://sonarcloud.io/api/qualitygates/project_status?projectKey=bie-pe.interbank.bie.cs-frontend:bie-cs-frontend -Headers $headers
+                  $result = Invoke-RestMethod -Method Get -Uri https://sonarcloud.io/api/qualitygates/project_status?projectKey=cse-pe.interbank:cse-eureca-frontend -Headers $headers
                   $result | ConvertTo-Json | Write-Host
 
                   if ($result.projectStatus.status -eq "OK") {

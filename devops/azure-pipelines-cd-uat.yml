@@ -38,7 +38,7 @@ extends:
   template: "src/templates/node-appservice/cd-uat.yml@ibkAzTemplates"
   parameters:
     projectName: "CSE"
-    componentName: "eureca-frontend"
+    componentName: "cse-eureca-frontend"
     buildOutputPath: "dist"
     azAppServiceSubscription: "RG_EU2_C003_EURC_UAT_01"
     azAppServiceAppType: "webAppLinux"

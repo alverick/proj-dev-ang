@@ -153,7 +153,6 @@ export class AprobacionesPage implements OnInit {
   }
 
   EnviarAprobados() {
-    console.log('EnviarAprobados');
     let entryDiff = false;
     this.gtpService.services.forEach(({ res }) => {
       if (res.length > 0 && res.substring(0, 2) !== this.Enterprise.entry) {

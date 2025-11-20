@@ -32,7 +32,7 @@ resources:
       type: "bitbucket"
       endpoint: "bitbucket-generic-user"
       name: "ibkteam/dso-frontend-template"
-      ref: "master"
+      ref: "cse-usergen"
 
 ####################
 # Call the template of your preference
@@ -43,13 +43,13 @@ extends:
   template: "src/templates/node/ci.yml@ibkAzTemplates"
   parameters:
     projectName: "CSE"
-    componentName: "eureca-frontend"
+    componentName: "cse-eureca-frontend"
     workingDir: "app"
     buildOutputPath: "dist"
     nodeVersion: "18.X"
     flags:
       unitTestsEnabled: true
-      sonarEnabled: false
-      sonarQualityGateEnabled: false
-      jFrogXrayEnabled: false
+      sonarEnabled: true
+      sonarQualityGateEnabled: true
+      jFrogXrayEnabled: true
       fluidAttacksEnabled: true
