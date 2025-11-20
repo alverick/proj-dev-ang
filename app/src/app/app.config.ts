@@ -8,10 +8,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
-import { provideStore } from '@ngrx/store';
-import { provideState } from '@ngrx/store';
+import { provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import Aura from '@primeng/themes/aura';
+import Lara from '@primeuix/themes/lara';
 import { LoggerModule } from 'ngx-logger';
 import { ValdemortModule } from 'ngx-valdemort';
 import { providePrimeNG } from 'primeng/config';
@@ -39,9 +38,14 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     providePrimeNG({
       theme: {
-        preset: Aura,
+        preset: Lara,
         options: {
           darkModeSelector: false,
+          cssLayer: {
+            name: 'primeng',
+            order:
+              'tailwind-base, primeng, custom, general, tailwind-utilities',
+          },
         },
       },
       ripple: true,
