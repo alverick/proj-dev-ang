@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import type { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
@@ -16,6 +16,10 @@ import { adminFullRoutingNames } from '../../admin-routing.names';
   imports: [HeaderComponent, NgOptimizedImage, MenuModule],
 })
 export class AdminHeaderComponent {
+  private readonly loginService = inject(LoginService);
+  private readonly excel = inject(ExcelService);
+  private readonly router = inject(Router);
+
   items: MenuItem[] = [
     {
       label: 'Configurar correo',
@@ -32,11 +36,6 @@ export class AdminHeaderComponent {
       },
     },
   ];
-  constructor(
-    private readonly loginService: LoginService,
-    private readonly excel: ExcelService,
-    private readonly router: Router,
-  ) {}
 
   public gotoSetupEmail() {
     void this.router.navigate([adminFullRoutingNames.SETUP_EMAIL]);

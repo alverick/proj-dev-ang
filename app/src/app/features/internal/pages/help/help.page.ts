@@ -1,4 +1,4 @@
-import { type AfterViewInit, Component } from '@angular/core';
+import { type AfterViewInit, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccordionModule } from 'primeng/accordion';
 import { pathOr } from 'ramda';
@@ -21,15 +21,15 @@ import { internalFullRoutingNames } from '../../internal-routing.names';
   imports: [AccordionModule],
 })
 export class HelpPage implements AfterViewInit {
+  private readonly router = inject(Router);
+  protected tracking = inject(TrackingService);
+
   /**
    * Accordion active index
    */
   activeIndex: number;
 
-  constructor(
-    private readonly router: Router,
-    protected tracking: TrackingService,
-  ) {
+  constructor() {
     const navigation = this.router.currentNavigation();
     const section = pathOr<string>(
       null,

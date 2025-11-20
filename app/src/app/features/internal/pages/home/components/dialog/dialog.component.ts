@@ -1,6 +1,6 @@
 import { CurrencyPipe, DecimalPipe, NgClass } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, computed, type OnInit } from '@angular/core';
+import { Component, computed, inject, type OnInit } from '@angular/core';
 import {
   UntypedFormBuilder,
   type UntypedFormGroup,
@@ -63,6 +63,12 @@ type withoutData = 'S';
   ],
 })
 export class DialogComponent implements OnInit {
+  excelService = inject(ExcelService);
+  formBuilder = inject(UntypedFormBuilder);
+  dialogRef = inject<DynamicDialogRef<DialogComponent>>(DynamicDialogRef);
+  private readonly tracking = inject(TrackingService);
+  config = inject(DynamicDialogConfig);
+
   useAmountLimits = false;
   public inputXlsForm: UntypedFormGroup;
   public messageUploadExcel = false;
@@ -96,14 +102,6 @@ export class DialogComponent implements OnInit {
       ? 14
       : 10;
   });
-
-  constructor(
-    public excelService: ExcelService,
-    public formBuilder: UntypedFormBuilder,
-    public dialogRef: DynamicDialogRef<DialogComponent>,
-    private readonly tracking: TrackingService,
-    public config: DynamicDialogConfig,
-  ) {}
 
   ngOnInit() {
     this.inputXlsForm = this.formBuilder.group({

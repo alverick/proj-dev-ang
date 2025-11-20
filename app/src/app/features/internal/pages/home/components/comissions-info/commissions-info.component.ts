@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -13,13 +13,15 @@ import { TrackingService } from '../../../../../../shared/services';
   imports: [ButtonDirective, Ripple],
 })
 export class CommissionsInfoComponent {
+  tracking = inject(TrackingService);
+  router = inject(Router);
+  dialogRef = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+
   showed = false;
-  constructor(
-    public tracking: TrackingService,
-    public router: Router,
-    public dialogRef: DynamicDialogRef,
-    public config: DynamicDialogConfig,
-  ) {
+  constructor() {
+    const config = this.config;
+
     this.showed = pathOr(false, ['data', 'showed'], config);
   }
 

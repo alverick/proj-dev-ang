@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Drawer } from 'primeng/drawer';
 
@@ -35,6 +35,10 @@ import { AffiliationService } from '../../services';
   ],
 })
 export class ServiceResumePage {
+  private readonly router = inject(Router);
+  private readonly serviceForms = inject(ServicesFormsService);
+  affiliation = inject(AffiliationService);
+
   showSidebar = false;
   position: number;
   errorMessages = {
@@ -48,12 +52,6 @@ export class ServiceResumePage {
   interestTypeOptions = interestTypeOptions;
   formData;
   form = this.affiliation.editServiceForm;
-
-  constructor(
-    private readonly router: Router,
-    private readonly serviceForms: ServicesFormsService,
-    public affiliation: AffiliationService,
-  ) {}
 
   actionDelete(position: number) {
     void swalAlert

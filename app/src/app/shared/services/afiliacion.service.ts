@@ -1,5 +1,5 @@
 import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -9,7 +9,7 @@ import { CompanyAccounts } from './company.service';
 
 @Injectable()
 export class AfiliacionService {
-  constructor(private readonly http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   public idCompany = 0;
   public email: string;

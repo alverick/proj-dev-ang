@@ -1,6 +1,7 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
+  inject,
   Input,
   type OnChanges,
   type SimpleChanges,
@@ -17,15 +18,15 @@ import { AdobeEvent, TrackingService } from '../../services/tracking.service';
   imports: [NgClass],
 })
 export class FabWhatsappComponent implements OnChanges {
+  private readonly tracking = inject(TrackingService);
+  protected router = inject(Router);
+
   @Input() showButton = true;
   @Input() expand = true;
   showText = true;
   url = '';
   timeToHide = 10000;
-  constructor(
-    private readonly tracking: TrackingService,
-    protected router: Router,
-  ) {
+  constructor() {
     setTimeout(() => (this.showText = false), this.timeToHide);
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {

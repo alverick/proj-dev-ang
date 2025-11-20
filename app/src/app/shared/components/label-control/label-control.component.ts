@@ -4,9 +4,8 @@ import {
   type AfterViewInit,
   Component,
   ElementRef,
+  inject,
   Input,
-  Optional,
-  Self,
   ViewChild,
 } from '@angular/core';
 import { type ControlValueAccessor, NgControl } from '@angular/forms';
@@ -27,6 +26,9 @@ import {
 })
 export class LabelControlComponent
   implements AfterViewInit, AfterContentInit, ControlValueAccessor {
+  ngControl = inject(NgControl, { optional: true, self: true });
+  private readonly elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
   private static labelCounter = 0;
   useDefaultContent = false;
   useGap = false;
@@ -39,12 +41,9 @@ export class LabelControlComponent
   @Input() errorMessages: Record<string, string>;
   @ViewChild('wrapper') wrapper: ElementRef<HTMLDivElement>;
 
-  constructor(
-    @Optional()
-    @Self()
-    public ngControl: NgControl,
-    private readonly elRef: ElementRef<HTMLElement>,
-  ) {
+  constructor() {
+    const ngControl = this.ngControl;
+
     if (ngControl != null) {
       ngControl.valueAccessor = this;
     }

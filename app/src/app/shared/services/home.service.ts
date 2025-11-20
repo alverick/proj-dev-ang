@@ -1,5 +1,5 @@
 import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -15,7 +15,7 @@ export type DebtorCode = { id?: number; code: string; firstName?: string };
 
 @Injectable()
 export class HomeService {
-  constructor(private readonly http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   private readonly ListDebts: Debts[] = [];
 

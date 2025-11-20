@@ -6,6 +6,7 @@ import {
   ElementRef,
   EventEmitter,
   HostListener,
+  inject,
   Input,
   Output,
 } from '@angular/core';
@@ -19,6 +20,9 @@ import { Ripple } from 'primeng/ripple';
   imports: [ButtonDirective, Ripple],
 })
 export class ServicesListComponent implements AfterViewInit, AfterViewChecked {
+  private readonly element = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly cdr = inject(ChangeDetectorRef);
+
   @Input() onlyEdit = false;
   @Input() showSaveAll = true;
   @Input() empty = false;
@@ -26,11 +30,6 @@ export class ServicesListComponent implements AfterViewInit, AfterViewChecked {
   @Output() add = new EventEmitter();
   @Output() finish = new EventEmitter();
   additionalButtons = false;
-
-  constructor(
-    private readonly element: ElementRef<HTMLElement>,
-    private readonly cdr: ChangeDetectorRef,
-  ) {}
 
   ngAfterViewInit(): void {
     this.resize();

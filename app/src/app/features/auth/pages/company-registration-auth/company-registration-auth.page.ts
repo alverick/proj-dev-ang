@@ -1,4 +1,4 @@
-import { Component, type OnInit } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { type IEntryModel } from '../../../../shared/models';
@@ -19,14 +19,12 @@ import { AffiliationService } from '../../services';
   imports: [SidebarCompanyComponent, CompanyFormAuthComponent],
 })
 export class CompanyRegistrationAuthPage implements OnInit {
+  affiliation = inject(AffiliationService);
+  private readonly router = inject(Router);
+
   entryOptions: IEntryModel[] = [];
   errors = errorRegisterAuth;
   blockAction = false;
-
-  constructor(
-    public affiliation: AffiliationService,
-    private readonly router: Router,
-  ) {}
 
   ngOnInit() {
     this.affiliation

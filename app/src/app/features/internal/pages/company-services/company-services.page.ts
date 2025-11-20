@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { Drawer } from 'primeng/drawer';
@@ -40,6 +40,13 @@ import { CompanyServicesService } from '../../services';
   ],
 })
 export class CompanyServicesPage {
+  companyServices = inject(CompanyServicesService);
+  private readonly serviceForms = inject(ServicesFormsService);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly logger = inject(NGXLogger);
+  protected tracking = inject(TrackingService);
+
   showSidebar = false;
   position: number;
   errorMessages = {
@@ -54,14 +61,7 @@ export class CompanyServicesPage {
   formData;
   loadFormEdit = false;
 
-  constructor(
-    public companyServices: CompanyServicesService,
-    private readonly serviceForms: ServicesFormsService,
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly router: Router,
-    private readonly logger: NGXLogger,
-    protected tracking: TrackingService,
-  ) {
+  constructor() {
     this.logger.debug(
       '-> this.companyServicesService.services',
       this.companyServices.services,

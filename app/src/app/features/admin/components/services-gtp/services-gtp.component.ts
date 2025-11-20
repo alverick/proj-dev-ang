@@ -2,6 +2,7 @@ import { CurrencyPipe } from '@angular/common';
 import {
   Component,
   EventEmitter,
+  inject,
   Input,
   type OnInit,
   Output,
@@ -48,6 +49,9 @@ import { type CompanyAccounts } from '../../../../shared/services/company.servic
   ],
 })
 export class ServicesGTPComponent implements OnInit {
+  private readonly fb = inject(UntypedFormBuilder);
+  private readonly afiliacionService = inject(AfiliacionService);
+
   codDeudor = this.afiliacionService.codDeudor;
   tiposDato = this.afiliacionService.tipoDato;
   tiposPago = this.afiliacionService.tipoPago;
@@ -73,11 +77,6 @@ export class ServicesGTPComponent implements OnInit {
   @Output() grabar = new EventEmitter<any>();
   submittedRequired = false;
   frm: UntypedFormGroup;
-
-  constructor(
-    private readonly fb: UntypedFormBuilder,
-    private readonly afiliacionService: AfiliacionService,
-  ) {}
 
   ngOnInit() {
     if (isNil(this._service.res)) {

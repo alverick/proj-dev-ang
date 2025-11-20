@@ -1,5 +1,5 @@
 import { DecimalPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   DefaultValidationErrorsDirective,
   DisplayMode,
@@ -17,7 +17,9 @@ import {
   ],
 })
 export class ValidationDefaultsComponent {
-  constructor(config: ValdemortConfig) {
+  constructor() {
+    const config = inject(ValdemortConfig);
+
     config.errorsClasses = 'error-messages';
     config.displayMode = DisplayMode.ONE;
     config.shouldDisplayErrors = (control, form) => form.submitted;

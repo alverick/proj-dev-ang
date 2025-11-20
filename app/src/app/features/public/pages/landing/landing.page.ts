@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, type OnDestroy } from '@angular/core';
+import { Component, inject, type OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { LetDirective } from '@ngrx/component';
 import { Store } from '@ngrx/store';
@@ -51,6 +51,12 @@ interface ItemLanding {
   ],
 })
 export class LandingPage implements OnDestroy {
+  router = inject(Router);
+  dialogService = inject(DynamicDialogService);
+  private readonly tracking = inject(TrackingService);
+  private readonly store = inject(Store);
+  private readonly messageService = inject(MessageService);
+
   ref: DynamicDialogRef;
   benefits: ItemLanding[] = [
     {
@@ -133,14 +139,6 @@ export class LandingPage implements OnDestroy {
   disabledAffiliation$ = this.store.select(
     appConfigFeature.selectDisabledAffiliation,
   );
-
-  constructor(
-    public router: Router,
-    public dialogService: DynamicDialogService,
-    private readonly tracking: TrackingService,
-    private readonly store: Store,
-    private readonly messageService: MessageService,
-  ) {}
 
   ngOnDestroy(): void {
     if (this.ref) {

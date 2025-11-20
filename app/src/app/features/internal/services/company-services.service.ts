@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { forEachObjIndexed, isNil, omit, pathEq } from 'ramda';
 import { switchMap, throwError } from 'rxjs';
@@ -38,6 +38,13 @@ import { swalAlert } from '../../../shared/utils/helpers/popups';
 
 @Injectable()
 export class CompanyServicesService {
+  private readonly companyService = inject(CompanyService);
+  private readonly serviceForms = inject(ServicesFormsService);
+  private readonly serviceService = inject(ServiceService);
+  private readonly logger = inject(NGXLogger);
+  private readonly digitalData = inject(DigitalDataService);
+  protected tracking = inject(TrackingService);
+
   get allowAllServiceType(): boolean {
     return this._allowAllServiceType;
   }
@@ -52,14 +59,7 @@ export class CompanyServicesService {
   editServiceForm: ModelFormGroup<ServiceEditForm>;
   private _allowAllServiceType = false;
 
-  constructor(
-    private readonly companyService: CompanyService,
-    private readonly serviceForms: ServicesFormsService,
-    private readonly serviceService: ServiceService,
-    private readonly logger: NGXLogger,
-    private readonly digitalData: DigitalDataService,
-    protected tracking: TrackingService,
-  ) {
+  constructor() {
     this.serviceForm = this.serviceForms.serviceForm;
     this.serviceConfigForm = this.serviceForms.serviceConfigForm;
     this.editServiceForm = this.serviceForms.editServiceForm;

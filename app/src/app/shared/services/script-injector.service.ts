@@ -1,12 +1,12 @@
-import { DOCUMENT, Inject, Injectable } from '@angular/core';
+import { DOCUMENT, inject, Injectable } from '@angular/core';
 import { type Observable, ReplaySubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class ScriptInjectorService {
-  private loadedLibraries: Record<string, ReplaySubject<boolean>> = {};
+  private readonly document = inject<Document>(DOCUMENT);
 
-  constructor(@Inject(DOCUMENT) private readonly document: Document) {}
+  private loadedLibraries: Record<string, ReplaySubject<boolean>> = {};
 
   loadScript(id: string, src: string): Observable<boolean> {
     if (this.loadedLibraries[src]) {

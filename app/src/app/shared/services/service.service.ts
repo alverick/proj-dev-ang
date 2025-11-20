@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { type Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class ServiceService {
-  constructor(private readonly http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   checkCanDeleteService(serviceId: number): Observable<any> {
     const url = `${environment.END_POINT}/service/${serviceId}/canDelete`;

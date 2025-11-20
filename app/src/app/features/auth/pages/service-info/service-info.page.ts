@@ -1,4 +1,4 @@
-import { Component, type OnInit } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ServiceStepInfoComponent } from '../../../../shared/components/service-step-info/service-step-info.component';
@@ -20,14 +20,13 @@ import { AffiliationService } from '../../services';
   imports: [ServiceStepInfoComponent],
 })
 export class ServiceInfoPage implements OnInit {
+  private readonly router = inject(Router);
+  affiliation = inject(AffiliationService);
+  private readonly serviceForms = inject(ServicesFormsService);
+  private readonly tracking = inject(TrackingService);
+
   accounts: CompanyAccounts[];
   errors = errorServiceInformation;
-  constructor(
-    private readonly router: Router,
-    public affiliation: AffiliationService,
-    private readonly serviceForms: ServicesFormsService,
-    private readonly tracking: TrackingService,
-  ) {}
 
   ngOnInit() {
     this.affiliation?.getAccountsCompany()?.subscribe((accounts) => {

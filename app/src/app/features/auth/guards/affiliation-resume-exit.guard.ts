@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   type ActivatedRouteSnapshot,
   Router,
@@ -17,7 +17,8 @@ import { type ServiceResumePage } from '../pages';
 
 @Injectable()
 export class AffiliationResumeExitGuard {
-  constructor(private readonly router: Router) {}
+  private readonly router = inject(Router);
+
   canDeactivate(
     _component: ServiceResumePage,
     _currentRoute: ActivatedRouteSnapshot,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { authFullRoutingNames } from '../../auth-routing.names';
@@ -11,12 +11,10 @@ import { AffiliationService } from '../../services';
   imports: [],
 })
 export class ProcessingUpdatePage implements OnInit {
-  public email: string;
+  affiliation = inject(AffiliationService);
+  private readonly router = inject(Router);
 
-  constructor(
-    public affiliation: AffiliationService,
-    private readonly router: Router,
-  ) {}
+  public email: string;
 
   ngOnInit() {
     this.email = this.affiliation.email;

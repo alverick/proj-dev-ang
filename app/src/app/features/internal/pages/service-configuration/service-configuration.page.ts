@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 
@@ -27,6 +27,12 @@ import { CompanyServicesService } from '../../services';
   imports: [ServiceStepConfigurationComponent],
 })
 export class ServiceConfigurationPage {
+  private readonly router = inject(Router);
+  protected companyServices = inject(CompanyServicesService);
+  serviceForms = inject(ServicesFormsService);
+  private readonly logger = inject(NGXLogger);
+  protected tracking = inject(TrackingService);
+
   errorMessagesServiceConfig = errorServiceConfiguration;
   debtorCodeOptions = debtorCodeOptions;
   paymentTypeOptions = paymentTypeOptions;
@@ -34,13 +40,6 @@ export class ServiceConfigurationPage {
   chargeTypeOptions = chargeTypeOptions;
   interestTypeOptions = interestTypeOptions;
   blockAction = false;
-  constructor(
-    private readonly router: Router,
-    protected companyServices: CompanyServicesService,
-    public serviceForms: ServicesFormsService,
-    private readonly logger: NGXLogger,
-    protected tracking: TrackingService,
-  ) {}
 
   onSubmit() {
     if (!this.blockAction) {

@@ -1,5 +1,5 @@
 import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { type Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -8,7 +8,8 @@ import { type IEntryModel } from '../models';
 
 @Injectable()
 export class EnterpriseHeadingService {
-  constructor(private readonly http: HttpClient) {}
+  private readonly http = inject(HttpClient);
+
   public getEntryOptions(): Observable<IEntryModel[]> {
     return this.http
       .get<IEntryModel[]>(`${environment.END_POINT}/enterpriseHeading`)

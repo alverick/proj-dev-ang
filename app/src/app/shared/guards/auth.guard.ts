@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { authFullRoutingNames } from '../../features/auth/auth-routing.names';
@@ -6,10 +6,8 @@ import { StorageService } from '../services/storage.service';
 
 @Injectable()
 export class AuthGuard {
-  constructor(
-    private readonly router: Router,
-    private readonly storageService: StorageService,
-  ) {}
+  private readonly router = inject(Router);
+  private readonly storageService = inject(StorageService);
 
   canActivate(): boolean {
     return this.checkLogin();

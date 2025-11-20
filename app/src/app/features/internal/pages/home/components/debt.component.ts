@@ -80,6 +80,14 @@ export interface Debt {
   ],
 })
 export class DebtComponent implements OnInit {
+  dialogRef = inject<DynamicDialogRef<DebtComponent>>(DynamicDialogRef);
+  private readonly homeService = inject(HomeService);
+  excelService = inject(ExcelService);
+  private readonly tracking = inject(TrackingService);
+  config = inject(DynamicDialogConfig);
+  private readonly currencyPipe = inject(CurrencyPipe);
+  fb = inject(FormBuilder);
+
   useAmountLimits = false;
   public grabado = false;
   public minDate = debtMinDate;
@@ -159,16 +167,6 @@ export class DebtComponent implements OnInit {
   };
   formDirective = viewChild<FormGroupDirective>('formDirective');
   datePipe: DatePipe = inject(DatePipe);
-
-  constructor(
-    public dialogRef: DynamicDialogRef<DebtComponent>,
-    private readonly homeService: HomeService,
-    public excelService: ExcelService,
-    private readonly tracking: TrackingService,
-    public config: DynamicDialogConfig,
-    private readonly currencyPipe: CurrencyPipe,
-    public fb: FormBuilder,
-  ) {}
 
   ngOnInit(): void {
     this.setPartialMode();

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { isNotEmpty } from 'ramda';
 
@@ -49,6 +49,8 @@ export interface ServiceDebt {
 
 @Injectable()
 export class ServicesFormsService {
+  private readonly formBuilder = inject(FormBuilder);
+
   serviceForm: ModelFormGroup<ServiceFormValue>;
   serviceConfigForm: ModelFormGroup<ServiceConfigurationForm>;
   editServiceForm: ModelFormGroup<ServiceEditForm>;
@@ -56,7 +58,7 @@ export class ServicesFormsService {
 
   editNameValidators = serviceNameValidators;
 
-  constructor(private readonly formBuilder: FormBuilder) {
+  constructor() {
     this.serviceForm = this.formBuilder.group({
       name: ['', serviceNameValidators],
       account: ['', [Validators.required]],

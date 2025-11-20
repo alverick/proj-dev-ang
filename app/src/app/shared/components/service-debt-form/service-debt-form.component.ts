@@ -127,7 +127,6 @@ export class ServiceDebtFormComponent
   }
 
   setDisabledState(disabled: boolean) {
-    // eslint-disable-next-line sonarjs/no-selector-parameter
     if (disabled) {
       this.disableFields(Object.keys(this.form.controls));
     } else {

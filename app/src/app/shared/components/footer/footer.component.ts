@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { headerModalTerms, modalTermsConfig } from '../../constants/modal-data';
 import { DynamicDialogService } from '../../services/dynamic-dialog.service';
@@ -12,10 +12,8 @@ import { ModalTermsComponent } from '../modal-terms/modal-terms.component';
   standalone: true,
 })
 export class FooterComponent {
-  constructor(
-    public dialogService: DynamicDialogService,
-    private readonly tracking: TrackingService,
-  ) {}
+  dialogService = inject(DynamicDialogService);
+  private readonly tracking = inject(TrackingService);
 
   showModalTerms() {
     this.tracking.trackEvent(AdobeEvent.trackAction, {

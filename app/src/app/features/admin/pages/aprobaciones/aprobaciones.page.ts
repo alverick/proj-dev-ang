@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe, NgClass } from '@angular/common';
-import { Component, HostListener, type OnInit } from '@angular/core';
+import { Component, HostListener, inject, type OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
 import { Ripple } from 'primeng/ripple';
@@ -40,6 +40,10 @@ import { ServicesGTPComponent } from '../../components/services-gtp/services-gtp
   ],
 })
 export class AprobacionesPage implements OnInit {
+  gtpService = inject(GtpService);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
+
   public Formulario = false;
   public ServiciosFormulario = false;
   public llave: string;
@@ -69,12 +73,6 @@ export class AprobacionesPage implements OnInit {
   stateDetail: IAccountStateDetails;
 
   rubros: IEntryModel[] = [];
-
-  constructor(
-    public gtpService: GtpService,
-    private readonly activatedRoute: ActivatedRoute,
-    public router: Router,
-  ) {}
 
   @HostListener('window:beforeunload', ['$event'])
   closeWindow(event: BeforeUnloadEvent) {
@@ -177,13 +175,12 @@ export class AprobacionesPage implements OnInit {
       ({ acceptednewNameCode }) => acceptednewNameCode === false,
     ).length;
 
-    // eslint-disable-next-line max-len
     const ListCantidadNombre = this.gtpService.services.filter(
       ({ acceptednewName, newNameGTPStatus }) =>
         (newNameGTPStatus === 0 || newNameGTPStatus === 2) &&
         acceptednewName === null,
     ).length;
-    // eslint-disable-next-line max-len
+
     const ListCantidadCodigoDeudor = this.gtpService.services.filter(
       ({ acceptednewNameCode, newNameCodeGTPStatus }) =>
         (newNameCodeGTPStatus === 0 || newNameCodeGTPStatus === 2) &&

@@ -79,6 +79,15 @@ interface LoginForm {
   ],
 })
 export class LoginPage implements OnInit {
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly loginService = inject(LoginService);
+  private readonly router = inject(Router);
+  private readonly cookieService = inject(CookieService);
+  private readonly storageService = inject(StorageService);
+  private readonly tracking = inject(TrackingService);
+  private readonly store = inject(Store);
+  private readonly messageService = inject(MessageService);
+
   public loginForm: ModelFormGroup<LoginForm>;
 
   intentos: number;
@@ -97,17 +106,6 @@ export class LoginPage implements OnInit {
   token = '';
 
   encryptionService = inject(EncryptionService);
-
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly loginService: LoginService,
-    private readonly router: Router,
-    private readonly cookieService: CookieService,
-    private readonly storageService: StorageService,
-    private readonly tracking: TrackingService,
-    private readonly store: Store,
-    private readonly messageService: MessageService,
-  ) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({

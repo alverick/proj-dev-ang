@@ -46,6 +46,14 @@ import { companyFeature } from '../../../../../../store/reducers/company.reducer
   ],
 })
 export class PaymentDetailComponent implements OnInit {
+  private readonly transaction = inject(TransactionService);
+  dialogRef =
+    inject<DynamicDialogRef<PaymentDetailComponent>>(DynamicDialogRef);
+  dialogConfig =
+    inject<DynamicDialogConfig<PaymentDetailComponent>>(DynamicDialogConfig);
+  protected tracking = inject(TrackingService);
+  private readonly store = inject(Store);
+
   items: any[] = [];
   loading = false;
   isEditingRow = false;
@@ -62,13 +70,7 @@ export class PaymentDetailComponent implements OnInit {
   protected readonly debtMaxAmount = debtMaxAmount;
   datePipe = inject(DatePipe);
 
-  constructor(
-    private readonly transaction: TransactionService,
-    public dialogRef: DynamicDialogRef<PaymentDetailComponent>,
-    public dialogConfig: DynamicDialogConfig<PaymentDetailComponent>,
-    protected tracking: TrackingService,
-    private readonly store: Store,
-  ) {
+  constructor() {
     ({
       debtId: this.debtId,
       customer: this.customer,

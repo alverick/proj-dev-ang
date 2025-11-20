@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  inject,
   Input,
   type OnChanges,
   type OnDestroy,
@@ -64,6 +65,8 @@ import {
   ],
 })
 export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
+  dialogService = inject(DynamicDialogService);
+
   $destroy = new Subject();
   ref: DynamicDialogRef;
   @Output() sendForm = new EventEmitter<Partial<AuthForm>>();
@@ -74,8 +77,6 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   @Input() passwordNoEditable = false;
   protected readonly messageErrorNewPasswords = messageErrorNewPasswords;
   namePattern = namePattern;
-
-  constructor(public dialogService: DynamicDialogService) {}
 
   ngOnInit() {
     this.companyForm

@@ -105,6 +105,21 @@ export type DebtDialog = {
   ],
 })
 export class HomePage implements OnInit, AfterViewInit, OnDestroy {
+  private readonly storageService = inject(StorageService);
+  private readonly homeService = inject(HomeService);
+  transactionService = inject(TransactionService);
+  excelService = inject(ExcelService);
+  private readonly loginService = inject(LoginService);
+  private readonly fileLoad = inject(LoadFileService);
+  private readonly barLoad = inject(LoadBarService);
+  private readonly movementsService = inject(MovementsService);
+  private readonly router = inject(Router);
+  private readonly shepherdService = inject(ShepherdService);
+  protected tracking = inject(TrackingService);
+  private readonly store = inject(Store);
+  dynamicDialogService = inject(DynamicDialogService);
+  settings = inject(SettingsStorageService);
+
   ref: DynamicDialogRef;
   numeroPagina: number;
   orderBy = -1;
@@ -202,22 +217,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   datePipe = inject(DatePipe);
 
-  constructor(
-    private readonly storageService: StorageService,
-    private readonly homeService: HomeService,
-    public transactionService: TransactionService,
-    public excelService: ExcelService,
-    private readonly loginService: LoginService,
-    private readonly fileLoad: LoadFileService,
-    private readonly barLoad: LoadBarService,
-    private readonly movementsService: MovementsService,
-    private readonly router: Router,
-    private readonly shepherdService: ShepherdService,
-    protected tracking: TrackingService,
-    private readonly store: Store,
-    public dynamicDialogService: DynamicDialogService,
-    public settings: SettingsStorageService,
-  ) {
+  constructor() {
+    const transactionService = this.transactionService;
+
     transactionService.itemsForDelete = [];
     const navigation = this.router.currentNavigation();
     let form = pathOr(null, ['extras', 'state', 'filter'], navigation);

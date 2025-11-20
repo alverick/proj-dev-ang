@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  inject,
   Input,
   type OnChanges,
   type OnInit,
@@ -55,6 +56,8 @@ import { ServiceDebtFormComponent } from '../service-debt-form/service-debt-form
   ],
 })
 export class ServiceEditFormComponent implements OnInit, OnChanges {
+  private readonly servicesForms = inject(ServicesFormsService);
+
   @Output() sendForm = new EventEmitter<object>();
   @Input() form: UntypedFormGroup;
   @Input() errorMessages: IErrorMessages;
@@ -72,7 +75,6 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   formLoaded = false;
   showDebtFields = false;
   protected readonly namePattern = namePattern;
-  constructor(private readonly servicesForms: ServicesFormsService) {}
 
   ngOnInit() {
     this.listenForChanges();

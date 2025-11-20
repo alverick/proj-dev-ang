@@ -1,5 +1,5 @@
 import { CommonModule, NgClass } from '@angular/common';
-import { Component, HostListener, type OnDestroy } from '@angular/core';
+import { Component, HostListener, inject, type OnDestroy } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet, Scroll } from '@angular/router';
 import { StepsModule } from 'primeng/steps';
 import { Subject } from 'rxjs';
@@ -22,14 +22,16 @@ import { AffiliationService } from '../../services';
   ],
 })
 export class ServiceAddPage implements OnDestroy {
+  protected router = inject(Router);
+  affiliation = inject(AffiliationService);
+
   destroy$ = new Subject();
   position = 0;
   steps = [{ title: 'Step 1' }, { title: 'Step 2' }];
 
-  constructor(
-    protected router: Router,
-    public affiliation: AffiliationService,
-  ) {
+  constructor() {
+    const router = this.router;
+
     router.events
       ?.pipe(
         map((evt) => (evt instanceof Scroll ? evt.routerEvent : evt)),

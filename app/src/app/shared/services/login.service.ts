@@ -3,7 +3,7 @@ import {
   HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { type Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -18,12 +18,10 @@ import { StorageService } from './storage.service';
   providedIn: 'root',
 })
 export class LoginService {
-  constructor(
-    public http: HttpClient,
-    private readonly storage: StorageService,
-    private readonly notify: NotifyService,
-    private readonly store: Store,
-  ) {}
+  http = inject(HttpClient);
+  private readonly storage = inject(StorageService);
+  private readonly notify = inject(NotifyService);
+  private readonly store = inject(Store);
 
   private readonly URI_API: string = environment.END_POINT;
   public errores: number;

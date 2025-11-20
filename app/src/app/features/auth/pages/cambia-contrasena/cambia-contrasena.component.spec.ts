@@ -9,11 +9,12 @@ import { Subject } from 'rxjs';
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { RecuperaService } from '../../../../shared/services/recupera.service';
 import { StorageService } from '../../../../shared/services/storage.service';
+import { TrackingService } from '../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { LayoutFormComponent } from '../../components/layout-form/layout-form.component';
 import { CambiaContrasenaComponent } from './cambia-contrasena.component';
 
-describe('RegistrationFinishedPage', () => {
+describe('CambiaContrasenaPage', () => {
   let changePasswordSubject: Subject<boolean>;
   let verifingTokenSubject: Subject<boolean>;
   beforeEach(() => {
@@ -32,6 +33,7 @@ describe('RegistrationFinishedPage', () => {
         ChangePassword: () => changePasswordSubject,
         VerifingToken: () => verifingTokenSubject,
       })
+      .mock(TrackingService)
       .replace(HttpClientModule, HttpClientTestingModule);
   });
 

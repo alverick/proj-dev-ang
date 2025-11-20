@@ -1,5 +1,5 @@
 import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { type Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -15,7 +15,7 @@ export interface MessageResult {
 
 @Injectable()
 export class QueryDataService {
-  constructor(private readonly http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   regularizeAll(): Observable<MessageResult> {
     const url = `${environment.END_POINT}/Query/regularizeStateProcessAll`;

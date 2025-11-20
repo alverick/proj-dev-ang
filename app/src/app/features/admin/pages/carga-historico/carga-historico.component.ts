@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe, DecimalPipe } from '@angular/common';
-import { Component, type OnInit } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -29,15 +29,13 @@ import { swalAlert } from '../../../../shared/utils/helpers/popups';
   ],
 })
 export class CargaHistoricoComponent implements OnInit {
+  private readonly processService = inject(ProcessService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly queryDataService = inject(QueryDataService);
+
   items: any[] = [];
   pageNumber = 1;
   totalItems = 0;
-
-  constructor(
-    private readonly processService: ProcessService,
-    private readonly route: ActivatedRoute,
-    private readonly queryDataService: QueryDataService,
-  ) {}
 
   ngOnInit(): void {
     this.cargarItems();

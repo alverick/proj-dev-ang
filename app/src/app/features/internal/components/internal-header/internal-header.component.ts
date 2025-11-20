@@ -5,7 +5,7 @@ import {
   registerLocaleData,
 } from '@angular/common';
 import localeEsPe from '@angular/common/locales/es-PE';
-import { Component, type OnInit } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { NgClickOutsideDirective } from 'ng-click-outside2';
 import { NgScrollbar } from 'ngx-scrollbar';
@@ -54,6 +54,15 @@ registerLocaleData(localeEsPe, 'es-PE');
   ],
 })
 export class InternalHeaderComponent implements OnInit {
+  private readonly router = inject(Router);
+  notify = inject(NotifyService);
+  private readonly loginService = inject(LoginService);
+  private readonly excelser = inject(ExcelService);
+  afiliacionService = inject(AfiliacionService);
+  private readonly storage = inject(StorageService);
+  private readonly tracking = inject(TrackingService);
+  private readonly datePipe = inject(DatePipe);
+
   isExpanded = false;
   showMenu = false;
   companyLink = internalFullRoutingNames.COMPANY;
@@ -76,17 +85,6 @@ export class InternalHeaderComponent implements OnInit {
       },
     },
   ];
-
-  constructor(
-    private readonly router: Router,
-    public notify: NotifyService,
-    private readonly loginService: LoginService,
-    private readonly excelser: ExcelService,
-    public afiliacionService: AfiliacionService,
-    private readonly storage: StorageService,
-    private readonly tracking: TrackingService,
-    private readonly datePipe: DatePipe,
-  ) {}
 
   toggleMenu() {
     this.isExpanded = false;

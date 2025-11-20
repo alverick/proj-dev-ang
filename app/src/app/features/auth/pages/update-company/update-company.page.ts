@@ -1,4 +1,4 @@
-import { Component, type OnInit } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { type IEntryModel } from '../../../../shared/models';
@@ -15,14 +15,12 @@ import { AffiliationService } from '../../services';
   imports: [SidebarCompanyComponent, CompanyFormAuthComponent],
 })
 export class UpdateCompanyPage implements OnInit {
+  private readonly router = inject(Router);
+  affiliation = inject(AffiliationService);
+  private readonly activatedRoute = inject(ActivatedRoute);
+
   entryOptions: IEntryModel[] = [];
   errors = errorRegisterAuth;
-
-  constructor(
-    private readonly router: Router,
-    public affiliation: AffiliationService,
-    private readonly activatedRoute: ActivatedRoute,
-  ) {}
 
   ngOnInit() {
     this.activatedRoute?.data?.subscribe(

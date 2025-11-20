@@ -1,4 +1,4 @@
-import { Component, type OnInit } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { ReactiveFormsModule, type UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { pathEq } from 'ramda';
@@ -25,15 +25,15 @@ import { AffiliationService } from '../../services';
   ],
 })
 export class CompanyRegistrationPage implements OnInit {
+  private readonly router = inject(Router);
+  affiliation = inject(AffiliationService);
+
   registerForm: UntypedFormGroup;
   errors = errorsRegisterForm;
   operators = mobileOperators;
   documentTypes = documentTypes;
 
-  constructor(
-    private readonly router: Router,
-    public affiliation: AffiliationService,
-  ) {
+  constructor() {
     const navigation = this.router.getCurrentNavigation(); // Corrected method call
     if (pathEq(true, ['extras', 'state', 'initNew'], navigation)) {
       this.affiliation.registerForm.get('email').setValue('');

@@ -12,9 +12,6 @@ if (production) {
   enableProdMode();
 }
 
-// --- MSW Setup ---
-// Run MSW worker start unconditionally if it's not a production build
-// This setup is moved outside the legacy HMR block.
 if (hmrValue || !production) {
   import('./mocks/browser')
     .then(({ worker }) => {
@@ -24,13 +21,8 @@ if (hmrValue || !production) {
     })
     .catch((err) => console.error('Failed to start MSW', err));
 }
-// --- MSW Setup End ---
 
-// Standard application bootstrap
 bootstrapApplication(AppComponent, {
   ...appConfig,
-  providers: [
-    ...(appConfig.providers ?? []),
-    provideAnimations()
-  ]
+  providers: [...(appConfig.providers ?? []), provideAnimations()],
 }).catch((err) => console.log(err));

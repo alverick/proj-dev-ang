@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe, DecimalPipe } from '@angular/common';
-import { Component, type OnDestroy, type OnInit } from '@angular/core';
+import { Component, inject, type OnDestroy, type OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -44,6 +44,12 @@ import { adminFullRoutingNames } from '../../admin-routing.names';
   ],
 })
 export class GtpGrillaPage implements OnInit, OnDestroy {
+  private readonly afiliacionService = inject(AfiliacionService);
+  gtpService = inject(GtpService);
+  private readonly router = inject(Router);
+  private readonly companyService = inject(CompanyService);
+  private readonly queryDataService = inject(QueryDataService);
+
   messageTable = '';
   linkHistory = adminFullRoutingNames.HISTORY;
   showArrow = false;
@@ -124,14 +130,6 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
   states: StatesGtp[] = [];
   solicitudes: StatesGtp[] = [];
   checkTimeObservable: Subscription;
-
-  constructor(
-    private readonly afiliacionService: AfiliacionService,
-    public gtpService: GtpService,
-    private readonly router: Router,
-    private readonly companyService: CompanyService,
-    private readonly queryDataService: QueryDataService,
-  ) {}
 
   ngOnInit() {
     this.afiliacionService.GetRubros().subscribe((d) => (this.rubros = d));

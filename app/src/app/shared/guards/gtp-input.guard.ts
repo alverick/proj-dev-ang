@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router, type UrlTree } from '@angular/router';
 import { type Observable } from 'rxjs';
 
@@ -6,7 +6,7 @@ import { internalFullRoutingNames } from '../../features/internal/internal-routi
 
 @Injectable()
 export class GtpInputGuard {
-  constructor(private readonly router: Router) {}
+  private readonly router = inject(Router);
 
   canActivate():
     | Observable<boolean | UrlTree>

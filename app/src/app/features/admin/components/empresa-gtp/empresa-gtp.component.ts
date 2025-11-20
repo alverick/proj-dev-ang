@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  inject,
   Input,
   type OnInit,
   Output,
@@ -45,6 +46,8 @@ import { ICompanyData } from '../../../../shared/models/company-data';
   ],
 })
 export class EmpresaGTPComponent implements OnInit {
+  private readonly formBuilder = inject(UntypedFormBuilder);
+
   formGroup: UntypedFormGroup;
   submitted = false;
   statusCodes: Record<string, number> = statusCodes;
@@ -63,8 +66,6 @@ export class EmpresaGTPComponent implements OnInit {
 
   @Input() enterprise: ICompanyData;
   @Output() grabar = new EventEmitter<ICompanyData>();
-
-  constructor(private readonly formBuilder: UntypedFormBuilder) {}
 
   ngOnInit() {
     const {

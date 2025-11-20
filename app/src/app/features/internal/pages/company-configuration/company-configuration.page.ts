@@ -1,5 +1,5 @@
 import { CommonModule, NgClass } from '@angular/common';
-import { Component, type OnInit } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Drawer } from 'primeng/drawer';
 import { type Observable } from 'rxjs';
@@ -42,6 +42,10 @@ import { CompanyConfigurationService } from '../../services';
   ],
 })
 export class CompanyConfigurationPage implements OnInit {
+  companyConfiguration = inject(CompanyConfigurationService);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  protected tracking = inject(TrackingService);
+
   companyForm: SimpleModelFormGroup<CompanyForm>;
   passwordForm: ModelFormGroup<CompanyChangePasswordForm>;
   errors = { ...errorsRegisterForm, ...errorRegisterAuth };
@@ -56,12 +60,6 @@ export class CompanyConfigurationPage implements OnInit {
   };
   showSidebar = false;
   blurContent = false;
-
-  constructor(
-    public companyConfiguration: CompanyConfigurationService,
-    private readonly activatedRoute: ActivatedRoute,
-    protected tracking: TrackingService,
-  ) {}
 
   ngOnInit() {
     (

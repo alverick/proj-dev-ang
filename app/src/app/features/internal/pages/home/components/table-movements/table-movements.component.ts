@@ -2,6 +2,7 @@ import { CurrencyPipe, DatePipe, NgClass } from '@angular/common';
 import {
   Component,
   EventEmitter,
+  inject,
   Input,
   type OnChanges,
   type OnInit,
@@ -97,6 +98,10 @@ type TableCol = {
   ],
 })
 export class TableMovementsComponent implements OnInit, OnChanges {
+  private readonly selectAllTable = inject(SelectAllTableService);
+  private readonly tracking = inject(TrackingService);
+  private readonly store = inject(Store);
+
   cols: Partial<TableCol>[] = [
     {
       field: 'firstName',
@@ -160,12 +165,6 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   public maxDate = debtMaxDate;
   protected readonly validNameRegex = validNameRegex;
   protected readonly debtMaxAmount = debtMaxAmount;
-
-  constructor(
-    private readonly selectAllTable: SelectAllTableService,
-    private readonly tracking: TrackingService,
-    private readonly store: Store,
-  ) {}
 
   ngOnInit() {
     this.selectAllTable.overridePrimeNGTableMethods();

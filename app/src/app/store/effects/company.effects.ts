@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
@@ -9,6 +9,10 @@ import { CompanyActions } from '../actions/company.actions';
 
 @Injectable()
 export class CompanyEffects {
+  private readonly actions$ = inject(Actions);
+  private readonly companyService = inject(CompanyService);
+  private readonly store = inject(Store);
+
   loadCompany$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(CompanyActions.loadCompany),
@@ -26,10 +30,4 @@ export class CompanyEffects {
       ),
     );
   });
-
-  constructor(
-    private readonly actions$: Actions,
-    private readonly companyService: CompanyService,
-    private readonly store: Store,
-  ) {}
 }

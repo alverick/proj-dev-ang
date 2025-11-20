@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { internalFullRoutingNames } from '../../features/internal/internal-routing.names';
 
 @Injectable()
 export class LogoutGuard {
-  constructor(private readonly router: Router) {}
+  private readonly router = inject(Router);
+
   canActivate(): boolean {
     if (
       sessionStorage.getItem('tk') == null ||
