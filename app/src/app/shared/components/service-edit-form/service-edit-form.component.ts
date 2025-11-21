@@ -103,7 +103,6 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
       inReview,
       debtorCode,
       newNameGTPStatus,
-      newNameCode,
       newNameCodeGTPStatus,
       debtorCodeOriginal,
       ...formData
@@ -116,7 +115,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
       ? { debtorCode, debtorCodeCustom: debtorCodeCustomEmpty }
       : { debtorCode: 'Otro', debtorCodeCustom: debtorCode };
 
-    const { dataType, chargeType, ...debt } = this.formData.debt;
+    const { chargeType, ...debt } = this.formData.debt;
 
     setTimeout(() => {
       this.formLoaded = true;
@@ -155,7 +154,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
         ...formData,
         debtorCode,
         ...debtorCodeObj,
-        debt: { ...debt, chargeType: String(chargeType) },
+        debt: { ...debt, chargeType: chargeType === '' ? null : chargeType },
       });
     }, 300);
     setTimeout(() => {

@@ -424,14 +424,14 @@ export class AffiliationService {
         paymentType = 'C',
         partialPayment = 'N',
         chargeInterest = 'N',
-        chargeType = '',
+        chargeType = null,
         interestType,
         amount,
       } = {
         paymentType: 'C',
         partialPayment: 'N',
         chargeInterest: 'N',
-        chargeType: '',
+        chargeType: null,
         interestType: null,
         amount: '1.00',
       },
@@ -461,6 +461,7 @@ export class AffiliationService {
       partialPayment,
       ...serviceValues,
     });
+    console.log(this.servicesList);
     this.serviceForms.resetServicesForms();
 
     const metadata = [
