@@ -59,11 +59,11 @@ export const currencyOptions: ISelectOptions[] = [
 ];
 export const chargeTypeOptions: ISelectOptions[] = [
   {
-    value: '1',
+    value: 1,
     label: 'Diario',
   },
   {
-    value: '2',
+    value: 2,
     label: 'Fijo',
   },
 ];
