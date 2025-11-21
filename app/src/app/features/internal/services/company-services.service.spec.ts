@@ -146,7 +146,7 @@ describe('CompanyServicesService', () => {
           paymentType: 'C',
           partialPayment: 'N',
           chargeInterest: 'S',
-          chargeType: '1',
+          chargeType: 0,
           interestType: 'M',
           amount: '10.00',
         },
