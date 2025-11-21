@@ -9,7 +9,7 @@
     "build": "ng build",
     "build:stats": "ng build --stats-json",
     "analyze": "webpack-bundle-analyzer dist/EurekaAngularProy/stats-latest.json",
-    "test": "jest",
+    "test": "cross-env NODE_OPTIONS=--max_old_space_size=8192 npx jest",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "storybook": "ng run EurekaAngularProy:storybook",
@@ -96,6 +96,7 @@
     "@typescript-eslint/eslint-plugin": "^8.7.0",
     "@typescript-eslint/parser": "^8.7.0",
     "autoprefixer": "^10.4.20",
+    "cross-env": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
@@ -104,7 +105,9 @@
     "eslint-plugin-storybook": "^0.9.0",
     "eslint-plugin-unused-imports": "^4.1.4",
     "jest": "^29.7.0",
+    "jest-junit": "^16.0.0",
     "jest-preset-angular": "^14.2.4",
+    "jest-transform-stub": "^2.0.0",
     "msw": "^2.5.2",
     "ng-mocks": "^14.13.1",
     "ngx-mf": "^4.1.1",
@@ -130,8 +133,9 @@
   },
   "overrides": {
     "jest-environment-jsdom": {
-      "jsdom": "25.0.1",
-      "rrweb-cssom": "0.8.0"
+      "jsdom": "27.0.1",
+      "rrweb-cssom": "0.8.0",
+      "cssstyle": "5.3.1"
     }
   }
 }

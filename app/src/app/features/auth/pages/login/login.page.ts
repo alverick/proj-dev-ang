@@ -18,6 +18,7 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { type Password, PasswordModule } from 'primeng/password';
 import { Ripple } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
+import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { first } from 'rxjs/operators';
 
 import { environment } from '../../../../../environments/environment';
@@ -28,8 +29,10 @@ import { errorsLoginForm } from '../../../../shared/constants/company-errors';
 import { AFFILIATION_SUSPENDED } from '../../../../shared/constants/message-service';
 import { loginResultStatus } from '../../../../shared/constants/session';
 import { ModelFormGroup } from '../../../../shared/models/forms';
+import { RespuestaLogin } from '../../../../shared/models/respuestaLogin.model';
 import { EncryptionService } from '../../../../shared/services/encryption.service';
 import { LoginService } from '../../../../shared/services/login.service';
+import { RecaptchaProviderService } from '../../../../shared/services/recaptcha-provider.service';
 import { StorageService } from '../../../../shared/services/storage.service';
 import {
   type ActionEventProperties,
@@ -41,8 +44,6 @@ import { rucValidators } from '../../../../shared/validators/company-validators'
 import { appConfigFeature } from '../../../../store/reducers/app-config.reducer';
 import { authFullRoutingNames } from '../../auth-routing.names';
 import { LayoutFormComponent } from '../../components/layout-form/layout-form.component';
-import { isNotNilOrEmpty } from 'ramda-adjunct';
-import { RespuestaLogin } from '../../../../shared/models/respuestaLogin.model';
 
 const userData = environment.credentials[0];
 
@@ -55,7 +56,7 @@ interface LoginForm {
 @Component({
   selector: 'cs-login',
   templateUrl: './login.page.html',
-  providers: [MessageService],
+  providers: [MessageService, RecaptchaProviderService],
   standalone: true,
   imports: [
     LayoutFormComponent,
@@ -88,6 +89,8 @@ export class LoginPage implements OnInit {
     appConfigFeature.selectDisabledAffiliation,
   );
   attemptsLimit = 6;
+  recaptcha = inject(RecaptchaProviderService);
+  token = '';
 
   encryptionService = inject(EncryptionService);
 
@@ -138,14 +141,15 @@ export class LoginPage implements OnInit {
     return this.loginForm.controls;
   }
 
-  showModal(title: string, text: string, confirmText = '') {
+  showModal(title: string, text: string, confirmText = '', additional = {}) {
     void swalAlert.fire({
       title,
       text,
-      showCloseButton: true,
+      showCloseButton: false,
       showConfirmButton: true,
       allowOutsideClick: false,
       confirmButtonText: confirmText || 'Cerrar',
+      ...additional,
     });
 
     this.tracking.trackEvent(AdobeEvent.trackView, {
@@ -156,7 +160,7 @@ export class LoginPage implements OnInit {
     });
   }
 
-  public submitLogin() {
+  public async submitLogin() {
     if (!this.loginForm.valid) return;
 
     this.cookieService.delete(companyDocumentStorageName);
@@ -167,8 +171,14 @@ export class LoginPage implements OnInit {
       this.buildTrackingParams(ruc, this.passwordControl.unmasked);
     this.tracking.setRuc(ruc);
 
+    try {
+      this.token = await this.recaptcha.getToken('submit_form');
+    } catch (err) {
+      console.error('reCAPTCHA failed', err);
+    }
+
     this.loginService
-      .login(ruc, password)
+      .login(ruc, password, this.token)
       .pipe(first())
       .subscribe({
         next: (value) => this.handleLoginResponse(value, actionParams),
@@ -208,7 +218,7 @@ export class LoginPage implements OnInit {
     }
 
     if (value.estado && this.intentos <= this.attemptsLimit) {
-      this.processSuccessfulLogin(value, actionParams);
+      void this.processSuccessfulLogin(value, actionParams);
       return;
     }
 
@@ -286,29 +296,59 @@ export class LoginPage implements OnInit {
   }
 
   private handleFailedAttempt(actionParams: Partial<ActionEventProperties>) {
-    if (this.codRespuesta === loginResultStatus.errorCredentials) {
-      this.showModal(
-        'Contraseña incorrecta',
-        `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes ${this.intentosRestantes} intentos restantes.`,
-      );
-      this.sendAdobeTrack({
-        ...actionParams,
-        state: 'Intención de envío',
-        typeError: 'Contraseña incorrecta',
-      });
-    } else if (this.codRespuesta === loginResultStatus.userInactive) {
-      this.showModal(
-        'Tu cuenta está siendo procesada',
-        'Estamos procesando la información de tu registro, esto puede tomar un máximo 24 horas hábiles. ' +
-          'Cuando esté lista te enviaremos un mail de Bienvenida.',
-        'Entendido',
-      );
-      this.sendAdobeTrack({
-        ...actionParams,
-        state: 'Intención de envío',
-        typeError: 'Tu cuenta está siendo procesada',
-      });
-    }
+    type ModalArgs = Parameters<typeof this.showModal>;
+
+    const errorMap: Record<
+      string,
+      {
+        modal: ModalArgs;
+        adobeTrack: Partial<ActionEventProperties>;
+      }
+    > = {
+      [loginResultStatus.errorCredentials]: {
+        modal: [
+          'Contraseña incorrecta',
+          `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes ${this.intentosRestantes} intentos restantes.`,
+        ],
+        adobeTrack: {
+          state: 'Intención de envío',
+          typeError: 'Contraseña incorrecta',
+        },
+      },
+      [loginResultStatus.userError]: {
+        modal: [
+          'No se pudo iniciar sesión',
+          'No logramos confirmar tu información. Inténtalo nuevamente.',
+          'Vuelve a intentarlo',
+          {
+            iconHtml:
+              '<img alt="" class="tw-w-20 tw-max-w-none" src="assets/images/icon-error-login.svg"/>',
+          },
+        ],
+        adobeTrack: {
+          state: 'Intención de envío',
+          typeError: 'Tu cuenta está siendo procesada',
+        },
+      },
+      [loginResultStatus.userInactive]: {
+        modal: [
+          'Tu cuenta está siendo procesada',
+          'Estamos procesando la información de tu registro, esto puede tomar un máximo 24 horas hábiles. ' +
+            'Cuando esté lista te enviaremos un mail de Bienvenida.',
+          'Entendido',
+        ],
+        adobeTrack: {
+          state: 'Intención de envío',
+          typeError: 'Tu cuenta está siendo procesada',
+        },
+      },
+    };
+
+    const config = errorMap[this.codRespuesta];
+    if (!config) return;
+
+    this.showModal(...config.modal);
+    this.sendAdobeTrack({ ...actionParams, ...config.adobeTrack });
   }
 
   private handleLoginError(

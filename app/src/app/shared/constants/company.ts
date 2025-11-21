@@ -1,6 +1,6 @@
 export interface ISelectOptions {
   symbol?: string;
-  value: string;
+  value: string | number;
   label: string;
 }
 

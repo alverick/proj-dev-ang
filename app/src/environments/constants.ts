@@ -94,6 +94,7 @@ export type IEnvironment = {
    * @example "adobe-client-id-12345"
    */
   adobe: string;
+  recaptcha: string;
   hotjarSiteId: string;
   hotjarVersion: string;
 };
@@ -105,6 +106,7 @@ export const environmentDefault: IEnvironment = {
   END_POINT: serverUrl.local,
   OCP_KEY: '',
   adobe: '',
+  recaptcha: '',
   logLevel: NgxLoggerLevel.WARN,
   serverLogLevel: NgxLoggerLevel.OFF,
   credentials: [['', '', '']],

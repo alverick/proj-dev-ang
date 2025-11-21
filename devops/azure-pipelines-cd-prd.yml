@@ -21,7 +21,7 @@ resources:
   pipelines:
     - pipeline: "pipelineoriginuat"
       source: "eureca-frontend_cd-uat"
-      project: "dopjeu2c003eurcpv01"
+      project: "dopjeu2eurcpv01"
       trigger:
         branches:
           include:
@@ -38,7 +38,7 @@ extends:
   template: "src/templates/node-appservice/cd-prd.yml@ibkAzTemplates"
   parameters:
     projectName: "CSE"
-    componentName: "eureca-frontend"
+    componentName: "cse-eureca-frontend"
     buildOutputPath: "dist"
     azAppServiceSubscription: "SC_RG_EU2_C003_EURC_PRD_01"
     azAppServiceAppType: "webAppLinux"
