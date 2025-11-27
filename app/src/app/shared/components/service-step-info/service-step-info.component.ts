@@ -1,11 +1,10 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
-  EventEmitter,
-  Input,
+  input,
   type OnDestroy,
   type OnInit,
-  Output,
+  output,
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
@@ -48,16 +47,16 @@ import { ServiceChannelChipComponent } from '../service-channel-chip/service-cha
 export class ServiceStepInfoComponent implements OnInit, OnDestroy {
   $destroy = new Subject();
   disclaimerCommissionDollars = false;
-  @Output() sendForm = new EventEmitter<object>();
-  @Output() cancel = new EventEmitter();
-  @Input() form: ModelFormGroup<ServiceFormValue>;
-  @Input() errorMessages: IErrorMessages;
-  @Input() accounts: CompanyAccounts[];
-  @Input() showCancel = false;
+  readonly sendForm = output<object>();
+  readonly cancel = output();
+  readonly form = input<ModelFormGroup<ServiceFormValue>>(undefined);
+  readonly errorMessages = input<IErrorMessages>(undefined);
+  readonly accounts = input<CompanyAccounts[]>(undefined);
+  readonly showCancel = input(false);
   protected readonly namePattern = namePattern;
 
   ngOnInit() {
-    this.form
+    this.form()
       ?.get('account')
       .valueChanges.pipe(
         takeUntil(this.$destroy),
@@ -65,7 +64,7 @@ export class ServiceStepInfoComponent implements OnInit, OnDestroy {
       )
       .subscribe((accountID) => {
         if (isNotNilOrEmpty(accountID)) {
-          const selectedAccount = this.accounts.find(
+          const selectedAccount = this.accounts().find(
             (account) => account.id === accountID,
           );
           const accountNumber = `${selectedAccount.number.substring(0, 13)} (${
@@ -76,16 +75,17 @@ export class ServiceStepInfoComponent implements OnInit, OnDestroy {
 
           this.disclaimerCommissionDollars =
             selectedAccount.currency !== CurrenciesCodes.soles;
-          this.form.get('accountNumber').setValue(accountNumber);
-          this.form.get('currency').setValue(selectedAccount.currency);
-          this.form.get('idAccount').setValue(accountID);
+          this.form().get('accountNumber').setValue(accountNumber);
+          this.form().get('currency').setValue(selectedAccount.currency);
+          this.form().get('idAccount').setValue(accountID);
         }
       });
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      this.sendForm.emit(this.form.value);
+    const form = this.form();
+    if (form.valid) {
+      this.sendForm.emit(form.value);
     }
   }
 

@@ -5,7 +5,7 @@
     class="tw-mx-auto tw-flex tw-w-full tw-max-w-[1320px] tw-items-center tw-justify-between"
   >
     <a class="navbar-brand" [routerLink]="'/'">
-      @if (isBlank) {
+      @if (isBlank()) {
         <img
           ngSrc="/assets/images/cs-logo-alternative.svg"
           alt="Cobro Simple"

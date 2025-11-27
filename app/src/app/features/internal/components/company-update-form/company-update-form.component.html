@@ -1,5 +1,5 @@
 <form
-  [formGroup]="form"
+  [formGroup]="form()"
   novalidate
   autocomplete="off"
   class="tw-max-w-2xl"
@@ -11,7 +11,7 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="name"
-          [errorMessages]="errorMessages.name"
+          [errorMessages]="errorMessages().name"
           >Empresa<input
             type="text"
             class="tw-w-full"
@@ -23,10 +23,10 @@
             formControlName="name"
             autocomplete="off"
           />
-          @if (inReview) {
+          @if (inReview()) {
             <div hint class="tw-text-error">
-              El nuevo nombre <strong> {{ nameInReview }} </strong> esta siendo
-              procesado
+              El nuevo nombre <strong> {{ nameInReview() }} </strong> esta
+              siendo procesado
             </div>
           }
         </cs-label-control>
@@ -35,7 +35,7 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="ruc"
-          [errorMessages]="errorMessages.ruc"
+          [errorMessages]="errorMessages().ruc"
           >RUC<input
             type="text"
             class="tw-w-full"
@@ -49,7 +49,7 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="entryName"
-          [errorMessages]="errorMessages.entryName"
+          [errorMessages]="errorMessages().entryName"
           >Rubro de tu empresa
           <input
             type="text"
@@ -67,9 +67,9 @@
           <cs-label-control
             class="tw-w-full"
             formControlName="documentType"
-            [errorMessages]="errorMessages.documentType"
+            [errorMessages]="errorMessages().documentType"
             >Tipo de documento<p-select
-              [options]="documentTypes"
+              [options]="documentTypes()"
               class="tw-w-full"
               styleClass="tw-w-full"
               formControlName="documentType"
@@ -79,7 +79,7 @@
           <cs-label-control
             class="tw-w-full"
             formControlName="documentNumber"
-            [errorMessages]="errorMessages.documentNumber"
+            [errorMessages]="errorMessages().documentNumber"
             >Número de documento<input
               type="text"
               class="tw-w-full"
@@ -91,7 +91,7 @@
             />
             <val-errors validation-messages controlName="documentNumber">
               @for (
-                error of errorMessages.documentNumber | keyvalue;
+                error of errorMessages().documentNumber | keyvalue;
                 track error
               ) {
                 <ng-template [valError]="error.key">{{
@@ -110,9 +110,9 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="movilOperator"
-          [errorMessages]="errorMessages.movilOperator"
+          [errorMessages]="errorMessages().movilOperator"
           >Operador<p-select
-            [options]="operators"
+            [options]="operators()"
             class="tw-w-full"
             styleClass="tw-w-full"
             formControlName="movilOperator"
@@ -122,7 +122,7 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="movilNumber"
-          [errorMessages]="errorMessages.movilNumber"
+          [errorMessages]="errorMessages().movilNumber"
           >Celular<input
             type="text"
             class="tw-w-full"
@@ -138,7 +138,7 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="email"
-          [errorMessages]="errorMessages.email"
+          [errorMessages]="errorMessages().email"
           >Correo electrónico<input
             type="text"
             class="tw-w-full"

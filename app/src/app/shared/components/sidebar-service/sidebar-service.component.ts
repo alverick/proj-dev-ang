@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { AccordionModule } from 'primeng/accordion';
 import { PrimeTemplate } from 'primeng/api';
 
@@ -12,8 +12,8 @@ import { CurrencyWithLimit } from '../../constants/currencies';
   imports: [AccordionModule, PrimeTemplate, CurrencyPipe],
 })
 export class SidebarServiceComponent {
-  @Input() position: number;
-  @Input() existServices = false;
-  @Input() showAllTypes = false;
-  @Input() currency: CurrencyWithLimit = null;
+  readonly position = input<number>(undefined);
+  readonly existServices = input(false);
+  readonly showAllTypes = input(false);
+  readonly currency = input<CurrencyWithLimit>(null);
 }

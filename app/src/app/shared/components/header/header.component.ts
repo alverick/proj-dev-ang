@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -9,5 +9,5 @@ import { RouterModule } from '@angular/router';
   imports: [RouterModule, NgOptimizedImage],
 })
 export class HeaderComponent {
-  @Input() isBlank = false;
+  readonly isBlank = input(false);
 }

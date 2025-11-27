@@ -1,11 +1,10 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
-  EventEmitter,
-  Input,
+  input,
   type OnChanges,
   type OnInit,
-  Output,
+  output,
   type SimpleChanges,
 } from '@angular/core';
 import { propOr } from 'ramda';
@@ -22,13 +21,13 @@ import { NotEmptyPipe } from '../../pipes/not-empty.pipe';
   imports: [NgClass, NotEmptyPipe],
 })
 export class ServiceCardComponent implements OnInit, OnChanges {
-  @Input() serviceData: Partial<IServiceRemoteModelForms>;
-  @Input() position: number;
-  @Input() canEdit = true;
-  @Input() reviewMode = false;
-  @Input() lockedMode = false;
-  @Output() edit = new EventEmitter<number>();
-  @Output() delete = new EventEmitter<number>();
+  readonly serviceData = input<Partial<IServiceRemoteModelForms>>(undefined);
+  readonly position = input<number>(undefined);
+  readonly canEdit = input(true);
+  readonly reviewMode = input(false);
+  readonly lockedMode = input(false);
+  readonly edit = output<number>();
+  readonly delete = output<number>();
   paymentChannels = '';
   dataType = '';
   name = '';
@@ -70,15 +69,16 @@ export class ServiceCardComponent implements OnInit, OnChanges {
   }
 
   isInReview() {
-    this.name = this.serviceData?.name;
-    this.debtorCode = this.serviceData?.debtorCode;
-    if (this.lockedMode) {
-      this.updateEditable = this.serviceData?.inReview;
-      if (isNilOrEmpty(this.serviceData?.name)) {
-        this.name = this.serviceData?.newName;
+    const serviceData = this.serviceData();
+    this.name = serviceData?.name;
+    this.debtorCode = serviceData?.debtorCode;
+    if (this.lockedMode()) {
+      this.updateEditable = serviceData?.inReview;
+      if (isNilOrEmpty(serviceData?.name)) {
+        this.name = serviceData?.newName;
       }
-      if (isNilOrEmpty(this.serviceData?.debtorCode)) {
-        this.debtorCode = this.serviceData?.newNameCode;
+      if (isNilOrEmpty(serviceData?.debtorCode)) {
+        this.debtorCode = serviceData?.newNameCode;
       }
     }
   }
@@ -95,9 +95,9 @@ export class ServiceCardComponent implements OnInit, OnChanges {
       newNameCode,
       newName,
       inReview,
-    } = this.serviceData;
+    } = this.serviceData();
 
-    if (this.reviewMode) {
+    if (this.reviewMode()) {
       this.messageStatus = 'notPendingUserReview';
       if (newNameGTPStatus === 3 && nameService === newName) {
         this.pendingUserReview = true;
@@ -108,7 +108,7 @@ export class ServiceCardComponent implements OnInit, OnChanges {
         this.messageStatus = 'pendingUserReview';
       }
     }
-    if (this.lockedMode) {
+    if (this.lockedMode()) {
       if (newNameGTPStatus === 3 || newNameCodeGTPStatus === 3) {
         this.pendingUserReview = true;
         this.messageStatus = 'pendingUserFix';
@@ -128,8 +128,9 @@ export class ServiceCardComponent implements OnInit, OnChanges {
 
   setDataType() {
     this.dataType =
-      dataTypeOptions.find(({ value }) => value === this.serviceData?.dataType)
-        ?.label || '';
+      dataTypeOptions.find(
+        ({ value }) => value === this.serviceData()?.dataType,
+      )?.label || '';
   }
 
   setPaymentChannels() {
@@ -138,16 +139,16 @@ export class ServiceCardComponent implements OnInit, OnChanges {
       { key: 'useAgent', label: 'Agentes' },
     ];
     this.paymentChannels = channels
-      .filter(({ key }) => propOr('', key, this.serviceData))
+      .filter(({ key }) => propOr('', key, this.serviceData()))
       .map(({ label }) => label)
       .join(', ');
   }
 
   actionEdit() {
-    this.edit.emit(this.position);
+    this.edit.emit(this.position());
   }
 
   actionDelete() {
-    this.delete.emit(this.position);
+    this.delete.emit(this.position());
   }
 }

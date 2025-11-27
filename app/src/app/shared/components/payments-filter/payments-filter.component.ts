@@ -1,11 +1,10 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
-  EventEmitter,
-  Input,
+  input,
   type OnDestroy,
   type OnInit,
-  Output,
+  output,
 } from '@angular/core';
 import {
   type AbstractControl,
@@ -72,16 +71,16 @@ const labelNamesGtp = {
   ],
 })
 export class PaymentsFilterComponent implements OnInit, OnDestroy {
-  @Input() gtpMode = false;
-  @Input() dateList: DateList[];
-  @Input() stateTypeList: StatesGtp[];
-  @Input() multipleState: boolean | string = false;
-  @Input() services: any[];
-  @Input() stateList: WayPay[] | StatesGtp[];
-  @Input() initial;
-  @Input() resetFilters: Subject<boolean>;
-  @Output() sendForm = new EventEmitter<object>();
-  @Output() resetForm = new EventEmitter();
+  readonly gtpMode = input(false);
+  readonly dateList = input<DateList[]>(undefined);
+  readonly stateTypeList = input<StatesGtp[]>(undefined);
+  readonly multipleState = input<boolean | string>(false);
+  readonly services = input<any[]>(undefined);
+  readonly stateList = input<WayPay[] | StatesGtp[]>(undefined);
+  readonly initial = input(undefined);
+  readonly resetFilters = input<Subject<boolean>>(undefined);
+  readonly sendForm = output<object>();
+  readonly resetForm = output();
 
   minDate = debtMinDate;
   maxDate = debtMaxDate;
@@ -118,14 +117,15 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
     this.parseDates();
     this.listenChangesForm();
     this.setMode();
-    if (isNotNil(this.initial)) {
-      const service = this.initial.services.map((item) => item.name);
+    const initial = this.initial();
+    if (isNotNil(initial)) {
+      const service = initial.services.map((item) => item.name);
       this.form.patchValue(
         {
-          dateForFilter: this.initial.payment,
-          dateTo: this.initial.dateTo,
-          dateFrom: this.initial.dateFrom,
-          status: this.initial.status,
+          dateForFilter: initial.payment,
+          dateTo: initial.dateTo,
+          dateFrom: initial.dateFrom,
+          status: initial.status,
           service,
         },
         { emitEvent: false },
@@ -136,15 +136,15 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
       dateTo.enable();
       this.sendFilters();
     }
-    this.resetFilters?.subscribe(() => {
+    this.resetFilters()?.subscribe(() => {
       this.cleanAllFilters();
     });
 
-    this.selectDropdownValue = this.gtpMode ? 'code' : 'name';
+    this.selectDropdownValue = this.gtpMode() ? 'code' : 'name';
   }
 
   private setMode() {
-    if (this.gtpMode) {
+    if (this.gtpMode()) {
       this.fieldNameSearch = labelNamesGtp.fieldNameSearch;
       this.fieldState = labelNamesGtp.fieldState;
     } else {
@@ -226,7 +226,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
   }
 
   private updateValidatorsDates() {
-    if (this.gtpMode) {
+    if (this.gtpMode()) {
       this.setDateFields(false, false);
     } else {
       this.form
@@ -265,7 +265,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
 
   cleanAllFilters() {
     this.form.reset();
-    if (this.gtpMode) {
+    if (this.gtpMode()) {
       this.setDateFields(false, false);
     }
     this.resetForm.emit();
@@ -306,7 +306,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
     this.formSubmitted = true;
     if (this.form.valid) {
       const formValuesNull = mapObjIndexed((value, key) => {
-        if (this.multipleState && key === 'status' && isNilOrEmpty(value)) {
+        if (this.multipleState() && key === 'status' && isNilOrEmpty(value)) {
           return [];
         } else if (key === 'dateFrom' || key === 'dateTo' || !isNil(value)) {
           return value;
@@ -329,7 +329,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
         dateFrom,
         dateTo,
       };
-      if (this.gtpMode) {
+      if (this.gtpMode()) {
         filterData = {
           ...filterData,
           statusSolicitud,

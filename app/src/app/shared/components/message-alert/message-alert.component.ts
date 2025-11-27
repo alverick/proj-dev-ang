@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
 
 import {
   type MessageColor,
@@ -18,7 +18,7 @@ export class MessageAlertComponent implements OnChanges {
   /**
    * Mode for disclaimer
    */
-  @Input() mode: MessageModeType = 'info';
+  readonly mode = input<MessageModeType>('info');
 
   bgClass = 'tw-bg-info';
   iconClass: string[] = ['pi-info-circle', 'tw-text-secondary-blue-3'];
@@ -47,7 +47,7 @@ export class MessageAlertComponent implements OnChanges {
   }
 
   private setColorClass(): void {
-    const colorConfig = this.colors[this.mode];
+    const colorConfig = this.colors[this.mode()];
     if (colorConfig) {
       this.bgClass = colorConfig.bg;
       this.iconClass = [colorConfig.iconColor, colorConfig.icon];

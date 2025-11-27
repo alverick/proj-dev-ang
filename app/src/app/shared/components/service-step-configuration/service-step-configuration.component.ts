@@ -1,11 +1,5 @@
 import { NgClass } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  type OnInit,
-  Output,
-} from '@angular/core';
+import { Component, input, type OnInit, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -47,18 +41,18 @@ import { ServiceDebtFormComponent } from '../service-debt-form/service-debt-form
   ],
 })
 export class ServiceStepConfigurationComponent implements OnInit {
-  @Output() sendForm = new EventEmitter<object>();
-  @Output() cancel = new EventEmitter();
-  @Input() form: ModelFormGroup<ServiceConfigurationForm>;
-  @Input() errorMessages: IErrorMessages;
-  @Input() debtorCodeOptions: ISelectOptions[];
-  @Input() paymentTypeOptions: ISelectOptions[];
-  @Input() currencyOptions: ISelectOptions[];
-  @Input() chargeTypeOptions: ISelectOptions[];
-  @Input() interestTypeOptions: ISelectOptions[];
-  @Input() showCancel = false;
-  @Input() showAllTypes = false;
-  @Input() currency = '';
+  readonly sendForm = output<object>();
+  readonly cancel = output();
+  readonly form = input<ModelFormGroup<ServiceConfigurationForm>>(undefined);
+  readonly errorMessages = input<IErrorMessages>(undefined);
+  readonly debtorCodeOptions = input<ISelectOptions[]>(undefined);
+  readonly paymentTypeOptions = input<ISelectOptions[]>(undefined);
+  readonly currencyOptions = input<ISelectOptions[]>(undefined);
+  readonly chargeTypeOptions = input<ISelectOptions[]>(undefined);
+  readonly interestTypeOptions = input<ISelectOptions[]>(undefined);
+  readonly showCancel = input(false);
+  readonly showAllTypes = input(false);
+  readonly currency = input('');
   debtForm: ModelFormGroup<ServiceDebt>;
   showDebtFields = false;
   currencySymbol = '';
@@ -69,24 +63,27 @@ export class ServiceStepConfigurationComponent implements OnInit {
 
   ngOnInit() {
     this.listenForms();
-    this.debtForm = this.form?.get('debt') as ModelFormGroup<ServiceDebt>;
-    this.setDebtForm(this.form?.value.dataType);
+    const form = this.form();
+    this.debtForm = form?.get('debt') as ModelFormGroup<ServiceDebt>;
+    this.setDebtForm(form?.value.dataType);
     this.setDebtorCodeCustomField(
-      this.form?.value.debtorCode,
-      this.form?.value.debtorCodeCustom,
+      form?.value.debtorCode,
+      form?.value.debtorCodeCustom,
     );
-    this.currencySymbol = this.currencyOptions?.find(
-      (currency) => currency.value === this.currency,
+    this.currencySymbol = this.currencyOptions()?.find(
+      (currency) => currency.value === this.currency(),
     )?.symbol;
   }
 
   listenForms() {
-    this.form?.get('dataType').valueChanges.subscribe((val) => {
-      setTimeout(() => {
-        this.setDebtForm(val);
-      }, 100);
-    });
-    this.form
+    this.form()
+      ?.get('dataType')
+      .valueChanges.subscribe((val) => {
+        setTimeout(() => {
+          this.setDebtForm(val);
+        }, 100);
+      });
+    this.form()
       ?.get('debtorCode')
       .valueChanges.pipe(takeUntil(this.$destroy))
       .subscribe((val) => {
@@ -97,14 +94,14 @@ export class ServiceStepConfigurationComponent implements OnInit {
   private setDebtorCodeCustomField(debtorVal: string, debtorCustom = '') {
     this.debtorCodeEditable = debtorVal === 'Otro';
     if (debtorVal === 'Otro') {
-      this.form?.get('debtorCodeCustom').setValue(debtorCustom);
+      this.form()?.get('debtorCodeCustom').setValue(debtorCustom);
     } else {
-      this.form?.get('debtorCodeCustom').setValue(debtorCodeCustomEmpty);
+      this.form()?.get('debtorCodeCustom').setValue(debtorCodeCustomEmpty);
     }
   }
 
   showDropdown() {
-    this.form.get('debtorCode').setValue('');
+    this.form().get('debtorCode').setValue('');
     this.debtorCodeEditable = false;
   }
 
@@ -114,7 +111,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
       this.debtForm?.enable();
       this.debtForm?.valueChanges.subscribe(() => {
         setTimeout(() => {
-          this.form.updateValueAndValidity();
+          this.form().updateValueAndValidity();
         }, 100);
       });
     } else {
@@ -124,14 +121,14 @@ export class ServiceStepConfigurationComponent implements OnInit {
         chargeInterest: 'N',
       });
     }
-    this.form?.updateValueAndValidity();
+    this.form()?.updateValueAndValidity();
   }
 
   onSubmit() {
-    const { debtorCodeCustom, ...formValue } = this.form.value;
+    const { debtorCodeCustom, ...formValue } = this.form().value;
     this.submittedForm = true;
     setTimeout(() => {
-      if (this.form.valid) {
+      if (this.form().valid) {
         this.sendForm.emit({
           ...formValue,
           debtorCode:

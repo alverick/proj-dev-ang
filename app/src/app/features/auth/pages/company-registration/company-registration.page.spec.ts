@@ -10,7 +10,6 @@ import { CompanyRegistrationPage } from './company-registration.page';
 
 describe('CompanyRegistrationPage', () => {
   beforeEach(() => {
-
     const affiliationServiceMock = {
       registerForm: {
         get: () => ({

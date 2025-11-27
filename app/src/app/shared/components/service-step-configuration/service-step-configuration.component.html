@@ -1,5 +1,5 @@
 <form
-  [formGroup]="form"
+  [formGroup]="form()"
   novalidate
   (submit)="onSubmit()"
   autocomplete="off"
@@ -10,7 +10,7 @@
   >
     <h2 class="tw-mb-7 tw-text-2xl tw-font-medium">Configura tu servicio</h2>
     <div class="form-controls tw-max-w-xl">
-      @if (showAllTypes) {
+      @if (showAllTypes()) {
         <div class="form-elm tw-mb-5">
           <div class="tw-font-medium">
             Selecciona la modalidad del servicio : <br />
@@ -59,9 +59,9 @@
           <cs-label-control
             class="tw-w-full"
             formControlName="debtorCode"
-            [errorMessages]="errorMessages.debtorCode"
+            [errorMessages]="errorMessages().debtorCode"
             >¿Con qué código identificarás a tus clientes?<p-select
-              [options]="debtorCodeOptions"
+              [options]="debtorCodeOptions()"
               class="tw-w-full"
               styleClass="tw-w-full"
               formControlName="debtorCode"
@@ -75,7 +75,7 @@
           <cs-label-control
             class="tw-w-full"
             formControlName="debtorCodeCustom"
-            [errorMessages]="errorMessages.debtorCodeCustom"
+            [errorMessages]="errorMessages().debtorCodeCustom"
             >¿Con qué código identificarás a tus clientes?
             <div class="control p-inputgroup tw-w-full">
               <input
@@ -110,11 +110,11 @@
       @if (showDebtFields) {
         <cs-service-debt-form
           [form]="debtForm"
-          [errorMessages]="errorMessages"
-          [paymentTypeOptions]="paymentTypeOptions"
-          [currencyOptions]="currencyOptions"
-          [chargeTypeOptions]="chargeTypeOptions"
-          [interestTypeOptions]="interestTypeOptions"
+          [errorMessages]="errorMessages()"
+          [paymentTypeOptions]="paymentTypeOptions()"
+          [currencyOptions]="currencyOptions()"
+          [chargeTypeOptions]="chargeTypeOptions()"
+          [interestTypeOptions]="interestTypeOptions()"
           [currency]="currencySymbol"
           [submitted]="submittedForm"
         ></cs-service-debt-form>
@@ -124,11 +124,11 @@
   <div
     class="tw-mt-10 tw-flex tw-gap-2"
     [ngClass]="{
-      'tw-justify-between': showCancel,
-      'tw-justify-end': !showCancel,
+      'tw-justify-between': showCancel(),
+      'tw-justify-end': !showCancel(),
     }"
   >
-    @if (showCancel) {
+    @if (showCancel()) {
       <button
         pButton
         pRipple

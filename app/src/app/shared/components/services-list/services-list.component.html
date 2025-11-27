@@ -4,7 +4,7 @@
       Resumen de tus servicios
     </div>
     <div class="actions tw-flex tw-justify-center tw-gap-2">
-      @if (!onlyEdit) {
+      @if (!onlyEdit()) {
         <button
           pButton
           pRipple
@@ -14,7 +14,7 @@
           label="Agregar otro servicio"
         ></button>
       }
-      @if (additionalButtons && showSaveAll) {
+      @if (additionalButtons && showSaveAll()) {
         <button
           pButton
           pRipple
@@ -29,20 +29,20 @@
   <div
     class="box-shadow tw-mt-6 tw-grid tw-w-full tw-gap-3 tw-p-4 sm:tw-grid-cols-2 lg:tw-grid-cols-3 lg:tw-px-10 lg:tw-py-8"
   >
-    @if (empty) {
+    @if (empty()) {
       <div
         class="empty tw-col-span-3 tw-flex tw-items-center tw-justify-center tw-text-center tw-text-3xl tw-text-extended-grey-2"
       >
-        {{ message }}
+        {{ message() }}
       </div>
     }
     <ng-content></ng-content>
   </div>
-  @if ((additionalButtons && !onlyEdit) || showSaveAll) {
+  @if ((additionalButtons && !onlyEdit()) || showSaveAll()) {
     <div
       class="tw-mt-10 tw-flex tw-justify-end tw-gap-2 tw-text-center sm:tw-text-right"
     >
-      @if (additionalButtons && !onlyEdit) {
+      @if (additionalButtons && !onlyEdit()) {
         <button
           pButton
           pRipple
@@ -52,7 +52,7 @@
           label="Agregar otro servicio"
         ></button>
       }
-      @if (showSaveAll) {
+      @if (showSaveAll()) {
         <button
           pButton
           pRipple

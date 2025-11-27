@@ -1,5 +1,5 @@
 <form
-  [formGroup]="form"
+  [formGroup]="form()"
   novalidate
   (submit)="onSubmit()"
   autocomplete="off"
@@ -16,7 +16,7 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="name"
-          [errorMessages]="errorMessages?.name"
+          [errorMessages]="errorMessages()?.name"
           >Nombre del servicio<input
             type="text"
             class="tw-w-full"
@@ -34,9 +34,9 @@
       <cs-label-control
         class="tw-w-full"
         formControlName="account"
-        [errorMessages]="errorMessages?.account"
+        [errorMessages]="errorMessages()?.account"
         >Selecciona la cuenta que se asociará al servicio<p-select
-          [options]="accounts"
+          [options]="accounts()"
           optionLabel="number"
           optionValue="id"
           class="tw-w-full"
@@ -117,11 +117,11 @@
   <div
     class="tw-mt-10 tw-flex tw-gap-2"
     [ngClass]="{
-      'tw-justify-between': showCancel,
-      'tw-justify-end': !showCancel,
+      'tw-justify-between': showCancel(),
+      'tw-justify-end': !showCancel(),
     }"
   >
-    @if (showCancel) {
+    @if (showCancel()) {
       <button
         pButton
         pRipple

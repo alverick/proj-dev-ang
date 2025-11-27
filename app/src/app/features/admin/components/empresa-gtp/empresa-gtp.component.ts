@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  inject,
-  Input,
-  type OnInit,
-  Output,
-} from '@angular/core';
+import { Component, inject, input, type OnInit, output } from '@angular/core';
 import {
   type AbstractControl,
   FormsModule,
@@ -64,8 +57,8 @@ export class EmpresaGTPComponent implements OnInit {
     },
   };
 
-  @Input() enterprise: ICompanyData;
-  @Output() grabar = new EventEmitter<ICompanyData>();
+  readonly enterprise = input<ICompanyData>(undefined);
+  readonly grabar = output<ICompanyData>();
 
   ngOnInit() {
     const {
@@ -77,7 +70,7 @@ export class EmpresaGTPComponent implements OnInit {
       movilNumber,
       newNameGTPStatus,
       entryName,
-    } = this.enterprise;
+    } = this.enterprise();
 
     const isNotEditable = newNameGTPStatus === statusCodes.APPROVED;
 
@@ -163,15 +156,15 @@ export class EmpresaGTPComponent implements OnInit {
     const { valid, value } = this.formGroup;
     if (valid) {
       const isNotEditable =
-        this.enterprise.newNameGTPStatus !== statusCodes.APPROVED;
+        this.enterprise().newNameGTPStatus !== statusCodes.APPROVED;
       let dataEnterprise: ICompanyData;
       if (isNotEditable) {
         dataEnterprise = {
-          ...this.enterprise,
+          ...this.enterprise(),
           NombreApproved: value.NewNameApproved === 'S',
         };
       } else {
-        dataEnterprise = { ...this.enterprise, ...value };
+        dataEnterprise = { ...this.enterprise(), ...value };
       }
       this.grabar.emit(dataEnterprise);
     }

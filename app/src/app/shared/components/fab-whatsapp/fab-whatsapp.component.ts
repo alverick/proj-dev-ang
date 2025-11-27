@@ -2,7 +2,7 @@ import { NgClass } from '@angular/common';
 import {
   Component,
   inject,
-  Input,
+  input,
   type OnChanges,
   type SimpleChanges,
 } from '@angular/core';
@@ -21,8 +21,8 @@ export class FabWhatsappComponent implements OnChanges {
   private readonly tracking = inject(TrackingService);
   protected router = inject(Router);
 
-  @Input() showButton = true;
-  @Input() expand = true;
+  readonly showButton = input(true);
+  readonly expand = input(true);
   showText = true;
   url = '';
   timeToHide = 10000;

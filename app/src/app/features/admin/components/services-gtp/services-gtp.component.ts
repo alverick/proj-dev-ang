@@ -1,11 +1,11 @@
 import { CurrencyPipe } from '@angular/common';
 import {
   Component,
-  EventEmitter,
   inject,
   Input,
+  input,
   type OnInit,
-  Output,
+  output,
 } from '@angular/core';
 import {
   FormsModule,
@@ -68,13 +68,13 @@ export class ServicesGTPComponent implements OnInit {
   update = false;
   useAgencyChannel = false;
 
-  @Input() public idCompany: number;
+  public readonly idCompany = input<number>(undefined);
 
   @Input() set service(value: DataServiceGTP) {
     this._service = value;
   }
 
-  @Output() grabar = new EventEmitter<any>();
+  readonly grabar = output<any>();
   submittedRequired = false;
   frm: UntypedFormGroup;
 
@@ -229,7 +229,7 @@ export class ServicesGTPComponent implements OnInit {
         Validators.required,
       ],
     });
-    this.afiliacionService.idCompany = this.idCompany;
+    this.afiliacionService.idCompany = this.idCompany();
     this.changeMora(false);
     this.afiliacionService.GetCards().subscribe((d) => {
       this.cuentas = d;

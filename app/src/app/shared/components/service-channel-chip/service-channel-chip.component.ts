@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { ChipModule } from 'primeng/chip';
 
 @Component({
@@ -7,5 +7,5 @@ import { ChipModule } from 'primeng/chip';
   templateUrl: './service-channel-chip.component.html',
 })
 export class ServiceChannelChipComponent {
-  @Input() amount: string;
+  readonly amount = input<string>(undefined);
 }

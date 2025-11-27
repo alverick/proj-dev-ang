@@ -1,5 +1,5 @@
 <form
-  [formGroup]="companyForm"
+  [formGroup]="companyForm()"
   novalidate
   (submit)="onSubmit()"
   autocomplete="off"
@@ -27,9 +27,9 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="name"
-          [errorMessages]="errorMessages?.name"
+          [errorMessages]="errorMessages()?.name"
           >Nombre de tu empresa
-          @if (nameOptions?.length < 2) {
+          @if (nameOptions()?.length < 2) {
             <input
               type="text"
               class="tw-w-full"
@@ -42,9 +42,9 @@
               formControlName="name"
             />
           }
-          @if (nameOptions?.length >= 2) {
+          @if (nameOptions()?.length >= 2) {
             <p-select
-              [options]="nameOptions"
+              [options]="nameOptions()"
               optionLabel="label"
               optionValue="value"
               class="tw-w-full"
@@ -75,10 +75,10 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="entrySelect"
-          [errorMessages]="errorMessages?.entrySelect"
+          [errorMessages]="errorMessages()?.entrySelect"
           >Rubro de tu empresa
           <p-select
-            [options]="categories"
+            [options]="categories()"
             optionLabel="name"
             class="tw-w-full"
             styleClass="tw-w-full"
@@ -87,12 +87,12 @@
           ></p-select>
         </cs-label-control>
       </div>
-      @if (!passwordNoEditable) {
+      @if (!passwordNoEditable()) {
         <div class="form-elm">
           <cs-label-control
             class="tw-w-full"
             formControlName="password"
-            [errorMessages]="errorMessages?.password"
+            [errorMessages]="errorMessages()?.password"
             >Crea tu contraseña
             <p-password
               class="tw-w-full"
@@ -106,7 +106,7 @@
             >
               <ng-template pTemplate="content">
                 <cs-control-rules-policies
-                  [control]="companyForm.get('password')"
+                  [control]="companyForm().get('password')"
                   [rules]="messageErrorNewPasswords"
                   >Por seguridad, tu nueva contraseña debe tener por lo
                   menos:</cs-control-rules-policies
@@ -119,7 +119,7 @@
           <cs-label-control
             class="tw-w-full"
             formControlName="passwordConfirm"
-            [errorMessages]="errorMessages?.passwordConfirm"
+            [errorMessages]="errorMessages()?.passwordConfirm"
             >Confirma tu contraseña
             <p-password
               class="tw-w-full"
@@ -138,7 +138,7 @@
           <cs-label-control
             class="tw-w-full"
             formControlName="acceptTerms"
-            [errorMessages]="errorMessages?.acceptTerms"
+            [errorMessages]="errorMessages()?.acceptTerms"
           >
             <p-checkbox
               class="tw-mr-1"

@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, type OnInit, ViewChild } from '@angular/core';
+import { Component, inject, type OnInit, viewChild } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -94,7 +94,7 @@ export class LoginPage implements OnInit {
   intentosRestantes = 6;
   codRespuesta: number;
   intento6 = false;
-  @ViewChild('passwordControl') passwordControl: Password;
+  readonly passwordControl = viewChild<Password>('passwordControl');
   protected readonly errorMessages = errorsLoginForm;
 
   linkRecoverPassword = authFullRoutingNames.RECOVER_PASSWORD;
@@ -170,7 +170,7 @@ export class LoginPage implements OnInit {
     const password = this.f.psw.value;
 
     const actionParams: Partial<ActionEventProperties> =
-      this.buildTrackingParams(ruc, this.passwordControl.unmasked);
+      this.buildTrackingParams(ruc, this.passwordControl().unmasked);
     this.tracking.setRuc(ruc);
 
     try {

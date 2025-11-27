@@ -1,12 +1,11 @@
 import {
   Component,
-  EventEmitter,
   inject,
-  Input,
+  input,
   type OnChanges,
   type OnDestroy,
   type OnInit,
-  Output,
+  output,
   type SimpleChanges,
 } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -69,31 +68,31 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
 
   $destroy = new Subject();
   ref: DynamicDialogRef;
-  @Output() sendForm = new EventEmitter<Partial<AuthForm>>();
-  @Input() categories: IEntryModel[] = [];
-  @Input() companyForm: SimpleModelFormGroup<AuthForm>;
-  @Input() nameOptions: CompanyName[];
-  @Input() errorMessages: IErrorMessages;
-  @Input() passwordNoEditable = false;
+  readonly sendForm = output<Partial<AuthForm>>();
+  readonly categories = input<IEntryModel[]>([]);
+  readonly companyForm = input<SimpleModelFormGroup<AuthForm>>(undefined);
+  readonly nameOptions = input<CompanyName[]>(undefined);
+  readonly errorMessages = input<IErrorMessages>(undefined);
+  readonly passwordNoEditable = input(false);
   protected readonly messageErrorNewPasswords = messageErrorNewPasswords;
   namePattern = namePattern;
 
   ngOnInit() {
-    this.companyForm
+    this.companyForm()
       ?.get('entrySelect')
       .valueChanges.pipe(
         takeUntil(this.$destroy),
         filter((value) => isNotNil(value)),
       )
       .subscribe((value: IEntryModel) => {
-        this.companyForm.get('entry').setValue(value.code);
+        this.companyForm().get('entry').setValue(value.code);
       });
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (
       has('categories', changes) &&
-      isNotNilOrEmpty(this.companyForm?.get('entry').value)
+      isNotNilOrEmpty(this.companyForm()?.get('entry').value)
     ) {
       this.setCategorySelected();
     }
@@ -107,31 +106,32 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   setCategorySelected() {
-    const categorySelected = this.categories.find(
-      (category) => category.code === this.companyForm.get('entry').value,
+    const categorySelected = this.categories().find(
+      (category) => category.code === this.companyForm().get('entry').value,
     );
-    this.companyForm.get('entrySelect').setValue(categorySelected);
+    this.companyForm().get('entrySelect').setValue(categorySelected);
   }
 
   private setForm() {
     ['password', 'passwordConfirm', 'acceptTerms'].forEach((field) => {
-      if (this.passwordNoEditable) {
-        this.companyForm?.get(field).disable();
+      if (this.passwordNoEditable()) {
+        this.companyForm()?.get(field).disable();
       } else {
-        this.companyForm?.get(field).enable();
+        this.companyForm()?.get(field).enable();
       }
     });
   }
 
   onSubmit() {
-    if (this.companyForm.valid) {
-      const name = this.companyForm.get('name').value;
-      const { passwordConfirm, ...formValue } = this.companyForm.value;
+    const companyForm = this.companyForm();
+    if (companyForm.valid) {
+      const name = companyForm.get('name').value;
+      const { passwordConfirm, ...formValue } = companyForm.value;
       let companyData = { name, ...formValue };
-      if (!this.passwordNoEditable) {
+      if (!this.passwordNoEditable()) {
         const {
           entrySelect: { code },
-        } = this.companyForm.value;
+        } = companyForm.value;
         companyData = { ...companyData, entry: code };
       }
       this.sendForm.emit(companyData);

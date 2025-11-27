@@ -1,6 +1,6 @@
 <form
   class="form"
-  [ngClass]="{ 'gtp-mode': gtpMode }"
+  [ngClass]="{ 'gtp-mode': gtpMode() }"
   [formGroup]="form"
   (ngSubmit)="sendFilters()"
 >
@@ -9,7 +9,7 @@
       <p-icon-field class="tw-w-full" iconPosition="left" control>
         <p-inputicon class="pi pi-search" />
         <input
-          [ngClass]="{ 'lg:tw-w-72': !gtpMode, 'lg:tw-w-80': gtpMode }"
+          [ngClass]="{ 'lg:tw-w-72': !gtpMode(), 'lg:tw-w-80': gtpMode() }"
           type="text"
           class="tw-w-full"
           pInputText
@@ -26,7 +26,7 @@
     <cs-label-control class="tw-w-full" formControlName="service">
       <p-select
         formControlName="service"
-        [options]="services"
+        [options]="services()"
         class="tw-w-full"
         styleClass="tw-w-full lg:tw-w-52"
         optionLabel="name"
@@ -48,24 +48,24 @@
       <p-select
         control
         formControlName="status"
-        [options]="stateList"
+        [options]="stateList()"
         [showClear]="true"
         class="tw-w-full"
         styleClass="tw-w-full lg:tw-w-52"
         optionLabel="descripcion"
         placeholder="Estado"
-        [optionValue]="gtpMode ? 'idState' : 'idWayPay'"
+        [optionValue]="gtpMode() ? 'idState' : 'idWayPay'"
       >
       </p-select
     ></cs-label-control>
   </div>
-  @if (stateTypeList) {
+  @if (stateTypeList()) {
     <div class="form-elm">
       <cs-label-control formControlName="statusSolicitud">
         <p-select
           control
           formControlName="statusSolicitud"
-          [options]="stateTypeList"
+          [options]="stateTypeList()"
           [showClear]="true"
           class="tw-w-full"
           styleClass="tw-w-full lg:tw-w-52"
@@ -80,17 +80,17 @@
   <div
     class="tw-hidden lg:tw-block lg:tw-basis-full"
     [ngClass]="{
-      'xl:tw-hidden': !gtpMode,
-      '2xl:tw-basis-auto': !gtpMode,
+      'xl:tw-hidden': !gtpMode(),
+      '2xl:tw-basis-auto': !gtpMode(),
     }"
   ></div>
-  @if (dateList) {
+  @if (dateList()) {
     <div class="form-elm">
       <cs-label-control formControlName="dateForFilter">
         <p-select
           control
           formControlName="dateForFilter"
-          [options]="dateList"
+          [options]="dateList()"
           [showClear]="true"
           class="tw-w-full"
           styleClass="tw-w-full lg:tw-w-44"
@@ -147,7 +147,7 @@
   </div>
   <div
     class="actions 2xl:tw-basis-auto"
-    [ngClass]="{ 'xl:tw-basis-full': !gtpMode }"
+    [ngClass]="{ 'xl:tw-basis-full': !gtpMode() }"
   >
     <button
       type="submit"
