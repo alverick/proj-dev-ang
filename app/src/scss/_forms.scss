@@ -845,3 +845,11 @@ a {
     animation: p-progress-spinner-dash 1.5s ease-in-out infinite;
   }
 }
+
+p-dynamicdialog{
+  .p-button.p-button-text {
+    color: var(--ibk-black);
+    background-color: transparent;
+    border-color: transparent;
+  }
+}
