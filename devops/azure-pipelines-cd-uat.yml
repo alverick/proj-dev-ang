@@ -20,7 +20,7 @@ resources:
 
   pipelines:
     - pipeline: "pipelineorigindev"
-      source: "eureca-frontend_cicd-dev"
+      source: "/PREV/Cloud/Squad_CSE/Deployment/eureca-frontend/eureca-frontend_cicd-dev"
       project: "dopjeu2eurcpv01"
       trigger:
         branches:
