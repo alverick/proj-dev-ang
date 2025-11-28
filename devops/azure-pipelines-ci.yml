@@ -46,7 +46,7 @@ extends:
     componentName: "eureca-frontend"
     workingDir: "app"
     buildOutputPath: "dist"
-    nodeVersion: "18.X"
+    nodeVersion: "20.X"
     flags:
       unitTestsEnabled: true
       sonarEnabled: true
