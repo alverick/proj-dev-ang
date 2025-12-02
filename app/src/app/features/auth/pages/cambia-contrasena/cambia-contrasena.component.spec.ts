@@ -1,50 +1,58 @@
-import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockBuilder, MockRender } from 'ng-mocks';
-import { PasswordModule } from 'primeng/password';
 import { Subject } from 'rxjs';
 
-import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { RecuperaService } from '../../../../shared/services/recupera.service';
 import { StorageService } from '../../../../shared/services/storage.service';
 import { TrackingService } from '../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
-import { LayoutFormComponent } from '../../components/layout-form/layout-form.component';
 import { CambiaContrasenaComponent } from './cambia-contrasena.component';
 
 describe('CambiaContrasenaPage', () => {
+  let component: CambiaContrasenaComponent;
+  let fixture: ComponentFixture<CambiaContrasenaComponent>;
   let changePasswordSubject: Subject<boolean>;
   let verifingTokenSubject: Subject<boolean>;
-  beforeEach(() => {
+
+  beforeEach(async () => {
     changePasswordSubject = new Subject<boolean>();
     verifingTokenSubject = new Subject<boolean>();
-    return MockBuilder(CambiaContrasenaComponent)
-      .mock(RouterTestingModule)
-      .mock(LayoutFormComponent)
-      .mock(LabelControlComponent)
-      .mock(PasswordModule)
-      .mock(FormsModule)
-      .mock(ReactiveFormsModule)
-      .keep(FormBuilder)
-      .keep(StorageService)
-      .mock(RecuperaService, {
-        ChangePassword: () => changePasswordSubject,
-        VerifingToken: () => verifingTokenSubject,
-      })
-      .mock(TrackingService)
-      .replace(HttpClientModule, HttpClientTestingModule);
+
+    await TestBed.configureTestingModule({
+      imports: [
+        CambiaContrasenaComponent,
+        RouterTestingModule,
+        ReactiveFormsModule,
+        NoopAnimationsModule,
+        HttpClientTestingModule,
+      ],
+      providers: [
+        FormBuilder,
+        StorageService,
+        {
+          provide: RecuperaService,
+          useValue: {
+            ChangePassword: () => changePasswordSubject,
+            VerifingToken: () => verifingTokenSubject,
+          },
+        },
+        { provide: TrackingService, useValue: { trackEvent: jest.fn() } },
+      ],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(CambiaContrasenaComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('should create', () => {
-    const fixture = MockRender(CambiaContrasenaComponent);
-    expect(fixture).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
   it('mensaje', () => {
-    const fixture = MockRender(CambiaContrasenaComponent);
-    const component = fixture.point.componentInstance;
     const swalAlertFire = swalAlert.fire;
     swalAlert.fire = jest.fn();
     component.mensaje('titulo', 'texto');
@@ -63,9 +71,6 @@ describe('CambiaContrasenaPage', () => {
   });
 
   it('Verificar', () => {
-    const fixture = MockRender(CambiaContrasenaComponent);
-    const component = fixture.point.componentInstance;
-
     component.llave = '3173I1201910171716';
 
     const swalAlertFire = swalAlert.fire;
@@ -86,9 +91,6 @@ describe('CambiaContrasenaPage', () => {
   });
 
   it('SubmitCambia', () => {
-    const fixture = MockRender(CambiaContrasenaComponent);
-    const component = fixture.point.componentInstance;
-
     component.llave = '3173I1201910171716';
 
     component.Cambia.setValue({
@@ -97,7 +99,7 @@ describe('CambiaContrasenaPage', () => {
     });
 
     const swalAlertFire = swalAlert.fire;
-    swalAlert.fire = jest.fn();
+    swalAlert.fire = jest.fn().mockResolvedValue({ isConfirmed: true });
 
     component.SubmitCambia();
     changePasswordSubject.next(true);
@@ -115,9 +117,6 @@ describe('CambiaContrasenaPage', () => {
   });
 
   it('SubmitCambia false', () => {
-    const fixture = MockRender(CambiaContrasenaComponent);
-    const component = fixture.point.componentInstance;
-
     component.llave = '3173I1201910171716';
 
     component.Cambia.setValue({

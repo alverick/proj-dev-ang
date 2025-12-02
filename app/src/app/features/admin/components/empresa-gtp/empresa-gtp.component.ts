@@ -57,8 +57,8 @@ export class EmpresaGTPComponent implements OnInit {
     },
   };
 
-  readonly enterprise = input<ICompanyData>(undefined);
-  readonly grabar = output<ICompanyData>();
+  enterprise = input<ICompanyData>(undefined);
+  grabar = output<ICompanyData>();
 
   ngOnInit() {
     const {

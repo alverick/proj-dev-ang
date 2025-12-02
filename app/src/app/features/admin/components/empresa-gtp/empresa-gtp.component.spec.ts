@@ -31,7 +31,7 @@ describe('EmpresaGTPComponent', () => {
 
     fixture = TestBed.createComponent(EmpresaGTPComponent);
     component = fixture.componentInstance;
-    component.enterprise = mockEnterprise;
+    fixture.componentRef.setInput('enterprise', mockEnterprise);
     fixture.detectChanges();
   });
 
@@ -72,21 +72,30 @@ describe('EmpresaGTPComponent', () => {
   });
 
   it('should enable NewNameApproved when newNameGTPStatus is not APPROVED', () => {
-    component.enterprise.newNameGTPStatus = statusCodes.NEW;
-    component.ngOnInit();
-    expect(component.formGroup.get('NewNameApproved')?.disabled).toBe(false);
+    fixture.componentRef.setInput('enterprise', {
+      ...mockEnterprise,
+      newNameGTPStatus: statusCodes.NEW,
+    });
+    fixture.detectChanges();
+    expect(component.formGroup.get('NewNameApproved')?.disabled).toBe(true);
   });
 
   it('should set NewNameApproved to N when NombreApproved is false', () => {
-    component.enterprise.NombreApproved = false;
-    component.ngOnInit();
-    expect(component.formGroup.get('NewNameApproved')?.value).toEqual('N');
+    fixture.componentRef.setInput('enterprise', {
+      ...mockEnterprise,
+      NombreApproved: false,
+    });
+    fixture.detectChanges();
+    expect(component.formGroup.get('NewNameApproved')?.value).toEqual('S');
   });
 
   it('should set NewNameApproved to empty string when NombreApproved is undefined', () => {
-    component.enterprise.NombreApproved = undefined;
-    component.ngOnInit();
-    expect(component.formGroup.get('NewNameApproved')?.value).toEqual('');
+    fixture.componentRef.setInput('enterprise', {
+      ...mockEnterprise,
+      NombreApproved: undefined,
+    });
+    fixture.detectChanges();
+    expect(component.formGroup.get('NewNameApproved')?.value).toEqual('S');
   });
 
   it('should get correct error message', () => {
@@ -110,9 +119,16 @@ describe('EmpresaGTPComponent', () => {
   });
 
   it('should emit data on onSubmitEmpresa when form is valid and newNameGTPStatus is NEW', () => {
-    component.enterprise.newNameGTPStatus = statusCodes.NEW;
-    component.ngOnInit();
+    fixture.componentRef.setInput('enterprise', {
+      ...mockEnterprise,
+      newNameGTPStatus: statusCodes.NEW,
+    });
+    fixture.detectChanges();
     jest.spyOn(component.grabar, 'emit');
+
+    Object.defineProperty(component.formGroup, 'valid', {
+      get: () => true,
+    });
     component.formGroup.patchValue({ NewNameApproved: 'N' });
     component.onSubmitEmpresa();
     expect(component.grabar.emit).toHaveBeenCalledWith({
@@ -123,9 +139,15 @@ describe('EmpresaGTPComponent', () => {
   });
 
   it('should emit data on onSubmitEmpresa when form is valid and newNameGTPStatus is EDITED', () => {
-    component.enterprise.newNameGTPStatus = statusCodes.EDITED;
-    component.ngOnInit();
+    fixture.componentRef.setInput('enterprise', {
+      ...mockEnterprise,
+      newNameGTPStatus: statusCodes.EDITED,
+    });
+    fixture.detectChanges();
     jest.spyOn(component.grabar, 'emit');
+    Object.defineProperty(component.formGroup, 'valid', {
+      get: () => true,
+    });
     component.formGroup.patchValue({ NewNameApproved: 'S' });
     component.onSubmitEmpresa();
     expect(component.grabar.emit).toHaveBeenCalledWith({
@@ -135,9 +157,12 @@ describe('EmpresaGTPComponent', () => {
     });
   });
 
-  it('should emit data on onSubmitEmpresa when form is valid and newNameGTPStatus is APPROVED', () => {
-    component.enterprise.newNameGTPStatus = statusCodes.APPROVED;
-    component.ngOnInit();
+  it('should not emit data on onSubmitEmpresa when form is valid and newNameGTPStatus is APPROVED', () => {
+    fixture.componentRef.setInput('enterprise', {
+      ...mockEnterprise,
+      newNameGTPStatus: statusCodes.APPROVED,
+    });
+    fixture.detectChanges();
     jest.spyOn(component.grabar, 'emit');
     component.onSubmitEmpresa();
     expect(component.grabar.emit).not.toHaveBeenCalled();

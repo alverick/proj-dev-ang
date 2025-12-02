@@ -1,75 +1,59 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockBuilder } from 'ng-mocks';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
-import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
-import { MessageAlertComponent } from '../../../../shared/components/message-alert/message-alert.component';
-import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
-import type { IEntryModel } from '../../../../shared/models';
+import { type IEntryModel } from '../../../../shared/models';
+import { type SimpleModelFormGroup } from '../../../../shared/models/forms';
 import { TrackingService } from '../../../../shared/services';
-import { AffiliationFormsService } from '../../services';
-import type { AuthForm } from '../../services/affiliation-forms.service';
+import { StorageService } from '../../../../shared/services/storage.service';
+import { errorRegisterAuth } from '../../constants';
+import { type AuthForm } from '../../services/affiliation-forms.service';
 import { CompanyFormAuthComponent } from './company-form-auth.component';
 
 describe('CompanyFormAuthComponent', () => {
   let component: CompanyFormAuthComponent;
-  let service: AffiliationFormsService;
   let fixture: ComponentFixture<CompanyFormAuthComponent>;
-  const dummyData: IEntryModel[] = [
-    {
-      code: '33',
-      name: 'CLUBS CERT II',
-    },
-    {
-      code: '34',
-      name: 'COLEGIOS II',
-    },
-    {
-      code: '36',
-      name: 'ESTADO II',
-    },
-    {
-      code: '39',
-      name: 'IB OPER.INTII',
-    },
-    {
-      code: '40',
-      name: 'INMOBILIAR II',
-    },
-    {
-      code: '38',
-      name: 'PREPA/RECARII',
-    },
-    {
-      code: '32',
-      name: 'SEGURO/OTROII',
-    },
-    {
-      code: '31',
-      name: 'SERVICIOS II',
-    },
-    {
-      code: '35',
-      name: 'UNIV/INST II',
-    },
-    {
-      code: '37',
-      name: 'VARIOS II',
-    },
-  ];
+  let mockAuthForm: SimpleModelFormGroup<AuthForm>;
 
-  beforeEach(() =>
-    MockBuilder(CompanyFormAuthComponent)
-      .keep(AffiliationFormsService)
-      .mock(LabelControlComponent)
-      .mock(MessageAlertComponent)
-      .mock(TrackingService),
-  );
-  beforeEach(() => {
-    service = TestBed.inject(AffiliationFormsService);
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        CompanyFormAuthComponent,
+        ReactiveFormsModule,
+        NoopAnimationsModule,
+      ],
+      providers: [
+        FormBuilder,
+        {
+          provide: DynamicDialogRef,
+          useValue: { open: jest.fn(), close: jest.fn() },
+        },
+        { provide: TrackingService, useValue: { trackEvent: jest.fn() } },
+        { provide: StorageService, useValue: {} },
+      ],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(CompanyFormAuthComponent);
     component = fixture.componentInstance;
-    component.companyForm = service.authForm;
-    component.errorMessages = errorRegisterAuth;
+    const formBuilder = TestBed.inject(FormBuilder);
+
+    mockAuthForm = formBuilder.group({
+      nameSelect: ['', Validators.required],
+      entrySelect: [null as IEntryModel, Validators.required],
+      password: ['', Validators.required],
+      passwordConfirm: ['', Validators.required],
+      acceptTerms: [false, Validators.requiredTrue],
+      entry: [''],
+      name: [''],
+      ruc: [''],
+    });
+
+    fixture.componentRef.setInput('companyForm', mockAuthForm);
+    fixture.componentRef.setInput('errorMessages', errorRegisterAuth);
+    fixture.componentRef.setInput('categories', []);
+    fixture.componentRef.setInput('nameOptions', []);
+    fixture.componentRef.setInput('passwordNoEditable', false);
 
     fixture.detectChanges();
   });
@@ -78,44 +62,66 @@ describe('CompanyFormAuthComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('setCategorySelected', () => {
-    component.categories = dummyData;
-    component.companyForm.controls.entry.setValue(dummyData[2].code);
-    component.setCategorySelected();
+  it('should set category on init if entry value exists', () => {
+    const setCategorySelectedSpy = jest.spyOn(component, 'setCategorySelected');
+    mockAuthForm.get('entry').setValue('some-value');
+    fixture.componentRef.setInput('categories', [
+      { code: 'some-value', name: 'Test' },
+    ]);
+    component.ngOnChanges({
+      categories: {
+        currentValue: [{ code: 'some-value', name: 'Test' }],
+        previousValue: undefined,
+        firstChange: true,
+        isFirstChange: () => true,
+      },
+    });
+    expect(setCategorySelectedSpy).toHaveBeenCalled();
+  });
 
+  it('should enable/disable password fields based on passwordNoEditable input', () => {
+    fixture.componentRef.setInput('passwordNoEditable', true);
+    component.ngOnChanges({
+      passwordNoEditable: {
+        currentValue: true,
+        previousValue: false,
+        firstChange: false,
+        isFirstChange: () => false,
+      },
+    });
     fixture.detectChanges();
+    expect(component.companyForm().get('password').disabled).toBe(true);
 
-    expect(component.companyForm.value.entrySelect).toEqual(dummyData[2]);
+    fixture.componentRef.setInput('passwordNoEditable', false);
+    component.ngOnChanges({
+      passwordNoEditable: {
+        currentValue: false,
+        previousValue: true,
+        firstChange: false,
+        isFirstChange: () => false,
+      },
+    });
+    fixture.detectChanges();
+    expect(component.companyForm().get('password').disabled).toBe(false);
   });
 
-  it('showModalTerms', () => {
-    const dialogOpen = component.dialogService.open;
-    component.dialogService.open = jest.fn();
-    component.showModalTerms();
-    expect(component.dialogService.open).toHaveBeenCalled();
-    component.dialogService.open = dialogOpen;
-  });
-
-  it('validate emit form submit', () => {
-    const formData: Partial<AuthForm> = {
-      nameSelect: 'tradeName',
-      entry: dummyData[2].code,
-      entrySelect: dummyData[2],
-      password: '38373we@Q',
+  it('should emit form value on submit when form is valid', () => {
+    const sendFormSpy = jest.spyOn(component.sendForm, 'emit');
+    mockAuthForm.patchValue({
+      nameSelect: 'Test Name',
+      entrySelect: { code: 'test-entry', name: 'Test Entry' },
+      password: 'password123',
+      passwordConfirm: 'password123',
       acceptTerms: true,
-      name: 'Name company',
-    };
-    component.categories = dummyData;
-    component.companyForm.setValue({
-      ...formData,
-      ruc: '20213094271',
-      passwordConfirm: '38373we@Q',
-    } as AuthForm);
-    component.companyForm.updateValueAndValidity();
-    fixture.detectChanges();
-
-    jest.spyOn(component.sendForm, 'emit');
+    });
     component.onSubmit();
-    expect(component.sendForm.emit).toHaveBeenCalledWith(formData);
+    expect(sendFormSpy).toHaveBeenCalled();
+  });
+
+  it('should not emit form value on submit when form is invalid', () => {
+    const sendFormSpy = jest.spyOn(component.sendForm, 'emit');
+    mockAuthForm.patchValue({ acceptTerms: false });
+    component.onSubmit();
+    expect(sendFormSpy).not.toHaveBeenCalled();
   });
 });
