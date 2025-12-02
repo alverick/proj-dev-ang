@@ -6,7 +6,7 @@
 >
   <div class="form-elm">
     <cs-label-control class="tw-w-full" formControlName="inputSearch">
-      <p-icon-field class="tw-w-full" iconPosition="left" control>
+      <p-icon-field class="tw-w-full" control>
         <p-inputicon class="pi pi-search" />
         <input
           [ngClass]="{ 'lg:tw-w-72': !gtpMode(), 'lg:tw-w-80': gtpMode() }"
@@ -114,7 +114,7 @@
         control
         formControlName="dateFrom"
         class="tw-w-full lg:tw-w-36"
-        styleClass="tw-w-full lg:tw-w-36"
+        inputStyleClass="tw-w-full lg:tw-w-36"
         [iconDisplay]="'input'"
         [showIcon]="true"
         [maxDate]="maxDateFrom"
@@ -134,7 +134,7 @@
         control
         formControlName="dateTo"
         class="tw-w-full lg:tw-w-36"
-        styleClass="tw-w-full lg:tw-w-36"
+        inputStyleClass="tw-w-full lg:tw-w-36"
         [iconDisplay]="'input'"
         [showIcon]="true"
         [minDate]="minDateTo"
