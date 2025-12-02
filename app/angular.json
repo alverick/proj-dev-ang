@@ -59,7 +59,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "aot": true,
-              "buildOptimizer": true,
               "extractLicenses": true
             },
             "legacy-production": {
@@ -75,7 +74,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "aot": true,
-              "buildOptimizer": true,
               "extractLicenses": true
             },
             "local": {
@@ -121,7 +119,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "aot": true,
-              "buildOptimizer": true,
               "extractLicenses": true
             },
             "dev": {
@@ -137,7 +134,6 @@
               "sourceMap": true,
               "namedChunks": false,
               "aot": true,
-              "buildOptimizer": true,
               "extractLicenses": true
             }
           }
