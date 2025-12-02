@@ -46,6 +46,11 @@ export const appConfig: ApplicationConfig = {
         preset: Lara,
         options: {
           darkModeSelector: false,
+          cssLayer: {
+            name: 'primeng',
+            order:
+              'tailwind-base, primeng, custom, general, tailwind-utilities',
+          },
         },
       },
       ripple: true,
