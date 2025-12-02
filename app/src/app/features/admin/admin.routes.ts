@@ -1,8 +1,11 @@
 import { type Routes } from '@angular/router';
 
 import { appRoutingNames } from '../../app-routing.names';
+import { QueryDataService } from '../../shared/data';
 import { AuthGuard } from '../../shared/guards/auth.guard';
 import { GtpInputGuard } from '../../shared/guards/gtp-input.guard';
+import { AfiliacionService } from '../../shared/services/afiliacion.service';
+import { ProcessService } from '../../shared/services/process.service';
 import { AdminComponent } from './admin.component';
 import {
   adminDynamicRoutingNames,
@@ -18,6 +21,12 @@ export const ADMIN_ROUTES: Routes = [
   {
     path: appRoutingNames.EMPTY,
     component: AdminComponent,
+    providers: [
+      AccountStateDetailsResolver,
+      AfiliacionService,
+      QueryDataService,
+      ProcessService,
+    ],
     children: [
       {
         path: appRoutingNames.EMPTY,
