@@ -88,12 +88,12 @@
           [errorMessages]="formErrors.firstName"
         >
           Nombre
-          <p-iconField control iconPosition="right" class="tw-w-full">
+          <p-icon-field control iconPosition="right" class="tw-w-full">
             @if (debtorExistent()) {
-              <p-inputIcon
+              <p-inputicon
                 (click)="resetName()"
                 (keydown)="resetName()"
-                styleClass="pi pi-times tw-cursor-pointer"
+                class="pi pi-times tw-cursor-pointer"
               />
             }
             <input
@@ -106,7 +106,7 @@
               [maxLength]="80"
               formControlName="firstName"
             />
-          </p-iconField>
+          </p-icon-field>
         </cs-label-control>
       </div>
       @if (debtorExistent()) {
