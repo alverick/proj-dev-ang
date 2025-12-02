@@ -1,14 +1,15 @@
 <div class="tw-relative tw-mb-3" [ngClass]="{ 'tw-pb-5': !onlyControl() }">
   @if (!hideLabel()) {
     <label
-      #labelRef
       [attr.for]="labelInputID()"
       [attr.aria-labelledby]="labelInputID()"
       class="tw-flex tw-items-center tw-gap-1 tw-text-extended-grey-1"
-      [ngClass]="{ 'tw-mb-2': labelRef.hasChildNodes() }"
+      [class.tw-mb-2]="labelContent.textContent.trim().length > 0"
     >
-      <ng-content></ng-content><ng-content select="[label]"></ng-content
-      ><span class="tw-hidden">data</span>
+      <span #labelContent><ng-content select="[label]"></ng-content></span>
+      @if (labelContent.textContent.trim().length > 0) {
+        <span class="tw-hidden">data</span>
+      }
     </label>
   }
   <div
