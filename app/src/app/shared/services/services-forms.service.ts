@@ -42,7 +42,7 @@ export interface ServiceDebt {
   paymentType: string;
   partialPayment: string;
   chargeInterest: string;
-  chargeType: string;
+  chargeType: number;
   interestType: string;
   amount: string;
 }
@@ -74,7 +74,7 @@ export class ServicesFormsService {
         paymentType: ['', [Validators.required]],
         partialPayment: ['S', [Validators.required]],
         chargeInterest: ['N', [Validators.required]],
-        chargeType: ['', [Validators.required]],
+        chargeType: ['' as unknown as number, [Validators.required]],
         interestType: ['', [Validators.required]],
         amount: ['', [Validators.required]],
       },
@@ -139,7 +139,7 @@ export class ServicesFormsService {
         paymentType: '',
         partialPayment: 'S',
         chargeInterest: 'N',
-        chargeType: '',
+        chargeType: null,
         interestType: '',
         amount: '',
       },
