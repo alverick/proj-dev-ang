@@ -74,7 +74,9 @@ export class AfiliacionService {
       return of(this._rubros);
     }
     return this.http
-      .get<IEntryModel[]>(`${environment.END_POINT}/enterpriseHeading`)
+      .get<IEntryModel[]>(
+        `${environment.END_POINT}/enterpriseHeading/BusinessSectorAll`,
+      )
       .pipe(
         map((r) => {
           this._rubros = r;
