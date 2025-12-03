@@ -4,7 +4,7 @@ import {
   type HttpInterceptor,
   type HttpRequest,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { type Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -13,6 +13,8 @@ import { AppConfigActions } from '../../store/actions/app-config.actions';
 
 @Injectable()
 export class LoaderInterceptor implements HttpInterceptor {
+  private readonly store = inject(Store);
+
   totalRequests = 0;
   requestsCompleted = 0;
   forbiddenUrls = [
@@ -21,8 +23,6 @@ export class LoaderInterceptor implements HttpInterceptor {
     'debt/process/[\\d]+/status',
     'debt/service/[^\\/]+/debtor/[\\w]+',
   ];
-
-  constructor(private readonly store: Store) {}
 
   intercept(
     request: HttpRequest<unknown>,

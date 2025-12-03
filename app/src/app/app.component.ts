@@ -1,8 +1,8 @@
 import { type AnimationEvent } from '@angular/animations';
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { PrimeNGConfig } from 'primeng/api';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { isNil, isNotEmpty } from 'ramda';
 import { filter, Subject, takeUntil } from 'rxjs';
 
@@ -12,10 +12,9 @@ import {
   fadeAnimation,
   phasesStateName,
 } from './shared/animations/page-transitions';
-import { primeng } from './shared/lang/es';
-import {
-  AdobeLaunchProviderService,
-} from './shared/services';
+import { FabWhatsappComponent } from './shared/components/fab-whatsapp/fab-whatsapp.component';
+import { ValidationDefaultsComponent } from './shared/components/validation-defaults/validation-defaults.component';
+import { AdobeLaunchProviderService } from './shared/services';
 import { HotjarProviderService } from './shared/services/hotjar-provider.service';
 import { AppConfigActions } from './store/actions/app-config.actions';
 
@@ -23,6 +22,12 @@ import { AppConfigActions } from './store/actions/app-config.actions';
   selector: 'cs-root',
   templateUrl: './app.component.html',
   animations: [fadeAnimation],
+  imports: [
+    RouterModule,
+    NgxSpinnerModule,
+    FabWhatsappComponent,
+    ValidationDefaultsComponent,
+  ],
 })
 export class AppComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
@@ -35,7 +40,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private readonly router = inject(Router);
   private readonly store = inject(Store);
-  private readonly primengConfig = inject(PrimeNGConfig);
   private readonly adobeLaunch = inject(AdobeLaunchProviderService);
   private readonly hotjar = inject(HotjarProviderService);
 
@@ -45,9 +49,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.primengConfig.ripple = true;
-    this.primengConfig.setTranslation(primeng);
-
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),

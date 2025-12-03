@@ -1,4 +1,4 @@
-import { Directive, HostListener } from '@angular/core';
+import { Directive, HostListener, inject } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 @Directive({
@@ -6,7 +6,8 @@ import { NgControl } from '@angular/forms';
   standalone: true,
 })
 export class InputTrimSpacesDirective {
-  constructor(private readonly ngControl: NgControl) {}
+  private readonly ngControl = inject(NgControl);
+
   @HostListener('input', ['$event'])
   @HostListener('blur', ['$event'])
   onBlur() {

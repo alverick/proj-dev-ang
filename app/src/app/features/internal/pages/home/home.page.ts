@@ -1,4 +1,4 @@
-import { DatePipe, NgClass } from '@angular/common';
+import { CommonModule, DatePipe, NgClass } from '@angular/common';
 import {
   type AfterViewInit,
   Component,
@@ -91,9 +91,10 @@ export type DebtDialog = {
   selector: 'cs-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  standalone: true,
   providers: [DatePipe, TransactionService],
+  standalone: true,
   imports: [
+    CommonModule,
     BadgeModule,
     PaymentsFilterComponent,
     NgClass,
@@ -263,7 +264,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     if (isNil(this.formValues)) {
       this.consultaDeuda();
     }
-    this.cargaExcel = false;
 
     this.selectedAll = false;
     this.selectedUniverse = false;
@@ -1050,7 +1050,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   openDialog(service: Partial<CompanyServices>) {
     this.OcultaListaExcel = false;
-    this.cargaExcel = false;
     this.excelService.service = service;
     if (this.fileLoad.isRunning()) {
       const dialogRef = this.dynamicDialogService.open(

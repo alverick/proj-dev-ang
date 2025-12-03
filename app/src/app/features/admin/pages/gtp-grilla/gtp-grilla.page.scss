@@ -1,7 +1,4 @@
-.container {
-  width: 1230px;
-  max-width: 1230px;
-}
+@use "configuration" as *;
 
 .widget {
   width: 97%;
@@ -9,7 +6,7 @@
   margin-right: auto;
 
   .title {
-    @include font-text(18px, 500);
+    @apply tw-text-lg tw-font-medium;
     padding: 20px 15px 10px 15px;
     color: var(--ibk-black);
   }
@@ -17,9 +14,9 @@
   .content {
     width: 100%;
     min-height: 15px;
-    @include border-radius(5px);
     background-color: var(--ibk-white);
     padding: 5px 15px;
+    @apply tw-rounded-md;
   }
 }
 
@@ -37,15 +34,6 @@
     .lista {
       padding-top: 8px;
 
-      .head-fixed {
-        position: fixed;
-        top: 0;
-        background-color: white;
-        width: 1200px;
-        z-index: 1;
-        padding-top: 10px;
-      }
-
       table {
         width: 100%;
 
@@ -54,7 +42,7 @@
             border-bottom: solid 1px #f0f0f0;
 
             th {
-              @include font-text(12px, 500);
+              @apply tw-text-xs tw-font-medium;
               color: var(--secondary-blue-1);
               padding: 2px;
 
@@ -75,10 +63,6 @@
                   border-left: 5px solid transparent;
                   border-right: 5px solid transparent;
                   border-bottom: 5px solid var(--secondary-blue-1);
-
-                  &.seleccionado {
-                    border-bottom: 5px solid var(--grises-grey-1);
-                  }
                 }
 
                 .down {
@@ -90,10 +74,6 @@
                   border-left: 5px solid transparent;
                   border-right: 5px solid transparent;
                   border-top: 5px solid var(--secondary-blue-1);
-
-                  &.seleccionado {
-                    border-top: 5px solid var(--grises-grey-1);
-                  }
                 }
               }
             }
@@ -104,80 +84,17 @@
           tr {
             border-bottom: solid 1px #f0f0f0;
 
-            &.seleccionado {
-              background-color: rgba(0, 169, 79, 0.05);
-
-              td {
-                color: var(--ibk-black) !important;
-              }
-            }
-
-            &.edit-pago {
-              background-color: rgba(0, 169, 79, 0.05);
-            }
-
             td {
-              @include font-text(12px);
               color: var(--ibk-black);
               padding: 8px 3px;
               text-overflow: ellipsis;
+              @apply tw-text-xs;
 
               &.texto-after {
-                @include font-text(28px, 500);
                 text-align: center;
                 height: 300px;
                 color: var(--ibk-black) !important;
-
-                img {
-                  position: absolute;
-                  top: 15px;
-                  right: 10%;
-                }
-              }
-
-              &.c8,
-              &.c9,
-              &.c10 {
-                text-align: left;
-              }
-
-              .cnt-status {
-                position: relative;
-
-                .lnk-status {
-                  cursor: pointer;
-                }
-              }
-
-              .msg-error {
-                margin-top: 0;
-              }
-
-              .btn-edit {
-                cursor: pointer;
-
-                img {
-                  width: 15px;
-                  height: 15px;
-                }
-              }
-
-              .btn-ok {
-                cursor: pointer;
-
-                img {
-                  width: 20px;
-                  height: 20px;
-                }
-              }
-
-              .btn-cancel {
-                cursor: pointer;
-
-                img {
-                  width: 20px;
-                  height: 20px;
-                }
+                @apply tw-text-[28px] tw-font-medium;
               }
             }
           }
@@ -214,58 +131,11 @@
 
         .c6 {
           width: 145px;
-
-          .text {
-            width: 50px;
-          }
         }
 
         .c7 {
           width: 100px;
-
-          .text {
-            width: 60px;
-          }
         }
-
-        /*.c8 {
-                    width: 100px;
-                    // text-align: justify;
-                    .text {
-                        width: 38px;
-                    }
-                    .msg-error {
-                        margin-left: -15px;
-                    }
-                }
-                .c9 {
-                    width: 100px;
-                    text-align: ce;
-                    .text {
-                        width: 31px;
-                    }
-                }
-                .c10 {
-                    width: 100px;
-                    .text {
-                        width: 31px;
-                    }
-                }
-                .c11 {
-                    width: 85px;
-                    .text {
-                        width: 52px;
-                    }
-                }
-                .c12 {
-                    width: 45px;
-                    .text {
-                        width: 37px;
-                    }
-                }
-                .c13 {
-                    width: 5px;
-                }*/
       }
     }
 
@@ -278,7 +148,7 @@
       .text {
         float: right;
         color: var(--grises-grey-1);
-        @include font-text(14px, 500);
+        @apply tw-text-sm tw-font-medium;
       }
 
       .ctrl {
@@ -289,8 +159,8 @@
 }
 
 :host ::ng-deep .ngx-pagination {
-  @include font-text(14px, 500);
   color: var(--grises-grey-1);
+  @apply tw-text-sm tw-font-medium;
 
   &::before,
   &::after {
@@ -320,46 +190,12 @@
   }
 }
 
-.mat-mdc-form-field {
-  .msg-error {
-    @include font-text(10px, 500);
-    position: absolute;
-    color: var(--extended-palette-watermelon-1);
-    margin-top: 10px;
-    width: 200px;
-  }
-
-  .msg-error-filtro {
-    @include font-text(10px, 500);
-    position: absolute;
-    color: var(--extended-palette-watermelon-1);
-    margin-top: 10px;
-    width: 200px;
-    background-color: var(--ibk-white);
-  }
-}
-
 .btn-eureca-green {
-  @include font-text(12px !important, 500 !important);
+  @apply tw-text-xs tw-font-medium;
 }
 
 .btn-eureca-yellow {
-  @include font-text(12px !important, 500 !important);
-}
-
-.text-danger {
-  @include font-text(12px, 500);
-  color: var(--extended-palette-watermelon-1) !important;
-}
-
-.input-text {
-  @include font-text(14px !important, normal);
-  color: var(--ibk-black) !important;
-}
-
-.input-text-dash {
-  @include font-text(12px !important, normal);
-  color: var(--ibk-black) !important;
+  @apply tw-text-xs tw-font-medium;
 }
 
 .content-container {
@@ -436,77 +272,8 @@
   margin-left: 0.5rem;
 }
 
-.ngx-pagination .show-for-sr {
-  position: absolute !important;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-}
-
-.ngx-pagination .small-screen {
-  display: none;
-}
-
-@media screen and (max-width: 601px) {
-  .ngx-pagination.responsive .small-screen {
-    display: inline-block;
-  }
-  .ngx-pagination.responsive
-    li:not(.small-screen):not(.pagination-previous):not(.pagination-next) {
-    display: none;
-  }
-}
-
-.btn {
-  @include font-text(14px, 500 !important);
-  font-weight: 400;
-  color: var(--primary-green-1);
-}
-
-.dropdown-toggle::after {
-  color: var(--ibk-white);
-}
-
-.addDeuda {
-  float: right;
-  padding-top: 10px;
-  cursor: pointer;
-}
-
-.selecciona-servicio {
-  @include font-text(10px !important, 500 !important);
-  color: var(--ibk-black) !important;
-  padding: 8px 2px;
-}
-
-.servicio-Opern {
-  @include font-text(14px !important, normal !important);
-  color: var(--ibk-black) !important;
-  padding-bottom: 10px;
-}
-
-.btn-calendar {
-  background-image: url(/assets/images/calendar.svg);
-}
-
 .numpag {
   color: var(--grises-grey-1) !important;
-}
-
-.chk-vertical {
-  margin-left: -10px !important;
-}
-
-///TAGS
-:host ::ng-deep .badge-primary {
-  color: var(--ibk-white);
-  background-color: var(--primary-green-1);
-}
-
-:host ::ng-deep .ps--active-x > .ps__rail-x,
-.ps--active-y > .ps__rail-y {
-  display: none !important;
 }
 
 .badge {

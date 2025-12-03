@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ServiceStepConfigurationComponent } from '../../../../shared/components/service-step-configuration/service-step-configuration.component';
@@ -22,6 +22,10 @@ import { AffiliationService } from '../../services';
   imports: [ServiceStepConfigurationComponent],
 })
 export class ServiceConfigurationPage {
+  private readonly router = inject(Router);
+  affiliation = inject(AffiliationService);
+  private readonly serviceForms = inject(ServicesFormsService);
+
   errorMessagesServiceConfig = errorServiceConfiguration;
   debtorCodeOptions = debtorCodeOptions;
   paymentTypeOptions = paymentTypeOptions;
@@ -29,12 +33,6 @@ export class ServiceConfigurationPage {
   chargeTypeOptions = chargeTypeOptions;
   interestTypeOptions = interestTypeOptions;
   blockAction = false;
-
-  constructor(
-    private readonly router: Router,
-    public affiliation: AffiliationService,
-    private readonly serviceForms: ServicesFormsService,
-  ) {}
 
   onSubmit() {
     if (!this.blockAction) {

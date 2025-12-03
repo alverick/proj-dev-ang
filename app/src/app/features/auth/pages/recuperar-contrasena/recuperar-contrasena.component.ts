@@ -1,4 +1,4 @@
-import { Component, HostListener, type OnInit } from '@angular/core';
+import { Component, HostListener, inject, type OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -49,19 +49,19 @@ interface RecoverForm {
     ButtonDirective,
     Ripple,
   ],
+  providers: [RecuperaService],
 })
 export class RecuperarContrasenaComponent implements OnInit {
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly recuperaService = inject(RecuperaService);
+  private readonly router = inject(Router);
+  protected tracking = inject(TrackingService);
+
   public formulario = true;
   recupera: SimpleModelFormGroup<RecoverForm>;
   public submitted = false;
   submittedRequired = false;
   protected readonly errorMessages = errorsLoginForm;
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly recuperaService: RecuperaService,
-    private readonly router: Router,
-    protected tracking: TrackingService,
-  ) {}
 
   @HostListener('window:beforeunload', ['$event'])
   public closeWindow($event: BeforeUnloadEvent) {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrimeTemplate } from 'primeng/api';
 import { PasswordModule } from 'primeng/password';
@@ -15,7 +15,6 @@ import { messageErrorNewPasswords } from '../../../../shared/validators/password
 @Component({
   selector: 'cs-company-password-form',
   templateUrl: './company-password-form.component.html',
-  standalone: true,
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -26,15 +25,16 @@ import { messageErrorNewPasswords } from '../../../../shared/validators/password
   ],
 })
 export class CompanyPasswordFormComponent {
-  @Input() form: ModelFormGroup<CompanyChangePasswordForm>;
-  @Input() errorMessages: IErrorMessages;
-  @Output() sendForm = new EventEmitter<Partial<CompanyChangePasswordForm>>();
+  readonly form = input<ModelFormGroup<CompanyChangePasswordForm>>(undefined);
+  readonly errorMessages = input<IErrorMessages>(undefined);
+  readonly sendForm = output<Partial<CompanyChangePasswordForm>>();
 
   protected readonly messageErrorNewPasswords = messageErrorNewPasswords;
 
   onSubmit() {
-    if (this.form.valid) {
-      this.sendForm.emit(this.form.value);
+    const form = this.form();
+    if (form.valid) {
+      this.sendForm.emit(form.value);
     }
   }
 }

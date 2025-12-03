@@ -1,7 +1,7 @@
-import { DOCUMENT } from '@angular/common';
 import {
   ApplicationRef,
-  Inject,
+  DOCUMENT,
+  inject,
   Injectable,
   Injector,
   type Type,
@@ -17,13 +17,14 @@ import { AdobeEvent, TrackingService } from './tracking.service';
 
 @Injectable()
 export class DynamicDialogService extends DialogService {
+  private readonly tracking = inject(TrackingService);
+
   private readonly stackRefs: DynamicDialogRef[] = [];
-  constructor(
-    private readonly tracking: TrackingService,
-    appRef: ApplicationRef,
-    injector: Injector,
-    @Inject(DOCUMENT) document: Document,
-  ) {
+  constructor() {
+    const appRef = inject(ApplicationRef);
+    const injector = inject(Injector);
+    const document = inject<Document>(DOCUMENT);
+
     super(appRef, injector, document);
   }
 

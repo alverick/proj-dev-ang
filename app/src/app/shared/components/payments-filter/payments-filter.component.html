@@ -1,15 +1,15 @@
 <form
   class="form"
-  [ngClass]="{ 'gtp-mode': gtpMode }"
+  [ngClass]="{ 'gtp-mode': gtpMode() }"
   [formGroup]="form"
   (ngSubmit)="sendFilters()"
 >
   <div class="form-elm">
     <cs-label-control class="tw-w-full" formControlName="inputSearch">
-      <p-iconField class="tw-w-full" iconPosition="left" control>
-        <p-inputIcon styleClass="pi pi-search" />
+      <p-icon-field class="tw-w-full" control>
+        <p-inputicon class="pi pi-search" />
         <input
-          [ngClass]="{ 'lg:tw-w-72': !gtpMode, 'lg:tw-w-80': gtpMode }"
+          [ngClass]="{ 'lg:tw-w-72': !gtpMode(), 'lg:tw-w-80': gtpMode() }"
           type="text"
           class="tw-w-full"
           pInputText
@@ -19,14 +19,15 @@
           formControlName="inputSearch"
           variant="filled"
         />
-      </p-iconField>
+      </p-icon-field>
     </cs-label-control>
   </div>
   <div class="form-elm">
     <cs-label-control class="tw-w-full" formControlName="service">
-      <p-dropdown
+      <p-select
+        control
         formControlName="service"
-        [options]="services"
+        [options]="services()"
         class="tw-w-full"
         styleClass="tw-w-full lg:tw-w-52"
         optionLabel="name"
@@ -40,32 +41,32 @@
         <ng-template let-service pTemplate="item">
           {{ (service.code ? service.code + ' - ' : '') + service.name }}
         </ng-template>
-      </p-dropdown>
+      </p-select>
     </cs-label-control>
   </div>
   <div class="form-elm">
     <cs-label-control formControlName="status">
-      <p-dropdown
+      <p-select
         control
         formControlName="status"
-        [options]="stateList"
+        [options]="stateList()"
         [showClear]="true"
         class="tw-w-full"
         styleClass="tw-w-full lg:tw-w-52"
         optionLabel="descripcion"
         placeholder="Estado"
-        [optionValue]="gtpMode ? 'idState' : 'idWayPay'"
+        [optionValue]="gtpMode() ? 'idState' : 'idWayPay'"
       >
-      </p-dropdown
+      </p-select
     ></cs-label-control>
   </div>
-  @if (stateTypeList) {
+  @if (stateTypeList()) {
     <div class="form-elm">
       <cs-label-control formControlName="statusSolicitud">
-        <p-dropdown
+        <p-select
           control
           formControlName="statusSolicitud"
-          [options]="stateTypeList"
+          [options]="stateTypeList()"
           [showClear]="true"
           class="tw-w-full"
           styleClass="tw-w-full lg:tw-w-52"
@@ -73,24 +74,24 @@
           placeholder="Tipo de solicitud"
           optionValue="idState"
         >
-        </p-dropdown>
+        </p-select>
       </cs-label-control>
     </div>
   }
   <div
     class="tw-hidden lg:tw-block lg:tw-basis-full"
     [ngClass]="{
-      'xl:tw-hidden': !gtpMode,
-      '2xl:tw-basis-auto': !gtpMode,
+      'xl:tw-hidden': !gtpMode(),
+      '2xl:tw-basis-auto': !gtpMode(),
     }"
   ></div>
-  @if (dateList) {
+  @if (dateList()) {
     <div class="form-elm">
       <cs-label-control formControlName="dateForFilter">
-        <p-dropdown
+        <p-select
           control
           formControlName="dateForFilter"
-          [options]="dateList"
+          [options]="dateList()"
           [showClear]="true"
           class="tw-w-full"
           styleClass="tw-w-full lg:tw-w-44"
@@ -98,7 +99,7 @@
           placeholder="Fecha"
           optionValue="idDate"
         >
-        </p-dropdown>
+        </p-select>
       </cs-label-control>
     </div>
   } @else {
@@ -110,18 +111,18 @@
       formControlName="dateFrom"
       [errorMessages]="errorMessageDates"
     >
-      <p-calendar
+      <p-date-picker
         control
         formControlName="dateFrom"
         class="tw-w-full lg:tw-w-36"
-        styleClass="tw-w-full lg:tw-w-36"
+        inputStyleClass="tw-w-full lg:tw-w-36"
         [iconDisplay]="'input'"
         [showIcon]="true"
         [maxDate]="maxDateFrom"
         placeholder="Desde"
         appendTo="body"
         dateFormat="d/m/yy"
-      ></p-calendar
+      ></p-date-picker
     ></cs-label-control>
   </div>
   <div class="form-elm tw-w-full lg:tw-w-auto">
@@ -130,11 +131,11 @@
       formControlName="dateTo"
       [errorMessages]="errorMessageDates"
     >
-      <p-calendar
+      <p-date-picker
         control
         formControlName="dateTo"
         class="tw-w-full lg:tw-w-36"
-        styleClass="tw-w-full lg:tw-w-36"
+        inputStyleClass="tw-w-full lg:tw-w-36"
         [iconDisplay]="'input'"
         [showIcon]="true"
         [minDate]="minDateTo"
@@ -142,12 +143,12 @@
         placeholder="Hasta"
         appendTo="body"
         dateFormat="d/m/yy"
-      ></p-calendar
+      ></p-date-picker
     ></cs-label-control>
   </div>
   <div
     class="actions 2xl:tw-basis-auto"
-    [ngClass]="{ 'xl:tw-basis-full': !gtpMode }"
+    [ngClass]="{ 'xl:tw-basis-full': !gtpMode() }"
   >
     <button
       type="submit"

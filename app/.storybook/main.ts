@@ -1,5 +1,5 @@
-import type { StorybookConfig } from '@storybook/angular';
-import * as path from 'path';
+// This file has been automatically migrated to valid ESM format by Storybook.
+import { StorybookConfig } from '@storybook/angular';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -11,30 +11,12 @@ const config: StorybookConfig = {
   addons: [
     '@storybook/addon-onboarding',
     '@storybook/addon-links',
-    '@storybook/addon-essentials',
     '@chromatic-com/storybook',
-    '@storybook/addon-interactions',
-    'storybook-msw-addon',
+    '@storybook/addon-docs',
   ],
   framework: {
     name: '@storybook/angular',
     options: {},
-  },
-  webpackFinal: async (config) => {
-    config.module.rules.push({
-      test: /\.scss$/,
-      use: [
-        {
-          loader: 'sass-resources-loader',
-          options: {
-            resources: [
-              path.resolve(__dirname, '../src/scss/_configuration.scss'),
-            ],
-          },
-        },
-      ],
-    });
-    return config;
   },
 };
 export default config;

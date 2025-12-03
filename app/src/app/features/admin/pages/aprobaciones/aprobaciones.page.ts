@@ -1,5 +1,5 @@
-import { DatePipe, NgClass } from '@angular/common';
-import { Component, HostListener, type OnInit } from '@angular/core';
+import { CommonModule, DatePipe, NgClass } from '@angular/common';
+import { Component, HostListener, inject, type OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
 import { Ripple } from 'primeng/ripple';
@@ -26,9 +26,10 @@ import { ServicesGTPComponent } from '../../components/services-gtp/services-gtp
 @Component({
   selector: 'cs-aprobaciones',
   templateUrl: './aprobaciones.page.html',
-  standalone: true,
   providers: [GtpService, DatePipe],
+  standalone: true,
   imports: [
+    CommonModule,
     NgClass,
     TagModule,
     ButtonDirective,
@@ -39,6 +40,10 @@ import { ServicesGTPComponent } from '../../components/services-gtp/services-gtp
   ],
 })
 export class AprobacionesPage implements OnInit {
+  gtpService = inject(GtpService);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
+
   public Formulario = false;
   public ServiciosFormulario = false;
   public llave: string;
@@ -68,12 +73,6 @@ export class AprobacionesPage implements OnInit {
   stateDetail: IAccountStateDetails;
 
   rubros: IEntryModel[] = [];
-
-  constructor(
-    public gtpService: GtpService,
-    private readonly activatedRoute: ActivatedRoute,
-    public router: Router,
-  ) {}
 
   @HostListener('window:beforeunload', ['$event'])
   closeWindow(event: BeforeUnloadEvent) {
@@ -176,13 +175,12 @@ export class AprobacionesPage implements OnInit {
       ({ acceptednewNameCode }) => acceptednewNameCode === false,
     ).length;
 
-    // eslint-disable-next-line max-len
     const ListCantidadNombre = this.gtpService.services.filter(
       ({ acceptednewName, newNameGTPStatus }) =>
         (newNameGTPStatus === 0 || newNameGTPStatus === 2) &&
         acceptednewName === null,
     ).length;
-    // eslint-disable-next-line max-len
+
     const ListCantidadCodigoDeudor = this.gtpService.services.filter(
       ({ acceptednewNameCode, newNameCodeGTPStatus }) =>
         (newNameCodeGTPStatus === 0 || newNameCodeGTPStatus === 2) &&
@@ -253,14 +251,14 @@ export class AprobacionesPage implements OnInit {
     }
     if (notApproved > 0) {
       if (isNewEnterprise) {
-        Swal.fire({
+        void Swal.fire({
           title: 'Aprobación',
           html: `Existen ${notApproved} campos que no fueron aprobados. <br> ¿Desea rechazar la Afiliación?`,
           showCloseButton: true,
           showCancelButton: true,
           confirmButtonText: 'Si, Rechazar afiliación',
           cancelButtonText: 'No, Solicitar corrección de datos',
-          onOpen: drawPopup,
+          didOpen: drawPopup,
         }).then(async (result) => {
           if (result.value) {
             this.saveApprovedData({
@@ -273,14 +271,14 @@ export class AprobacionesPage implements OnInit {
           }
         });
       } else {
-        Swal.fire({
+        void Swal.fire({
           title: 'Aprobación',
           html: `Existen ${notApproved} campos que no fueron aprobados. <br> ¿Desea solicitar corrección de datos?`,
           showCloseButton: true,
           showCancelButton: true,
           confirmButtonText: 'Si, Solicitar corrección de datos',
           cancelButtonText: 'No, Cancelar',
-          onOpen: drawPopup,
+          didOpen: drawPopup,
         }).then(async (result) => {
           if (result.value) {
             await this.saveQueryFixData();
@@ -293,14 +291,14 @@ export class AprobacionesPage implements OnInit {
       !servicesInReview &&
       (this.enterpriseChanged || this.servicesChanged)
     ) {
-      Swal.fire({
+      void Swal.fire({
         title: 'Confirmar cambios',
         html: '¿Estás seguro de que quieres guardar estos cambios?',
         showCloseButton: true,
         showCancelButton: true,
         confirmButtonText: 'Si, Terminar',
         cancelButtonText: 'No, Cancelar',
-        onOpen: drawPopup,
+        didOpen: drawPopup,
       }).then(async (result) => {
         if (result.value) {
           if (this.enterpriseChanged) {
@@ -321,14 +319,14 @@ export class AprobacionesPage implements OnInit {
     } else if (!this.enterpriseChanged && !this.servicesChanged) {
       this.router.navigate([appFullRoutingNames.ADMIN]);
     } else {
-      Swal.fire({
+      void Swal.fire({
         title: 'Aprobación',
         html: 'Todos los campos han sido revisados <br> ¿Desea terminar? <br> (Se enviará un correo a la empresa)',
         showCloseButton: true,
         showCancelButton: true,
         confirmButtonText: 'Si, Terminar',
         cancelButtonText: 'No, Cancelar',
-        onOpen: drawPopup,
+        didOpen: drawPopup,
       }).then(async (result) => {
         if (!result.value) {
           return;
@@ -515,7 +513,7 @@ export class AprobacionesPage implements OnInit {
       this.Empgtp.newNameGTPStatus === 0 ||
       this.Empgtp.newNameGTPStatus === 2
     ) {
-      Swal.fire({
+      void Swal.fire({
         title: 'Descartar Cambios',
         text: 'Se van a descartar los cambios.',
         showConfirmButton: true,
@@ -523,7 +521,7 @@ export class AprobacionesPage implements OnInit {
         showCloseButton: true,
         confirmButtonText: 'Descartar',
         cancelButtonText: 'Regresar',
-        onOpen: drawPopup,
+        didOpen: drawPopup,
       }).then((r) => {
         if (r.value) {
           this.Formulario = false;
@@ -541,7 +539,7 @@ export class AprobacionesPage implements OnInit {
       this.Servgtp.newNameCodeGTPStatus === 0 ||
       this.Servgtp.newNameCodeGTPStatus === 2
     ) {
-      Swal.fire({
+      void Swal.fire({
         title: 'Descartar Cambios',
         text: 'Se van a descartar los cambios.',
         showConfirmButton: true,
@@ -549,7 +547,7 @@ export class AprobacionesPage implements OnInit {
         showCloseButton: true,
         confirmButtonText: 'Descartar',
         cancelButtonText: 'Regresar',
-        onOpen: drawPopup,
+        didOpen: drawPopup,
       }).then((r) => {
         if (r.value) {
           this.indiceActual = -1;

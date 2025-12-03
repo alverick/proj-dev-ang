@@ -1,17 +1,17 @@
-<form [formGroup]="form" novalidate #formElm="ngForm">
+<form [formGroup]="form()" novalidate #formElm="ngForm">
   <div class="form-elm">
     <cs-label-control
       class="tw-w-full"
       formControlName="paymentType"
-      [errorMessages]="errorMessages.paymentType"
+      [errorMessages]="errorMessages().paymentType"
       >¿En qué orden te podrán pagar tus clientes?
-      <p-dropdown
-        [options]="paymentTypeOptions"
+      <p-select
+        [options]="paymentTypeOptions()"
         class="tw-w-full"
         styleClass="tw-w-full"
         formControlName="paymentType"
         placeholder="Selecciona"
-      ></p-dropdown>
+      ></p-select>
     </cs-label-control>
   </div>
   <div class="form-elm tw-mb-5">
@@ -47,12 +47,12 @@
   </div>
   <div class="form-elm tw-mb-5">
     <div class="tw-font-medium">¿Quieres incluir el cobro de mora?</div>
-    @if (interestOnlyInfo) {
+    @if (interestOnlyInfo()) {
       <div class="tw-font-light">
-        {{ form.get('chargeInterest').value === 'S' ? 'Sí' : 'No' }}
+        {{ form().get('chargeInterest').value === 'S' ? 'Sí' : 'No' }}
       </div>
     }
-    @if (!interestOnlyInfo) {
+    @if (!interestOnlyInfo()) {
       <cs-label-control [onlyControl]="true" class="tw-w-full">
         <p-radioButton
           name="chargeInterest"
@@ -81,66 +81,66 @@
   </div>
   @if (showArrearsFields) {
     <div class="form-elm">
-      @if (interestOnlyInfo) {
+      @if (interestOnlyInfo()) {
         <div class="info tw-mb-5">
           <div class="tw-font-medium">Tipo de cobro</div>
           <div class="tw-font-light">
-            {{ form.get('chargeType').value === 1 ? 'Diario' : 'Fijo' }}
+            {{ form().get('chargeType').value === '1' ? 'Diario' : 'Fijo' }}
           </div>
         </div>
       }
-      @if (!interestOnlyInfo) {
+      @if (!interestOnlyInfo()) {
         <cs-label-control
           class="tw-w-full"
           formControlName="chargeType"
-          [errorMessages]="errorMessages.chargeType"
+          [errorMessages]="errorMessages().chargeType"
           >Tipo de cobro
-          <p-dropdown
-            [options]="chargeTypeOptions"
+          <p-select
+            [options]="chargeTypeOptions()"
             class="tw-w-full"
             styleClass="tw-w-full"
             formControlName="chargeType"
             placeholder="Selecciona"
-          ></p-dropdown>
+          ></p-select>
         </cs-label-control>
       }
     </div>
     <div class="form-elm lg:tw-flex lg:tw-gap-4">
-      @if (interestOnlyInfo) {
+      @if (interestOnlyInfo()) {
         <div class="info tw-mb-5">
           <div class="tw-font-medium">Tipo de cobro</div>
           <div class="tw-font-light">
             {{
-              form.get('interestType').value === 'M' ? 'Monto' : 'Porcentaje'
+              form().get('interestType').value === 'M' ? 'Monto' : 'Porcentaje'
             }}
           </div>
         </div>
         <div class="info tw-mb-5">
           <div class="tw-font-medium">Tipo de cobro</div>
           <div class="tw-font-light">
-            {{ form.get('amount').value | currency: unitAmount }}
+            {{ form().get('amount').value | currency: unitAmount }}
           </div>
         </div>
       }
-      @if (!interestOnlyInfo) {
+      @if (!interestOnlyInfo()) {
         <cs-label-control
           class="tw-w-full"
           formControlName="interestType"
-          [errorMessages]="errorMessages.interestType"
+          [errorMessages]="errorMessages().interestType"
           >Tipo de cálculo
-          <p-dropdown
-            [options]="interestTypeOptions"
+          <p-select
+            [options]="interestTypeOptions()"
             class="tw-w-full"
             styleClass="tw-w-full"
             formControlName="interestType"
             placeholder="Selecciona"
-          ></p-dropdown>
+          ></p-select>
         </cs-label-control>
         <cs-label-control
           class="tw-w-full"
           formControlName="amount"
           formControlLabel="El monto"
-          [errorMessages]="errorMessages.amount"
+          [errorMessages]="errorMessages().amount"
           >Monto
           <p-inputNumber
             formControlName="amount"

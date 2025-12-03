@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { defer, from, mergeMap, type Observable, of, shareReplay } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -110,10 +110,12 @@ declare const window: {
 
 @Injectable()
 export class DigitalDataService {
+  private readonly ipInfoService = inject(IpInfoDataService);
+
   private readonly digital: FingerPrintType;
   private readonly fingerPrintData: Observable<FingerPrintData>;
 
-  constructor(private readonly ipInfoService: IpInfoDataService) {
+  constructor() {
     this.fingerPrintData = defer(() =>
       from(this.digital?.getData(true, true)),
     ).pipe(shareReplay(1));

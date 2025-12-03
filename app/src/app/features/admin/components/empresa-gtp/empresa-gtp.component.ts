@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  type OnInit,
-  Output,
-} from '@angular/core';
+import { Component, inject, input, type OnInit, output } from '@angular/core';
 import {
   type AbstractControl,
   FormsModule,
@@ -16,10 +10,10 @@ import {
 } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { Ripple } from 'primeng/ripple';
+import { TextareaModule } from 'primeng/textarea';
 import { forEachObjIndexed } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 
@@ -32,20 +26,21 @@ import { ICompanyData } from '../../../../shared/models/company-data';
 @Component({
   selector: 'cs-empresa-gtp',
   templateUrl: './empresa-gtp.component.html',
-  standalone: true,
   imports: [
     FormsModule,
     ReactiveFormsModule,
     LabelControlComponent,
     InputTextModule,
     KeyFilterModule,
-    InputTextareaModule,
+    TextareaModule,
     RadioButtonModule,
     ButtonDirective,
     Ripple,
   ],
 })
 export class EmpresaGTPComponent implements OnInit {
+  private readonly formBuilder = inject(UntypedFormBuilder);
+
   formGroup: UntypedFormGroup;
   submitted = false;
   statusCodes: Record<string, number> = statusCodes;
@@ -62,10 +57,8 @@ export class EmpresaGTPComponent implements OnInit {
     },
   };
 
-  @Input() enterprise: ICompanyData;
-  @Output() grabar = new EventEmitter<ICompanyData>();
-
-  constructor(private readonly formBuilder: UntypedFormBuilder) {}
+  enterprise = input<ICompanyData>(undefined);
+  grabar = output<ICompanyData>();
 
   ngOnInit() {
     const {
@@ -77,7 +70,7 @@ export class EmpresaGTPComponent implements OnInit {
       movilNumber,
       newNameGTPStatus,
       entryName,
-    } = this.enterprise;
+    } = this.enterprise();
 
     const isNotEditable = newNameGTPStatus === statusCodes.APPROVED;
 
@@ -163,15 +156,15 @@ export class EmpresaGTPComponent implements OnInit {
     const { valid, value } = this.formGroup;
     if (valid) {
       const isNotEditable =
-        this.enterprise.newNameGTPStatus !== statusCodes.APPROVED;
+        this.enterprise().newNameGTPStatus !== statusCodes.APPROVED;
       let dataEnterprise: ICompanyData;
       if (isNotEditable) {
         dataEnterprise = {
-          ...this.enterprise,
+          ...this.enterprise(),
           NombreApproved: value.NewNameApproved === 'S',
         };
       } else {
-        dataEnterprise = { ...this.enterprise, ...value };
+        dataEnterprise = { ...this.enterprise(), ...value };
       }
       this.grabar.emit(dataEnterprise);
     }

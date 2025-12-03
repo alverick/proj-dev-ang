@@ -1,7 +1,8 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
-  Input,
+  inject,
+  input,
   type OnChanges,
   type SimpleChanges,
 } from '@angular/core';
@@ -14,19 +15,18 @@ import { AdobeEvent, TrackingService } from '../../services/tracking.service';
   selector: 'cs-fab-whatsapp',
   templateUrl: './fab-whatsapp.component.html',
   styleUrls: ['./fab-whatsapp.component.scss'],
-  standalone: true,
   imports: [NgClass],
 })
 export class FabWhatsappComponent implements OnChanges {
-  @Input() showButton = true;
-  @Input() expand = true;
+  private readonly tracking = inject(TrackingService);
+  protected router = inject(Router);
+
+  readonly showButton = input(true);
+  readonly expand = input(true);
   showText = true;
   url = '';
   timeToHide = 10000;
-  constructor(
-    private readonly tracking: TrackingService,
-    protected router: Router,
-  ) {
+  constructor() {
     setTimeout(() => (this.showText = false), this.timeToHide);
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {

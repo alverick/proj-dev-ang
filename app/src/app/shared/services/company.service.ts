@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { environment } from '../../../environments/environment';
 import {
@@ -35,7 +35,7 @@ type CompanyServicesData = ServicePostData & { sdk: FingerPrintData };
 
 @Injectable()
 export class CompanyService {
-  constructor(private readonly http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   public validateCompany(data: Partial<RegisterForm>) {
     return this.http.post<ICompanyResult>(

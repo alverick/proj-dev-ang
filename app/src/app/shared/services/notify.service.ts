@@ -1,5 +1,5 @@
 import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   faBell as farBell,
   faCircle as farCircle,
@@ -31,6 +31,9 @@ export interface MessagesType extends MessagesResponse {
 
 @Injectable()
 export class NotifyService {
+  private readonly http = inject(HttpClient);
+  private readonly storage = inject(StorageService);
+
   set total(value: number) {
     this._total = value;
     if (value >= 100) {
@@ -50,11 +53,6 @@ export class NotifyService {
   messages: MessagesType[] = [];
   private _total = -1;
   totalLabel = '';
-
-  constructor(
-    private readonly http: HttpClient,
-    private readonly storage: StorageService,
-  ) {}
 
   public iniciar() {
     this.storage.getCurrentSession();

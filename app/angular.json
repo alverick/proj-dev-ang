@@ -10,7 +10,7 @@
       "prefix": "cs",
       "architect": {
         "build": {
-          "builder": "@angular-builders/custom-webpack:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "allowedCommonJsDependencies": [
               "dompurify",
@@ -23,13 +23,9 @@
               "react-dom",
               "dot-object"
             ],
-            "customWebpackConfig": {
-              "path": "./config/extra-webpack.config.js"
-            },
             "outputPath": "dist/EurekaAngularProy",
             "index": "src/index.html",
-            "indexTransform": "./src/index-html.transform.ts",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
@@ -41,8 +37,6 @@
               "src/scss/layers.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/primeicons/primeicons.css",
-              "node_modules/primeng/resources/themes/lara-light-green/theme.css",
-              "node_modules/primeng/resources/primeng.min.css",
               "node_modules/shepherd.js/dist/css/shepherd.css",
               "src/scss/style.scss"
             ],
@@ -59,12 +53,12 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "outputPath": "dist/EurekaAngularProy-production",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
               "aot": true,
-              "buildOptimizer": true,
               "extractLicenses": true
             },
             "legacy-production": {
@@ -74,12 +68,12 @@
                   "with": "src/environments/environment.legacy-prod.ts"
                 }
               ],
+              "outputPath": "dist/EurekaAngularProy-leg",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
               "aot": true,
-              "buildOptimizer": true,
               "extractLicenses": true
             },
             "local": {
@@ -88,7 +82,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.local.ts"
                 }
-              ]
+              ],
+              "outputPath": "dist/EurekaAngularProy-local"
             },
             "hmr": {
               "fileReplacements": [
@@ -97,6 +92,7 @@
                   "with": "src/environments/environment.hmr.ts"
                 }
               ],
+              "outputPath": "dist/EurekaAngularProy-hmr",
               "optimization": false,
               "aot": true,
               "extractLicenses": false,
@@ -110,6 +106,7 @@
                   "with": "src/environments/environment.uat.ts"
                 }
               ],
+              "outputPath": "dist/EurekaAngularProy-uat",
               "optimization": {
                 "scripts": true,
                 "styles": {
@@ -122,7 +119,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "aot": true,
-              "buildOptimizer": true,
               "extractLicenses": true
             },
             "dev": {
@@ -132,27 +128,28 @@
                   "with": "src/environments/environment.dev.ts"
                 }
               ],
+              "outputPath": "dist/EurekaAngularProy-dev",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": true,
               "namedChunks": false,
               "aot": true,
-              "buildOptimizer": true,
               "extractLicenses": true
             }
           }
         },
         "serve": {
-          "builder": "@angular-builders/custom-webpack:dev-server",
-          "options": {
-            "buildTarget": "EurekaAngularProy:build"
-          },
+          "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
+            "development": {
+              "buildTarget": "EurekaAngularProy:build"
+            },
             "production": {
               "buildTarget": "EurekaAngularProy:build:production"
             },
             "hmr": {
-              "buildTarget": "EurekaAngularProy:build:hmr"
+              "buildTarget": "EurekaAngularProy:build:hmr",
+              "hmr": true
             },
             "local": {
               "buildTarget": "EurekaAngularProy:build:local"
@@ -163,7 +160,8 @@
             "uat": {
               "buildTarget": "EurekaAngularProy:build:uat"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -220,7 +218,29 @@
   },
   "schematics": {
     "@schematics/angular:component": {
-      "style": "scss"
+      "style": "scss",
+      "type": "component"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
     }
   },
   "cli": {

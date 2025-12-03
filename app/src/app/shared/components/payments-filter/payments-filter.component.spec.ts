@@ -1,27 +1,33 @@
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MockBuilder, MockRender } from 'ng-mocks';
-import { CalendarModule } from 'primeng/calendar';
-import { DropdownModule } from 'primeng/dropdown';
-import { IconField } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { LabelControlComponent } from '../label-control/label-control.component';
 import { PaymentsFilterComponent } from './payments-filter.component';
 
 describe('PaymentsFilterComponent', () => {
-  beforeEach(() =>
-    MockBuilder(PaymentsFilterComponent)
-      .mock(FormsModule)
-      .mock(IconField)
-      .mock(InputIconModule)
-      .mock(DropdownModule)
-      .mock(CalendarModule)
-      .mock(LabelControlComponent)
-      .mock(ReactiveFormsModule),
-  );
+  let component: PaymentsFilterComponent;
+  let fixture: ComponentFixture<PaymentsFilterComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [PaymentsFilterComponent, NoopAnimationsModule],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(PaymentsFilterComponent);
+    component = fixture.componentInstance;
+
+    fixture.componentRef.setInput('gtpMode', false);
+    fixture.componentRef.setInput('dateList', []);
+    fixture.componentRef.setInput('stateTypeList', []);
+    fixture.componentRef.setInput('multipleState', false);
+    fixture.componentRef.setInput('services', []);
+    fixture.componentRef.setInput('stateList', []);
+    fixture.componentRef.setInput('initial', undefined);
+    fixture.componentRef.setInput('resetFilters', undefined);
+
+    fixture.detectChanges();
+  });
 
   it('should create', () => {
-    const fixture = MockRender(PaymentsFilterComponent);
-    expect(fixture).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 });

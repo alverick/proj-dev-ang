@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { LetDirective } from '@ngrx/component';
 import { Store } from '@ngrx/store';
 import { ButtonDirective } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
-import { DropdownModule } from 'primeng/dropdown';
+import { DatePicker } from 'primeng/datepicker';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { Ripple } from 'primeng/ripple';
+import { Select } from 'primeng/select';
 import { forEachObjIndexed, isNil } from 'ramda';
 
 import { ServiceTypes } from '../../../../../../shared/constants/services';
@@ -31,22 +31,29 @@ import { companyFeature } from '../../../../../../store/reducers/company.reducer
 @Component({
   selector: 'cs-payment-detail',
   templateUrl: './payment-detail.component.html',
-  standalone: true,
   providers: [DatePipe, TransactionService],
   imports: [
     ProgressSpinnerModule,
     InputNumberModule,
     FormsModule,
-    CalendarModule,
-    DropdownModule,
     LetDirective,
     ButtonDirective,
     Ripple,
     DecimalPipe,
     DatePipe,
+    Select,
+    DatePicker,
   ],
 })
 export class PaymentDetailComponent implements OnInit {
+  private readonly transaction = inject(TransactionService);
+  dialogRef =
+    inject<DynamicDialogRef<PaymentDetailComponent>>(DynamicDialogRef);
+  dialogConfig =
+    inject<DynamicDialogConfig<PaymentDetailComponent>>(DynamicDialogConfig);
+  protected tracking = inject(TrackingService);
+  private readonly store = inject(Store);
+
   items: any[] = [];
   loading = false;
   isEditingRow = false;
@@ -63,13 +70,7 @@ export class PaymentDetailComponent implements OnInit {
   protected readonly debtMaxAmount = debtMaxAmount;
   datePipe = inject(DatePipe);
 
-  constructor(
-    private readonly transaction: TransactionService,
-    public dialogRef: DynamicDialogRef<PaymentDetailComponent>,
-    public dialogConfig: DynamicDialogConfig<PaymentDetailComponent>,
-    protected tracking: TrackingService,
-    private readonly store: Store,
-  ) {
+  constructor() {
     ({
       debtId: this.debtId,
       customer: this.customer,

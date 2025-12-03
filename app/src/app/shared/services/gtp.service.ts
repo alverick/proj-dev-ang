@@ -16,12 +16,12 @@ import { type StatesGtp } from '../models/states-gtp';
 
 @Injectable()
 export class GtpService {
+  private readonly http = inject(HttpClient);
+
   private lastFilter: GtpFilter = null;
   private readonly URI_API: string = environment.END_POINT;
   public pageMessage = 'Mostrando 0 de 0 elementos';
   datePipe = inject(DatePipe);
-
-  constructor(private readonly http: HttpClient) {}
   /// para los servicios que estan en eprobacin
   public services: DataServiceGTP[] = [];
   public Service: DataServiceGTP;

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router, type UrlTree } from '@angular/router';
 import { type Observable } from 'rxjs';
 
@@ -6,7 +6,7 @@ import { appFullRoutingNames } from '../../app-routing.names';
 
 @Injectable()
 export class GtpOutputGuard {
-  constructor(private readonly router: Router) {}
+  private readonly router = inject(Router);
 
   canActivate():
     | Observable<boolean | UrlTree>

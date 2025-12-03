@@ -2,7 +2,6 @@ import {
   Directive,
   ElementRef,
   inject,
-  Input,
   input,
   OnDestroy,
   OnInit,
@@ -22,7 +21,7 @@ export class SingleClickDirective implements OnInit, OnDestroy {
 
   throttleMillis = input<number>(5000);
   singleClick = output();
-  @Input() csSingleClick!: number;
+  readonly csSingleClick = input.required<number>();
 
   ngOnInit() {
     this.subscription = fromEvent<MouseEvent>(

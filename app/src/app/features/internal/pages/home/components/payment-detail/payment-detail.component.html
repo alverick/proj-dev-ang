@@ -91,7 +91,7 @@
                   }
                   @if (itm.editing) {
                     <div class="tw-relative">
-                      <p-calendar
+                      <p-date-picker
                         class="tw-w-full"
                         styleClass="tw-w-full"
                         [iconDisplay]="'input'"
@@ -102,7 +102,7 @@
                         [maxDate]="maxDate"
                         appendTo="body"
                         dateFormat="dd/mm/yy"
-                      ></p-calendar>
+                      ></p-date-picker>
                       @if (itm.errores.date) {
                         <div
                           class="tw-absolute tw-left-0 tw-top-full tw-mt-1 tw-w-full tw-text-left tw-text-xxs tw-text-error"
@@ -119,13 +119,13 @@
                   }
                   @if (itm.editing) {
                     <div>
-                      <p-dropdown
+                      <p-select
                         [options]="channelOptions"
                         class="tw-w-full"
                         styleClass="tw-w-full"
                         [(ngModel)]="itm.newChannel"
                         appendTo="body"
-                      ></p-dropdown>
+                      ></p-select>
                     </div>
                   }
                 </td>

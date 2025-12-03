@@ -1,4 +1,4 @@
-import { Directive, HostListener, Input, Optional, Self } from '@angular/core';
+import { Directive, HostListener, inject, input } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 @Directive({
@@ -6,8 +6,12 @@ import { NgControl } from '@angular/forms';
   standalone: true,
 })
 export class InputWithoutSpacesDirective {
-  @Input() csFilter = /[^\dA-Za-z ]*/g;
-  constructor(@Self() @Optional() private readonly ngControl: NgControl) {}
+  private readonly ngControl = inject(NgControl, {
+    self: true,
+    optional: true,
+  });
+
+  readonly csFilter = input(/[^\dA-Za-z ]*/g);
 
   @HostListener('input', ['$event'])
   onInputChange(event: Event) {
@@ -59,8 +63,6 @@ export class InputWithoutSpacesDirective {
   }
 
   private sanitize(value: string): string {
-    return value
-      .replace(/\s{2,}/g, ' ') // Replace multiple spaces with a single space
-      .replace(this.csFilter, ''); // Remove disallowed characters
+    return value.replace(/\s{2,}/g, ' ').replace(this.csFilter(), '');
   }
 }

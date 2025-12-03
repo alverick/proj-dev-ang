@@ -1,6 +1,5 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NotEmptyPipe } from '../../../../shared/pipes/not-empty.pipe';
 import { DashboardCardComponent } from './dashboard-card.component';
 
 describe('DashboardCardComponent', () => {
@@ -9,8 +8,7 @@ describe('DashboardCardComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [DashboardCardComponent],
-      imports: [NotEmptyPipe],
+      imports: [DashboardCardComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardCardComponent);

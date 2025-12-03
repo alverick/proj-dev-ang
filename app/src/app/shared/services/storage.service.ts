@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 
 import { companyDocumentStorageName } from '../constants/company';
@@ -7,10 +7,12 @@ import { type User } from '../models/user.model';
 
 @Injectable()
 export class StorageService {
+  private readonly cookieStorage = inject(CookieService);
+
   private readonly sessionStorageService: Storage;
   private currentSession: Session = null;
 
-  constructor(private readonly cookieStorage: CookieService) {
+  constructor() {
     this.sessionStorageService = window.sessionStorage;
     this.currentSession = this.loadSessionData();
   }

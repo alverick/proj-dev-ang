@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ServiceStepInfoComponent } from '../../../../shared/components/service-step-info/service-step-info.component';
@@ -22,14 +22,14 @@ import {
   imports: [ServiceStepInfoComponent],
 })
 export class ServiceInfoPage {
+  private readonly router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
+  serviceForms = inject(ServicesFormsService);
+  protected tracking = inject(TrackingService);
+
   accounts: CompanyAccounts[];
   errors = errorServiceInformation;
-  constructor(
-    private readonly router: Router,
-    public activatedRoute: ActivatedRoute,
-    public serviceForms: ServicesFormsService,
-    protected tracking: TrackingService,
-  ) {
+  constructor() {
     this.activatedRoute.data.subscribe((value) => {
       this.accounts = value.accounts as CompanyAccounts[];
     });

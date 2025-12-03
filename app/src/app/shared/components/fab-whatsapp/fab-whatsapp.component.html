@@ -5,7 +5,11 @@
   rel="noopener noreferrer"
   (click)="clickWa()"
   class="tw-z-90 tw-duration-400 tw-fixed tw-flex tw-items-center tw-justify-center tw-gap-3 tw-rounded-full tw-border tw-border-extended-grey-2 tw-bg-white tw-text-black tw-no-underline tw-drop-shadow-lg tw-transition-all hover:tw-no-underline hover:tw-drop-shadow-xl"
-  [ngClass]="{ hide: !showButton, 'show-text': showText, 'tw-p-2': !expand }"
+  [ngClass]="{
+    hide: !showButton(),
+    'show-text': showText,
+    'tw-p-2': !expand(),
+  }"
 >
   <div
     class="text tw-hidden tw-w-28 tw-text-right tw-text-sm tw-leading-4 tw-no-underline"
@@ -14,7 +18,7 @@
   </div>
   <div
     class="tw-duration-400 tw-flex tw-items-center tw-justify-center tw-rounded-full tw-bg-primary-green-1 tw-transition-all"
-    [ngClass]="[expand ? 'tw-h-11 tw-w-11' : 'tw-h-9 tw-w-9']"
+    [ngClass]="[expand() ? 'tw-h-11 tw-w-11' : 'tw-h-9 tw-w-9']"
   >
     <i class="pi pi-whatsapp tw-text-2xl tw-text-white"></i>
   </div>

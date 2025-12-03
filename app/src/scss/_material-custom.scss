@@ -10,11 +10,10 @@
 }
 
 .btn-eureca-green {
-  @include font-text(14px !important, 500 !important);
   color: var(--ibk-white) !important;
   background-color: var(--primary-green-1) !important;
-  @include border-radius(4px !important);
   border: solid 1px var(--primary-green-1) !important;
+  @apply tw-text-sm tw-font-medium tw-rounded;
 
   &:hover {
     background-color: var(--primary-green-2) !important;
@@ -32,11 +31,10 @@
 }
 
 .btn-eureca-yellow {
-  @include font-text(14px !important, 500 !important);
   color: var(--ibk-black) !important;
   background-color: var(--extended-palette-yellow-3) !important;
-  @include border-radius(4px !important);
   border: solid 1px var(--extended-palette-yellow-3) !important;
+  @apply tw-text-sm tw-font-medium tw-rounded;
 
   &:hover {
     background-color: var(--extended-palette-yellow-4) !important;
@@ -54,11 +52,10 @@
 }
 
 .btn-outline-green {
-  @include font-text(16px !important, 500 !important);
-  @include border-radius(4px !important);
   background-color: var(--ibk-white) !important;
   border: solid 1px var(--ibk-white) !important;
   color: var(--primary-green-1) !important;
+  @apply tw-text-base tw-font-medium tw-rounded;
 
   &:hover {
     background-color: var(--grises-grey-4) !important;
@@ -78,11 +75,10 @@
 .btn-eureca-green-alert {
   height: 48px;
   width: 207px;
-  @include font-text(14px !important, normal !important);
   color: var(--ibk-white) !important;
   background-color: var(--primary-green-1) !important;
-  @include border-radius(4px !important);
   border: solid 1px var(--primary-green-1) !important;
+  @apply tw-text-sm tw-font-medium tw-rounded;
 
   &:hover {
     background-color: var(--primary-green-2) !important;
@@ -102,11 +98,10 @@
 .btn-outline-green-alert {
   height: 48px;
   width: 207px;
-  @include font-text(14px !important, normal !important);
-  @include border-radius(4px !important);
   background-color: var(--ibk-white) !important;
   border: solid 1px var(--ibk-white) !important;
   color: var(--primary-green-1) !important;
+  @apply tw-text-sm tw-font-medium tw-rounded;
 
   &:hover {
     background-color: var(--ibk-white) !important;

@@ -1,5 +1,5 @@
 <form
-  [formGroup]="registerForm"
+  [formGroup]="registerForm()"
   novalidate
   (submit)="onSubmit()"
   autocomplete="off"
@@ -14,19 +14,19 @@
         <cs-label-control
           class="tw-w-1/2 tw-shrink-0"
           formControlName="documentType"
-          [errorMessages]="errorMessages.documentType"
-          >Tipo de documento<p-dropdown
-            [options]="documentTypes"
+          [errorMessages]="errorMessages().documentType"
+          >Tipo de documento<p-select
+            [options]="documentTypes()"
             class="tw-w-full"
             styleClass="tw-w-full"
             formControlName="documentType"
             placeholder="Selecciona"
-          ></p-dropdown>
+          ></p-select>
         </cs-label-control>
         <cs-label-control
           class="tw-w-1/2 tw-shrink-0"
           formControlName="documentNumber"
-          [errorMessages]="errorMessages.documentNumber"
+          [errorMessages]="errorMessages().documentNumber"
           >Número de documento<input
             type="text"
             class="tw-w-full"
@@ -38,7 +38,7 @@
           />
           <val-errors validation-messages controlName="documentNumber">
             @for (
-              error of errorMessages.documentNumber | keyvalue;
+              error of errorMessages().documentNumber | keyvalue;
               track error
             ) {
               <ng-template [valError]="error.key">{{
@@ -56,7 +56,7 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="ruc"
-          [errorMessages]="errorMessages.ruc"
+          [errorMessages]="errorMessages().ruc"
           >RUC de la empresa<input
             type="text"
             class="tw-w-full"
@@ -72,7 +72,7 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="email"
-          [errorMessages]="errorMessages.email"
+          [errorMessages]="errorMessages().email"
           >Correo electrónico<input
             type="text"
             class="tw-w-full"
@@ -89,7 +89,7 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="emailConfirm"
-          [errorMessages]="errorMessages.emailConfirm"
+          [errorMessages]="errorMessages().emailConfirm"
           >Confirmar correo electrónico<input
             type="text"
             class="tw-w-full"
@@ -106,19 +106,19 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="movilOperator"
-          [errorMessages]="errorMessages.movilOperator"
-          >Operador<p-dropdown
-            [options]="operators"
+          [errorMessages]="errorMessages().movilOperator"
+          >Operador<p-select
+            [options]="operators()"
             class="tw-w-full"
             styleClass="tw-w-full"
             formControlName="movilOperator"
             placeholder="Selecciona"
-          ></p-dropdown>
+          ></p-select>
         </cs-label-control>
         <cs-label-control
           class="tw-w-full"
           formControlName="movilNumber"
-          [errorMessages]="errorMessages.movilNumber"
+          [errorMessages]="errorMessages().movilNumber"
           >Celular<input
             type="text"
             class="tw-w-full"

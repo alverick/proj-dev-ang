@@ -1,5 +1,5 @@
 <form
-  [formGroup]="form"
+  [formGroup]="form()"
   novalidate
   (submit)="onSubmit()"
   autocomplete="off"
@@ -11,7 +11,7 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="name"
-          [errorMessages]="errorMessages?.name"
+          [errorMessages]="errorMessages()?.name"
           >Nombre del servicio<input
             type="text"
             class="tw-w-full"
@@ -25,13 +25,13 @@
         </cs-label-control>
       </div>
     </div>
-    @if (formData?.newNameGTPStatus === 3) {
+    @if (formData()?.newNameGTPStatus === 3) {
       <p-message
         class="tw-mb-2 tw-block tw-text-sm"
         severity="warn"
         [text]="
           'El nombre <strong>' +
-          formData.newName +
+          formData().newName +
           '</strong> ha sido rechazado, elija' +
           ' un nuevo nombre'
         "
@@ -43,14 +43,14 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="debtorCode"
-          [errorMessages]="errorMessages.debtorCode"
-          >¿Con qué código identificarás a tus clientes?<p-dropdown
-            [options]="debtorCodeOptions"
+          [errorMessages]="errorMessages().debtorCode"
+          >¿Con qué código identificarás a tus clientes?<p-select
+            [options]="debtorCodeOptions()"
             class="tw-w-full"
             styleClass="tw-w-full"
             formControlName="debtorCode"
             placeholder="Selecciona"
-          ></p-dropdown>
+          ></p-select>
         </cs-label-control>
       </div>
     }
@@ -59,7 +59,7 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="debtorCodeCustom"
-          [errorMessages]="errorMessages.debtorCodeCustom"
+          [errorMessages]="errorMessages().debtorCodeCustom"
           >¿Con qué código identificarás a tus clientes?
           <div class="control p-inputgroup tw-w-full">
             <input
@@ -79,20 +79,20 @@
               class="p-button-text input-button tw-bg-extended-grey-1"
               (click)="showDropdown()"
               [disabled]="
-                formData.inReview && formData.newNameCodeGTPStatus !== 3
+                formData().inReview && formData().newNameCodeGTPStatus !== 3
               "
             ></button>
           </div>
         </cs-label-control>
       </div>
     }
-    @if (formData?.newNameCodeGTPStatus === 3) {
+    @if (formData()?.newNameCodeGTPStatus === 3) {
       <p-message
         class="tw-mb-2 tw-block tw-text-sm"
         severity="warn"
         [text]="
           'El código deudor <strong>' +
-          formData.newNameCode +
+          formData().newNameCode +
           '</strong> ha sido rechazado, elija' +
           ' un nuevo código deudor'
         "
@@ -102,13 +102,13 @@
     @if (showDebtFields) {
       <cs-service-debt-form
         [form]="debtForm"
-        [errorMessages]="errorMessages"
-        [paymentTypeOptions]="paymentTypeOptions"
-        [currencyOptions]="currencyOptions"
-        [chargeTypeOptions]="chargeTypeOptions"
-        [interestTypeOptions]="interestTypeOptions"
-        [interestOnlyInfo]="interestOnlyInfo"
-        [currency]="formData?.currencySymbol"
+        [errorMessages]="errorMessages()"
+        [paymentTypeOptions]="paymentTypeOptions()"
+        [currencyOptions]="currencyOptions()"
+        [chargeTypeOptions]="chargeTypeOptions()"
+        [interestTypeOptions]="interestTypeOptions()"
+        [interestOnlyInfo]="interestOnlyInfo()"
+        [currency]="formData()?.currencySymbol"
         [submitted]="submittedForm"
       ></cs-service-debt-form>
     }

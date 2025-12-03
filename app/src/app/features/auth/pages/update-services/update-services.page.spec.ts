@@ -1,5 +1,5 @@
 import { MockBuilder, MockRender } from 'ng-mocks';
-import { SidebarModule } from 'primeng/sidebar';
+import { DrawerModule } from 'primeng/drawer';
 import { StepsModule } from 'primeng/steps';
 
 import { ServicesListComponent } from '../../../../shared/components/services-list/services-list.component';
@@ -12,7 +12,7 @@ describe('UpdateServicesPage', () => {
       .mock(AffiliationService)
       .mock(ServicesListComponent)
       .mock(StepsModule)
-      .mock(SidebarModule),
+      .mock(DrawerModule),
   );
 
   it('should create', () => {

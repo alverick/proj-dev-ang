@@ -58,7 +58,7 @@ describe('TransactionService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [TransactionService,DatePipe],
+      providers: [TransactionService, DatePipe],
     });
     service = TestBed.inject(TransactionService);
     httpMock = TestBed.inject(HttpTestingController);

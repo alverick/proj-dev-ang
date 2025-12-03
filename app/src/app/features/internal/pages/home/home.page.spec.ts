@@ -10,9 +10,11 @@ import { Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { ShepherdService } from 'angular-shepherd';
+import { MockService } from 'ng-mocks';
 import { type LazyLoadEvent } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { of, Subject } from 'rxjs';
+import { Step } from 'shepherd.js';
 
 import { processStatus } from '../../../../shared/constants/process';
 import { initialState } from '../../../../shared/mocks/store';
@@ -21,7 +23,6 @@ import { type CompanyServices } from '../../../../shared/models/company';
 import { type DateList } from '../../../../shared/models/dateList';
 import { type Debts } from '../../../../shared/models/debts';
 import { type User } from '../../../../shared/models/user.model';
-import { type WayPay } from '../../../../shared/models/way-pay';
 import {
   SettingsStorageService,
   TrackingService,
@@ -51,6 +52,20 @@ jest.mock('exceljs', () => ({
   })),
 }));
 
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
+
 describe('HomePage', () => {
   let component: HomePage;
   let fixture: ComponentFixture<HomePage>;
@@ -59,18 +74,11 @@ describe('HomePage', () => {
   let shepherdService: ShepherdService;
   let dynamicDialogService: DynamicDialogService;
   let homeService: HomeService;
-  let transactionService: TransactionService;
-  let excelService: ExcelService;
   let loginService: LoginService;
   let fileLoad: LoadFileService;
-  let barLoad: LoadBarService;
-  let movementsService: MovementsService;
   let settings: SettingsStorageService;
-  let tracking: TrackingService;
   let storageService: StorageService;
   let ngZone: NgZone;
-
-  let storeMock: any;
 
   const mockUser: User = {
     ruc: '2000000000938',
@@ -144,48 +152,7 @@ describe('HomePage', () => {
       status: '',
     },
   ];
-  const mockWayPay: WayPay[] = [{ idWayPay: '1', descripcion: 'Way Pay 1' }];
   const mockDateList: DateList[] = [{ idDate: '1', descripcion: 'Date 1' }];
-  const mockDebts: Debts[] = [
-    {
-      id: 1,
-      amount: 100,
-      currency: 'S/',
-      firstName: 'Test',
-      status: 'PENDING',
-      serviceType: 'Service1',
-      code: 'C1',
-      emissionDate: '',
-      lastName: '',
-      service: '',
-      concept: '',
-      payDate: undefined,
-      channel: '',
-      hasIBKPayments: false,
-      editPending: false,
-      editInput: false,
-      editButton: false,
-    },
-    {
-      id: 2,
-      amount: 200,
-      currency: 'S/',
-      firstName: 'Test 2',
-      status: 'PENDING',
-      serviceType: 'Service2',
-      code: 'C2',
-      emissionDate: '',
-      lastName: '',
-      service: '',
-      concept: '',
-      payDate: undefined,
-      channel: '',
-      hasIBKPayments: false,
-      editPending: false,
-      editInput: false,
-      editButton: false,
-    },
-  ];
 
   beforeEach(async () => {
     const mockShepherdService = {
@@ -208,7 +175,7 @@ describe('HomePage', () => {
     const mockHomeService = {
       getServices: jest.fn().mockReturnValue(of([mockService])),
       getServicesActive: jest.fn().mockReturnValue(of(mockCompanyServices)),
-      getWayPay: jest.fn().mockReturnValue(of(mockWayPay)),
+      getWayPay: jest.fn().mockReturnValue(of([])),
       getDate: jest.fn().mockReturnValue(of(mockDateList)),
     };
     const mockTransactionService = {
@@ -268,8 +235,6 @@ describe('HomePage', () => {
       getSettingAndSave: jest.fn().mockReturnValue(false),
     };
 
-    storeMock = { dispatch: jest.fn() };
-
     await TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]), HomePage, HttpClientModule],
       providers: [
@@ -302,14 +267,9 @@ describe('HomePage', () => {
     shepherdService = TestBed.inject(ShepherdService);
     dynamicDialogService = TestBed.inject(DynamicDialogService);
     homeService = TestBed.inject(HomeService);
-    transactionService = TestBed.inject(TransactionService);
     storageService = TestBed.inject(StorageService);
-    tracking = TestBed.inject(TrackingService);
-    excelService = TestBed.inject(ExcelService);
     loginService = TestBed.inject(LoginService);
     fileLoad = TestBed.inject(LoadFileService);
-    barLoad = TestBed.inject(LoadBarService);
-    movementsService = TestBed.inject(MovementsService);
     settings = TestBed.inject(SettingsStorageService);
     ngZone = TestBed.inject(NgZone);
 
@@ -474,39 +434,13 @@ describe('HomePage', () => {
   });
 
   it('should call getStepPositionTitle', () => {
-    const mockStep = {
-      id: 'intro',
-      cancel: jest.fn(),
-      complete: jest.fn(),
-      destroy: jest.fn(),
-      getElement: jest.fn(),
-      getTour: jest.fn(),
-      hide: jest.fn(),
-      isOpen: jest.fn(),
-      show: jest.fn(),
-      updateStepOptions: jest.fn(),
-      on: jest.fn(),
-      once: jest.fn(),
-      off: jest.fn(),
-      trigger: jest.fn(),
-      getTarget: jest.fn(),
-      options: {},
-    };
-    (shepherdService.tourObject.getById as any).mockReturnValue({
+    const mockStep1: Step = MockService(Step, { id: '1' });
+    const mockStep2: Step = MockService(Step, { id: '2' });
+
+    (shepherdService.tourObject.getById as jest.Mock).mockReturnValue({
       id: 'intro',
     });
-
-    (shepherdService.tourObject.getCurrentStep as any).mockReturnValue({
-      id: '2',
-    });
-
-    shepherdService.tourObject.steps = [
-      {
-        ...mockStep,
-        id: '1',
-      },
-      { ...mockStep, id: '2' },
-    ];
+    shepherdService.tourObject.steps = [mockStep1, mockStep2];
 
     jest.spyOn(component as any, 'getOnboardingPosition').mockReturnValue(1);
     const result = component.getStepPositionTitle();
@@ -561,7 +495,7 @@ describe('HomePage', () => {
   });
 
   it('should handle row selection', () => {
-    const mockDebt = {
+    const mockDebt: Debts = {
       id: 1,
       amount: 100,
       currency: 'S/',

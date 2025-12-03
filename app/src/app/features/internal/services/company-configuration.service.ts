@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forEachObjIndexed, pick } from 'ramda';
@@ -32,17 +32,17 @@ import { internalFullRoutingNames } from '../internal-routing.names';
 
 @Injectable()
 export class CompanyConfigurationService {
+  private readonly fb = inject(FormBuilder);
+  private readonly companyService = inject(CompanyService);
+  private readonly router = inject(Router);
+  protected loginService = inject(LoginService);
+  protected tracking = inject(TrackingService);
+
   companyData: IDataEnterpriseModel;
   companyForm: SimpleModelFormGroup<CompanyForm>;
   passwordForm: ModelFormGroup<CompanyChangePasswordForm>;
 
-  constructor(
-    private readonly fb: FormBuilder,
-    private readonly companyService: CompanyService,
-    private readonly router: Router,
-    protected loginService: LoginService,
-    protected tracking: TrackingService,
-  ) {
+  constructor() {
     this.initForms();
   }
 

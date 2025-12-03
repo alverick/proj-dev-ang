@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { clone } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
@@ -74,6 +74,9 @@ export type EventTrackType = {
   providedIn: 'root',
 })
 export class TrackingService {
+  private readonly storageService = inject(StorageService);
+  private readonly router = inject(Router);
+
   payload: Partial<TrackEventProperties> = {
     general: {
       version: 'CSX',
@@ -90,10 +93,7 @@ export class TrackingService {
   pageSubject$ = new ReplaySubject<Partial<TrackEventProperties>>(10);
   eventSubject$ = new ReplaySubject<EventTrackType>(10);
 
-  constructor(
-    private readonly storageService: StorageService,
-    private readonly router: Router,
-  ) {
+  constructor() {
     const session = this.storageService.getCurrentSession();
     if (session?.isAuthenticate) {
       this.setRuc(window.sessionStorage.getItem('username'));

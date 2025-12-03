@@ -15,12 +15,12 @@
       {{ name }}
     </div>
     <div class="tw-flex tw-flex-shrink-0 tw-gap-2">
-      @if (canEdit) {
+      @if (canEdit()) {
         <button (click)="actionEdit()" class="tw-cursor-pointer">
           <img alt="Editar" src="assets/images/card-icon-edit.svg" />
         </button>
       }
-      @if (!reviewMode) {
+      @if (!reviewMode()) {
         <button (click)="actionDelete()" class="tw-cursor-pointer">
           <img alt="Eliminar" src="assets/images/card-icon-delete.svg" />
         </button>
@@ -42,7 +42,7 @@
   }
   <div class="tw-grid tw-grid-cols-2 tw-gap-2">
     <div class="tw-text-extended-grey-2">Código de servicio:</div>
-    <div class="val">{{ serviceData?.res | notEmpty: '-' }}</div>
+    <div class="val">{{ serviceData()?.res | notEmpty: '-' }}</div>
     <div class="tw-text-extended-grey-2">Canales de pago:</div>
     <div class="val">{{ paymentChannels }}</div>
     <div class="tw-text-extended-grey-2">Código de cliente:</div>
@@ -52,6 +52,6 @@
     <div class="tw-text-extended-grey-2">Modalidad:</div>
     <div class="val">{{ dataType }}</div>
     <div class="tw-text-extended-grey-2">Nº Cta. depósito:</div>
-    <div class="val">{{ serviceData?.accountNumber }}</div>
+    <div class="val">{{ serviceData()?.accountNumber }}</div>
   </div>
 </div>

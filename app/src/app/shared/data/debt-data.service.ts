@@ -1,5 +1,5 @@
 import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { type Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -8,7 +8,7 @@ import { type Debts, type DebtsPagedList } from '../models/debts';
 
 @Injectable()
 export class DebtDataService {
-  constructor(private readonly http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   deleteAll(ids): Observable<any> {
     const url = `${environment.END_POINT}/debt/deleteAll`;

@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 
 import { EnterpriseHeadingService } from '../services';
 
 @Injectable()
 export class CompanyEntriesResolver {
-  constructor(private readonly enterpriseHeading: EnterpriseHeadingService) {}
+  private readonly enterpriseHeading = inject(EnterpriseHeadingService);
 
   resolve() {
     return this.enterpriseHeading

@@ -5,7 +5,7 @@ import {
   type HttpInterceptor,
   type HttpRequest,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { type Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -18,11 +18,9 @@ import { swalAlert } from '../utils/helpers/popups';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
-  constructor(
-    private readonly router: Router,
-    private readonly login: LoginService,
-    private readonly storage: StorageService,
-  ) {}
+  private readonly router = inject(Router);
+  private readonly login = inject(LoginService);
+  private readonly storage = inject(StorageService);
 
   intercept(
     req: HttpRequest<any>,

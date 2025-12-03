@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 
@@ -7,10 +7,9 @@ import { AffiliationService } from '../services';
 
 @Injectable()
 export class AffiliationCompanyIdGuard {
-  constructor(
-    private readonly affiliation: AffiliationService,
-    private readonly router: Router,
-  ) {}
+  private readonly affiliation = inject(AffiliationService);
+  private readonly router = inject(Router);
+
   canActivateChild() {
     if (!isNotNilOrEmpty(this.affiliation.companyId)) {
       void this.router.navigate([authFullRoutingNames.COMPANY_REGISTER]);

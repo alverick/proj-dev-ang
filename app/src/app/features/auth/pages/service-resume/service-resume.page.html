@@ -18,7 +18,7 @@
     ></cs-service-card>
   }
 </cs-services-list>
-<p-sidebar
+<p-drawer
   [(visible)]="showSidebar"
   [dismissible]="false"
   [closeOnEscape]="false"
@@ -39,4 +39,4 @@
     [formData]="formData"
     (sendForm)="updateService()"
   ></cs-service-edit-form>
-</p-sidebar>
+</p-drawer>

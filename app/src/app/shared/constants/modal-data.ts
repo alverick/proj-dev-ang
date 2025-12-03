@@ -8,6 +8,7 @@ export const modalTermsConfig: DynamicDialogConfig = {
   header: headerModalTerms,
   styleClass: 'modal-custom-cs',
   maximizable: true,
+  closable: true,
 };
 
 export const affiliationModalTitleError = 'Regístrame';

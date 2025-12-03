@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { pathOr } from 'ramda';
 
@@ -11,17 +11,16 @@ import { ExcelService } from '../../../../../shared/services/excel.service';
   selector: 'cs-agrega-cobro',
   templateUrl: './agrega-cobro.component.html',
   styleUrls: ['./agrega-cobro.component.scss'],
-  standalone: true,
   imports: [MessageAlertComponent, CurrencyPipe],
 })
 export class AgregaCobroComponent {
+  excelService = inject(ExcelService);
+  dialogRef = inject<DynamicDialogRef<AgregaCobroComponent>>(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
+
   limitAmountMax: number = null;
   useAmountLimits = false;
-  constructor(
-    public excelService: ExcelService,
-    public dialogRef: DynamicDialogRef<AgregaCobroComponent>,
-    public config: DynamicDialogConfig,
-  ) {
+  constructor() {
     this.initializeComponent();
   }
 

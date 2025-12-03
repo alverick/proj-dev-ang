@@ -31,8 +31,8 @@
       ></textarea>
     </cs-label-control>
     @if (
-      enterprise.newNameGTPStatus === statusCodes.NEW ||
-      enterprise.newNameGTPStatus === statusCodes.EDITED
+      enterprise().newNameGTPStatus === statusCodes.NEW ||
+      enterprise().newNameGTPStatus === statusCodes.EDITED
     ) {
       <div class="form-group tw-w-40 tw-shrink-0 tw-pr-2">
         <div class="form-elm tw-flex tw-items-center tw-gap-4 tw-pt-10">
@@ -64,8 +64,8 @@
         @if (
           formGroup.get('NewNameApproved').invalid &&
           formGroup.get('NewNameApproved').hasError('required') &&
-          (enterprise.newNameGTPStatus === statusCodes.NEW ||
-            enterprise.newNameGTPStatus === statusCodes.EDITED)
+          (enterprise().newNameGTPStatus === statusCodes.NEW ||
+            enterprise().newNameGTPStatus === statusCodes.EDITED)
         ) {
           <div class="tw-whitespace-nowrap tw-text-xxs tw-text-error">
             Debe seleccionar una opción
@@ -122,9 +122,9 @@
     </cs-label-control>
   </div>
   @if (
-    enterprise.newNameGTPStatus === statusCodes.NEW ||
-    enterprise.newNameGTPStatus === statusCodes.APPROVED ||
-    enterprise.newNameGTPStatus === statusCodes.EDITED
+    enterprise().newNameGTPStatus === statusCodes.NEW ||
+    enterprise().newNameGTPStatus === statusCodes.APPROVED ||
+    enterprise().newNameGTPStatus === statusCodes.EDITED
   ) {
     <div class="tw-mt-4 tw-pb-4 tw-text-center">
       <button

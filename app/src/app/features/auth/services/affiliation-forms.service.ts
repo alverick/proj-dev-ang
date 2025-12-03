@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { type IEntryModel } from '../../../shared/models';
@@ -45,10 +45,12 @@ export type AuthForm = {
 
 @Injectable()
 export class AffiliationFormsService {
+  private readonly formBuilder = inject(FormBuilder);
+
   registerForm: ModelFormGroup<RegisterForm>;
   authForm: SimpleModelFormGroup<AuthForm>;
 
-  constructor(private readonly formBuilder: FormBuilder) {
+  constructor() {
     this.registerForm = this.formBuilder.group(
       {
         documentType: ['', [Validators.required]],
