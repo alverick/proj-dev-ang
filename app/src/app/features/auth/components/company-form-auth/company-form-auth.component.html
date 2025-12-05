@@ -12,7 +12,8 @@
     <div class="form-controls tw-max-w-xl">
       <div class="form-elm">
         <cs-label-control class="tw-w-full" formControlName="ruc"
-          >RUC de la empresa<input
+          ><ng-container label>RUC de la empresa</ng-container
+          ><input
             type="text"
             class="tw-w-full"
             pInputText
@@ -28,7 +29,7 @@
           class="tw-w-full"
           formControlName="name"
           [errorMessages]="errorMessages()?.name"
-          >Nombre de tu empresa
+          ><ng-container label>Nombre de tu empresa</ng-container>
           @if (nameOptions()?.length < 2) {
             <input
               type="text"
@@ -44,6 +45,7 @@
           }
           @if (nameOptions()?.length >= 2) {
             <p-select
+              control
               [options]="nameOptions()"
               optionLabel="label"
               optionValue="value"
@@ -76,8 +78,9 @@
           class="tw-w-full"
           formControlName="entrySelect"
           [errorMessages]="errorMessages()?.entrySelect"
-          >Rubro de tu empresa
-          <p-select
+          ><ng-container label>Rubro de tu empresa </ng-container
+          ><p-select
+            control
             [options]="categories()"
             optionLabel="name"
             class="tw-w-full"
@@ -93,8 +96,8 @@
             class="tw-w-full"
             formControlName="password"
             [errorMessages]="errorMessages()?.password"
-            >Crea tu contraseña
-            <p-password
+            ><ng-container label>Crea tu contraseña </ng-container
+            ><p-password
               class="tw-w-full"
               styleClass="tw-w-full"
               inputStyleClass="tw-w-full"
@@ -120,8 +123,8 @@
             class="tw-w-full"
             formControlName="passwordConfirm"
             [errorMessages]="errorMessages()?.passwordConfirm"
-            >Confirma tu contraseña
-            <p-password
+            ><ng-container label>Confirma tu contraseña </ng-container
+            ><p-password
               class="tw-w-full"
               styleClass="tw-w-full"
               inputStyleClass="tw-w-full"
@@ -139,8 +142,8 @@
             class="tw-w-full"
             formControlName="acceptTerms"
             [errorMessages]="errorMessages()?.acceptTerms"
-          >
-            <p-checkbox
+            ><ng-container label> </ng-container
+            ><p-checkbox
               class="tw-mr-1"
               [binary]="true"
               formControlName="acceptTerms"

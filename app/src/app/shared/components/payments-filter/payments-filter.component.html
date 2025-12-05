@@ -5,8 +5,9 @@
   (ngSubmit)="sendFilters()"
 >
   <div class="form-elm">
-    <cs-label-control class="tw-w-full" formControlName="inputSearch">
-      <p-icon-field class="tw-w-full" control>
+    <cs-label-control class="tw-w-full" formControlName="inputSearch"
+      ><ng-container label> </ng-container
+      ><p-icon-field class="tw-w-full" control>
         <p-inputicon class="pi pi-search" />
         <input
           [ngClass]="{ 'lg:tw-w-72': !gtpMode(), 'lg:tw-w-80': gtpMode() }"
@@ -23,8 +24,9 @@
     </cs-label-control>
   </div>
   <div class="form-elm">
-    <cs-label-control class="tw-w-full" formControlName="service">
-      <p-select
+    <cs-label-control class="tw-w-full" formControlName="service"
+      ><ng-container label> </ng-container
+      ><p-select
         control
         formControlName="service"
         [options]="services()"
@@ -45,8 +47,9 @@
     </cs-label-control>
   </div>
   <div class="form-elm">
-    <cs-label-control formControlName="status">
-      <p-select
+    <cs-label-control formControlName="status"
+      ><ng-container label> </ng-container
+      ><p-select
         control
         formControlName="status"
         [options]="stateList()"
@@ -62,8 +65,9 @@
   </div>
   @if (stateTypeList()) {
     <div class="form-elm">
-      <cs-label-control formControlName="statusSolicitud">
-        <p-select
+      <cs-label-control formControlName="statusSolicitud"
+        ><ng-container label> </ng-container
+        ><p-select
           control
           formControlName="statusSolicitud"
           [options]="stateTypeList()"
@@ -87,8 +91,9 @@
   ></div>
   @if (dateList()) {
     <div class="form-elm">
-      <cs-label-control formControlName="dateForFilter">
-        <p-select
+      <cs-label-control formControlName="dateForFilter"
+        ><ng-container label> </ng-container
+        ><p-select
           control
           formControlName="dateForFilter"
           [options]="dateList()"
@@ -110,8 +115,8 @@
       class="tw-w-full"
       formControlName="dateFrom"
       [errorMessages]="errorMessageDates"
-    >
-      <p-date-picker
+      ><ng-container label> </ng-container
+      ><p-date-picker
         control
         formControlName="dateFrom"
         class="tw-w-full lg:tw-w-36"
@@ -130,8 +135,8 @@
       class="tw-w-full"
       formControlName="dateTo"
       [errorMessages]="errorMessageDates"
-    >
-      <p-date-picker
+      ><ng-container label> </ng-container
+      ><p-date-picker
         control
         formControlName="dateTo"
         class="tw-w-full lg:tw-w-36"
