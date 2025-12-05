@@ -12,7 +12,8 @@
           class="tw-w-full"
           formControlName="name"
           [errorMessages]="errorMessages()?.name"
-          >Nombre del servicio<input
+          ><ng-container label>Nombre del servicio</ng-container
+          ><input
             type="text"
             class="tw-w-full"
             pInputText
@@ -44,7 +45,10 @@
           class="tw-w-full"
           formControlName="debtorCode"
           [errorMessages]="errorMessages().debtorCode"
-          >¿Con qué código identificarás a tus clientes?<p-select
+          ><ng-container label
+            >¿Con qué código identificarás a tus clientes?</ng-container
+          ><p-select
+            control
             [options]="debtorCodeOptions()"
             class="tw-w-full"
             styleClass="tw-w-full"
@@ -60,7 +64,9 @@
           class="tw-w-full"
           formControlName="debtorCodeCustom"
           [errorMessages]="errorMessages().debtorCodeCustom"
-          >¿Con qué código identificarás a tus clientes?
+          ><ng-container label
+            >¿Con qué código identificarás a tus clientes?
+          </ng-container>
           <div class="control p-inputgroup tw-w-full">
             <input
               type="text"
@@ -121,8 +127,8 @@
           [onlyControl]="true"
           class="tw-w-full"
           formControlName="useAppWeb"
-        >
-          <p-checkbox
+          ><ng-container label> </ng-container
+          ><p-checkbox
             class="tw-mr-1"
             [binary]="true"
             formControlName="useAppWeb"
@@ -143,8 +149,8 @@
           [onlyControl]="true"
           class="tw-w-full"
           formControlName="useAgent"
-        >
-          <p-checkbox
+          ><ng-container label> </ng-container
+          ><p-checkbox
             class="tw-mr-1"
             [binary]="true"
             formControlName="useAgent"

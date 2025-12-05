@@ -16,8 +16,9 @@
             Selecciona la modalidad del servicio : <br />
             ¿Qué datos ingresarás para identificar a tus clientes?
           </div>
-          <cs-label-control [onlyControl]="true" class="tw-w-full">
-            <p-radioButton
+          <cs-label-control [onlyControl]="true" class="tw-w-full"
+            ><ng-container label> </ng-container
+            ><p-radioButton
               [value]="serviceTypes.withoutData"
               formControlName="dataType"
             ></p-radioButton>
@@ -28,8 +29,9 @@
               <div class="sub">No ingresaré ninguna información.</div>
             </ng-container>
           </cs-label-control>
-          <cs-label-control [onlyControl]="true" class="tw-w-full">
-            <p-radioButton
+          <cs-label-control [onlyControl]="true" class="tw-w-full"
+            ><ng-container label> </ng-container
+            ><p-radioButton
               [value]="serviceTypes.partial"
               formControlName="dataType"
             ></p-radioButton>
@@ -40,8 +42,9 @@
               <div class="sub">Código identificador y nombre</div>
             </ng-container>
           </cs-label-control>
-          <cs-label-control [onlyControl]="true" class="tw-w-full">
-            <p-radioButton
+          <cs-label-control [onlyControl]="true" class="tw-w-full"
+            ><ng-container label> </ng-container
+            ><p-radioButton
               [value]="serviceTypes.complete"
               formControlName="dataType"
             ></p-radioButton>
@@ -60,7 +63,10 @@
             class="tw-w-full"
             formControlName="debtorCode"
             [errorMessages]="errorMessages().debtorCode"
-            >¿Con qué código identificarás a tus clientes?<p-select
+            ><ng-container label
+              >¿Con qué código identificarás a tus clientes?</ng-container
+            ><p-select
+              control
               [options]="debtorCodeOptions()"
               class="tw-w-full"
               styleClass="tw-w-full"
@@ -76,7 +82,9 @@
             class="tw-w-full"
             formControlName="debtorCodeCustom"
             [errorMessages]="errorMessages().debtorCodeCustom"
-            >¿Con qué código identificarás a tus clientes?
+            ><ng-container label
+              >¿Con qué código identificarás a tus clientes?
+            </ng-container>
             <div class="control p-inputgroup tw-w-full">
               <input
                 type="text"

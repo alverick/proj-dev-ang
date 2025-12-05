@@ -36,7 +36,10 @@
             class="tw-w-full"
             formControlName="ruc"
             [errorMessages]="errorMessages.ruc"
-            ><i class="pi pi-user tw-text-primary-green-1"></i> RUC
+            ><ng-container label
+              ><i class="pi pi-user tw-text-primary-green-1"></i>
+              RUC</ng-container
+            >
             <input
               type="text"
               class="tw-w-full"
@@ -53,8 +56,10 @@
             class="tw-w-full"
             formControlName="email"
             [errorMessages]="errorMessages.email"
-            ><i class="pi pi-envelope tw-text-primary-green-1"></i> Ingresa tu
-            correo electrónico
+            ><ng-container label
+              ><i class="pi pi-envelope tw-text-primary-green-1"></i> Ingresa tu
+              correo electrónico</ng-container
+            >
             <input
               type="text"
               class="tw-w-full"

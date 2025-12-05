@@ -13,8 +13,10 @@
           class="tw-w-full"
           formControlName="ruc"
           [errorMessages]="errorMessages.ruc"
-          ><i class="pi pi-user tw-text-primary-green-1"></i>
-          RUC
+          ><ng-container label
+            ><i class="pi pi-user tw-text-primary-green-1"></i>
+            RUC</ng-container
+          >
           <p-inputgroup class="p-inputgroup" control>
             <input
               class="tw-w-full"
@@ -45,8 +47,10 @@
           class="tw-w-full"
           formControlName="psw"
           [errorMessages]="errorMessages.password"
-          ><i class="pi pi-lock tw-text-primary-green-1"></i>
-          Contraseña
+          ><ng-container label
+            ><i class="pi pi-lock tw-text-primary-green-1"></i>
+            Contraseña</ng-container
+          >
           <p-password
             class="tw-w-full"
             styleClass="tw-w-full"
