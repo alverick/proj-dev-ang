@@ -272,12 +272,12 @@
   }
 
   .p-button {
-    border-radius: 4px;
-    transition: background-color 0.2s,
-    color 0.2s,
-    border-color 0.2s,
-    box-shadow 0.2s,
-    color 0.2s;
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      border-color 0.2s,
+      box-shadow 0.2s,
+      color 0.2s;
     color: var(--ibk-white);
     background: var(--primary-green-1);
     border: 1px solid var(--primary-green-1);
@@ -823,13 +823,6 @@
       background: var(--primary-green-2);
       border: 1px solid var(--primary-green-2);
     }
-  }
-
-  .p-splitbutton-menubutton,
-  .p-splitbutton.p-button-rounded > .p-splitbutton-menubutton.p-button,
-  .p-splitbutton.p-button-outlined > .p-splitbutton-menubutton.p-button {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
   }
 
   .p-iconfield-left > .p-inputtext {
