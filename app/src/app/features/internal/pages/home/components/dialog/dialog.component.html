@@ -89,8 +89,8 @@
           cobros de tus clientes.
         </div>
         @if (!excelService.statusUpload && ready) {
-          <div class="text-center pt-1">
-            <p-fileUpload
+          <div class="pt-1 tw-w-full">
+            <p-fileupload
               #createUploader
               chooseLabel="Seleccionar archivo"
               [styleClass]="
@@ -123,7 +123,7 @@
                   </div>
                 </div>
               </ng-template>
-            </p-fileUpload>
+            </p-fileupload>
             <br />
           </div>
         }

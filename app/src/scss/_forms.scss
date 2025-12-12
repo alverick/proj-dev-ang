@@ -794,9 +794,13 @@
     }
 
     &.with-files {
-      .p-fileupload-buttonbar {
-        display: none;
+      .p-fileupload-header {
+        @apply tw-hidden;
       }
+    }
+
+    .p-fileupload-header {
+      @apply tw-w-full tw-justify-center;
     }
 
     .p-fileupload-choose {
@@ -806,8 +810,12 @@
     }
 
     .p-fileupload-content {
-      padding: 0 1rem;
       transition: all 0.3s;
+      padding: 0;
+      gap: 0;
+      .p-fileupload-file-list {
+        padding: 0 1rem;
+      }
     }
 
     &-choose:not(.p-disabled):hover {
