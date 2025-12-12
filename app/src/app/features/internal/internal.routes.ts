@@ -51,6 +51,7 @@ export const INTERNAL_ROUTES: Routes = [
       AfiliacionService,
       DynamicDialogService,
       SettingsStorageService,
+      HomeService,
     ],
     children: [
       {
@@ -58,7 +59,6 @@ export const INTERNAL_ROUTES: Routes = [
         component: HomePage,
         canActivate: [AuthGuard, GtpOutputGuard],
         providers: [
-          HomeService,
           LoadFileService,
           LoadBarService,
           MovementsService,
