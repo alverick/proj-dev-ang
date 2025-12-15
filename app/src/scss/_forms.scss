@@ -217,7 +217,7 @@
       }
 
       &.p-highlight {
-        .p-menuitem-link {
+        .p-menu-item-link {
           .p-steps-number {
             background-color: var(--primary-green-1);
             color: var(--ibk-white);
@@ -225,7 +225,7 @@
         }
       }
 
-      .p-menuitem-link {
+      .p-menu-item-link {
         flex-direction: row;
         padding: 0;
         border-radius: 50%;
@@ -248,7 +248,7 @@
       &.p-widget:disabled {
         opacity: 1;
 
-        .p-menuitem-link {
+        .p-menu-item-link {
           .p-steps-number {
             color: var(--primary-green-3);
             border: 1px solid var(--primary-green-3);
@@ -272,12 +272,12 @@
   }
 
   .p-button {
-    border-radius: 4px;
-    transition: background-color 0.2s,
-    color 0.2s,
-    border-color 0.2s,
-    box-shadow 0.2s,
-    color 0.2s;
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      border-color 0.2s,
+      box-shadow 0.2s,
+      color 0.2s;
     color: var(--ibk-white);
     background: var(--primary-green-1);
     border: 1px solid var(--primary-green-1);
@@ -547,10 +547,6 @@
           width: 100%;
           padding: 3px;
         }
-
-        .p-datepicker:not(.p-datepicker-inline) {
-          min-width: 310px;
-        }
       }
     }
   }
@@ -582,11 +578,11 @@
   }
 
   .p-tieredmenu {
-    .p-menuitem-link {
+    .p-menu-item-link {
       color: var(--primary-green-1);
       font-size: 14px;
 
-      .p-menuitem-text {
+      .p-menu-item-label {
         color: var(--primary-green-1);
       }
 
@@ -602,7 +598,7 @@
         &:hover {
           background: var(--primary-green-5);
 
-          .p-menuitem-text {
+          .p-menu-item-label {
             color: var(--grises-grey-1);
           }
 
@@ -624,10 +620,10 @@
     }
 
     .p-menuitem.p-menuitem-active {
-      > .p-menuitem-link {
+      > .p-menu-item-link {
         background: #eff6ff;
 
-        .p-menuitem-text {
+        .p-menu-item-label {
           color: var(--primary-green-2);
         }
 
@@ -798,9 +794,13 @@
     }
 
     &.with-files {
-      .p-fileupload-buttonbar {
-        display: none;
+      .p-fileupload-header {
+        @apply tw-hidden;
       }
+    }
+
+    .p-fileupload-header {
+      @apply tw-w-full tw-justify-center;
     }
 
     .p-fileupload-choose {
@@ -810,8 +810,12 @@
     }
 
     .p-fileupload-content {
-      padding: 0 1rem;
       transition: all 0.3s;
+      padding: 0;
+      gap: 0;
+      .p-fileupload-file-list {
+        padding: 0 1rem;
+      }
     }
 
     &-choose:not(.p-disabled):hover {
@@ -819,13 +823,6 @@
       background: var(--primary-green-2);
       border: 1px solid var(--primary-green-2);
     }
-  }
-
-  .p-splitbutton-menubutton,
-  .p-splitbutton.p-button-rounded > .p-splitbutton-menubutton.p-button,
-  .p-splitbutton.p-button-outlined > .p-splitbutton-menubutton.p-button {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
   }
 
   .p-iconfield-left > .p-inputtext {
@@ -857,5 +854,9 @@
       background-color: transparent;
       border-color: transparent;
     }
+  }
+
+  .p-menu .p-menu-item > .p-menu-item-content .p-menu-item-link .p-menu-item-label {
+    color: #4b5563;
   }
 }

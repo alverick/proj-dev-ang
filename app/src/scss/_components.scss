@@ -45,7 +45,7 @@
   }
 
   .menu-item-categories {
-    .p-menuitem-text {
+    .p-tieredmenu-item-label {
       @apply tw-flex tw-flex-col;
       .name {
         @apply tw-line-clamp-1 tw-break-all;

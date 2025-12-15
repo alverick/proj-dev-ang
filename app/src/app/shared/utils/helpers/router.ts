@@ -26,12 +26,14 @@ function _reduceTreeRecursive<T extends TreeNode, U>(
 
   if (hasChildren(node) && node.children) {
     currentAcc = node.children.reduce((accFromChildren, child) => {
-      const link = isNil(child.path) ? child.link : child.path;
-      const parent = isEmpty(node.link) ? '' : '/';
+      const childSegment = isNil(child.path) ? child.link : child.path;
+
+      const newLink = [node.link, childSegment].join('/');
+
       const processedChild = {
         ...child,
         key: child.link,
-        link: `${node.link}${parent}${link}`,
+        link: newLink.replace('//', '/'),
       };
       return _reduceTreeRecursive(
         reducerFn,
@@ -53,7 +55,14 @@ export const generateFullRoutes: any = (obj: any, path: string) => {
 };
 
 export const generateFullRoutesTree: any = (obj: any, tree: TreeNode) => {
-  const links: TreeNode[] = TreeObject.reduce(flattenToArrayReducer)([], tree);
+  const treeWithRootSlash = { ...tree };
+  if (treeWithRootSlash.link && !treeWithRootSlash.link.startsWith('/')) {
+    treeWithRootSlash.link = `/${treeWithRootSlash.link}`;
+  }
+  const links: TreeNode[] = TreeObject.reduce(flattenToArrayReducer)(
+    [],
+    treeWithRootSlash,
+  );
 
   const parseRoute = (val: string) => {
     const result = links.find((link) => link.key === val);
