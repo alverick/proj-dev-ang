@@ -272,7 +272,9 @@
             </div>
           }
           @if (f.tipoMora.value === 'P') {
-            <div class="data">Porcentaje: {{ f.monto.value }} %</div>
+            <div class="data">
+              Porcentaje: {{ f.porcentaje.value | number: '1.2-2' }} %
+            </div>
           }
         </div>
       }

@@ -1,4 +1,4 @@
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import {
   Component,
   inject,
@@ -46,6 +46,7 @@ import { type CompanyAccounts } from '../../../../shared/services/company.servic
     ButtonDirective,
     Ripple,
     CurrencyPipe,
+    DecimalPipe,
   ],
 })
 export class ServicesGTPComponent implements OnInit {
