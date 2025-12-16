@@ -74,6 +74,15 @@
         color: #64748b;
       }
     }
+
+    &.self-width {
+      .p-overlay {
+        .p-select-option{
+          white-space: normal;
+          padding: 0.429rem 0.857rem;
+        }
+      }
+    }
   }
 
   .p-multiselect {
@@ -853,7 +862,19 @@
     }
   }
 
-  .p-menu .p-menu-item > .p-menu-item-content .p-menu-item-link .p-menu-item-label {
+  .p-drawer {
+    .p-button.p-button-icon-only.p-button-text {
+      color: var(--ibk-black);
+      background-color: transparent;
+      border-color: transparent;
+    }
+  }
+
+  .p-menu
+    .p-menu-item
+    > .p-menu-item-content
+    .p-menu-item-link
+    .p-menu-item-label {
     color: #4b5563;
   }
 }
