@@ -166,7 +166,8 @@
 
   .p-inputtext {
     font-family: 'Geometria', 'Helvetica Neue', sans-serif;
-    padding: 0.429rem;
+    padding-top: 0.429rem;
+    padding-bottom: 0.429rem;
     font-size: 16px;
     color: var(--ibk-black);
 
@@ -823,10 +824,6 @@
       background: var(--primary-green-2);
       border: 1px solid var(--primary-green-2);
     }
-  }
-
-  .p-iconfield-left > .p-inputtext {
-    padding-left: 2.5rem;
   }
 
   .p-dialog {
