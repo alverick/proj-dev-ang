@@ -6,6 +6,7 @@ import {
 } from '../../app-routing.collection';
 import { LogoutGuard } from '../../shared/guards/logout.guard';
 import { CompanyEntriesResolver } from '../../shared/resolvers';
+import { RecuperaService } from '../../shared/services/recupera.service';
 import { AuthComponent } from './auth.component';
 import {
   authDynamicRoutingNames,
@@ -145,6 +146,7 @@ export const AUTH_ROUTES: Routes = [
   {
     path: authDynamicRoutingNames.CHANGE_PASSWORD,
     component: CambiaContrasenaComponent,
+    providers: [RecuperaService],
     canActivate: [LogoutGuard],
   },
   {
