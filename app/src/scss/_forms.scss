@@ -28,11 +28,6 @@
     .p-select-label {
       padding: 0.429rem;
       font-size: 16px;
-      color: var(--ibk-black);
-
-      &.p-placeholder {
-        color: var(--grises-grey-1);
-      }
     }
 
     .p-select-trigger {
@@ -72,6 +67,15 @@
 
       p-inputtext {
         color: #64748b;
+      }
+    }
+
+    &.self-width {
+      .p-overlay {
+        .p-select-option{
+          white-space: normal;
+          padding: 0.429rem 0.857rem;
+        }
       }
     }
   }
@@ -166,18 +170,12 @@
 
   .p-inputtext {
     font-family: 'Geometria', 'Helvetica Neue', sans-serif;
-    padding: 0.429rem;
+    padding-top: 0.429rem;
+    padding-bottom: 0.429rem;
     font-size: 16px;
-    color: var(--ibk-black);
 
     &.p-inputtext-sm {
       font-size: 14px;
-    }
-
-    &:disabled {
-      opacity: 1;
-      background-color: #e2e8f0;
-      color: #64748b;
     }
 
     &:enabled {
@@ -825,10 +823,6 @@
     }
   }
 
-  .p-iconfield-left > .p-inputtext {
-    padding-left: 2.5rem;
-  }
-
   .p-dialog {
     &.simple-dialog {
       .p-dialog-header {
@@ -856,7 +850,19 @@
     }
   }
 
-  .p-menu .p-menu-item > .p-menu-item-content .p-menu-item-link .p-menu-item-label {
+  .p-drawer {
+    .p-button.p-button-icon-only.p-button-text {
+      color: var(--ibk-black);
+      background-color: transparent;
+      border-color: transparent;
+    }
+  }
+
+  .p-menu
+    .p-menu-item
+    > .p-menu-item-content
+    .p-menu-item-link
+    .p-menu-item-label {
     color: #4b5563;
   }
 }

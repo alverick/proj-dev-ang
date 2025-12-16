@@ -1,65 +1,68 @@
-:root {
-  --primary-green-1: #05be50;
-  --primary-green-2: #37cb73;
-  --primary-green-3: #69d890;
-  --primary-green-4: #9be5b9;
-  --primary-green-5: #cdf2dc;
-  --primary-green-6: #ebfaf1;
-  --secondary-blue-1: #0039a6;
-  --secondary-blue-2: #3361b8;
-  --secondary-blue-3: #6688ca;
-  --secondary-blue-4: #99b0db;
-  --secondary-blue-5: #ccd7ed;
-  --grises-grey-1: #878c8f;
-  --grises-grey-2: #b7babc;
-  --grises-grey-3: #d9dadb;
-  --grises-grey-4: #eceded;
-  --grises-grey-5: #fbfbfb;
-  --ibk-black: #0f191e;
-  --ibk-white: #fff;
-  --extended-palette-beige-1: #f0f0dc;
-  --extended-palette-beige-2: #f3f3e3;
-  --extended-palette-beige-3: #f6f6ea;
-  --extended-palette-beige-4: #f9f9f1;
-  --extended-palette-beige-5: #fcfcf8;
-  --extended-palette-darkblue-1: #001e5f;
-  --extended-palette-darkblue-2: #334b7f;
-  --extended-palette-darkblue-3: #66789f;
-  --extended-palette-darkblue-4: #99a5bf;
-  --extended-palette-darkblue-5: #ccd2df;
-  --extended-palette-lightblue-1: #64b4e6;
-  --extended-palette-lightblue-2: #83c3eb;
-  --extended-palette-lightblue-3: #a2d2f0;
-  --extended-palette-lightblue-4: #c1e1f5;
-  --extended-palette-lightblue-5: #e0f0fa;
-  --extended-palette-lightblue-6: #f3f9fd;
-  --extended-palette-watermelon-1: #eb0046;
-  --extended-palette-watermelon-2: #ef336b;
-  --extended-palette-watermelon-3: #f36690;
-  --extended-palette-watermelon-4: #f799b5;
-  --extended-palette-watermelon-5: #fbccda;
-  --extended-palette-watermelon-6: #fdebf0;
-  --extended-palette-yellow-1: #ffcd00;
-  --extended-palette-yellow-2: #ffd733;
-  --extended-palette-yellow-3: #ffe166;
-  --extended-palette-yellow-4: #ffeb99;
-  --extended-palette-yellow-5: #fff5cc;
-  --extended-palette-yellow-6: #fffbeb;
-  --extended-palette-dark-yellow-1: #ffb406;
-  --extended-palette-dark-yellow-2: #ffefca;
-  --extended-bleached-silk: #f3f3f3;
-  --transition-duration: 0.5s;
-  --header-height: 72px;
-  --footer-height: 222px;
-  --font-family: 'Geometria', Arial, sans-serif;
+@layer general {
+  :root {
+    --primary-green-1: #05be50;
+    --primary-green-2: #37cb73;
+    --primary-green-3: #69d890;
+    --primary-green-4: #9be5b9;
+    --primary-green-5: #cdf2dc;
+    --primary-green-6: #ebfaf1;
+    --secondary-blue-1: #0039a6;
+    --secondary-blue-2: #3361b8;
+    --secondary-blue-3: #6688ca;
+    --secondary-blue-4: #99b0db;
+    --secondary-blue-5: #ccd7ed;
+    --grises-grey-1: #878c8f;
+    --grises-grey-2: #b7babc;
+    --grises-grey-3: #d9dadb;
+    --grises-grey-4: #eceded;
+    --grises-grey-5: #fbfbfb;
+    --ibk-black: #0f191e;
+    --ibk-white: #fff;
+    --extended-palette-beige-1: #f0f0dc;
+    --extended-palette-beige-2: #f3f3e3;
+    --extended-palette-beige-3: #f6f6ea;
+    --extended-palette-beige-4: #f9f9f1;
+    --extended-palette-beige-5: #fcfcf8;
+    --extended-palette-darkblue-1: #001e5f;
+    --extended-palette-darkblue-2: #334b7f;
+    --extended-palette-darkblue-3: #66789f;
+    --extended-palette-darkblue-4: #99a5bf;
+    --extended-palette-darkblue-5: #ccd2df;
+    --extended-palette-lightblue-1: #64b4e6;
+    --extended-palette-lightblue-2: #83c3eb;
+    --extended-palette-lightblue-3: #a2d2f0;
+    --extended-palette-lightblue-4: #c1e1f5;
+    --extended-palette-lightblue-5: #e0f0fa;
+    --extended-palette-lightblue-6: #f3f9fd;
+    --extended-palette-watermelon-1: #eb0046;
+    --extended-palette-watermelon-2: #ef336b;
+    --extended-palette-watermelon-3: #f36690;
+    --extended-palette-watermelon-4: #f799b5;
+    --extended-palette-watermelon-5: #fbccda;
+    --extended-palette-watermelon-6: #fdebf0;
+    --extended-palette-yellow-1: #ffcd00;
+    --extended-palette-yellow-2: #ffd733;
+    --extended-palette-yellow-3: #ffe166;
+    --extended-palette-yellow-4: #ffeb99;
+    --extended-palette-yellow-5: #fff5cc;
+    --extended-palette-yellow-6: #fffbeb;
+    --extended-palette-dark-yellow-1: #ffb406;
+    --extended-palette-dark-yellow-2: #ffefca;
+    --extended-bleached-silk: #f3f3f3;
+    --transition-duration: 0.5s;
+    --header-height: 72px;
+    --footer-height: 222px;
+    --font-family: 'Geometria', Arial, sans-serif;
+    --p-form-field-color: var(--ibk-black);
+  }
+
+  $separador: solid 1px var(--grises-grey-4);
+
+  $breakpoints: (
+    sm: 640px,
+    md: 768px,
+    lg: 1024px,
+    xl: 1280px,
+    '2xl': 1536px,
+  ) !default;
 }
-
-$separador: solid 1px var(--grises-grey-4);
-
-$breakpoints: (
-  sm: 640px,
-  md: 768px,
-  lg: 1024px,
-  xl: 1280px,
-  '2xl': 1536px,
-) !default;

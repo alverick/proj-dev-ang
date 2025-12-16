@@ -17,7 +17,7 @@
         ><p-date-picker
           control
           class="tw-w-full"
-          styleClass="tw-w-full"
+          inputStyleClass="tw-w-full"
           [iconDisplay]="'input'"
           [showIcon]="true"
           [minDate]="minDate"
@@ -36,7 +36,7 @@
           ><p-date-picker
             control
             class="tw-w-full"
-            styleClass="tw-w-full"
+            inputStyleClass="tw-w-full"
             [iconDisplay]="'input'"
             [showIcon]="true"
             [minDate]="minDate"
@@ -84,14 +84,7 @@
           class="tw-w-full"
           [errorMessages]="formErrors.firstName"
           ><ng-container label> Nombre </ng-container
-          ><p-icon-field control iconPosition="right" class="tw-w-full">
-            @if (debtorExistent()) {
-              <p-inputicon
-                (click)="resetName()"
-                (keydown)="resetName()"
-                class="pi pi-times tw-cursor-pointer"
-              />
-            }
+          ><p-icon-field control class="tw-w-full">
             <input
               type="text"
               class="tw-w-full"
@@ -102,6 +95,13 @@
               [maxLength]="80"
               formControlName="firstName"
             />
+            @if (debtorExistent()) {
+              <p-inputicon
+                (click)="resetName()"
+                (keydown)="resetName()"
+                class="pi pi-times tw-cursor-pointer"
+              />
+            }
           </p-icon-field>
         </cs-label-control>
       </div>
