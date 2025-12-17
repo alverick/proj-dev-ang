@@ -81,6 +81,12 @@
     color: var(--ibk-black);
   }
 
+  &:where(.swal2-container) div:where(.swal2-html-container) {
+    color: var(--ibk-black);
+    text-align: center;
+    @apply tw-text-base;
+  }
+
   .swal2-actions {
     display: grid;
   }
@@ -358,7 +364,7 @@ main.general:not(.animating) {
 }
 
 .overlay-app {
-  @apply tw-fixed tw-w-full tw-h-screen tw-bg-white tw-top-0 tw-transition-opacity tw-ease-in tw-duration-700;
+  @apply tw-fixed tw-top-0 tw-h-screen tw-w-full tw-bg-white tw-transition-opacity tw-duration-700 tw-ease-in;
   &.showed {
     @apply tw-pointer-events-none tw-opacity-0;
   }
