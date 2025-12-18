@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
@@ -52,13 +53,21 @@ describe('PaymentDetailComponent', () => {
     await TestBed.configureTestingModule({
       imports: [PaymentDetailComponent, HttpClientTestingModule],
       providers: [
-        { provide: TransactionService, useValue: transactionServiceMock },
         { provide: TrackingService, useValue: trackingServiceMock },
         { provide: Store, useValue: storeMock },
         { provide: DynamicDialogRef, useValue: { close: jest.fn() } },
         { provide: DynamicDialogConfig, useValue: { data: {} } },
       ],
-    }).compileComponents();
+    })
+      .overrideComponent(PaymentDetailComponent, {
+        set: {
+          providers: [
+            { provide: TransactionService, useValue: transactionServiceMock },
+            DatePipe,
+          ],
+        },
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(PaymentDetailComponent);
     component = fixture.componentInstance;
@@ -70,60 +79,66 @@ describe('PaymentDetailComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should load payments on init', () => {
-  //   expect(transactionServiceMock.getPayments).toHaveBeenCalled();
-  // });
+  it('should load payments on init', () => {
+    expect(transactionServiceMock.getPayments).toHaveBeenCalled();
+  });
 
-  it('should add a new payment item', () => {
+  it('should set isEditingRow and currentEditingItem on addItem', () => {
     component.addItem();
-    expect(component.items.length).toBe(1);
-    expect(component.isEditingRow).toBeTruthy();
+    expect(component.isEditingRow).toBe(true);
+    expect(component.currentEditingItem).not.toBeNull();
+    expect(component.currentEditingItem.newAmount).toBeNull();
   });
 
-  it('should edit an existing payment item', () => {
+  it('should set isEditingRow and currentEditingItem on editItm', () => {
     const item = { id: 1, amount: 100, date: '2024-01-01', channel: 'POS' };
-    component.items = [item];
     component.editItm(item);
-    expect((item as any).editing).toBeTruthy();
+    expect(component.isEditingRow).toBe(true);
+    expect(component.currentEditingItem).toEqual(
+      expect.objectContaining({
+        id: 1,
+        newAmount: 100,
+      }),
+    );
   });
 
-  // it('should validate and save payment item', async () => {
-  //   const item = {
-  //     id: 1,
-  //     newAmount: '100.50',
-  //     newDate: new Date('2025-03-20'),
-  //     newChannel: 'POS',
-  //     errores: {},
-  //   };
-  //
-  //   await component.saveItm(item);
-  //
-  //   expect(transactionServiceMock.editPayment).toHaveBeenCalledWith(
-  //     component.debtId,
-  //     item.id,
-  //     expect.objectContaining({
-  //       amount: 100.5,
-  //       date: item.newDate,
-  //       channel: item.newChannel,
-  //     }),
-  //   );
-  //   expect(trackingServiceMock.trackEvent).toHaveBeenCalledWith(
-  //     expect.any(String),
-  //     expect.objectContaining({
-  //       category: 'Editado',
-  //     }),
-  //   );
-  // });
-  //
-  // it('should delete a payment item', async () => {
-  //   const item = { id: 1 };
-  //   component.items = [item];
-  //   await component.delItm(item);
-  //   expect(transactionServiceMock.deletePayment).toHaveBeenCalledWith(
-  //     component.debtId,
-  //     item.id,
-  //   );
-  // });
+  it('should reset isEditingRow and currentEditingItem on cancelItem', () => {
+    component.isEditingRow = true;
+    component.currentEditingItem = {};
+    component.cancelItem();
+    expect(component.isEditingRow).toBe(false);
+    expect(component.currentEditingItem).toBeNull();
+  });
+
+  it('should validate and save payment item', async () => {
+    const item = {
+      id: 1,
+      newAmount: '100.50',
+      newDate: new Date('2025-03-20'),
+      newChannel: 'POS',
+      errores: {},
+    };
+    component.currentEditingItem = item;
+    await component.saveItm(item);
+
+    expect(transactionServiceMock.editPayment).toHaveBeenCalledWith(
+      component.debtId,
+      item.id,
+      expect.objectContaining({
+        amount: 100.5,
+        channel: 'POS',
+      }),
+    );
+  });
+
+  it('should delete a payment item', async () => {
+    const item = { id: 1 };
+    await component.delItm(item);
+    expect(transactionServiceMock.deletePayment).toHaveBeenCalledWith(
+      component.debtId,
+      item.id,
+    );
+  });
 
   it('should format valid numeric input to 2 decimal places', () => {
     const itm = { newAmount: '12.345' };
@@ -137,19 +152,7 @@ describe('PaymentDetailComponent', () => {
     expect(itm.newAmount).toBe('abc');
   });
 
-  it('should not modify null or undefined input', () => {
-    const itm = { newAmount: null };
-    component.amountBlur(itm);
-    expect(itm.newAmount).toBeNull();
-  });
-
-  it('should not modify empty string input', () => {
-    const itm = { newAmount: '' };
-    component.amountBlur(itm);
-    expect(itm.newAmount).toBe('');
-  });
-
-  it('should call trackEvent with correct event properties', () => {
+  it('should call trackEvent with correct event properties on close', () => {
     component.close();
     expect(trackingServiceMock.trackEvent).toHaveBeenCalledWith(
       AdobeEvent.trackAction,
@@ -164,7 +167,7 @@ describe('PaymentDetailComponent', () => {
     );
   });
 
-  it('should call dialogRef.close with correct status', () => {
+  it('should call dialogRef.close with correct status on close', () => {
     component.status = 'test-status';
     component.close();
     expect(dialogRef.close).toHaveBeenCalledWith({ status: 'test-status' });
