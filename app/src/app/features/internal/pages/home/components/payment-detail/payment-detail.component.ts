@@ -10,6 +10,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { Ripple } from 'primeng/ripple';
 import { Select } from 'primeng/select';
+import { TableModule } from 'primeng/table';
 import { forEachObjIndexed, isNil } from 'ramda';
 
 import { ServiceTypes } from '../../../../../../shared/constants/services';
@@ -43,7 +44,9 @@ import { companyFeature } from '../../../../../../store/reducers/company.reducer
     DatePipe,
     Select,
     DatePicker,
+    TableModule,
   ],
+  standalone: true,
 })
 export class PaymentDetailComponent implements OnInit {
   private readonly transaction = inject(TransactionService);
@@ -57,6 +60,7 @@ export class PaymentDetailComponent implements OnInit {
   items: any[] = [];
   loading = false;
   isEditingRow = false;
+  currentEditingItem: any | null = null;
   serviceType = '';
   customer = {};
   debtId: number;
@@ -86,6 +90,8 @@ export class PaymentDetailComponent implements OnInit {
   private loadData() {
     this.items = [];
     this.loading = true;
+    this.isEditingRow = false;
+    this.currentEditingItem = null;
     this.transaction.getPayments(this.debtId).subscribe((p) => {
       this.loading = false;
       this.items = p;
@@ -101,21 +107,18 @@ export class PaymentDetailComponent implements OnInit {
       typeElement: 'Botón',
       location: 'Movimientos - Detalle de pago',
     });
-    this.cancelItm(this.getItemEditing());
     this.isEditingRow = true;
-    itm.editing = true;
-    itm.newAmount = itm.amount;
-    itm.newDate = new Date(itm.date);
-    itm.newChannel = itm.channel;
-    itm.errores = {};
+    this.currentEditingItem = {
+      ...itm,
+      newAmount: itm.amount,
+      newDate: new Date(itm.date),
+      newChannel: itm.channel,
+      errores: {},
+    };
   }
 
   saveItem() {
-    this.saveItm(this.getItemEditing());
-  }
-
-  private getItemEditing() {
-    return this.items.find(({ editing }) => editing);
+    this.saveItm(this.currentEditingItem);
   }
 
   cancelItem() {
@@ -127,7 +130,8 @@ export class PaymentDetailComponent implements OnInit {
       typeElement: 'Botón',
       location: 'Movimientos - Detalle de pago',
     });
-    this.cancelItm(this.getItemEditing());
+    this.isEditingRow = false;
+    this.currentEditingItem = null;
   }
 
   saveItm(itm) {
@@ -214,7 +218,6 @@ export class PaymentDetailComponent implements OnInit {
           response.subscribe((r) => {
             if (r.success) {
               this.status = r.status;
-              this.loadData();
               this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
 
               this.tracking.trackEvent(AdobeEvent.trackView, {
@@ -228,13 +231,8 @@ export class PaymentDetailComponent implements OnInit {
                 text: 'El pago ha sido editado.',
                 showCloseButton: true,
                 showCancelButton: false,
-                didClose: () => {
-                  this.isEditingRow = false;
-                  itm.editing = false;
-                  itm.amount = itm.newAmount;
-                  itm.date = itm.newDate;
-                  itm.channel = itm.newChannel;
-                },
+              }).then(() => {
+                this.loadData();
               });
             } else {
               this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
@@ -260,18 +258,6 @@ export class PaymentDetailComponent implements OnInit {
       });
   }
 
-  cancelItm(itm) {
-    if (isNil(itm)) {
-      return;
-    }
-    this.isEditingRow = false;
-    if (itm.id === undefined) {
-      this.items.pop();
-    } else {
-      itm.editing = false;
-    }
-  }
-
   addItem() {
     this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home movimientos',
@@ -282,15 +268,14 @@ export class PaymentDetailComponent implements OnInit {
       location: 'Movimientos - Detalle de pago',
     });
     this.isEditingRow = true;
-    this.items.push({
+    this.currentEditingItem = {
       currency: this.currency,
       newAmount: null,
       newDate: new Date(),
       newChannel: 'Efectivo',
       canEdit: true,
-      editing: true,
       errores: {},
-    });
+    };
   }
 
   delItm(itm) {
