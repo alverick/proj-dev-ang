@@ -13,12 +13,11 @@
         class="tw-w-full"
         formControlName="emissionDate"
         [errorMessages]="formErrors.emissionDate"
-      >
-        Fecha de emisión
-        <p-date-picker
+        ><ng-container label> Fecha de emisión </ng-container
+        ><p-date-picker
           control
           class="tw-w-full"
-          styleClass="tw-w-full"
+          inputStyleClass="tw-w-full"
           [iconDisplay]="'input'"
           [showIcon]="true"
           [minDate]="minDate"
@@ -33,12 +32,11 @@
           class="tw-w-full"
           formControlName="dueDate"
           [errorMessages]="formErrors.dueDate"
-        >
-          Fecha de vencimiento
-          <p-date-picker
+          ><ng-container label> Fecha de vencimiento </ng-container
+          ><p-date-picker
             control
             class="tw-w-full"
-            styleClass="tw-w-full"
+            inputStyleClass="tw-w-full"
             [iconDisplay]="'input'"
             [showIcon]="true"
             [minDate]="minDate"
@@ -58,8 +56,7 @@
           class="tw-w-full"
           formControlName="code"
           [errorMessages]="formErrors.code"
-        >
-          Código deudor
+          ><ng-container label> Código deudor </ng-container>
           <div class="tw-relative tw-w-full" control>
             <input
               type="text"
@@ -86,16 +83,8 @@
           formControlName="firstName"
           class="tw-w-full"
           [errorMessages]="formErrors.firstName"
-        >
-          Nombre
-          <p-icon-field control iconPosition="right" class="tw-w-full">
-            @if (debtorExistent()) {
-              <p-inputicon
-                (click)="resetName()"
-                (keydown)="resetName()"
-                class="pi pi-times tw-cursor-pointer"
-              />
-            }
+          ><ng-container label> Nombre </ng-container
+          ><p-icon-field control class="tw-w-full">
             <input
               type="text"
               class="tw-w-full"
@@ -106,6 +95,13 @@
               [maxLength]="80"
               formControlName="firstName"
             />
+            @if (debtorExistent()) {
+              <p-inputicon
+                (click)="resetName()"
+                (keydown)="resetName()"
+                class="pi pi-times tw-cursor-pointer"
+              />
+            }
           </p-icon-field>
         </cs-label-control>
       </div>
@@ -129,9 +125,8 @@
             formControlName="concept"
             class="tw-w-full"
             [errorMessages]="formErrors.concept"
-          >
-            Concepto
-            <input
+            ><ng-container label> Concepto </ng-container
+            ><input
               type="text"
               class="tw-w-full"
               pInputText
@@ -148,9 +143,8 @@
             formControlName="amount"
             class="tw-w-full"
             [errorMessages]="formErrors.amount"
-          >
-            Monto
-            <p-inputNumber
+            ><ng-container label> Monto </ng-container
+            ><p-inputNumber
               class="tw-w-full"
               styleClass="tw-w-full"
               mode="decimal"

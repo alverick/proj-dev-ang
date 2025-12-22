@@ -48,35 +48,19 @@ export class CompanyConfigurationService {
 
   setCompanyData() {
     this.companyForm.patchValue(this.companyData);
-    if (
-      this.companyData.newNameGTPStatus === 0 ||
-      this.companyData.newNameGTPStatus === 2 ||
-      this.companyData.isNewFlow
-    ) {
-      this.companyForm.get('name').disable();
-    } else {
-      this.companyForm.get('name').enable();
-    }
+    this.companyForm.get('name').disable();
   }
 
   saveCompanyData() {
-    const { email, movilNumber, movilOperator, name } = this.companyForm.value;
-    const parsedName: string = this.companyData.isNewFlow
-      ? this.companyData.name
-      : name || this.companyData.name;
+    const { email, movilNumber, movilOperator } = this.companyForm.value;
     const companyDataUpdated = {
-      newName: parsedName,
       email,
       movilNumber,
       movilOperator,
     };
-    const enterprise = {
-      ruc: this.companyData.ruc,
-      ...companyDataUpdated,
-    };
 
     const formValue = pick(
-      ['email', 'movilNumber', 'movilOperator', 'name'],
+      ['email', 'movilNumber', 'movilOperator'],
       this.companyForm.value,
     );
     const metadata: Metadata[] = [];
@@ -97,7 +81,7 @@ export class CompanyConfigurationService {
     };
 
     this.companyService
-      .updateCompany(enterprise)
+      .updateCompany(companyDataUpdated)
       .subscribe((enterpriseUpdate) => {
         if (enterpriseUpdate.success === true) {
           this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);

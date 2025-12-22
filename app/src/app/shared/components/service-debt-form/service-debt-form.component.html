@@ -4,11 +4,13 @@
       class="tw-w-full"
       formControlName="paymentType"
       [errorMessages]="errorMessages().paymentType"
-      >¿En qué orden te podrán pagar tus clientes?
-      <p-select
+      ><ng-container label
+        >¿En qué orden te podrán pagar tus clientes? </ng-container
+      ><p-select
+        control
         [options]="paymentTypeOptions()"
-        class="tw-w-full"
-        styleClass="tw-w-full"
+        class="self-width tw-w-full"
+        panelStyleClass="tw-w-full"
         formControlName="paymentType"
         placeholder="Selecciona"
       ></p-select>
@@ -18,8 +20,9 @@
     <div class="tw-font-medium">
       ¿Tus clientes podrán pagar la deuda en partes?
     </div>
-    <cs-label-control [onlyControl]="true" class="tw-w-full">
-      <p-radioButton
+    <cs-label-control [onlyControl]="true" class="tw-w-full"
+      ><ng-container label> </ng-container
+      ><p-radioButton
         name="partialPayment"
         value="S"
         formControlName="partialPayment"
@@ -30,8 +33,9 @@
         </div>
       </ng-container>
     </cs-label-control>
-    <cs-label-control [onlyControl]="true" class="tw-w-full">
-      <p-radioButton
+    <cs-label-control [onlyControl]="true" class="tw-w-full"
+      ><ng-container label> </ng-container
+      ><p-radioButton
         name="partialPayment"
         value="N"
         formControlName="partialPayment"
@@ -53,8 +57,9 @@
       </div>
     }
     @if (!interestOnlyInfo()) {
-      <cs-label-control [onlyControl]="true" class="tw-w-full">
-        <p-radioButton
+      <cs-label-control [onlyControl]="true" class="tw-w-full"
+        ><ng-container label> </ng-container
+        ><p-radioButton
           name="chargeInterest"
           value="N"
           formControlName="chargeInterest"
@@ -65,8 +70,9 @@
           </div>
         </ng-container>
       </cs-label-control>
-      <cs-label-control [onlyControl]="true" class="tw-w-full">
-        <p-radioButton
+      <cs-label-control [onlyControl]="true" class="tw-w-full"
+        ><ng-container label> </ng-container
+        ><p-radioButton
           name="chargeInterest"
           value="S"
           formControlName="chargeInterest"
@@ -94,11 +100,12 @@
           class="tw-w-full"
           formControlName="chargeType"
           [errorMessages]="errorMessages().chargeType"
-          >Tipo de cobro
-          <p-select
+          ><ng-container label>Tipo de cobro </ng-container
+          ><p-select
+            control
             [options]="chargeTypeOptions()"
-            class="tw-w-full"
-            styleClass="tw-w-full"
+            class="self-width tw-w-full"
+            panelStyleClass="tw-w-full"
             formControlName="chargeType"
             placeholder="Selecciona"
           ></p-select>
@@ -127,11 +134,12 @@
           class="tw-w-full"
           formControlName="interestType"
           [errorMessages]="errorMessages().interestType"
-          >Tipo de cálculo
-          <p-select
+          ><ng-container label>Tipo de cálculo </ng-container
+          ><p-select
+            control
             [options]="interestTypeOptions()"
-            class="tw-w-full"
-            styleClass="tw-w-full"
+            class="self-width tw-w-full"
+            panelStyleClass="tw-w-full"
             formControlName="interestType"
             placeholder="Selecciona"
           ></p-select>
@@ -141,8 +149,8 @@
           formControlName="amount"
           formControlLabel="El monto"
           [errorMessages]="errorMessages().amount"
-          >Monto
-          <p-inputNumber
+          ><ng-container label>Monto </ng-container
+          ><p-inputNumber
             formControlName="amount"
             class="tw-block tw-w-full"
             mode="decimal"

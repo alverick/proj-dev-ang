@@ -131,6 +131,7 @@
                     <ng-template pTemplate="input">
                       <p-date-picker
                         class="tw-w-full tw-text-sm"
+                        inputStyleClass="tw-w-full tw-text-sm"
                         [(ngModel)]="rowData.emissionDate"
                         appendTo="body"
                         [showIcon]="true"
@@ -151,6 +152,7 @@
                       <ng-template pTemplate="input">
                         <p-date-picker
                           class="tw-w-full"
+                          inputStyleClass="tw-w-full"
                           [(ngModel)]="rowData.dueDate"
                           appendTo="body"
                           [showIcon]="true"
@@ -316,7 +318,7 @@
           }
         </tr>
       </ng-template>
-      <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+      <ng-template #expandedrow let-rowData let-columns="columns">
         <tr class="lg:tw-hidden">
           <td [attr.colspan]="2">
             <div class="">
@@ -385,17 +387,17 @@
                   </td>
                 </tr>
                 <tr class="tw-text-primary-green-1">
-                  <td>
-                    <button
-                      pButton
-                      pRipple
-                      class="p-button-text"
-                      (click)="openDialog(rowData)"
-                    >
-                      Editar
-                    </button>
-                  </td>
-                  <td class="tw-cursor-pointer tw-text-primary-green-1">
+                  <td colspan="2" class="tw-text-center">
+                    @if (setStatusRow(rowData).canEdit) {
+                      <button
+                        pButton
+                        pRipple
+                        class="p-button-text"
+                        (click)="openDialog(rowData)"
+                      >
+                        Editar
+                      </button>
+                    }
                     <button
                       pButton
                       pRipple
@@ -459,6 +461,7 @@
             <p-date-picker
               id="year"
               class="tw-w-full"
+              inputStyleClass="tw-w-full"
               [(ngModel)]="editRowData.emissionDate"
               dateFormat="dd/mm/y"
               [touchUI]="true"
@@ -480,6 +483,7 @@
             <p-date-picker
               id="brand"
               class="tw-w-full"
+              inputStyleClass="tw-w-full"
               [(ngModel)]="editRowData.dueDate"
               dateFormat="dd/mm/y"
               [touchUI]="true"

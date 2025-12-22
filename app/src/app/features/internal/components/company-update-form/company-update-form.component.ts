@@ -20,7 +20,6 @@ import { isNil, pathEq } from 'ramda';
 
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { InputTrimSpacesDirective } from '../../../../shared/directives/input-trim-spaces.directive';
-import { InputWithoutSpacesDirective } from '../../../../shared/directives/input-without-spaces.directive';
 import { CompanyForm } from '../../../../shared/models/company-forms';
 import {
   IErrorMessages,
@@ -36,7 +35,6 @@ import { namePattern } from '../../../../shared/validators/company-validators';
     ReactiveFormsModule,
     LabelControlComponent,
     InputTextModule,
-    InputWithoutSpacesDirective,
     KeyFilterModule,
     ValidationErrorsComponent,
     ValidationErrorDirective,

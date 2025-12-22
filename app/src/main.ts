@@ -12,7 +12,7 @@ if (production) {
   enableProdMode();
 }
 
-if (hmrValue || !production) {
+if (hmrValue && !production) {
   import('./mocks/browser')
     .then(({ worker }) => {
       return worker.start({

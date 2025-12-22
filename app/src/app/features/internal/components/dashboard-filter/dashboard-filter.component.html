@@ -10,15 +10,15 @@
         formControlName="currency"
         [hideLabel]="true"
         [errorMessages]="errorMessages.currency"
-      >
-        <p-select
+        ><ng-container label> </ng-container
+        ><p-select
+          control
           [options]="currencies"
           placeholder="Moneda"
           formControlName="currency"
           optionLabel="label"
           class="tw-w-full md:tw-w-36 lg:tw-w-40"
           styleClass="tw-w-full md:tw-w-36 lg:tw-w-40"
-          control
         ></p-select>
       </cs-label-control>
     }
@@ -27,8 +27,8 @@
       formControlName="services"
       [hideLabel]="true"
       [errorMessages]="errorMessages.services"
-    >
-      <p-multiSelect
+      ><ng-container label> </ng-container
+      ><p-multiSelect
         [options]="internalServices"
         formControlName="services"
         [showToggleAll]="true"
@@ -58,8 +58,8 @@
       formControlName="payment"
       [hideLabel]="true"
       [errorMessages]="errorMessages.payment"
-    >
-      <p-select
+      ><ng-container label> </ng-container
+      ><p-select
         [options]="internalDates"
         placeholder="Tipo de pago"
         formControlName="payment"
@@ -74,8 +74,8 @@
       formControlName="dateFrom"
       [hideLabel]="true"
       [errorMessages]="errorMessages.dateFrom"
-    >
-      <p-date-picker
+      ><ng-container label> </ng-container
+      ><p-date-picker
         [showIcon]="true"
         formControlName="dateFrom"
         placeholder="Desde"
@@ -90,8 +90,8 @@
       formControlName="dateTo"
       [hideLabel]="true"
       [errorMessages]="errorMessages.dateTo"
-    >
-      <p-date-picker
+      ><ng-container label> </ng-container
+      ><p-date-picker
         [showIcon]="true"
         formControlName="dateTo"
         placeholder="Hasta"

@@ -17,7 +17,6 @@ import { LoadBarService } from '../../shared/services/load-bar.service';
 import { LoadFileService } from '../../shared/services/load-file.service';
 import { InternalComponent } from './internal.component';
 import {
-  internalFullRoutingChildNames,
   internalRoutingChildNames,
   internalRoutingNames,
 } from './internal-routing.names';
@@ -51,6 +50,8 @@ export const INTERNAL_ROUTES: Routes = [
       AfiliacionService,
       DynamicDialogService,
       SettingsStorageService,
+      CompanyAccountsResolver,
+      HomeService,
     ],
     children: [
       {
@@ -58,7 +59,6 @@ export const INTERNAL_ROUTES: Routes = [
         component: HomePage,
         canActivate: [AuthGuard, GtpOutputGuard],
         providers: [
-          HomeService,
           LoadFileService,
           LoadBarService,
           MovementsService,
@@ -102,16 +102,16 @@ export const INTERNAL_ROUTES: Routes = [
             children: [
               {
                 path: appRoutingNames.EMPTY,
-                redirectTo: internalFullRoutingChildNames.SERVICES_ADD_INFO,
+                redirectTo: internalRoutingChildNames.SERVICES_ADD_INFO,
                 pathMatch: 'full',
               },
               {
-                path: internalFullRoutingChildNames.SERVICES_ADD_INFO,
+                path: internalRoutingChildNames.SERVICES_ADD_INFO,
                 component: ServiceInfoPage,
                 resolve: { accounts: CompanyAccountsResolver },
               },
               {
-                path: internalFullRoutingChildNames.SERVICES_ADD_CONFIGURATION,
+                path: internalRoutingChildNames.SERVICES_ADD_CONFIGURATION,
                 component: ServiceConfigurationPage,
               },
             ],

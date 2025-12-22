@@ -12,12 +12,11 @@
           class="tw-w-full"
           formControlName="name"
           [errorMessages]="errorMessages().name"
-          >Empresa<input
+          ><ng-container label>Empresa</ng-container
+          ><input
             type="text"
             class="tw-w-full"
             pInputText
-            csInputWithoutSpaces
-            [csFilter]="namePattern"
             minlength="3"
             maxlength="80"
             formControlName="name"
@@ -36,7 +35,8 @@
           class="tw-w-full"
           formControlName="ruc"
           [errorMessages]="errorMessages().ruc"
-          >RUC<input
+          ><ng-container label>RUC</ng-container
+          ><input
             type="text"
             class="tw-w-full"
             pInputText
@@ -50,8 +50,8 @@
           class="tw-w-full"
           formControlName="entryName"
           [errorMessages]="errorMessages().entryName"
-          >Rubro de tu empresa
-          <input
+          ><ng-container label>Rubro de tu empresa </ng-container
+          ><input
             type="text"
             class="tw-w-full"
             pInputText
@@ -68,7 +68,9 @@
             class="tw-w-full"
             formControlName="documentType"
             [errorMessages]="errorMessages().documentType"
-            >Tipo de documento<p-select
+            ><ng-container label>Tipo de documento</ng-container
+            ><p-select
+              control
               [options]="documentTypes()"
               class="tw-w-full"
               styleClass="tw-w-full"
@@ -80,7 +82,8 @@
             class="tw-w-full"
             formControlName="documentNumber"
             [errorMessages]="errorMessages().documentNumber"
-            >Número de documento<input
+            ><ng-container label>Número de documento</ng-container
+            ><input
               type="text"
               class="tw-w-full"
               pInputText
@@ -111,7 +114,9 @@
           class="tw-w-full"
           formControlName="movilOperator"
           [errorMessages]="errorMessages().movilOperator"
-          >Operador<p-select
+          ><ng-container label>Operador</ng-container
+          ><p-select
+            control
             [options]="operators()"
             class="tw-w-full"
             styleClass="tw-w-full"
@@ -123,7 +128,8 @@
           class="tw-w-full"
           formControlName="movilNumber"
           [errorMessages]="errorMessages().movilNumber"
-          >Celular<input
+          ><ng-container label>Celular</ng-container
+          ><input
             type="text"
             class="tw-w-full"
             pInputText
@@ -139,7 +145,8 @@
           class="tw-w-full"
           formControlName="email"
           [errorMessages]="errorMessages().email"
-          >Correo electrónico<input
+          ><ng-container label>Correo electrónico</ng-container
+          ><input
             type="text"
             class="tw-w-full"
             pInputText
