@@ -1,4 +1,6 @@
-export const primeng = {
+import { type Translation } from 'primeng/api';
+
+export const primeng: Translation = {
   firstDayOfWeek: 1,
   dayNames: [
     'Domingo',
