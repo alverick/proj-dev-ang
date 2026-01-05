@@ -441,6 +441,10 @@
     background-color: var(--primary-green-1);
   }
 
+  .p-datepicker-panel .p-datepicker-calendar td {
+    padding: 0.15rem;
+  }
+
   .p-datatable {
     .p-paginator {
       font-size: 12px;

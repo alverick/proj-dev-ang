@@ -23,6 +23,7 @@ import { GtpOutputGuard } from './shared/guards/gtp-output.guard';
 import { LogoutGuard } from './shared/guards/logout.guard';
 import { AuthInterceptorService } from './shared/interceptors/auth-interceptor.service';
 import { LoaderInterceptor } from './shared/interceptors/loader.interceptor';
+import { primeng } from './shared/lang/es';
 import { AdobeLaunchProviderService, CompanyService } from './shared/services';
 import { EncryptionService } from './shared/services/encryption.service';
 import { ExcelService } from './shared/services/excel.service';
@@ -54,6 +55,7 @@ export const appConfig: ApplicationConfig = {
         },
       },
       ripple: true,
+      translation: primeng,
     }),
     provideStore(
       {},
