@@ -95,6 +95,7 @@ export type IEnvironment = {
    */
   adobe: string;
   recaptcha: string;
+  dynatrace: string;
   hotjarSiteId: string;
   hotjarVersion: string;
 };
@@ -107,6 +108,7 @@ export const environmentDefault: IEnvironment = {
   OCP_KEY: '',
   adobe: '',
   recaptcha: '',
+  dynatrace: '',
   logLevel: NgxLoggerLevel.WARN,
   serverLogLevel: NgxLoggerLevel.OFF,
   credentials: [['', '', '']],
