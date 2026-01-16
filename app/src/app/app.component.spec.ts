@@ -9,11 +9,7 @@ import { Subject } from 'rxjs';
 import { AppComponent } from './app.component';
 import { FabWhatsappComponent } from './shared/components/fab-whatsapp/fab-whatsapp.component';
 import { ValidationDefaultsComponent } from './shared/components/validation-defaults/validation-defaults.component';
-import {
-  AdobeLaunchProviderService,
-  NewRelicProviderService,
-  TrackingService,
-} from './shared/services';
+import { AdobeLaunchProviderService, TrackingService } from './shared/services';
 import { HotjarProviderService } from './shared/services/hotjar-provider.service';
 
 describe('AppComponent', () => {
@@ -39,7 +35,6 @@ describe('AppComponent', () => {
       providers: [
         MockProvider(AdobeLaunchProviderService),
         MockProvider(HotjarProviderService),
-        MockProvider(NewRelicProviderService),
         MockProvider(HotjarProviderService),
         MockProvider(TrackingService),
         { provide: Router, useValue: { events: routerEvents$.asObservable() } },
