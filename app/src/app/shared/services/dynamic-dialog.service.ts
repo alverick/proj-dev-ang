@@ -35,7 +35,7 @@ export class DynamicDialogService extends DialogService {
       detail: pathOr(config.header, ['data', 'detail'], config),
       location: 'Modal',
     });
-    const modal = super.open(componentType, config);
+    const modal = super.open(componentType, { ...config, draggable: false });
     this.stackRefs.push(modal);
     return modal;
   }
