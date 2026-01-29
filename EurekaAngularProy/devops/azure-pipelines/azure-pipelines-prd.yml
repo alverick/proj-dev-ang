@@ -29,6 +29,7 @@ stages:
       - job: Build
         displayName: Build
         pool:
+          name: "apdevsecops01"
           vmImage: $(vmImageName)
         steps:
           - task: NodeTool@0
