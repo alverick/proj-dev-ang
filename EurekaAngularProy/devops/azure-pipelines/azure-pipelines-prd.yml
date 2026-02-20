@@ -18,7 +18,7 @@ parameters:
 variables:
   vmImageName: 'ubuntu-latest'
   mode: 'legacy-production'
-  appServiceConnection: 'SC_RG_EU2_C003_EURC_PRD_01'
+  appServiceConnection: 'arm-oidc-cse-prd'
   groupName: 'rg_eu2_c003_eurc_prd_01'
   appServiceName: 'wappeu2c003eurcprd01'
 
@@ -29,6 +29,7 @@ stages:
       - job: Build
         displayName: Build
         pool:
+          name: "apdevsecops01"
           vmImage: $(vmImageName)
         steps:
           - task: NodeTool@0
