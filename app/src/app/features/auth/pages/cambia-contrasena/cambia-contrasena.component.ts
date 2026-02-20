@@ -1,4 +1,4 @@
-import { Component, type OnInit } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PrimeTemplate } from 'primeng/api';
@@ -48,20 +48,18 @@ export type FormChangePassword = {
   ],
 })
 export class CambiaContrasenaComponent implements OnInit {
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly rutaActiva = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly recuperaService = inject(RecuperaService);
+  storage = inject(StorageService);
+  protected tracking = inject(TrackingService);
+
   public llave: string;
   public formulario: boolean;
   protected readonly messageErrorNewPasswords = messageErrorNewPasswords;
   errorMessages = errorRegisterAuth;
   public Cambia: ModelFormGroup<FormChangePassword>;
-
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly rutaActiva: ActivatedRoute,
-    private readonly router: Router,
-    private readonly recuperaService: RecuperaService,
-    public storage: StorageService,
-    protected tracking: TrackingService,
-  ) {}
   ngOnInit() {
     this.Cambia = this.formBuilder.group(
       {

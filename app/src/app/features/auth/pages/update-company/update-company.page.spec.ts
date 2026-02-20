@@ -1,6 +1,6 @@
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockBuilder, MockRender } from 'ng-mocks';
-import { SidebarModule } from 'primeng/sidebar';
+import { DrawerModule } from 'primeng/drawer';
 
 import { CompanyFormAuthComponent } from '../../components/company-form-auth/company-form-auth.component';
 import { SidebarCompanyComponent } from '../../components/sidebar-company/sidebar-company.component';
@@ -12,7 +12,7 @@ describe('UpdateCompanyComponent', () => {
     MockBuilder(UpdateCompanyPage)
       .mock(AffiliationService)
       .mock(RouterTestingModule)
-      .mock(SidebarModule)
+      .mock(DrawerModule)
       .mock(SidebarCompanyComponent)
       .mock(CompanyFormAuthComponent),
   );

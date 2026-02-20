@@ -1,27 +1,18 @@
 .content {
   .landing {
     text-align: center;
-    @include font-text(16px);
+    @apply tw-text-base;
 
     color: var(--ibk-black);
-
-    .text {
-      .link {
-        font-weight: 500;
-        color: var(--primary-green-1);
-        cursor: pointer;
-        text-decoration: underline;
-      }
-    }
   }
 
   .progress-text {
-    @include font-text(14px);
+    @apply tw-text-sm;
   }
 
   .errores {
     .header {
-      @include font-text(14px, 500);
+      @apply tw-text-sm tw-font-medium;
 
       .texto {
         float: left;
@@ -50,71 +41,42 @@
       height: 90px;
       overflow-y: auto;
       padding: 5px;
-      @include border-radius(4px);
+      @apply tw-rounded-md;
 
       .err-item {
-        @include font-text(14px);
-
         color: var(--ibk-black);
+        @apply tw-text-sm;
       }
     }
 
     .footer {
-      @include font-text(14px, 500);
+      @apply tw-text-sm tw-font-medium;
 
       color: var(--ibk-black) !important;
     }
   }
 }
 
-.title {
-  @include font-text(24px, normal);
-
-  color: var(--ibk-black);
-  text-align: center;
-
-  .resaltado {
-    font-weight: 500;
-  }
-}
-
 .paso {
-  @include font-text(24px, 500);
+  @apply tw-text-2xl tw-font-medium;
   color: var(--secondary-blue-3);
   text-align: center;
 }
 
 .text-center {
   text-align: center;
-
-  .input-file {
-    height: 40px;
-    @include border-radius(23.5px);
-
-    border: solid 1px var(--grises-grey-1);
-    text-align: left;
-    margin-bottom: 15px;
-    text-overflow: ellipsis;
-
-    .text {
-      @include font-text(14px, 500);
-
-      color: var(--ibk-black) !important;
-      text-overflow: ellipsis;
-    }
-  }
 }
 
 .btn-eureca-green {
   width: 216px;
   height: 48px;
-  @include font-text(14px !important, 500 !important);
+  @apply tw-text-sm tw-font-medium;
 }
 
 .btn-outline-green {
   width: 216px;
   height: 48px;
-  @include font-text(14px !important, 500 !important);
+  @apply tw-text-sm tw-font-medium;
 }
 
 .img-excel {
@@ -123,67 +85,6 @@
   margin-right: auto;
 }
 
-b {
-  @include font-text(14px, 500);
-
-  float: left;
-  color: var(--ibk-black);
-}
-
-small {
-  @include font-text(14px, 500);
-
-  color: var(--ibk-black);
-  text-align: center !important;
-  margin-left: 160px;
-}
-
-.cancelar {
-  width: 77px !important;
-  height: 23px !important;
-  @include font-text(18px !important, 500 !important);
-
-  color: var(--grises-grey-1);
-}
-
-.text-input-file {
-  @include font-text(16px, normal);
-
-  color: var(--ibk-black);
-  text-align: left;
-}
-
-.name-file {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-:host ::ng-deep .mat-mdc-dialog-container {
-  object-fit: contain;
-  border-radius: 4px !important;
-  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1) !important;
-  background-color: var(--ibk-white) !important;
-  padding: 0px !important;
-}
-
 .resaltado {
   font-weight: 500;
-}
-
-.svg_custom {
-  color: var(--grises-grey-1);
-}
-
-.btn-eureka-block {
-  width: 216px;
-  height: 48px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--ibk-white) !important;
-  background-color: var(--grises-grey-1);
-  border-radius: 4px !important;
-  background-clip: padding-box;
-  border: solid 1px var(--grises-grey-1);
-  display: block;
 }

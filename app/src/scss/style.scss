@@ -1,23 +1,24 @@
+@use 'configuration' as *;
+@use 'forms' as *;
+@use 'fonts' as *;
+@use 'material-custom' as *;
+@use 'main' as *;
+@use 'reponsive' as *;
+@use 'components' as *;
+@use 'global' as *;
+
 @layer tailwind-base {
   @tailwind base;
 }
 
 @layer custom {
-  @import 'forms';
 }
 
 @layer general {
-  @import 'configuration';
-  @import 'fonts';
-  @import 'material-custom';
-  @import 'main';
-  @import 'reponsive';
 }
 
 @layer tailwind-utilities {
   @tailwind components;
-  @import 'components';
   @tailwind utilities;
 }
 
-@import 'global';

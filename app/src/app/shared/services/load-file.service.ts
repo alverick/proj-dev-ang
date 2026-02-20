@@ -1,6 +1,7 @@
 import {
   type ComponentRef,
   EventEmitter,
+  inject,
   Injectable,
   type ViewContainerRef,
 } from '@angular/core';
@@ -22,10 +23,8 @@ export interface ModalCloseData {
 
 @Injectable()
 export class LoadFileService {
-  constructor(
-    private readonly excelService: ExcelService,
-    private readonly router: Router,
-  ) {}
+  private readonly excelService = inject(ExcelService);
+  private readonly router = inject(Router);
 
   private componentRef: ComponentRef<LoadFileComponent> = null;
   private cancel = true;

@@ -1,10 +1,10 @@
 import {
   Component,
-  EventEmitter,
-  Input,
+  inject,
+  input,
   type OnChanges,
   type OnInit,
-  Output,
+  output,
   type SimpleChanges,
 } from '@angular/core';
 import {
@@ -14,10 +14,10 @@ import {
 } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
-import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { Ripple } from 'primeng/ripple';
+import { Select } from 'primeng/select';
 import { has, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { throttleTime } from 'rxjs/operators';
@@ -39,74 +39,78 @@ import { ServiceDebtFormComponent } from '../service-debt-form/service-debt-form
   selector: 'cs-service-edit-form',
   templateUrl: './service-edit-form.component.html',
   styleUrls: ['./service-edit-form.component.scss'],
-  standalone: true,
   imports: [
     FormsModule,
     ReactiveFormsModule,
     LabelControlComponent,
     InputTextModule,
     MessageModule,
-    DropdownModule,
     InputWithoutSpacesDirective,
     ButtonDirective,
     ServiceDebtFormComponent,
     CheckboxModule,
     ServiceChannelChipComponent,
     Ripple,
+    Select,
   ],
 })
 export class ServiceEditFormComponent implements OnInit, OnChanges {
-  @Output() sendForm = new EventEmitter<object>();
-  @Input() form: UntypedFormGroup;
-  @Input() errorMessages: IErrorMessages;
-  @Input() debtorCodeOptions: any[];
-  @Input() paymentTypeOptions: any[];
-  @Input() currencyOptions: any[];
-  @Input() chargeTypeOptions: any[];
-  @Input() interestTypeOptions: any[];
-  @Input() affiliationMode = true;
-  @Input() interestOnlyInfo = false;
-  @Input() formData: IServiceRemoteModelForms;
+  private readonly servicesForms = inject(ServicesFormsService);
+
+  readonly sendForm = output<object>();
+  readonly form = input<UntypedFormGroup>(undefined);
+  readonly errorMessages = input<IErrorMessages>(undefined);
+  readonly debtorCodeOptions = input<any[]>(undefined);
+  readonly paymentTypeOptions = input<any[]>(undefined);
+  readonly currencyOptions = input<any[]>(undefined);
+  readonly chargeTypeOptions = input<any[]>(undefined);
+  readonly interestTypeOptions = input<any[]>(undefined);
+  readonly affiliationMode = input(true);
+  readonly interestOnlyInfo = input(false);
+  readonly formData = input<IServiceRemoteModelForms>(undefined);
   debtForm: UntypedFormGroup;
   debtorCodeEditable = false;
   submittedForm = false;
   formLoaded = false;
   showDebtFields = false;
   protected readonly namePattern = namePattern;
-  constructor(private readonly servicesForms: ServicesFormsService) {}
 
   ngOnInit() {
     this.listenForChanges();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (has('form', changes) && isNotNil(this.form)) {
-      this.debtForm = this.form.get('debt') as UntypedFormGroup;
+    const form = this.form();
+    if (has('form', changes) && isNotNil(form)) {
+      this.debtForm = form.get('debt') as UntypedFormGroup;
     }
-    if (has('formData', changes) && isNotNil(this.formData)) {
-      const { dataType, ...debt } = this.formData.debt;
+    const formData = this.formData();
+    if (has('formData', changes) && isNotNil(formData)) {
+      const { dataType, ...debt } = formData.debt;
       this.formLoaded = false;
       this.setDebtForm(dataType, debt.chargeInterest);
     }
   }
 
   showDropdown() {
-    this.form.get('debtorCode').setValue('');
+    this.form().get('debtorCode').setValue('');
     this.debtorCodeEditable = false;
   }
 
   setFormData() {
-    if (isNil(this.formData)) {
+    const formDataValue = this.formData();
+    if (isNil(formDataValue)) {
       return;
     }
     const {
       inReview,
       debtorCode,
       newNameGTPStatus,
+      newNameCode,
       newNameCodeGTPStatus,
       debtorCodeOriginal,
       ...formData
-    } = this.formData;
+    } = formDataValue;
     const isNotDebtorCodeCustom = debtorCodeOptions.some(
       ({ value }) => value === debtorCode,
     );
@@ -115,28 +119,28 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
       ? { debtorCode, debtorCodeCustom: debtorCodeCustomEmpty }
       : { debtorCode: 'Otro', debtorCodeCustom: debtorCode };
 
-    const { chargeType, ...debt } = this.formData.debt;
+    const { dataType, chargeType, ...debt } = formDataValue.debt;
 
     setTimeout(() => {
       this.formLoaded = true;
       if (inReview || newNameGTPStatus === 3 || newNameCodeGTPStatus === 3) {
-        if (this.affiliationMode) {
-          this.form.get('debt').disable();
-          this.form.get('useAgent').disable();
+        if (this.affiliationMode()) {
+          this.form().get('debt').disable();
+          this.form().get('useAgent').disable();
           this.debtForm.get('chargeType').disable();
           this.debtForm.get('interestType').disable();
           this.debtForm.get('amount').disable();
           if (newNameGTPStatus === 3) {
-            this.form.get('name').enable();
+            this.form().get('name').enable();
           } else {
-            this.form.get('name').disable();
+            this.form().get('name').disable();
           }
           if (newNameCodeGTPStatus === 3) {
-            this.form.get('debtorCode').enable();
-            this.form.get('debtorCodeCustom').enable();
+            this.form().get('debtorCode').enable();
+            this.form().get('debtorCodeCustom').enable();
           } else {
-            this.form.get('debtorCode').disable();
-            this.form.get('debtorCodeCustom').disable();
+            this.form().get('debtorCode').disable();
+            this.form().get('debtorCodeCustom').disable();
           }
         }
         if (newNameCodeGTPStatus === 3) {
@@ -150,16 +154,16 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
           this.debtorCodeEditable,
         );
       }
-      this.form.patchValue({
+      this.form().patchValue({
         ...formData,
         debtorCode,
         ...debtorCodeObj,
-        debt: { ...debt, chargeType: chargeType === '' ? null : chargeType },
+        debt: { ...debt, chargeType: String(chargeType) },
       });
     }, 300);
     setTimeout(() => {
       if (
-        this.affiliationMode &&
+        this.affiliationMode() &&
         (inReview || newNameGTPStatus === 3 || newNameCodeGTPStatus === 3)
       ) {
         this.debtForm.get('chargeType').disable({ emitEvent: false });
@@ -178,14 +182,16 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
           this.setFormData();
         }
       });
-    this.form?.get('debtorCode').valueChanges.subscribe((val) => {
-      this.debtorCodeEditable = val === 'Otro';
-      if (val === 'Otro') {
-        this.form.get('debtorCodeCustom').setValue('');
-      } else {
-        this.form.get('debtorCodeCustom').setValue(debtorCodeCustomEmpty);
-      }
-    });
+    this.form()
+      ?.get('debtorCode')
+      .valueChanges.subscribe((val) => {
+        this.debtorCodeEditable = val === 'Otro';
+        if (val === 'Otro') {
+          this.form().get('debtorCodeCustom').setValue('');
+        } else {
+          this.form().get('debtorCodeCustom').setValue(debtorCodeCustomEmpty);
+        }
+      });
   }
 
   private setDebtForm(dataType, chargeInterest) {
@@ -195,16 +201,16 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
       this.debtForm.get('chargeInterest').setValue(chargeInterest);
     } else {
       this.setFormData();
-      if (this.affiliationMode) {
+      if (this.affiliationMode()) {
         this.debtForm.disable();
       }
     }
   }
 
   onSubmit() {
-    const { emailConfirm, ...formValue } = this.form.value;
+    const { emailConfirm, ...formValue } = this.form().value;
     this.submittedForm = true;
-    if (this.form.valid) {
+    if (this.form().valid) {
       this.sendForm.emit({ ...formValue });
     }
   }

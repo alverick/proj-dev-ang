@@ -1,5 +1,5 @@
 import { MockBuilder, MockRender } from 'ng-mocks';
-import { SidebarModule } from 'primeng/sidebar';
+import { DrawerModule } from 'primeng/drawer';
 
 import { ServiceEditFormComponent } from '../../../../shared/components/service-edit-form/service-edit-form.component';
 import { ServicesListComponent } from '../../../../shared/components/services-list/services-list.component';
@@ -14,7 +14,7 @@ describe('ServiceListPage', () => {
       .mock(AffiliationService)
       .mock(ServicesListComponent)
       .mock(ServiceEditFormComponent)
-      .mock(SidebarModule),
+      .mock(DrawerModule),
   );
 
   it('should create', () => {

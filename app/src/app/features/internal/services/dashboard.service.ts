@@ -1,14 +1,12 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { DashboardDataService } from '../../../shared/data';
 import { CompanyService } from '../../../shared/services';
 
 @Injectable()
 export class DashboardService {
-  constructor(
-    private readonly company: CompanyService,
-    private readonly dashboard: DashboardDataService,
-  ) {}
+  private readonly company = inject(CompanyService);
+  private readonly dashboard = inject(DashboardDataService);
 
   getServices() {
     return this.company.getCompanyServices(true);

@@ -1,5 +1,5 @@
 <form
-  [formGroup]="form"
+  [formGroup]="form()"
   novalidate
   autocomplete="off"
   class="tw-max-w-2xl"
@@ -11,22 +11,21 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="name"
-          [errorMessages]="errorMessages.name"
-          >Empresa<input
+          [errorMessages]="errorMessages().name"
+          ><ng-container label>Empresa</ng-container
+          ><input
             type="text"
             class="tw-w-full"
             pInputText
-            csInputWithoutSpaces
-            [csFilter]="namePattern"
             minlength="3"
             maxlength="80"
             formControlName="name"
             autocomplete="off"
           />
-          @if (inReview) {
+          @if (inReview()) {
             <div hint class="tw-text-error">
-              El nuevo nombre <strong> {{ nameInReview }} </strong> esta siendo
-              procesado
+              El nuevo nombre <strong> {{ nameInReview() }} </strong> esta
+              siendo procesado
             </div>
           }
         </cs-label-control>
@@ -35,8 +34,9 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="ruc"
-          [errorMessages]="errorMessages.ruc"
-          >RUC<input
+          [errorMessages]="errorMessages().ruc"
+          ><ng-container label>RUC</ng-container
+          ><input
             type="text"
             class="tw-w-full"
             pInputText
@@ -49,9 +49,9 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="entryName"
-          [errorMessages]="errorMessages.entryName"
-          >Rubro de tu empresa
-          <input
+          [errorMessages]="errorMessages().entryName"
+          ><ng-container label>Rubro de tu empresa </ng-container
+          ><input
             type="text"
             class="tw-w-full"
             pInputText
@@ -67,20 +67,23 @@
           <cs-label-control
             class="tw-w-full"
             formControlName="documentType"
-            [errorMessages]="errorMessages.documentType"
-            >Tipo de documento<p-dropdown
-              [options]="documentTypes"
+            [errorMessages]="errorMessages().documentType"
+            ><ng-container label>Tipo de documento</ng-container
+            ><p-select
+              control
+              [options]="documentTypes()"
               class="tw-w-full"
               styleClass="tw-w-full"
               formControlName="documentType"
               placeholder="Selecciona"
-            ></p-dropdown>
+            ></p-select>
           </cs-label-control>
           <cs-label-control
             class="tw-w-full"
             formControlName="documentNumber"
-            [errorMessages]="errorMessages.documentNumber"
-            >Número de documento<input
+            [errorMessages]="errorMessages().documentNumber"
+            ><ng-container label>Número de documento</ng-container
+            ><input
               type="text"
               class="tw-w-full"
               pInputText
@@ -91,7 +94,7 @@
             />
             <val-errors validation-messages controlName="documentNumber">
               @for (
-                error of errorMessages.documentNumber | keyvalue;
+                error of errorMessages().documentNumber | keyvalue;
                 track error
               ) {
                 <ng-template [valError]="error.key">{{
@@ -110,20 +113,23 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="movilOperator"
-          [errorMessages]="errorMessages.movilOperator"
-          >Operador<p-dropdown
-            [options]="operators"
+          [errorMessages]="errorMessages().movilOperator"
+          ><ng-container label>Operador</ng-container
+          ><p-select
+            control
+            [options]="operators()"
             class="tw-w-full"
             styleClass="tw-w-full"
             formControlName="movilOperator"
             placeholder="Selecciona"
-          ></p-dropdown>
+          ></p-select>
         </cs-label-control>
         <cs-label-control
           class="tw-w-full"
           formControlName="movilNumber"
-          [errorMessages]="errorMessages.movilNumber"
-          >Celular<input
+          [errorMessages]="errorMessages().movilNumber"
+          ><ng-container label>Celular</ng-container
+          ><input
             type="text"
             class="tw-w-full"
             pInputText
@@ -138,8 +144,9 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="email"
-          [errorMessages]="errorMessages.email"
-          >Correo electrónico<input
+          [errorMessages]="errorMessages().email"
+          ><ng-container label>Correo electrónico</ng-container
+          ><input
             type="text"
             class="tw-w-full"
             pInputText

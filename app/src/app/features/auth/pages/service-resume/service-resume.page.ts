@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { SidebarModule } from 'primeng/sidebar';
+import { Drawer } from 'primeng/drawer';
 
 import { ServiceCardComponent } from '../../../../shared/components/service-card/service-card.component';
 import { ServiceEditFormComponent } from '../../../../shared/components/service-edit-form/service-edit-form.component';
@@ -30,11 +30,15 @@ import { AffiliationService } from '../../services';
   imports: [
     ServicesListComponent,
     ServiceCardComponent,
-    SidebarModule,
     ServiceEditFormComponent,
+    Drawer,
   ],
 })
 export class ServiceResumePage {
+  private readonly router = inject(Router);
+  private readonly serviceForms = inject(ServicesFormsService);
+  affiliation = inject(AffiliationService);
+
   showSidebar = false;
   position: number;
   errorMessages = {
@@ -48,12 +52,6 @@ export class ServiceResumePage {
   interestTypeOptions = interestTypeOptions;
   formData;
   form = this.affiliation.editServiceForm;
-
-  constructor(
-    private readonly router: Router,
-    private readonly serviceForms: ServicesFormsService,
-    public affiliation: AffiliationService,
-  ) {}
 
   actionDelete(position: number) {
     void swalAlert

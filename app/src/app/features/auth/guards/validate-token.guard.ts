@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   type ActivatedRouteSnapshot,
   Router,
@@ -16,10 +16,9 @@ import { AffiliationService } from '../services';
 
 @Injectable()
 export class ValidateTokenGuard {
-  constructor(
-    private readonly router: Router,
-    private readonly affiliation: AffiliationService,
-  ) {}
+  private readonly router = inject(Router);
+  private readonly affiliation = inject(AffiliationService);
+
   canActivate(
     next: ActivatedRouteSnapshot,
   ):

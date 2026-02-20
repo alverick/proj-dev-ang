@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, type OnInit, ViewChild } from '@angular/core';
+import { Component, inject, type OnInit, viewChild } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -13,6 +13,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
 import { ButtonDirective } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { InputGroup } from 'primeng/inputgroup';
+import { InputGroupAddon } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { type Password, PasswordModule } from 'primeng/password';
@@ -72,16 +74,27 @@ interface LoginForm {
     Ripple,
     LetDirective,
     ToastModule,
+    InputGroup,
+    InputGroupAddon,
   ],
 })
 export class LoginPage implements OnInit {
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly loginService = inject(LoginService);
+  private readonly router = inject(Router);
+  private readonly cookieService = inject(CookieService);
+  private readonly storageService = inject(StorageService);
+  private readonly tracking = inject(TrackingService);
+  private readonly store = inject(Store);
+  private readonly messageService = inject(MessageService);
+
   public loginForm: ModelFormGroup<LoginForm>;
 
   intentos: number;
   intentosRestantes = 6;
   codRespuesta: number;
   intento6 = false;
-  @ViewChild('passwordControl') passwordControl: Password;
+  readonly passwordControl = viewChild<Password>('passwordControl');
   protected readonly errorMessages = errorsLoginForm;
 
   linkRecoverPassword = authFullRoutingNames.RECOVER_PASSWORD;
@@ -93,17 +106,6 @@ export class LoginPage implements OnInit {
   token = '';
 
   encryptionService = inject(EncryptionService);
-
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly loginService: LoginService,
-    private readonly router: Router,
-    private readonly cookieService: CookieService,
-    private readonly storageService: StorageService,
-    private readonly tracking: TrackingService,
-    private readonly store: Store,
-    private readonly messageService: MessageService,
-  ) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -168,7 +170,7 @@ export class LoginPage implements OnInit {
     const password = this.f.psw.value;
 
     const actionParams: Partial<ActionEventProperties> =
-      this.buildTrackingParams(ruc, this.passwordControl.unmasked);
+      this.buildTrackingParams(ruc, this.passwordControl().unmasked);
     this.tracking.setRuc(ruc);
 
     try {

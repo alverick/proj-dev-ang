@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { action } from '@storybook/addon-actions';
 import { applicationConfig, moduleMetadata } from '@storybook/angular';
+import { action } from 'storybook/actions';
 
 import { ValidationDefaultsComponent } from '../../../../shared/components/validation-defaults/validation-defaults.component';
 import { errorRegisterAuth } from '../../../../shared/constants/company-errors';

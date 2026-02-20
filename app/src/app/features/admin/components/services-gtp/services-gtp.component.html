@@ -1,8 +1,8 @@
 <form [formGroup]="frm" novalidate (submit)="onSubmitServicio()">
   <div class="form-row tw-flex tw-gap-4">
-    <cs-label-control class="tw-w-full" formControlName="nombre">
-      Nombre del servicio
-      <textarea
+    <cs-label-control class="tw-w-full" formControlName="nombre"
+      ><ng-container label> Nombre del servicio </ng-container
+      ><textarea
         control
         cols="30"
         rows="1"
@@ -15,8 +15,9 @@
     @if (RadioAprovveName()) {
       <div class="form-group tw-w-40 tw-shrink-0 tw-pr-2">
         <div class="form-elm tw-flex tw-items-center tw-gap-4 tw-pt-10">
-          <cs-label-control [onlyControl]="true" class="tw-w-full">
-            <p-radioButton
+          <cs-label-control [onlyControl]="true" class="tw-w-full"
+            ><ng-container label> </ng-container
+            ><p-radioButton
               name="NewName"
               value="S"
               formControlName="NewName"
@@ -27,8 +28,9 @@
               </div>
             </ng-container>
           </cs-label-control>
-          <cs-label-control [onlyControl]="true" class="tw-w-full">
-            <p-radioButton
+          <cs-label-control [onlyControl]="true" class="tw-w-full"
+            ><ng-container label> </ng-container
+            ><p-radioButton
               name="NewName"
               value="N"
               formControlName="NewName"
@@ -54,7 +56,8 @@
   </div>
   <div class="form-row tw-flex tw-gap-4">
     <cs-label-control class="tw-w-full" formControlName="nameCod"
-      >Código deudor<input
+      ><ng-container label>Código deudor</ng-container
+      ><input
         type="text"
         class="tw-w-full"
         pInputText
@@ -65,8 +68,9 @@
     @if (RadioAprovveNameCod()) {
       <div class="form-group tw-w-40 tw-shrink-0 tw-pr-2">
         <div class="form-elm tw-flex tw-items-center tw-gap-4 tw-pt-10">
-          <cs-label-control [onlyControl]="true" class="tw-w-full">
-            <p-radioButton
+          <cs-label-control [onlyControl]="true" class="tw-w-full"
+            ><ng-container label> </ng-container
+            ><p-radioButton
               name="NewNameCod"
               value="S"
               formControlName="NewNameCod"
@@ -77,8 +81,9 @@
               </div>
             </ng-container>
           </cs-label-control>
-          <cs-label-control [onlyControl]="true" class="tw-w-full">
-            <p-radioButton
+          <cs-label-control [onlyControl]="true" class="tw-w-full"
+            ><ng-container label> </ng-container
+            ><p-radioButton
               name="NewNameCod"
               value="N"
               formControlName="NewNameCod"
@@ -183,8 +188,9 @@
     <div
       class="form-elm tw-flex tw-items-center tw-justify-items-start tw-gap-4 tw-pt-2"
     >
-      <cs-label-control [onlyControl]="true">
-        <p-radioButton
+      <cs-label-control [onlyControl]="true"
+        ><ng-container label> </ng-container
+        ><p-radioButton
           name="pagoPartes"
           value="S"
           formControlName="pagoPartes"
@@ -195,8 +201,9 @@
           </div>
         </ng-container>
       </cs-label-control>
-      <cs-label-control [onlyControl]="true">
-        <p-radioButton
+      <cs-label-control [onlyControl]="true"
+        ><ng-container label> </ng-container
+        ><p-radioButton
           name="pagoPartes"
           value="N"
           formControlName="pagoPartes"
@@ -214,8 +221,9 @@
     <div
       class="form-elm tw-flex tw-items-center tw-justify-items-start tw-gap-4 tw-pt-2"
     >
-      <cs-label-control [onlyControl]="true">
-        <p-radioButton
+      <cs-label-control [onlyControl]="true"
+        ><ng-container label> </ng-container
+        ><p-radioButton
           name="cobraMora"
           value="S"
           formControlName="cobraMora"
@@ -226,8 +234,9 @@
           </div>
         </ng-container>
       </cs-label-control>
-      <cs-label-control [onlyControl]="true">
-        <p-radioButton
+      <cs-label-control [onlyControl]="true"
+        ><ng-container label> </ng-container
+        ><p-radioButton
           name="cobraMora"
           value="N"
           formControlName="cobraMora"
@@ -263,7 +272,9 @@
             </div>
           }
           @if (f.tipoMora.value === 'P') {
-            <div class="data">Porcentaje: {{ f.monto.value }} %</div>
+            <div class="data">
+              Porcentaje: {{ f.porcentaje.value | number: '1.2-2' }} %
+            </div>
           }
         </div>
       }

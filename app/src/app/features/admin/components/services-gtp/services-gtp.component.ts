@@ -1,10 +1,11 @@
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import {
   Component,
-  EventEmitter,
+  inject,
   Input,
+  input,
   type OnInit,
-  Output,
+  output,
 } from '@angular/core';
 import {
   FormsModule,
@@ -16,9 +17,9 @@ import {
 } from '@angular/forms';
 import { ButtonDirective } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { Ripple } from 'primeng/ripple';
+import { TextareaModule } from 'primeng/textarea';
 import { isNil } from 'ramda';
 
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
@@ -35,20 +36,23 @@ import { type CompanyAccounts } from '../../../../shared/services/company.servic
 @Component({
   selector: 'cs-services-gtp',
   templateUrl: './services-gtp.component.html',
-  standalone: true,
   imports: [
     FormsModule,
     ReactiveFormsModule,
     LabelControlComponent,
-    InputTextareaModule,
+    TextareaModule,
     RadioButtonModule,
     InputTextModule,
     ButtonDirective,
     Ripple,
     CurrencyPipe,
+    DecimalPipe,
   ],
 })
 export class ServicesGTPComponent implements OnInit {
+  private readonly fb = inject(UntypedFormBuilder);
+  private readonly afiliacionService = inject(AfiliacionService);
+
   codDeudor = this.afiliacionService.codDeudor;
   tiposDato = this.afiliacionService.tipoDato;
   tiposPago = this.afiliacionService.tipoPago;
@@ -65,20 +69,15 @@ export class ServicesGTPComponent implements OnInit {
   update = false;
   useAgencyChannel = false;
 
-  @Input() public idCompany: number;
+  public readonly idCompany = input<number>(undefined);
 
   @Input() set service(value: DataServiceGTP) {
     this._service = value;
   }
 
-  @Output() grabar = new EventEmitter<any>();
+  readonly grabar = output<any>();
   submittedRequired = false;
   frm: UntypedFormGroup;
-
-  constructor(
-    private readonly fb: UntypedFormBuilder,
-    private readonly afiliacionService: AfiliacionService,
-  ) {}
 
   ngOnInit() {
     if (isNil(this._service.res)) {
@@ -231,7 +230,7 @@ export class ServicesGTPComponent implements OnInit {
         Validators.required,
       ],
     });
-    this.afiliacionService.idCompany = this.idCompany;
+    this.afiliacionService.idCompany = this.idCompany();
     this.changeMora(false);
     this.afiliacionService.GetCards().subscribe((d) => {
       this.cuentas = d;

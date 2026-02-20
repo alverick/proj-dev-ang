@@ -129,8 +129,9 @@
                 @case ('emissionDate') {
                   <p-cellEditor>
                     <ng-template pTemplate="input">
-                      <p-calendar
+                      <p-date-picker
                         class="tw-w-full tw-text-sm"
+                        inputStyleClass="tw-w-full tw-text-sm"
                         [(ngModel)]="rowData.emissionDate"
                         appendTo="body"
                         [showIcon]="true"
@@ -138,7 +139,7 @@
                         [minDate]="minDate"
                         [maxDate]="maxDate"
                         required
-                      ></p-calendar>
+                      ></p-date-picker>
                     </ng-template>
                     <ng-template pTemplate="output">{{
                       rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-'
@@ -149,8 +150,9 @@
                   @if (col.editable && rowData[col.checkEditableField]) {
                     <p-cellEditor>
                       <ng-template pTemplate="input">
-                        <p-calendar
+                        <p-date-picker
                           class="tw-w-full"
+                          inputStyleClass="tw-w-full"
                           [(ngModel)]="rowData.dueDate"
                           appendTo="body"
                           [showIcon]="true"
@@ -158,7 +160,7 @@
                           [maxDate]="maxDate"
                           dateFormat="dd/mm/y"
                           required
-                        ></p-calendar>
+                        ></p-date-picker>
                       </ng-template>
                       <ng-template pTemplate="output">{{
                         rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-'
@@ -316,7 +318,7 @@
           }
         </tr>
       </ng-template>
-      <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+      <ng-template #expandedrow let-rowData let-columns="columns">
         <tr class="lg:tw-hidden">
           <td [attr.colspan]="2">
             <div class="">
@@ -385,17 +387,17 @@
                   </td>
                 </tr>
                 <tr class="tw-text-primary-green-1">
-                  <td>
-                    <button
-                      pButton
-                      pRipple
-                      class="p-button-text"
-                      (click)="openDialog(rowData)"
-                    >
-                      Editar
-                    </button>
-                  </td>
-                  <td class="tw-cursor-pointer tw-text-primary-green-1">
+                  <td colspan="2" class="tw-text-center">
+                    @if (setStatusRow(rowData).canEdit) {
+                      <button
+                        pButton
+                        pRipple
+                        class="p-button-text"
+                        (click)="openDialog(rowData)"
+                      >
+                        Editar
+                      </button>
+                    }
                     <button
                       pButton
                       pRipple
@@ -426,6 +428,7 @@
   [(visible)]="displayDialog"
   [modal]="true"
   [style]="{ width: '300px' }"
+  [draggable]="false"
   (onHide)="onCancel('Cerrar')"
   class="modal-edit"
 >
@@ -456,9 +459,10 @@
             <label for="year" class="tw-m-0">F. emisión</label>
           </div>
           <div class="field">
-            <p-calendar
+            <p-date-picker
               id="year"
               class="tw-w-full"
+              inputStyleClass="tw-w-full"
               [(ngModel)]="editRowData.emissionDate"
               dateFormat="dd/mm/y"
               [touchUI]="true"
@@ -467,7 +471,7 @@
               [maxDate]="maxDate"
               appendTo="body"
               required
-            ></p-calendar>
+            ></p-date-picker>
           </div>
         </div>
       }
@@ -477,9 +481,10 @@
             <label for="brand" class="tw-m-0">F. vcto.</label>
           </div>
           <div class="field">
-            <p-calendar
+            <p-date-picker
               id="brand"
               class="tw-w-full"
+              inputStyleClass="tw-w-full"
               [(ngModel)]="editRowData.dueDate"
               dateFormat="dd/mm/y"
               [touchUI]="true"
@@ -488,7 +493,7 @@
               [maxDate]="maxDate"
               appendTo="body"
               required
-            ></p-calendar>
+            ></p-date-picker>
           </div>
         </div>
       }

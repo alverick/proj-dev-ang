@@ -1,15 +1,7 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockProvider } from 'ng-mocks';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
-import {
-  errorRegisterAuth,
-  errorsRegisterForm,
-} from '../../../../shared/constants/company-errors';
-import { CompanyService } from '../../../../shared/services';
-import { LoginService } from '../../../../shared/services/login.service';
-import { NotifyService } from '../../../../shared/services/notify.service';
-import { StorageService } from '../../../../shared/services/storage.service';
+import { errorRegisterAuth, errorsRegisterForm } from '../../../auth/constants';
 import { CompanyConfigurationService } from '../../services';
 import { CompanyUpdateFormComponent } from './company-update-form.component';
 
@@ -18,29 +10,73 @@ describe('CompanyUpdateFormComponent', () => {
   let fixture: ComponentFixture<CompanyUpdateFormComponent>;
   let service: CompanyConfigurationService;
 
-  beforeEach(() => {
-    void TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [CompanyUpdateFormComponent, ReactiveFormsModule],
       providers: [
-        CompanyService,
-        CompanyConfigurationService,
-        MockProvider(LoginService),
-        NotifyService,
-        StorageService,
+        {
+          provide: CompanyConfigurationService,
+          useValue: {
+            companyForm: new FormBuilder().group({
+              name: [''],
+              ruc: [''],
+              entry: [''],
+              entryName: [''],
+              email: [''],
+              movilNumber: [''],
+              movilOperator: [''],
+              documentType: [''],
+              documentNumber: [''],
+            }),
+          },
+        },
+        FormBuilder,
       ],
     }).compileComponents();
-  });
 
-  beforeEach(() => {
-    service = TestBed.inject(CompanyConfigurationService);
     fixture = TestBed.createComponent(CompanyUpdateFormComponent);
     component = fixture.componentInstance;
-    component.form = service.companyForm;
-    component.errorMessages = { ...errorsRegisterForm, ...errorRegisterAuth };
+    service = TestBed.inject(CompanyConfigurationService);
+
+    fixture.componentRef.setInput('form', service.companyForm);
+    fixture.componentRef.setInput('errorMessages', {
+      ...errorsRegisterForm,
+      ...errorRegisterAuth,
+    });
+    fixture.componentRef.setInput('operators', []);
+    fixture.componentRef.setInput('documentTypes', []);
+    fixture.componentRef.setInput('submitted', false);
+    fixture.componentRef.setInput('inReview', false);
+    fixture.componentRef.setInput('nameInReview', '');
+
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should show document fields when documentType and documentNumber are not nil', () => {
+    component.form().patchValue({
+      documentType: 'DNI',
+      documentNumber: '12345678',
+    });
+    component.ngOnInit();
+    expect(component.showDocumentFields).toBe(true);
+  });
+
+  it('should not show document fields when documentType and documentNumber are nil', () => {
+    component.form().patchValue({
+      documentType: null,
+      documentNumber: null,
+    });
+    component.ngOnInit();
+    expect(component.showDocumentFields).toBe(false);
+  });
+
+  it('should emit showPanel on openPanel', () => {
+    const showPanelSpy = jest.spyOn(component.showPanel, 'emit');
+    component.openPanel();
+    expect(showPanelSpy).toHaveBeenCalledWith(true);
   });
 });

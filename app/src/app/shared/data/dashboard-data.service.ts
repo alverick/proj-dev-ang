@@ -3,7 +3,7 @@ import {
   type HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { type Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -22,7 +22,7 @@ export interface SendReport {
 
 @Injectable()
 export class DashboardDataService {
-  constructor(private readonly http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   getAmounts(filterData: HttpParams): Observable<CollectAmount[]> {
     const url = `${environment.END_POINT}/dashBoard/collectAmount`;

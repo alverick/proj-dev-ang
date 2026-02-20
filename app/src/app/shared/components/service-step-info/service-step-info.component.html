@@ -1,5 +1,5 @@
 <form
-  [formGroup]="form"
+  [formGroup]="form()"
   novalidate
   (submit)="onSubmit()"
   autocomplete="off"
@@ -16,8 +16,9 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="name"
-          [errorMessages]="errorMessages?.name"
-          >Nombre del servicio<input
+          [errorMessages]="errorMessages()?.name"
+          ><ng-container label>Nombre del servicio</ng-container
+          ><input
             type="text"
             class="tw-w-full"
             pInputText
@@ -34,16 +35,19 @@
       <cs-label-control
         class="tw-w-full"
         formControlName="account"
-        [errorMessages]="errorMessages?.account"
-        >Selecciona la cuenta que se asociará al servicio<p-dropdown
-          [options]="accounts"
+        [errorMessages]="errorMessages()?.account"
+        ><ng-container label
+          >Selecciona la cuenta que se asociará al servicio</ng-container
+        ><p-select
+          control
+          [options]="accounts()"
           optionLabel="number"
           optionValue="id"
           class="tw-w-full"
           styleClass="tw-w-full"
           formControlName="account"
           placeholder="Selecciona"
-        ></p-dropdown>
+        ></p-select>
       </cs-label-control>
     </div>
     <div class="form-controls tw-max-w-xl">
@@ -56,8 +60,8 @@
           [onlyControl]="true"
           class="tw-w-full"
           formControlName="useAppWeb"
-        >
-          <p-checkbox
+          ><ng-container label> </ng-container
+          ><p-checkbox
             class="tw-mr-1"
             [binary]="true"
             formControlName="useAppWeb"
@@ -78,8 +82,8 @@
           [onlyControl]="true"
           class="tw-w-full"
           formControlName="useAgent"
-        >
-          <p-checkbox
+          ><ng-container label> </ng-container
+          ><p-checkbox
             class="tw-mr-1"
             [binary]="true"
             formControlName="useAgent"
@@ -117,11 +121,11 @@
   <div
     class="tw-mt-10 tw-flex tw-gap-2"
     [ngClass]="{
-      'tw-justify-between': showCancel,
-      'tw-justify-end': !showCancel,
+      'tw-justify-between': showCancel(),
+      'tw-justify-end': !showCancel(),
     }"
   >
-    @if (showCancel) {
+    @if (showCancel()) {
       <button
         pButton
         pRipple

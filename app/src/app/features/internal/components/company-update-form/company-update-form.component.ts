@@ -1,27 +1,25 @@
 import { KeyValuePipe } from '@angular/common';
 import {
   Component,
-  EventEmitter,
-  Input,
+  input,
   type OnChanges,
   type OnInit,
-  Output,
+  output,
   type SimpleChanges,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import {
   ValidationErrorDirective,
   ValidationErrorsComponent,
 } from 'ngx-valdemort';
-import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { Select } from 'primeng/select';
 import { isNil, pathEq } from 'ramda';
 
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { InputTrimSpacesDirective } from '../../../../shared/directives/input-trim-spaces.directive';
-import { InputWithoutSpacesDirective } from '../../../../shared/directives/input-without-spaces.directive';
 import { CompanyForm } from '../../../../shared/models/company-forms';
 import {
   IErrorMessages,
@@ -32,48 +30,47 @@ import { namePattern } from '../../../../shared/validators/company-validators';
 @Component({
   selector: 'cs-company-update-form',
   templateUrl: './company-update-form.component.html',
-  standalone: true,
   imports: [
     FormsModule,
     ReactiveFormsModule,
     LabelControlComponent,
     InputTextModule,
-    InputWithoutSpacesDirective,
     KeyFilterModule,
-    DropdownModule,
     ValidationErrorsComponent,
     ValidationErrorDirective,
     InputTrimSpacesDirective,
     KeyValuePipe,
+    Select,
   ],
 })
 export class CompanyUpdateFormComponent implements OnInit, OnChanges {
   documentNumberMax = '8';
   documentNumberFilter: string | RegExp = 'int';
-  @Input() operators = [];
-  @Input() documentTypes = [];
-  @Input() errorMessages: IErrorMessages;
-  @Input() form: SimpleModelFormGroup<CompanyForm>;
-  @Input() submitted = false;
-  @Input() inReview = false;
-  @Input() nameInReview = '';
-  @Output() showPanel = new EventEmitter<any>();
-  @ViewChild('formElm') htmlForm: NgForm;
+  readonly operators = input([]);
+  readonly documentTypes = input([]);
+  readonly errorMessages = input<IErrorMessages>(undefined);
+  readonly form = input<SimpleModelFormGroup<CompanyForm>>(undefined);
+  readonly submitted = input(false);
+  readonly inReview = input(false);
+  readonly nameInReview = input('');
+  readonly showPanel = output<any>();
+  readonly htmlForm = viewChild<NgForm>('formElm');
   showDocumentFields = false;
   protected readonly namePattern = namePattern;
 
   ngOnInit() {
-    const { documentType, documentNumber } = this.form.getRawValue();
+    const { documentType, documentNumber } = this.form().getRawValue();
     this.showDocumentFields = !(isNil(documentType) && isNil(documentNumber));
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (pathEq(true, ['submitted', 'currentValue'], changes) && this.htmlForm) {
-      this.htmlForm.onSubmit(null);
+    const htmlForm = this.htmlForm();
+    if (pathEq(true, ['submitted', 'currentValue'], changes) && htmlForm) {
+      htmlForm.onSubmit(null);
     }
   }
 
   openPanel() {
-    this.showPanel.emit();
+    this.showPanel.emit(true);
   }
 }

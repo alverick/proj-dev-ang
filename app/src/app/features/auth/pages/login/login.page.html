@@ -13,9 +13,11 @@
           class="tw-w-full"
           formControlName="ruc"
           [errorMessages]="errorMessages.ruc"
-          ><i class="pi pi-user tw-text-primary-green-1"></i>
-          RUC
-          <div class="p-inputgroup" control>
+          ><ng-container label
+            ><i class="pi pi-user tw-text-primary-green-1"></i>
+            RUC</ng-container
+          >
+          <p-inputgroup class="p-inputgroup" control>
             <input
               class="tw-w-full"
               pInputText
@@ -25,8 +27,8 @@
               formControlName="ruc"
               autocomplete="off"
             />
-            <span class="p-inputgroup-addon tw-gap-1"
-              ><p-checkbox
+            <p-inputgroup-addon class="tw-flex tw-gap-1 tw-px-4">
+              <p-checkbox
                 class="tw-ml-1"
                 [binary]="true"
                 formControlName="rememberMe"
@@ -35,9 +37,9 @@
               </p-checkbox
               ><label for="remember" class="tw-m-0 tw-mr-1 tw-text-xs"
                 >Recordar</label
-              ></span
+              ></p-inputgroup-addon
             >
-          </div>
+          </p-inputgroup>
         </cs-label-control>
       </div>
       <div class="form-elm">
@@ -45,8 +47,10 @@
           class="tw-w-full"
           formControlName="psw"
           [errorMessages]="errorMessages.password"
-          ><i class="pi pi-lock tw-text-primary-green-1"></i>
-          Contraseña
+          ><ng-container label
+            ><i class="pi pi-lock tw-text-primary-green-1"></i>
+            Contraseña</ng-container
+          >
           <p-password
             class="tw-w-full"
             styleClass="tw-w-full"

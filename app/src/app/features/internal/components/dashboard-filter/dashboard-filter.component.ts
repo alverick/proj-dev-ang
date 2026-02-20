@@ -13,13 +13,20 @@ import {
   FormBuilder,
   type FormControl,
   type FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ButtonDirective } from 'primeng/button';
+import { DatePicker } from 'primeng/datepicker';
+import { MultiSelect } from 'primeng/multiselect';
+import { Ripple } from 'primeng/ripple';
+import { Select } from 'primeng/select';
 import { has, path, pipe, pluck, uniq } from 'ramda';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
+import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import {
   currencies,
   type Currency,
@@ -60,6 +67,15 @@ interface FilterForm {
 @Component({
   selector: 'cs-dashboard-filter',
   templateUrl: './dashboard-filter.component.html',
+  imports: [
+    LabelControlComponent,
+    ReactiveFormsModule,
+    Select,
+    MultiSelect,
+    DatePicker,
+    ButtonDirective,
+    Ripple,
+  ],
 })
 export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
   /**

@@ -15,8 +15,10 @@
             class="tw-w-full"
             formControlName="contrasena"
             [errorMessages]="errorMessages.password"
-            ><i class="pi pi-lock tw-text-primary-green-1"></i>
-            Nueva contraseña
+            ><ng-container label
+              ><i class="pi pi-lock tw-text-primary-green-1"></i> Nueva
+              contraseña</ng-container
+            >
             <p-password
               class="tw-w-full"
               styleClass="tw-w-full"
@@ -43,8 +45,10 @@
             class="tw-w-full"
             formControlName="repcontrasena"
             [errorMessages]="errorMessages.passwordConfirm"
-            ><i class="pi pi-lock tw-text-primary-green-1"></i> Repite la
-            contraseña
+            ><ng-container label
+              ><i class="pi pi-lock tw-text-primary-green-1"></i> Repite la
+              contraseña</ng-container
+            >
             <p-password
               class="tw-w-full"
               styleClass="tw-w-full"

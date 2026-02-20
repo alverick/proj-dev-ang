@@ -1,5 +1,5 @@
 <form
-  [formGroup]="form"
+  [formGroup]="form()"
   novalidate
   (submit)="onSubmit()"
   autocomplete="off"
@@ -10,14 +10,15 @@
   >
     <h2 class="tw-mb-7 tw-text-2xl tw-font-medium">Configura tu servicio</h2>
     <div class="form-controls tw-max-w-xl">
-      @if (showAllTypes) {
+      @if (showAllTypes()) {
         <div class="form-elm tw-mb-5">
           <div class="tw-font-medium">
             Selecciona la modalidad del servicio : <br />
             ¿Qué datos ingresarás para identificar a tus clientes?
           </div>
-          <cs-label-control [onlyControl]="true" class="tw-w-full">
-            <p-radioButton
+          <cs-label-control [onlyControl]="true" class="tw-w-full"
+            ><ng-container label> </ng-container
+            ><p-radioButton
               [value]="serviceTypes.withoutData"
               formControlName="dataType"
             ></p-radioButton>
@@ -28,8 +29,9 @@
               <div class="sub">No ingresaré ninguna información.</div>
             </ng-container>
           </cs-label-control>
-          <cs-label-control [onlyControl]="true" class="tw-w-full">
-            <p-radioButton
+          <cs-label-control [onlyControl]="true" class="tw-w-full"
+            ><ng-container label> </ng-container
+            ><p-radioButton
               [value]="serviceTypes.partial"
               formControlName="dataType"
             ></p-radioButton>
@@ -40,8 +42,9 @@
               <div class="sub">Código identificador y nombre</div>
             </ng-container>
           </cs-label-control>
-          <cs-label-control [onlyControl]="true" class="tw-w-full">
-            <p-radioButton
+          <cs-label-control [onlyControl]="true" class="tw-w-full"
+            ><ng-container label> </ng-container
+            ><p-radioButton
               [value]="serviceTypes.complete"
               formControlName="dataType"
             ></p-radioButton>
@@ -59,14 +62,17 @@
           <cs-label-control
             class="tw-w-full"
             formControlName="debtorCode"
-            [errorMessages]="errorMessages.debtorCode"
-            >¿Con qué código identificarás a tus clientes?<p-dropdown
-              [options]="debtorCodeOptions"
+            [errorMessages]="errorMessages().debtorCode"
+            ><ng-container label
+              >¿Con qué código identificarás a tus clientes?</ng-container
+            ><p-select
+              control
+              [options]="debtorCodeOptions()"
               class="tw-w-full"
               styleClass="tw-w-full"
               formControlName="debtorCode"
               placeholder="Selecciona"
-            ></p-dropdown>
+            ></p-select>
           </cs-label-control>
         </div>
       }
@@ -75,8 +81,10 @@
           <cs-label-control
             class="tw-w-full"
             formControlName="debtorCodeCustom"
-            [errorMessages]="errorMessages.debtorCodeCustom"
-            >¿Con qué código identificarás a tus clientes?
+            [errorMessages]="errorMessages().debtorCodeCustom"
+            ><ng-container label
+              >¿Con qué código identificarás a tus clientes?
+            </ng-container>
             <div class="control p-inputgroup tw-w-full">
               <input
                 type="text"
@@ -110,11 +118,11 @@
       @if (showDebtFields) {
         <cs-service-debt-form
           [form]="debtForm"
-          [errorMessages]="errorMessages"
-          [paymentTypeOptions]="paymentTypeOptions"
-          [currencyOptions]="currencyOptions"
-          [chargeTypeOptions]="chargeTypeOptions"
-          [interestTypeOptions]="interestTypeOptions"
+          [errorMessages]="errorMessages()"
+          [paymentTypeOptions]="paymentTypeOptions()"
+          [currencyOptions]="currencyOptions()"
+          [chargeTypeOptions]="chargeTypeOptions()"
+          [interestTypeOptions]="interestTypeOptions()"
           [currency]="currencySymbol"
           [submitted]="submittedForm"
         ></cs-service-debt-form>
@@ -124,11 +132,11 @@
   <div
     class="tw-mt-10 tw-flex tw-gap-2"
     [ngClass]="{
-      'tw-justify-between': showCancel,
-      'tw-justify-end': !showCancel,
+      'tw-justify-between': showCancel(),
+      'tw-justify-end': !showCancel(),
     }"
   >
-    @if (showCancel) {
+    @if (showCancel()) {
       <button
         pButton
         pRipple

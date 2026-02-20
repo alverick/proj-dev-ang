@@ -18,7 +18,7 @@ import {
 } from '@angular/forms';
 import { FormModel } from 'ngx-mf';
 import { ButtonDirective } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
+import { DatePicker } from 'primeng/datepicker';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -64,12 +64,10 @@ export interface Debt {
   selector: 'cs-debt-form',
   templateUrl: './debt.component.html',
   providers: [CurrencyPipe, DatePipe],
-  standalone: true,
   imports: [
     FormsModule,
     ReactiveFormsModule,
     LabelControlComponent,
-    CalendarModule,
     InputTextModule,
     KeyFilterModule,
     InputNumberModule,
@@ -78,9 +76,18 @@ export interface Debt {
     IconFieldModule,
     InputIconModule,
     MessageAlertComponent,
+    DatePicker,
   ],
 })
 export class DebtComponent implements OnInit {
+  dialogRef = inject<DynamicDialogRef<DebtComponent>>(DynamicDialogRef);
+  private readonly homeService = inject(HomeService);
+  excelService = inject(ExcelService);
+  private readonly tracking = inject(TrackingService);
+  config = inject(DynamicDialogConfig);
+  private readonly currencyPipe = inject(CurrencyPipe);
+  fb = inject(FormBuilder);
+
   useAmountLimits = false;
   public grabado = false;
   public minDate = debtMinDate;
@@ -160,16 +167,6 @@ export class DebtComponent implements OnInit {
   };
   formDirective = viewChild<FormGroupDirective>('formDirective');
   datePipe: DatePipe = inject(DatePipe);
-
-  constructor(
-    public dialogRef: DynamicDialogRef<DebtComponent>,
-    private readonly homeService: HomeService,
-    public excelService: ExcelService,
-    private readonly tracking: TrackingService,
-    public config: DynamicDialogConfig,
-    private readonly currencyPipe: CurrencyPipe,
-    public fb: FormBuilder,
-  ) {}
 
   ngOnInit(): void {
     this.setPartialMode();

@@ -1,4 +1,4 @@
-import { Component, type OnDestroy, type OnInit } from '@angular/core';
+import { Component, inject, type OnDestroy, type OnInit } from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -36,18 +36,20 @@ import { CompanyServicesService } from '../../services';
   imports: [SidebarServiceComponent, RouterOutlet],
 })
 export class ServicesMainPage implements OnInit, OnDestroy {
+  protected router = inject(Router);
+  companyServices = inject(CompanyServicesService);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly servicesFormsService = inject(ServicesFormsService);
+
   destroy$ = new Subject();
   position = 2;
   limitsAmountMax: AmountLimit[] = null;
   useAmountLimits = false;
   currency: CurrencyWithLimit = null;
 
-  constructor(
-    protected router: Router,
-    public companyServices: CompanyServicesService,
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly servicesFormsService: ServicesFormsService,
-  ) {
+  constructor() {
+    const router = this.router;
+
     router.events
       .pipe(
         map((evt) => (evt instanceof Scroll ? evt.routerEvent : evt)),

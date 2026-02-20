@@ -6,7 +6,8 @@
 >
   <div class="form-row">
     <cs-label-control class="tw-w-full" formControlName="ruc"
-      >RUC de la empresa<input
+      ><ng-container label>RUC de la empresa</ng-container
+      ><input
         type="text"
         class="tw-w-full"
         pInputText
@@ -17,9 +18,9 @@
     </cs-label-control>
   </div>
   <div class="form-row tw-flex tw-gap-4">
-    <cs-label-control class="tw-w-full" formControlName="newName">
-      Nuevo Nombre de la empresa
-      <textarea
+    <cs-label-control class="tw-w-full" formControlName="newName"
+      ><ng-container label> Nuevo Nombre de la empresa </ng-container
+      ><textarea
         control
         cols="30"
         rows="1"
@@ -31,13 +32,14 @@
       ></textarea>
     </cs-label-control>
     @if (
-      enterprise.newNameGTPStatus === statusCodes.NEW ||
-      enterprise.newNameGTPStatus === statusCodes.EDITED
+      enterprise().newNameGTPStatus === statusCodes.NEW ||
+      enterprise().newNameGTPStatus === statusCodes.EDITED
     ) {
       <div class="form-group tw-w-40 tw-shrink-0 tw-pr-2">
         <div class="form-elm tw-flex tw-items-center tw-gap-4 tw-pt-10">
-          <cs-label-control [onlyControl]="true" class="tw-w-full">
-            <p-radioButton
+          <cs-label-control [onlyControl]="true" class="tw-w-full"
+            ><ng-container label> </ng-container
+            ><p-radioButton
               name="NewNameApproved"
               value="S"
               formControlName="NewNameApproved"
@@ -48,8 +50,9 @@
               </div>
             </ng-container>
           </cs-label-control>
-          <cs-label-control [onlyControl]="true" class="tw-w-full">
-            <p-radioButton
+          <cs-label-control [onlyControl]="true" class="tw-w-full"
+            ><ng-container label> </ng-container
+            ><p-radioButton
               name="NewNameApproved"
               value="N"
               formControlName="NewNameApproved"
@@ -64,8 +67,8 @@
         @if (
           formGroup.get('NewNameApproved').invalid &&
           formGroup.get('NewNameApproved').hasError('required') &&
-          (enterprise.newNameGTPStatus === statusCodes.NEW ||
-            enterprise.newNameGTPStatus === statusCodes.EDITED)
+          (enterprise().newNameGTPStatus === statusCodes.NEW ||
+            enterprise().newNameGTPStatus === statusCodes.EDITED)
         ) {
           <div class="tw-whitespace-nowrap tw-text-xxs tw-text-error">
             Debe seleccionar una opción
@@ -76,7 +79,8 @@
   </div>
   <div class="form-row">
     <cs-label-control class="tw-w-full" formControlName="entry"
-      >Rubro<input
+      ><ng-container label>Rubro</ng-container
+      ><input
         control
         type="text"
         class="tw-w-full"
@@ -87,7 +91,8 @@
   </div>
   <div class="form-row">
     <cs-label-control class="tw-w-full" formControlName="email"
-      >E-mail<input
+      ><ng-container label>E-mail</ng-container
+      ><input
         control
         type="email"
         class="tw-w-full"
@@ -101,7 +106,8 @@
   </div>
   <div class="form-row">
     <cs-label-control class="tw-w-full" formControlName="movilNumber"
-      >Teléfono o celular<input
+      ><ng-container label>Teléfono o celular</ng-container
+      ><input
         control
         type="text"
         class="tw-w-full"
@@ -112,7 +118,8 @@
   </div>
   <div class="form-row">
     <cs-label-control class="tw-w-full" formControlName="movilOperator"
-      >Operador<input
+      ><ng-container label>Operador</ng-container
+      ><input
         control
         type="text"
         class="tw-w-full"
@@ -122,9 +129,9 @@
     </cs-label-control>
   </div>
   @if (
-    enterprise.newNameGTPStatus === statusCodes.NEW ||
-    enterprise.newNameGTPStatus === statusCodes.APPROVED ||
-    enterprise.newNameGTPStatus === statusCodes.EDITED
+    enterprise().newNameGTPStatus === statusCodes.NEW ||
+    enterprise().newNameGTPStatus === statusCodes.APPROVED ||
+    enterprise().newNameGTPStatus === statusCodes.EDITED
   ) {
     <div class="tw-mt-4 tw-pb-4 tw-text-center">
       <button

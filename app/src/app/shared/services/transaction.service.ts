@@ -13,11 +13,11 @@ import { type DebstFilter } from '../models/debts-filter.model';
 
 @Injectable()
 export class TransactionService {
+  http = inject(HttpClient);
+
   private readonly URI_API: string = environment.END_POINT;
   private lastFilter: DebstFilter = null;
   datePipe = inject(DatePipe);
-
-  constructor(public http: HttpClient) {}
 
   public pageMessage = 'Mostrando 0 de 0 elementos';
   public debtItemsOriginal: DebtsPagedList = {

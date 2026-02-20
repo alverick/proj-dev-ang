@@ -3,7 +3,7 @@ import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockProvider } from 'ng-mocks';
 import { LoggerModule } from 'ngx-logger';
-import { SidebarModule } from 'primeng/sidebar';
+import { DrawerModule } from 'primeng/drawer';
 
 import { environment } from '../../../../../environments/environment';
 import {
@@ -30,7 +30,7 @@ describe('CompanyServicesPage', () => {
           disableConsoleLogging: false,
           enableSourceMaps: true,
         }),
-        SidebarModule,
+        DrawerModule,
         RouterTestingModule,
       ],
       providers: [

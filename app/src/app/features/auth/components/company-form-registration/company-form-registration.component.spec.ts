@@ -1,65 +1,93 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockProvider } from 'ng-mocks';
-import { LoggerModule } from 'ngx-logger';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { environment } from '../../../../../environments/environment';
-import { errorsRegisterForm } from '../../../../shared/constants/company-errors';
-import { IpInfoDataService } from '../../../../shared/data';
-import {
-  CompanyService,
-  DigitalDataService,
-  EnterpriseHeadingService,
-  ServicesFormsService,
-} from '../../../../shared/services';
-import { LoginService } from '../../../../shared/services/login.service';
-import { NotifyService } from '../../../../shared/services/notify.service';
-import { StorageService } from '../../../../shared/services/storage.service';
-import { AffiliationFormsService, AffiliationService } from '../../services';
+import { type ModelFormGroup } from '../../../../shared/models/forms';
+import { errorsRegisterForm } from '../../constants';
+import { type RegisterForm } from '../../services/affiliation-forms.service';
 import { CompanyFormRegistrationComponent } from './company-form-registration.component';
 
 describe('CompanyFormRegistrationComponent', () => {
   let component: CompanyFormRegistrationComponent;
   let fixture: ComponentFixture<CompanyFormRegistrationComponent>;
-  let service: AffiliationService;
+  let formBuilder: FormBuilder;
+  let mockRegisterForm: ModelFormGroup<RegisterForm>;
 
-  beforeEach(() => {
-    void TestBed.configureTestingModule({
-      declarations: [],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
-        LoggerModule.forRoot({
-          level: environment.logLevel,
-          serverLogLevel: environment.serverLogLevel,
-          disableConsoleLogging: false,
-          enableSourceMaps: true,
-        }),
+        CompanyFormRegistrationComponent,
+        ReactiveFormsModule,
+        NoopAnimationsModule,
       ],
-      providers: [
-        AffiliationFormsService,
-        AffiliationService,
-        MockProvider(LoginService),
-        CompanyService,
-        MockProvider(DigitalDataService),
-        EnterpriseHeadingService,
-        IpInfoDataService,
-        NotifyService,
-        ServicesFormsService,
-        StorageService,
-      ],
+      providers: [FormBuilder],
     }).compileComponents();
-  });
 
-  beforeEach(() => {
-    service = TestBed.inject(AffiliationService);
     fixture = TestBed.createComponent(CompanyFormRegistrationComponent);
     component = fixture.componentInstance;
-    component.registerForm = service.registerForm;
-    component.errorMessages = errorsRegisterForm;
+    formBuilder = TestBed.inject(FormBuilder);
+
+    mockRegisterForm = formBuilder.group({
+      documentType: ['DNI'],
+      documentNumber: [''],
+      ruc: [''],
+      email: [''],
+      emailConfirm: [''],
+      movilNumber: [''],
+      movilOperator: [''],
+    });
+
+    fixture.componentRef.setInput('registerForm', mockRegisterForm);
+    fixture.componentRef.setInput('errorMessages', errorsRegisterForm);
+    fixture.componentRef.setInput('operators', []);
+    fixture.componentRef.setInput('documentTypes', []);
+
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should set document number properties on init', () => {
+    const setDocumentNumberPropsSpy = jest.spyOn(
+      component,
+      'setDocumentNumberProps',
+    );
+    component.ngOnInit();
+    expect(setDocumentNumberPropsSpy).toHaveBeenCalled();
+  });
+
+  it('should update document number validators on document type change', () => {
+    const setDocumentNumberPropsSpy = jest.spyOn(
+      component,
+      'setDocumentNumberProps',
+    );
+    mockRegisterForm.get('documentType').setValue('CE');
+    expect(setDocumentNumberPropsSpy).toHaveBeenCalled();
+  });
+
+  it('should emit form value on submit when form is valid', () => {
+    const sendFormSpy = jest.spyOn(component.sendForm, 'emit');
+
+    mockRegisterForm.patchValue({
+      ruc: '12345678901',
+      email: 'test@example.com',
+      emailConfirm: 'test@example.com',
+      documentType: 'DNI',
+      documentNumber: '12345678',
+      movilOperator: 'CLARO',
+      movilNumber: '987654321',
+    });
+
+    component.onSubmit();
+    expect(sendFormSpy).toHaveBeenCalled();
+  });
+
+  it('should not emit form value on submit when form is invalid', () => {
+    const sendFormSpy = jest.spyOn(component.sendForm, 'emit');
+
+    component.onSubmit();
+    expect(sendFormSpy).not.toHaveBeenCalled();
   });
 });

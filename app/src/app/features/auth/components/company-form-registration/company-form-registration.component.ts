@@ -1,21 +1,15 @@
 import { KeyValuePipe } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  type OnInit,
-  Output,
-} from '@angular/core';
+import { Component, input, type OnInit, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   ValidationErrorDirective,
   ValidationErrorsComponent,
 } from 'ngx-valdemort';
 import { ButtonDirective } from 'primeng/button';
-import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule, KeyFilterPattern } from 'primeng/keyfilter';
 import { Ripple } from 'primeng/ripple';
+import { Select } from 'primeng/select';
 
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { InputTrimSpacesDirective } from '../../../../shared/directives/input-trim-spaces.directive';
@@ -28,12 +22,10 @@ import { type RegisterForm } from '../../services/affiliation-forms.service';
 @Component({
   selector: 'cs-company-form-registration',
   templateUrl: './company-form-registration.component.html',
-  standalone: true,
   imports: [
     FormsModule,
     ReactiveFormsModule,
     LabelControlComponent,
-    DropdownModule,
     InputTextModule,
     KeyFilterModule,
     ValidationErrorsComponent,
@@ -42,30 +34,34 @@ import { type RegisterForm } from '../../services/affiliation-forms.service';
     ButtonDirective,
     Ripple,
     KeyValuePipe,
+    Select,
   ],
 })
 export class CompanyFormRegistrationComponent implements OnInit {
-  @Output() sendForm = new EventEmitter<Partial<RegisterForm>>();
+  readonly sendForm = output<Partial<RegisterForm>>();
 
   text = '';
   documentNumberMax = '8';
   documentNumberFilter: KeyFilterPattern | RegExp = 'int';
   blockSpecial = /^[a-z0-9]+$/i;
-  @Input() registerForm: ModelFormGroup<RegisterForm>;
-  @Input() operators = [];
-  @Input() documentTypes = [];
-  @Input() errorMessages: IErrorMessages;
+  readonly registerForm = input<ModelFormGroup<RegisterForm>>(undefined);
+  readonly operators = input([]);
+  readonly documentTypes = input([]);
+  readonly errorMessages = input<IErrorMessages>(undefined);
 
   ngOnInit() {
     this.setDocumentNumberProps();
-    this.registerForm?.get('documentType').valueChanges.subscribe(() => {
-      this.registerForm.get('documentNumber').setValue('');
-      this.setDocumentNumberProps();
-    });
+    this.registerForm()
+      ?.get('documentType')
+      .valueChanges.subscribe(() => {
+        this.registerForm().get('documentNumber').setValue('');
+        this.setDocumentNumberProps();
+      });
   }
 
   setDocumentNumberProps() {
-    const documentType = this.registerForm?.value.documentType;
+    const registerForm = this.registerForm();
+    const documentType = registerForm?.value.documentType;
     const isDNI = documentType === 'DNI';
     const isCE = documentType === 'CE';
     const isPASS = documentType === 'PASS';
@@ -89,12 +85,12 @@ export class CompanyFormRegistrationComponent implements OnInit {
       this.documentNumberMax = '12';
     }
 
-    this.registerForm?.get('documentNumber').setValidators(validators);
+    registerForm?.get('documentNumber').setValidators(validators);
   }
 
   onSubmit() {
-    const { emailConfirm, ...formValue } = this.registerForm.value;
-    if (this.registerForm.valid) {
+    const { emailConfirm, ...formValue } = this.registerForm().value;
+    if (this.registerForm().valid) {
       this.sendForm.emit({ ...formValue });
     }
   }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import Hotjar from '@hotjar/browser';
 import { filter } from 'rxjs/operators';
 
@@ -12,10 +12,12 @@ import {
 
 @Injectable()
 export class HotjarProviderService implements ProviderService {
+  trackingService = inject(TrackingService);
+
   private readonly initialized = false;
   enabledPageRouting = false;
 
-  constructor(public trackingService: TrackingService) {
+  constructor() {
     if (
       this.initialized ||
       !environment.hotjarSiteId ||

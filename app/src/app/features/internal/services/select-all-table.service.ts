@@ -18,7 +18,7 @@ export class SelectAllTableService {
         );
       } else {
         const val: Partial<Debts>[] = this.dt.value as Partial<Debts>[];
-        const enabledRows = (this.dt.value as Partial<Debts>[]).filter(
+        const enabledRows = (this.dt.value as Partial<Debts>[])?.filter(
           (rowData) =>
             rowData.status !== 'PAGADO' &&
             (rowData.totalAmount === 0 || !rowData.hasIBKPayments),

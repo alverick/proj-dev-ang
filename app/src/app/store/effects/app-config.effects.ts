@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
@@ -14,6 +14,10 @@ import {
 
 @Injectable()
 export class AppConfigEffects {
+  private readonly actions$ = inject(Actions);
+  private readonly store = inject<Store<AppConfigState>>(Store);
+  private readonly spinner = inject(NgxSpinnerService);
+
   configAppConfigs$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(AppConfigActions.loadConfig),
@@ -61,10 +65,4 @@ export class AppConfigEffects {
     },
     { dispatch: false },
   );
-
-  constructor(
-    private readonly actions$: Actions,
-    private readonly store: Store<AppConfigState>,
-    private readonly spinner: NgxSpinnerService,
-  ) {}
 }

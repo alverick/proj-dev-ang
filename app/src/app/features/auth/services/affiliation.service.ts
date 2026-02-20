@@ -1,5 +1,5 @@
 import { type HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { isNotNil, isNotNilOrEmpty, isString } from 'ramda-adjunct';
@@ -67,6 +67,16 @@ import {
 
 @Injectable()
 export class AffiliationService {
+  private readonly router = inject(Router);
+  private readonly companyService = inject(CompanyService);
+  private readonly loginService = inject(LoginService);
+  private readonly enterpriseHeading = inject(EnterpriseHeadingService);
+  affiliationForms = inject(AffiliationFormsService);
+  private readonly serviceForms = inject(ServicesFormsService);
+  private readonly logger = inject(NGXLogger);
+  private readonly digitalData = inject(DigitalDataService);
+  protected tracking = inject(TrackingService);
+
   companyId: number;
   companyNames: CompanyName[];
   email: string;
@@ -80,17 +90,7 @@ export class AffiliationService {
   updateData: ICompanyUpdate;
   tokenUpdate: string;
 
-  constructor(
-    private readonly router: Router,
-    private readonly companyService: CompanyService,
-    private readonly loginService: LoginService,
-    private readonly enterpriseHeading: EnterpriseHeadingService,
-    public affiliationForms: AffiliationFormsService,
-    private readonly serviceForms: ServicesFormsService,
-    private readonly logger: NGXLogger,
-    private readonly digitalData: DigitalDataService,
-    protected tracking: TrackingService,
-  ) {
+  constructor() {
     this.setRegisterForm();
   }
 

@@ -1,14 +1,15 @@
-<div class="tw-relative tw-mb-3" [ngClass]="{ 'tw-pb-5': !onlyControl }">
-  @if (!hideLabel) {
+<div class="tw-relative tw-mb-3" [ngClass]="{ 'tw-pb-5': !onlyControl() }">
+  @if (!hideLabel()) {
     <label
-      #labelRef
-      [attr.for]="labelInputID"
-      [attr.aria-labelledby]="labelInputID"
+      [attr.for]="labelInputID()"
+      [attr.aria-labelledby]="labelInputID()"
       class="tw-flex tw-items-center tw-gap-1 tw-text-extended-grey-1"
-      [ngClass]="{ 'tw-mb-2': labelRef.hasChildNodes() }"
+      [class.tw-mb-2]="labelContent.textContent.trim().length > 0"
     >
-      <ng-content></ng-content><ng-content select="[label]"></ng-content
-      ><span class="tw-hidden">data</span>
+      <span #labelContent><ng-content select="[label]"></ng-content></span>
+      @if (labelContent.textContent.trim().length > 0) {
+        <span class="tw-hidden">data</span>
+      }
     </label>
   }
   <div
@@ -20,21 +21,24 @@
       select="[control],.control,input,textarea,p-dropdown,p-checkbox,p-radioButton,p-inputNumber"
     ></ng-content>
     <label
-      [attr.for]="labelInputID"
-      [attr.aria-labelledby]="labelInputID"
+      [attr.for]="labelInputID()"
+      [attr.aria-labelledby]="labelInputID()"
       class="label-right tw-text-gray-700 tw-mb-0 tw-mt-1 tw-block tw-text-sm"
       ><ng-content select="[label-inline]"></ng-content
     ></label>
   </div>
-  @if (!onlyControl) {
+  @if (!onlyControl()) {
     <div
       class="tw-absolute tw-mt-1 tw-inline-block tw-w-full tw-align-middle tw-text-xxs"
       [ngClass]="{ 'tw-text-error': ngControl?.errors }"
     >
       <ng-content select="[validation-messages],[hint]"></ng-content>
       @if (useDefaultContent) {
-        <val-errors [controlName]="formControlName" [label]="formControlLabel">
-          @for (error of errorMessages | keyvalue; track error) {
+        <val-errors
+          [controlName]="formControlName()"
+          [label]="formControlLabel()"
+        >
+          @for (error of errorMessages() | keyvalue; track error) {
             <ng-template [valError]="error.key">{{ error.value }}</ng-template>
           }
         </val-errors>

@@ -1,46 +1,72 @@
 import { curry, isEmpty, isNil, map, prop } from 'ramda';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 
-function hasChildren(node) {
+interface TreeNode {
+  children?: TreeNode[];
+  link?: string;
+  path?: string;
+  key?: string;
+}
+
+function hasChildren(node: TreeNode): boolean {
   return isNotNilOrEmpty(prop('children', node));
 }
 
-function flattenToArray(arr, { children, ...data }) {
-  return arr.concat([{ ...data }]);
+function flattenToArrayReducer(acc: TreeNode[], node: TreeNode): TreeNode[] {
+  const { children, ...data } = node;
+  return acc.concat([{ ...data }]);
+}
+
+function _reduceTreeRecursive<T extends TreeNode, U>(
+  reducerFn: (acc: U, node: T) => U,
+  initialAcc: U,
+  node: T,
+): U {
+  let currentAcc = reducerFn(initialAcc, node); // Apply reducer to the current node
+
+  if (hasChildren(node) && node.children) {
+    currentAcc = node.children.reduce((accFromChildren, child) => {
+      const childSegment = isNil(child.path) ? child.link : child.path;
+
+      const newLink = [node.link, childSegment].join('/');
+
+      const processedChild = {
+        ...child,
+        key: child.link,
+        link: newLink.replace('//', '/'),
+      };
+      return _reduceTreeRecursive(
+        reducerFn,
+        accFromChildren,
+        processedChild as T,
+      );
+    }, currentAcc);
+  }
+  return currentAcc;
 }
 
 const TreeObject = {
-  reduce: curry(function reduce(reducerFn, init, node) {
-    const acc = reducerFn(init, node);
-    if (!hasChildren(node)) {
-      return acc;
-    }
-    return node.children
-      .map((item) => {
-        const link = isNil(item.path) ? item.link : item.path;
-        const parent = isEmpty(link) ? '' : '/';
-        return {
-          ...item,
-          key: item.link,
-          link: `${node.link}${parent}${link}`,
-        };
-      })
-      .reduce(TreeObject.reduce(reducerFn), acc);
-  }),
+  reduce: curry(_reduceTreeRecursive),
 };
 
-export const generateFullRoutes: any = (obj, path: string) => {
+export const generateFullRoutes: any = (obj: any, path: string) => {
   const parseRoute = (val: string) => path + val;
   return map(parseRoute, obj);
 };
 
-export const generateFullRoutesTree: any = (obj, tree) => {
-  const links = TreeObject.reduce(flattenToArray, [], tree);
+export const generateFullRoutesTree: any = (obj: any, tree: TreeNode) => {
+  const treeWithRootSlash = { ...tree };
+  if (treeWithRootSlash.link && !treeWithRootSlash.link.startsWith('/')) {
+    treeWithRootSlash.link = `/${treeWithRootSlash.link}`;
+  }
+  const links: TreeNode[] = TreeObject.reduce(flattenToArrayReducer)(
+    [],
+    treeWithRootSlash,
+  );
 
-  const parseRoute = (val) => {
+  const parseRoute = (val: string) => {
     const result = links.find((link) => link.key === val);
-    const parent = isEmpty(links[0].link) ? '' : '/';
-    return result ? `${parent}${result.link}` : false;
+    return result ? result.link : false;
   };
   return map(parseRoute, obj);
 };

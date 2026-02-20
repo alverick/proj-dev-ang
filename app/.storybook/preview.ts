@@ -69,7 +69,7 @@ const preview: Preview = {
       },
     },
     viewport: {
-      viewports: {
+      options: {
         ...tailwindViewports,
       },
     },

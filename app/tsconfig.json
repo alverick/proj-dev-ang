@@ -6,6 +6,7 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": false,
     "declaration": false,
+    "esModuleInterop": true,
     "module": "es2022",
     "skipLibCheck": true,
     "moduleResolution": "bundler",
@@ -13,7 +14,6 @@
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
     "target": "es2022",
     "lib": ["es2022", "dom"]
   }

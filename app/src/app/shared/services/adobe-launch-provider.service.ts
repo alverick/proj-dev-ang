@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { hasPath, isEmpty, isNotEmpty } from 'ramda';
 import { combineLatest, type Observable } from 'rxjs';
@@ -27,14 +27,14 @@ declare const window: {
 
 @Injectable()
 export class AdobeLaunchProviderService implements ProviderService {
+  private readonly scriptInjectorService = inject(ScriptInjectorService);
+  private readonly trackingService = inject(TrackingService);
+  private readonly store = inject(Store);
+
   launchLibrary: Observable<boolean>;
   loaded = false;
 
-  constructor(
-    private readonly scriptInjectorService: ScriptInjectorService,
-    private readonly trackingService: TrackingService,
-    private readonly store: Store,
-  ) {
+  constructor() {
     if (isNotEmpty(environment.adobe)) {
       document.addEventListener('at-content-rendering-succeeded', () => {
         this.store.dispatch(AppConfigActions.setLoader({ show: false }));

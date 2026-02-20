@@ -6,7 +6,6 @@ import { RouterLink } from '@angular/router';
   selector: 'cs-layout-form',
   templateUrl: './layout-form.component.html',
   styleUrls: ['./layout-form.component.scss'],
-  standalone: true,
   imports: [RouterLink, NgOptimizedImage],
 })
 export class LayoutFormComponent {}

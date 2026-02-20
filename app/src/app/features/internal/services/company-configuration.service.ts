@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forEachObjIndexed, pick } from 'ramda';
@@ -32,51 +32,35 @@ import { internalFullRoutingNames } from '../internal-routing.names';
 
 @Injectable()
 export class CompanyConfigurationService {
+  private readonly fb = inject(FormBuilder);
+  private readonly companyService = inject(CompanyService);
+  private readonly router = inject(Router);
+  protected loginService = inject(LoginService);
+  protected tracking = inject(TrackingService);
+
   companyData: IDataEnterpriseModel;
   companyForm: SimpleModelFormGroup<CompanyForm>;
   passwordForm: ModelFormGroup<CompanyChangePasswordForm>;
 
-  constructor(
-    private readonly fb: FormBuilder,
-    private readonly companyService: CompanyService,
-    private readonly router: Router,
-    protected loginService: LoginService,
-    protected tracking: TrackingService,
-  ) {
+  constructor() {
     this.initForms();
   }
 
   setCompanyData() {
     this.companyForm.patchValue(this.companyData);
-    if (
-      this.companyData.newNameGTPStatus === 0 ||
-      this.companyData.newNameGTPStatus === 2 ||
-      this.companyData.isNewFlow
-    ) {
-      this.companyForm.get('name').disable();
-    } else {
-      this.companyForm.get('name').enable();
-    }
+    this.companyForm.get('name').disable();
   }
 
   saveCompanyData() {
-    const { email, movilNumber, movilOperator, name } = this.companyForm.value;
-    const parsedName: string = this.companyData.isNewFlow
-      ? this.companyData.name
-      : name || this.companyData.name;
+    const { email, movilNumber, movilOperator } = this.companyForm.value;
     const companyDataUpdated = {
-      newName: parsedName,
       email,
       movilNumber,
       movilOperator,
     };
-    const enterprise = {
-      ruc: this.companyData.ruc,
-      ...companyDataUpdated,
-    };
 
     const formValue = pick(
-      ['email', 'movilNumber', 'movilOperator', 'name'],
+      ['email', 'movilNumber', 'movilOperator'],
       this.companyForm.value,
     );
     const metadata: Metadata[] = [];
@@ -97,7 +81,7 @@ export class CompanyConfigurationService {
     };
 
     this.companyService
-      .updateCompany(enterprise)
+      .updateCompany(companyDataUpdated)
       .subscribe((enterpriseUpdate) => {
         if (enterpriseUpdate.success === true) {
           this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);

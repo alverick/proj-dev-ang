@@ -1,14 +1,13 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MockProvider } from 'ng-mocks';
-import { PasswordModule } from 'primeng/password';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideMockStore } from '@ngrx/store/testing';
 
-import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
 import { CompanyService } from '../../../../shared/services';
-import { LoginService } from '../../../../shared/services/login.service';
 import { NotifyService } from '../../../../shared/services/notify.service';
 import { StorageService } from '../../../../shared/services/storage.service';
+import { errorRegisterAuth } from '../../../auth/constants';
 import { CompanyConfigurationService } from '../../services';
 import { CompanyPasswordFormComponent } from './company-password-form.component';
 
@@ -17,38 +16,64 @@ describe('CompanyPasswordFormComponent', () => {
   let fixture: ComponentFixture<CompanyPasswordFormComponent>;
   let service: CompanyConfigurationService;
 
-  beforeEach(() => {
-    void TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [
-        FormsModule,
+        CompanyPasswordFormComponent,
         ReactiveFormsModule,
-        PasswordModule,
+        NoopAnimationsModule,
         HttpClientTestingModule,
       ],
       providers: [
-        CompanyService,
         CompanyConfigurationService,
-        MockProvider(LoginService),
-        NotifyService,
+        FormBuilder,
+        CompanyService,
         StorageService,
+        NotifyService,
+        provideMockStore({}),
       ],
     }).compileComponents();
-  });
 
-  beforeEach(() => {
-    service = TestBed.inject(CompanyConfigurationService);
     fixture = TestBed.createComponent(CompanyPasswordFormComponent);
     component = fixture.componentInstance;
-    component.form = service.passwordForm;
-    component.errorMessages = {
+    service = TestBed.inject(CompanyConfigurationService);
+
+    fixture.componentRef.setInput('form', service.passwordForm);
+    fixture.componentRef.setInput('errorMessages', {
       ...errorRegisterAuth,
       newPassword: errorRegisterAuth.newPassword,
       confirmNewPassword: errorRegisterAuth.passwordConfirm,
-    };
+    });
+
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should emit sendForm on submit when form is valid', () => {
+    const sendFormSpy = jest.spyOn(component.sendForm, 'emit');
+    component.form().patchValue({
+      password: 'password123',
+      newPassword: 'newPassword123',
+      confirmNewPassword: 'newPassword123',
+    });
+
+    Object.defineProperty(component.form(), 'valid', {
+      get: () => true,
+    });
+    component.onSubmit();
+    expect(sendFormSpy).toHaveBeenCalled();
+  });
+
+  it('should not emit sendForm on submit when form is invalid', () => {
+    const sendFormSpy = jest.spyOn(component.sendForm, 'emit');
+
+    Object.defineProperty(component.form(), 'valid', {
+      get: () => false,
+    });
+    component.onSubmit();
+    expect(sendFormSpy).not.toHaveBeenCalled();
   });
 });

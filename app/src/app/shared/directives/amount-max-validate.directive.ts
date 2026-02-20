@@ -1,4 +1,4 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, input } from '@angular/core';
 import {
   type AbstractControl,
   NG_VALIDATORS,
@@ -20,16 +20,16 @@ import { type CurrencyWithLimit } from '../constants/currencies';
   standalone: true,
 })
 export class AmountMaxValidateDirective {
-  @Input() maxAmountLimits: CurrencyWithLimit[] = [];
-  @Input() currencySymbol = '';
-  @Input() useLimits = false;
+  readonly maxAmountLimits = input<CurrencyWithLimit[]>([]);
+  readonly currencySymbol = input('');
+  readonly useLimits = input(false);
   validate(control: AbstractControl<string>): ValidationErrors {
-    if (!this.useLimits || isNilOrEmpty(control.value)) {
+    if (!this.useLimits() || isNilOrEmpty(control.value)) {
       return null;
     }
     const amount = parseFloat(control.value);
-    const limit = this.maxAmountLimits.find(
-      (currency) => currency.symbol === this.currencySymbol,
+    const limit = this.maxAmountLimits().find(
+      (currency) => currency.symbol === this.currencySymbol(),
     ).limitMax;
     if (amount > limit) {
       return { amountMax: true };

@@ -27,7 +27,7 @@ type Story = StoryObj<LabelControlComponent>;
 export const Default: Story = {
   render: () => ({
     template: `<cs-label-control class="tw-m-5"
-      >Label 1 <input type="text" pInputText />
+      ><ng-container label>Label 1 </ng-container><input type="text" pInputText />
     </cs-label-control>`,
   }),
 };
@@ -35,7 +35,7 @@ export const Default: Story = {
 export const WithHint: Story = {
   render: (args) => ({
     template: `<cs-label-control class="tw-m-5"
-      >Label 1 <input type="text" pInputText />
+      ><ng-container label>Label 1 </ng-container><input type="text" pInputText />
       <div hint class="tw-text-error">
         El nuevo nombre 1 <strong> ${args.onlyControl} </strong> esta siendo procesado
       </div>

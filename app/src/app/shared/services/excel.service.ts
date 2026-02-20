@@ -1,5 +1,5 @@
 import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { type Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -30,13 +30,13 @@ export type LoadFileProcess = {
 
 @Injectable()
 export class ExcelService {
+  http = inject(HttpClient);
+
   private readonly URI_API: string = environment.END_POINT;
   public statusUpload = false;
   public service: Partial<CompanyServices> = null;
   public idProcess = 0;
   public errores: IErrorObj[] = [];
-
-  constructor(public http: HttpClient) {}
 
   UploadExcel(files: File[]) {
     this.statusUpload = true;

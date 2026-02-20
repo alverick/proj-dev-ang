@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { type ActivatedRouteSnapshot } from '@angular/router';
 import { type Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { CompanyService } from '../../../shared/services';
 
 @Injectable()
 export class AccountStateDetailsResolver {
-  constructor(private readonly companyService: CompanyService) {}
+  private readonly companyService = inject(CompanyService);
 
   resolve(
     route: ActivatedRouteSnapshot,

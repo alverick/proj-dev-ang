@@ -48,7 +48,7 @@ extends:
     componentName: "cse-eureca-frontend"
     workingDir: "app"
     buildOutputPath: "dist"
-    nodeVersion: "18.X"
+    nodeVersion: "20.X"
     azAppServiceSubscription: "gr2c003eurcdev01"
     azAppServiceAppType: "webAppLinux"
     azAppServiceAppName: "wappeu2c003eurcdev01"

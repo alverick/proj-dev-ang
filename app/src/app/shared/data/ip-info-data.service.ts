@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { type Observable } from 'rxjs';
 
 export interface IpInfo {
@@ -34,9 +34,9 @@ export interface IpInfo {
 
 @Injectable()
 export class IpInfoDataService {
-  private readonly url = `https://pro.ip-api.com/json/?fields=status,message,continent,continentCode,country,countryCode,countryCode3,region,regionName,city,district,zip,lat,lon,timezone,offset,currentTime,currency,callingCode,isp,org,as,asname,reverse,mobile,proxy,hosting,query&key=BwfSJxuANSbGW0B`;
+  private readonly httpClient = inject(HttpClient);
 
-  constructor(private readonly httpClient: HttpClient) {}
+  private readonly url = `https://pro.ip-api.com/json/?fields=status,message,continent,continentCode,country,countryCode,countryCode3,region,regionName,city,district,zip,lat,lon,timezone,offset,currentTime,currency,callingCode,isp,org,as,asname,reverse,mobile,proxy,hosting,query&key=BwfSJxuANSbGW0B`;
 
   getIpInfo(): Observable<IpInfo> {
     return this.httpClient.get<IpInfo>(this.url);

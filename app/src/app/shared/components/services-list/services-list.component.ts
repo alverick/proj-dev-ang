@@ -4,10 +4,10 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  EventEmitter,
   HostListener,
-  Input,
-  Output,
+  inject,
+  input,
+  output,
 } from '@angular/core';
 import { ButtonDirective } from 'primeng/button';
 import { Ripple } from 'primeng/ripple';
@@ -16,22 +16,19 @@ import { Ripple } from 'primeng/ripple';
   selector: 'cs-services-list',
   templateUrl: './services-list.component.html',
   styleUrls: ['./services-list.component.scss'],
-  standalone: true,
   imports: [ButtonDirective, Ripple],
 })
 export class ServicesListComponent implements AfterViewInit, AfterViewChecked {
-  @Input() onlyEdit = false;
-  @Input() showSaveAll = true;
-  @Input() empty = false;
-  @Input() message = '';
-  @Output() add = new EventEmitter();
-  @Output() finish = new EventEmitter();
-  additionalButtons = false;
+  private readonly element = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly cdr = inject(ChangeDetectorRef);
 
-  constructor(
-    private readonly element: ElementRef<HTMLElement>,
-    private readonly cdr: ChangeDetectorRef,
-  ) {}
+  readonly onlyEdit = input(false);
+  readonly showSaveAll = input(true);
+  readonly empty = input(false);
+  readonly message = input('');
+  readonly add = output();
+  readonly finish = output();
+  additionalButtons = false;
 
   ngAfterViewInit(): void {
     this.resize();

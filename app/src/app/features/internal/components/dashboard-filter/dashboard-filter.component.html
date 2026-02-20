@@ -10,16 +10,16 @@
         formControlName="currency"
         [hideLabel]="true"
         [errorMessages]="errorMessages.currency"
-      >
-        <p-dropdown
+        ><ng-container label> </ng-container
+        ><p-select
+          control
           [options]="currencies"
           placeholder="Moneda"
           formControlName="currency"
           optionLabel="label"
           class="tw-w-full md:tw-w-36 lg:tw-w-40"
           styleClass="tw-w-full md:tw-w-36 lg:tw-w-40"
-          control
-        ></p-dropdown>
+        ></p-select>
       </cs-label-control>
     }
     <cs-label-control
@@ -27,8 +27,8 @@
       formControlName="services"
       [hideLabel]="true"
       [errorMessages]="errorMessages.services"
-    >
-      <p-multiSelect
+      ><ng-container label> </ng-container
+      ><p-multiSelect
         [options]="internalServices"
         formControlName="services"
         [showToggleAll]="true"
@@ -58,8 +58,8 @@
       formControlName="payment"
       [hideLabel]="true"
       [errorMessages]="errorMessages.payment"
-    >
-      <p-dropdown
+      ><ng-container label> </ng-container
+      ><p-select
         [options]="internalDates"
         placeholder="Tipo de pago"
         formControlName="payment"
@@ -67,15 +67,15 @@
         class="tw-w-full md:tw-w-36 lg:tw-w-40"
         styleClass="tw-w-full md:tw-w-36 lg:tw-w-40"
         control
-      ></p-dropdown>
+      ></p-select>
     </cs-label-control>
     <cs-label-control
       class="tw-w-full md:tw-w-40"
       formControlName="dateFrom"
       [hideLabel]="true"
       [errorMessages]="errorMessages.dateFrom"
-    >
-      <p-calendar
+      ><ng-container label> </ng-container
+      ><p-date-picker
         [showIcon]="true"
         formControlName="dateFrom"
         placeholder="Desde"
@@ -83,15 +83,15 @@
         styleClass="tw-w-full md:tw-w-40"
         dateFormat="dd/mm/yy"
         control
-      ></p-calendar>
+      ></p-date-picker>
     </cs-label-control>
     <cs-label-control
       class="tw-w-full md:tw-w-40"
       formControlName="dateTo"
       [hideLabel]="true"
       [errorMessages]="errorMessages.dateTo"
-    >
-      <p-calendar
+      ><ng-container label> </ng-container
+      ><p-date-picker
         [showIcon]="true"
         formControlName="dateTo"
         placeholder="Hasta"
@@ -100,7 +100,7 @@
         dateFormat="dd/mm/yy"
         [minDate]="minDateTo"
         control
-      ></p-calendar>
+      ></p-date-picker>
     </cs-label-control>
     <div class="flex-break tw-h-0 tw-basis-full lg:tw-hidden"></div>
     <div class="actions tw-flex tw-h-10 tw-gap-4">

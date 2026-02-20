@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, type OnInit } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -21,8 +21,8 @@ import { swalAlert } from '../../../../shared/utils/helpers/popups';
   selector: 'cs-configurar-correo-gtp',
   templateUrl: './configurar-correo-gtp.component.html',
   styleUrls: ['./configurar-correo-gtp.component.scss'],
-  standalone: true,
   providers: [GtpService, DatePipe],
+  standalone: true,
   imports: [
     ButtonDirective,
     Ripple,
@@ -33,6 +33,9 @@ import { swalAlert } from '../../../../shared/utils/helpers/popups';
   ],
 })
 export class ConfigurarCorreoGtpComponent implements OnInit {
+  private readonly formBuilder = inject(FormBuilder);
+  gtpService = inject(GtpService);
+
   frmCorreoGtp = this.formBuilder.group({
     correo: [
       '',
@@ -60,12 +63,6 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
       pattern: 'Ingrese un e-mail válido',
     },
   };
-
-  // correoGtp: CorreoGtpModel;
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    public gtpService: GtpService,
-  ) {}
 
   ngOnInit() {
     this.onListarCorreoGTP();

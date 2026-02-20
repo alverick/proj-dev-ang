@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { isNotEmpty, path } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
@@ -16,6 +17,7 @@ export interface GraphData {
 @Component({
   selector: 'cs-dashboard-graph',
   templateUrl: './dashboard-graph.component.html',
+  imports: [NgClass],
 })
 export class DashboardGraphComponent implements OnChanges {
   @Input() serviceData: GraphData;

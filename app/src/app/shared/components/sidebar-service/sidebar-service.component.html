@@ -4,10 +4,10 @@
   >
     <h2 class="tw-mb-7 tw-text-3xl tw-font-medium">
       Configura
-      {{ this.existServices ? 'tus servicios' : 'tu primer servicio' }} y
+      {{ this.existServices() ? 'tus servicios' : 'tu primer servicio' }} y
       gestiona tus cobranzas 100% digital
     </h2>
-    @if (position === 0) {
+    @if (position() === 0) {
       <div class="tw-mb-20 tw-text-xl tw-text-secondary-blue-1">
         Un servicio es el concepto por el cual te pagarán tus clientes.
       </div>
@@ -25,13 +25,13 @@
         </ul>
       </div>
     }
-    @if (position === 1) {
+    @if (position() === 1) {
       <div class="tw-mb-20 tw-text-xl tw-font-medium tw-text-secondary-blue-1">
-        @if (showAllTypes) {
+        @if (showAllTypes()) {
           ¿Qué modalidad elegir?
         }
       </div>
-      @if (showAllTypes) {
+      @if (showAllTypes()) {
         <p-accordion
           expandIcon="pi pi-plus-circle tw-text-white tw-text-2xl"
           collapseIcon="pi pi-minus-circle tw-text-white tw-text-2xl"
@@ -106,7 +106,7 @@
           </p-accordionTab>
         </p-accordion>
       }
-      @if (!showAllTypes) {
+      @if (!showAllTypes()) {
         <ul class="tw-list-disc tw-pl-4 tw-text-lg tw-text-white">
           <li class="tw-mb-3">
             Agrega tu
@@ -114,10 +114,10 @@
             <strong>código de identificación</strong> y el monto de la
             <strong>deuda a pagar</strong> de cada uno.
           </li>
-          @if (currency?.limitMax) {
+          @if (currency()?.limitMax) {
             <li class="tw-mb-3">
               Monto máximo permitido por cobro
-              {{ currency.limitMax | currency: currency.symbol }}
+              {{ currency().limitMax | currency: currency().symbol }}
             </li>
           }
           <li class="tw-mb-3">

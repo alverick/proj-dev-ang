@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router, type UrlTree } from '@angular/router';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { type Observable } from 'rxjs';
@@ -8,10 +8,9 @@ import { AffiliationService } from '../services';
 
 @Injectable()
 export class AffiliationFinishedGuard {
-  constructor(
-    private readonly affiliation: AffiliationService,
-    private readonly router: Router,
-  ) {}
+  private readonly affiliation = inject(AffiliationService);
+  private readonly router = inject(Router);
+
   canActivate():
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>

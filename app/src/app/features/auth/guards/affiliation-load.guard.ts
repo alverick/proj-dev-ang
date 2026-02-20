@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { type Observable } from 'rxjs';
 
@@ -6,7 +6,7 @@ import { appConfigFeature } from '../../../store/reducers/app-config.reducer';
 
 @Injectable()
 export class AffiliationLoadGuard {
-  constructor(private readonly store: Store) {}
+  private readonly store = inject(Store);
 
   canMatch(): Observable<boolean> | Promise<boolean> | boolean {
     return new Promise((resolve) => {

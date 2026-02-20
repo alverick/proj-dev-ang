@@ -4,10 +4,9 @@ import {
   type AfterViewInit,
   Component,
   ElementRef,
-  Input,
-  Optional,
-  Self,
-  ViewChild,
+  inject,
+  input,
+  viewChild,
 } from '@angular/core';
 import { type ControlValueAccessor, NgControl } from '@angular/forms';
 import {
@@ -18,7 +17,6 @@ import {
 @Component({
   selector: 'cs-label-control',
   templateUrl: './label-control.component.html',
-  standalone: true,
   imports: [
     NgClass,
     ValidationErrorsComponent,
@@ -29,24 +27,26 @@ import {
 export class LabelControlComponent
   implements AfterViewInit, AfterContentInit, ControlValueAccessor
 {
+  ngControl = inject(NgControl, { optional: true, self: true });
+  private readonly elRef = inject<ElementRef<HTMLElement>>(ElementRef);
+
   private static labelCounter = 0;
   useDefaultContent = false;
   useGap = false;
 
-  @Input() hideLabel = false;
-  @Input() labelInputID = `form-label-${LabelControlComponent.labelCounter}`;
-  @Input() onlyControl = false;
-  @Input() formControlName: string;
-  @Input() formControlLabel: string;
-  @Input() errorMessages: Record<string, string>;
-  @ViewChild('wrapper') wrapper: ElementRef<HTMLDivElement>;
+  readonly hideLabel = input(false);
+  readonly labelInputID = input(
+    `form-label-${LabelControlComponent.labelCounter}`,
+  );
+  readonly onlyControl = input(false);
+  readonly formControlName = input<string>(undefined);
+  readonly formControlLabel = input<string>(undefined);
+  readonly errorMessages = input<Record<string, string>>(undefined);
+  readonly wrapper = viewChild<ElementRef<HTMLDivElement>>('wrapper');
 
-  constructor(
-    @Optional()
-    @Self()
-    public ngControl: NgControl,
-    private readonly elRef: ElementRef<HTMLElement>,
-  ) {
+  constructor() {
+    const ngControl = this.ngControl;
+
     if (ngControl != null) {
       ngControl.valueAccessor = this;
     }
@@ -54,11 +54,12 @@ export class LabelControlComponent
   }
 
   ngAfterViewInit() {
-    if (this.wrapper) {
+    const wrapper = this.wrapper();
+    if (wrapper) {
       const inputElement =
-        this.wrapper.nativeElement.querySelector('input,textarea');
+        wrapper.nativeElement.querySelector('input,textarea');
       if (inputElement) {
-        inputElement.setAttribute('id', this.labelInputID);
+        inputElement.setAttribute('id', this.labelInputID());
       }
       setTimeout(() => {
         const nav = this.elRef.nativeElement.querySelector(

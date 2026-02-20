@@ -1,23 +1,20 @@
-import { NgClass } from '@angular/common';
-import { Component, HostBinding } from '@angular/core';
+import { CommonModule, NgClass } from '@angular/common'; // Import CommonModule
+import { Component, HostBinding, inject } from '@angular/core';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { TimesIcon } from 'primeng/icons/times';
+import { TimesIcon } from 'primeng/icons';
 
 import { ExcelService } from '../../../../../../shared/services/excel.service';
 
 @Component({
   selector: 'cs-dialog-header',
-  standalone: true,
-  imports: [NgClass, TimesIcon],
+  imports: [CommonModule, NgClass, TimesIcon],
   templateUrl: './dialog-header.component.html',
 })
 export class DialogHeaderComponent {
-  @HostBinding('class') class = 'tw-w-full';
+  excelService = inject(ExcelService);
+  ref = inject(DynamicDialogRef);
 
-  constructor(
-    public excelService: ExcelService,
-    public ref: DynamicDialogRef,
-  ) {}
+  @HostBinding('class') class = 'tw-w-full';
 
   hide() {
     this.ref.close();

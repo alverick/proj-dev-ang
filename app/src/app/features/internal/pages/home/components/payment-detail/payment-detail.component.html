@@ -13,7 +13,9 @@
         <div class="tw-mb-8 tw-text-center tw-text-2xl tw-font-medium">
           Detalle de pago
         </div>
-        <div class="tw-flex tw-justify-center tw-gap-2">
+        <div
+          class="tw-flex tw-flex-col tw-justify-center tw-gap-2 tw-px-6 lg:tw-flex-row lg:tw-px-0"
+        >
           @if (serviceType !== ServiceTypes.withoutData) {
             <div class="tw-font-bold">Nombre:</div>
             <div class="tw-mr-5 tw-text-extended-grey-1">
@@ -24,110 +26,30 @@
           <div class="tw-text-extended-grey-1">{{ customer?.code }}</div>
         </div>
       </div>
-      <div class="box-shadow tw-p-6">
-        <table class="tw-w-full">
-          <thead>
-            <tr class="tw-border-b-2 tw-border-primary-green-1">
-              <th class="tw-w-1/5 tw-p-3 tw-text-center" scope="col">
-                Monto pagado
-              </th>
-              <th class="tw-w-1/5 tw-p-3 tw-text-center" scope="col">
-                Fecha de pago
-              </th>
-              <th class="tw-w-1/5 tw-p-3 tw-text-center" scope="col">Canal</th>
-              <th class="tw-w-2/12 tw-p-3 tw-text-center" scope="col">
-                Nº de operación
-              </th>
-              <th class="tw-w-1/12 tw-p-3 tw-text-center" scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            @if (items.length === 0) {
+      <div class="box-shadow md:tw-p-6">
+        @if (!isEditingRow) {
+          <p-table [value]="items" styleClass="p-datatable-gridlines">
+            <ng-template pTemplate="header">
               <tr>
-                <td class="tw-p-3 tw-text-center">-</td>
-                <td class="tw-p-3 tw-text-center">-</td>
-                <td class="tw-p-3 tw-text-center">-</td>
-                <td class="tw-p-3 tw-text-center">-</td>
-                <td class="tw-p-3 tw-text-center"></td>
+                <th class="tw-w-1/5 tw-p-3 tw-text-center">Monto pagado</th>
+                <th class="tw-w-1/5 tw-p-3 tw-text-center">Fecha de pago</th>
+                <th class="tw-w-1/5 tw-p-3 tw-text-center">Canal</th>
+                <th class="tw-w-2/12 tw-p-3 tw-text-center">Nº de operación</th>
+                <th class="tw-w-1/12 tw-p-3 tw-text-center"></th>
               </tr>
-            }
-            @for (itm of items; track itm) {
+            </ng-template>
+            <ng-template pTemplate="body" let-itm>
               <tr>
                 <td class="tw-p-3 tw-text-center">
-                  @if (!itm.editing) {
-                    <span
-                      >{{ itm.currency }}
-                      {{ itm.amount | number: '1.2-2' }}</span
-                    >
-                  }
-                  @if (itm.editing) {
-                    <div>
-                      <div class="tw-relative tw-w-full">
-                        <p-inputNumber
-                          type="text"
-                          [(ngModel)]="itm.newAmount"
-                          [min]="0.01"
-                          [max]="debtMaxAmount"
-                          (blur)="amountBlur(itm)"
-                          [minFractionDigits]="2"
-                          [maxFractionDigits]="2"
-                          [prefix]="itm.currency"
-                          (ngModelChange)="itm.errores.amount = null"
-                        />
-                        @if (itm.errores.amount) {
-                          <div
-                            class="tw-absolute tw-left-0 tw-top-full tw-mt-1 tw-w-full tw-text-left tw-text-xxs tw-text-error"
-                          >
-                            {{ itm.errores.amount }}
-                          </div>
-                        }
-                      </div>
-                    </div>
-                  }
+                  <span
+                    >{{ itm.currency }} {{ itm.amount | number: '1.2-2' }}</span
+                  >
                 </td>
                 <td class="tw-p-3 tw-text-center">
-                  @if (!itm.editing) {
-                    <span>{{ itm.date | date: 'dd/MM/yy' }}</span>
-                  }
-                  @if (itm.editing) {
-                    <div class="tw-relative">
-                      <p-calendar
-                        class="tw-w-full"
-                        styleClass="tw-w-full"
-                        [iconDisplay]="'input'"
-                        [showIcon]="true"
-                        [(ngModel)]="itm.newDate"
-                        (ngModelChange)="itm.errores.date = null"
-                        [minDate]="minDate"
-                        [maxDate]="maxDate"
-                        appendTo="body"
-                        dateFormat="dd/mm/yy"
-                      ></p-calendar>
-                      @if (itm.errores.date) {
-                        <div
-                          class="tw-absolute tw-left-0 tw-top-full tw-mt-1 tw-w-full tw-text-left tw-text-xxs tw-text-error"
-                        >
-                          {{ itm.errores.date }}
-                        </div>
-                      }
-                    </div>
-                  }
+                  <span>{{ itm.date | date: 'dd/MM/yy' }}</span>
                 </td>
                 <td class="tw-p-3 tw-text-center">
-                  @if (!itm.editing) {
-                    <span class="select-color">{{ itm.channel }}</span>
-                  }
-                  @if (itm.editing) {
-                    <div>
-                      <p-dropdown
-                        [options]="channelOptions"
-                        class="tw-w-full"
-                        styleClass="tw-w-full"
-                        [(ngModel)]="itm.newChannel"
-                        appendTo="body"
-                      ></p-dropdown>
-                    </div>
-                  }
+                  <span class="select-color">{{ itm.channel }}</span>
                 </td>
                 <td class="tw-p-3 tw-text-center">{{ itm.number }}</td>
                 <td>
@@ -138,72 +60,163 @@
                         serviceType === ServiceTypes.complete)
                     ) {
                       <div class="tw-flex tw-gap-2">
-                        @if (!itm.editing) {
-                          <button
-                            pButton
-                            pRipple
-                            type="button"
-                            class="p-button p-button-text p-button-icon-only tw-h-10 tw-w-10"
-                            icon="pi pi-pen-to-square"
-                            (click)="editItm(itm); $event.stopPropagation()"
-                          ></button>
-                        }
-                        @if (!itm.editing) {
-                          <button
-                            pButton
-                            pRipple
-                            type="button"
-                            class="p-button p-button-text p-button-icon-only tw-h-10 tw-w-10"
-                            icon="pi pi-trash"
-                            (click)="delItm(itm); $event.stopPropagation()"
-                          ></button>
-                        }
+                        <button
+                          pButton
+                          pRipple
+                          type="button"
+                          class="p-button p-button-text p-button-icon-only tw-h-10 tw-w-10"
+                          icon="pi pi-pen-to-square"
+                          (click)="editItm(itm); $event.stopPropagation()"
+                        ></button>
+                        <button
+                          pButton
+                          pRipple
+                          type="button"
+                          class="p-button p-button-text p-button-icon-only tw-h-10 tw-w-10"
+                          icon="pi pi-trash"
+                          (click)="delItm(itm); $event.stopPropagation()"
+                        ></button>
                       </div>
                     }
                   </ng-container>
                 </td>
               </tr>
-            }
-          </tbody>
-        </table>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="5" class="tw-p-3 tw-text-center">
+                  No hay pagos registrados.
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        }
+
+        @if (isEditingRow && currentEditingItem) {
+          <div class="tw-mb-4 tw-p-4">
+            <div
+              class="tw-mb-4 tw-grid tw-grid-cols-1 tw-gap-4 md:tw-grid-cols-3"
+            >
+              <div>
+                <label
+                  for="newAmount"
+                  class="tw-text-gray-700 tw-block tw-text-sm tw-font-medium"
+                  >Monto pagado</label
+                >
+                <div class="tw-relative tw-w-full">
+                  <p-inputNumber
+                    id="newAmount"
+                    type="text"
+                    [(ngModel)]="currentEditingItem.newAmount"
+                    [min]="0.01"
+                    [max]="debtMaxAmount"
+                    (blur)="amountBlur(currentEditingItem)"
+                    [minFractionDigits]="2"
+                    [maxFractionDigits]="2"
+                    [prefix]="currentEditingItem.currency"
+                    (ngModelChange)="currentEditingItem.errores.amount = null"
+                    styleClass="tw-w-full"
+                  />
+                  @if (currentEditingItem.errores.amount) {
+                    <div
+                      class="tw-absolute tw-left-0 tw-top-full tw-mt-1 tw-w-full tw-text-left tw-text-xxs tw-text-error"
+                    >
+                      {{ currentEditingItem.errores.amount }}
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <div>
+                <label
+                  for="newDate"
+                  class="tw-text-gray-700 tw-block tw-text-sm tw-font-medium"
+                  >Fecha de pago</label
+                >
+                <div class="tw-relative">
+                  <p-date-picker
+                    id="newDate"
+                    class="tw-w-full"
+                    inputStyleClass="tw-w-full"
+                    [iconDisplay]="'input'"
+                    [showIcon]="true"
+                    [(ngModel)]="currentEditingItem.newDate"
+                    (ngModelChange)="currentEditingItem.errores.date = null"
+                    [minDate]="minDate"
+                    [maxDate]="maxDate"
+                    appendTo="body"
+                    dateFormat="dd/mm/yy"
+                  ></p-date-picker>
+                  @if (currentEditingItem.errores.date) {
+                    <div
+                      class="tw-absolute tw-left-0 tw-top-full tw-mt-1 tw-w-full tw-text-left tw-text-xxs tw-text-error"
+                    >
+                      {{ currentEditingItem.errores.date }}
+                    </div>
+                  }
+                </div>
+              </div>
+              <div>
+                <label
+                  for="newChannel"
+                  class="tw-text-gray-700 tw-block tw-text-sm tw-font-medium"
+                  >Canal</label
+                >
+                <div>
+                  <p-select
+                    id="newChannel"
+                    [options]="channelOptions"
+                    class="tw-w-full"
+                    styleClass="tw-w-full"
+                    [(ngModel)]="currentEditingItem.newChannel"
+                    appendTo="body"
+                  ></p-select>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="tw-mt-4 tw-flex tw-items-center tw-justify-center tw-gap-4"
+            >
+              <button
+                type="button"
+                pButton
+                pRipple
+                class="tw-h-10 tw-w-32"
+                (click)="saveItem()"
+                icon="pi pi-save"
+                label="Guardar"
+              ></button>
+              <button
+                type="button"
+                pButton
+                pRipple
+                class="p-button-outlined tw-h-10 tw-w-32"
+                (click)="cancelItem()"
+                icon="pi pi-times-circle"
+                label="Cancelar"
+              ></button>
+            </div>
+          </div>
+        }
+
         <ng-container *ngrxLet="useAmountLimits$ as useAmountLimits">
           @if (
+            !isEditingRow &&
             (!useAmountLimits || serviceType === ServiceTypes.complete) &&
-            (items.length == 0 || status !== 'PAGADO' || isEditingRow)
+            (items.length == 0 || status !== 'PAGADO')
           ) {
             <div>
               <div class="tw-flex tw-items-center tw-justify-center tw-gap-4">
-                @if (!isEditingRow) {
-                  <button
-                    pButton
-                    pRipple
-                    type="button"
-                    (click)="addItem()"
-                    icon="pi pi-plus-circle"
-                    class="p-button-text tw-h-10"
-                    label="Agregar un pago"
-                  ></button>
-                }
-                @if (isEditingRow) {
-                  <button
-                    type="button"
-                    pButton
-                    pRipple
-                    class="tw-h-10 tw-w-32"
-                    (click)="saveItem()"
-                    icon="pi pi-save"
-                    label="Guardar"
-                  ></button>
-                  <button
-                    type="button"
-                    pButton
-                    pRipple
-                    class="p-button-outlined tw-h-10 tw-w-32"
-                    (click)="cancelItem()"
-                    icon="pi pi-times-circle"
-                    label="Cancelar"
-                  ></button>
-                }
+                <button
+                  pButton
+                  pRipple
+                  type="button"
+                  (click)="addItem()"
+                  icon="pi pi-plus-circle"
+                  class="p-button-text tw-h-10"
+                  label="Agregar un pago"
+                ></button>
               </div>
             </div>
           }
