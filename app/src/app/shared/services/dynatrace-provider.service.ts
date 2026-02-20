@@ -15,6 +15,7 @@ export class DynatraceProviderService implements ProviderService {
     }
     this.scriptInjectorService.loadScript('Dynatrace', this.scriptUrl, {
       crossOrigin: 'anonymous',
+      async: false,
     });
   }
   startTracking(): void {
