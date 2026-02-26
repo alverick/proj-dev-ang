@@ -68,7 +68,7 @@
                   "with": "src/environments/environment.legacy-prod.ts"
                 }
               ],
-              "outputPath": "dist/EurekaAngularProy-leg",
+              "outputPath": "dist/EurekaAngularProy",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,

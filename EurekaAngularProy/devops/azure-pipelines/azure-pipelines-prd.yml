@@ -122,7 +122,7 @@ stages:
               echo Creating Directory
               mkdir -p Deploy/ClientApp/dist
               echo Move Directory Deploy
-              cp -a dist/EurekaAngularProy/. Deploy/ClientApp/dist/
+              cp -a dist/EurekaAngularProy/browser/. Deploy/ClientApp/dist/
               ls Deploy/ClientApp/dist/
             workingDirectory: app
             displayName: 'Create directory'
