@@ -18,7 +18,7 @@ parameters:
 variables:
   vmImageName: 'ubuntu-latest'
   mode: 'legacy-production'
-  appServiceConnection: 'SC_RG_EU2_C003_EURC_PRD_01'
+  appServiceConnection: 'arm-oidc-cse-prd'
   groupName: 'rg_eu2_c003_eurc_prd_01'
   appServiceName: 'wappeu2c003eurcprd01'
 
@@ -29,19 +29,20 @@ stages:
       - job: Build
         displayName: Build
         pool:
+          name: "apdevsecops01"
           vmImage: $(vmImageName)
         steps:
           - task: NodeTool@0
             displayName: 'Install Node.js'
             inputs:
-              versionSpec: '18.x'
+              versionSpec: '20.x'
 
           - task: Npm@1
             displayName: 'Install angular'
             inputs:
               command: custom
               verbose: false
-              customCommand: 'install -g @angular/cli@17'
+              customCommand: 'install -g @angular/cli@20'
 
           - task: Npm@1
             displayName: 'Install npm'
@@ -121,7 +122,7 @@ stages:
               echo Creating Directory
               mkdir -p Deploy/ClientApp/dist
               echo Move Directory Deploy
-              cp -a dist/EurekaAngularProy/. Deploy/ClientApp/dist/
+              cp -a dist/EurekaAngularProy/browser/. Deploy/ClientApp/dist/
               ls Deploy/ClientApp/dist/
             workingDirectory: app
             displayName: 'Create directory'
