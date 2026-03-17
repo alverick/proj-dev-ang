@@ -451,7 +451,7 @@ export class DialogComponent implements OnInit {
   private handleFailedStatus(actionStep: Partial<ActionEventProperties>) {
     this.excelService.statusUpload = false;
 
-    const obsClose = new Observable((observer) => {
+    const obsClose = new Observable<void>((observer) => {
       this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
         ...actionStep,
         state: 'Intento de envio',
@@ -478,7 +478,7 @@ export class DialogComponent implements OnInit {
     this.excelService.statusUpload = false;
     this.excelService.errores = [];
 
-    const obsClose = new Observable((observer) => {
+    const obsClose = new Observable<void>((observer) => {
       const msg =
         this.excelService.service.dataType === 'C'
           ? '¡Listo! Se agregaron nuevas deudas'
