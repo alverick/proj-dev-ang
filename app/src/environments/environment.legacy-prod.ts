@@ -15,4 +15,6 @@ export const environment: IEnvironment = {
     'https://assets.adobedtm.com/df637a308f4c/ec7ac20e39e1/launch-f36536511e92.min.js',
   hotjarSiteId: '2944859',
   hotjarVersion: '6',
+  dynatrace:
+    'https://dok.js-cdn.dynatrace.com/jstag/18ecc485038/bf23299knm/e5b3bea2b05a025e_complete.js',
 };
