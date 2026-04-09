@@ -18,7 +18,6 @@ export { AdobeLaunchProviderService } from './adobe-launch-provider.service';
 export { CompanyService } from './company.service';
 export { DigitalDataService } from './digital-data.service';
 export { EnterpriseHeadingService } from './enterprise-heading.service';
-export { NewRelicProviderService } from './new-relic-provider.service';
 export { ServiceService } from './service.service';
 export { ServicesFormsService } from './services-forms.service';
 export { SettingsStorageService } from './settings-storage.service';

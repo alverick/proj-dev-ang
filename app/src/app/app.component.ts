@@ -15,6 +15,7 @@ import {
 import { FabWhatsappComponent } from './shared/components/fab-whatsapp/fab-whatsapp.component';
 import { ValidationDefaultsComponent } from './shared/components/validation-defaults/validation-defaults.component';
 import { AdobeLaunchProviderService } from './shared/services';
+import { DynatraceProviderService } from './shared/services/dynatrace-provider.service';
 import { HotjarProviderService } from './shared/services/hotjar-provider.service';
 import { AppConfigActions } from './store/actions/app-config.actions';
 
@@ -42,6 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private readonly store = inject(Store);
   private readonly adobeLaunch = inject(AdobeLaunchProviderService);
   private readonly hotjar = inject(HotjarProviderService);
+  private readonly _dynatrace = inject(DynatraceProviderService);
 
   constructor() {
     this.adobeLaunch.startTracking();

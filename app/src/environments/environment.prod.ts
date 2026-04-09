@@ -13,4 +13,5 @@ export const environment: IEnvironment = {
   adobe: '#{ADOBE_URL}',
   hotjarSiteId: '#{HOTJAR_SITE_ID}',
   hotjarVersion: '#{HOTJAR_VERSION}',
+  dynatrace: '#{DYNATRACE_URL}',
 };
