@@ -29,9 +29,9 @@ trigger:
 resources:
   repositories:
     - repository: "ibkAzTemplates"
-      type: "bitbucket"
-      endpoint: "bitbucket-generic-user"
-      name: "ibkteam/dso-frontend-template"
+      type: "github"
+      endpoint: "github-generic-user"
+      name: "ibkpe-org/dso-frontend-template"
       ref: "master"
 
 ####################
