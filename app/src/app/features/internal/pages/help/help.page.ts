@@ -1,8 +1,14 @@
-import { type AfterViewInit, Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  signal,
+  viewChild,
+} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AccordionModule } from 'primeng/accordion';
-import { pathOr } from 'ramda';
-import { isNotNil } from 'ramda-adjunct';
 
 import {
   AdobeEvent,
@@ -11,65 +17,60 @@ import {
 import { sectionCommissions } from '../../constants';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 
-/**
- * Help page component
- */
 @Component({
   selector: 'cs-help',
   templateUrl: './help.page.html',
   standalone: true,
   imports: [AccordionModule],
 })
-export class HelpPage implements AfterViewInit {
+export class HelpPage implements OnInit, AfterViewInit {
   private readonly router = inject(Router);
-  protected tracking = inject(TrackingService);
+  private readonly route = inject(ActivatedRoute);
+  protected readonly tracking = inject(TrackingService);
 
-  /**
-   * Accordion active index
-   */
-  activeIndex: number;
+  accordionContainer = viewChild<ElementRef<HTMLElement>>('accordionContainer');
 
-  constructor() {
-    const navigation = this.router.currentNavigation();
-    const section = pathOr<string>(
-      null,
-      ['extras', 'state', 'section'],
-      navigation,
-    );
+  public readonly activeIndex = signal<number>(-1);
+
+  ngOnInit(): void {
+    const params = this.route.snapshot.queryParams;
+    const section = params['section'] as string;
+
     if (section === sectionCommissions) {
-      this.activeIndex = 6;
+      this.activeIndex.set(6);
+
+      void this.router.navigate([], {
+        queryParams: { section: null },
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
+      });
     }
   }
 
   ngAfterViewInit(): void {
-    if (isNotNil(this.activeIndex)) {
-      const accordion = document.querySelector(
-        `.p-accordion.p-component p-accordiontab:nth-child(${this.activeIndex})`,
-      );
-
-      if (isNotNil(accordion)) {
-        setTimeout(() => {
-          window.scrollTo({
-            top: 1000,
-            behavior: 'smooth',
-          });
-        }, 500);
-      }
+    if (this.activeIndex() === 6) {
+      this.scrollToActiveTab();
     }
   }
 
-  /**
-   * Go home link
-   */
+  private scrollToActiveTab(): void {
+    setTimeout(() => {
+      const containerRef = this.accordionContainer();
+      const element = containerRef?.nativeElement;
+
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }
+    }, 400);
+  }
+
   goBack() {
     void this.router.navigate([internalFullRoutingNames.HOME]);
   }
 
-  /**
-   * Track opened tab with adobe
-   * @param evt
-   * @param evt.index
-   */
   openedTab({ index }: { index: number }) {
     this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Ayuda',

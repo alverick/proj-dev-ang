@@ -10,14 +10,14 @@
     >
       Centro de Ayuda
     </h3>
-    <div class="lists">
+    <div #accordionContainer class="lists">
       <p-accordion
         expandIcon="pi pi-plus-circle tw-text-primary-green-1 tw-text-3xl"
         collapseIcon="pi pi-minus-circle tw-text-primary-green-1 tw-text-3xl"
-        [(value)]="activeIndex"
+        [value]="activeIndex()"
         (onOpen)="openedTab($event)"
       >
-        <p-accordion-panel value="0">
+        <p-accordion-panel [value]="0">
           <p-accordion-header class="lg:tw-text-2xl"
             >¿Cómo empezar a usar Cobro Simple?</p-accordion-header
           >
@@ -39,7 +39,7 @@
             </p>
           </p-accordion-content>
         </p-accordion-panel>
-        <p-accordion-panel value="1">
+        <p-accordion-panel [value]="1">
           <p-accordion-header class="lg:tw-text-2xl"
             >¿Cómo cargar mi lista de cobros?</p-accordion-header
           >
@@ -69,7 +69,7 @@
             </ol>
           </p-accordion-content>
         </p-accordion-panel>
-        <p-accordion-panel value="2">
+        <p-accordion-panel [value]="2">
           <p-accordion-header class="lg:tw-text-2xl"
             >¿Qué es un servicio y cómo lo configuro?</p-accordion-header
           >
@@ -112,7 +112,7 @@
             </ol>
           </p-accordion-content>
         </p-accordion-panel>
-        <p-accordion-panel value="3">
+        <p-accordion-panel [value]="3">
           <p-accordion-header class="lg:tw-text-2xl"
             >¿Cómo podrán pagarme mis clientes?</p-accordion-header
           >
@@ -142,7 +142,7 @@
             </p>
           </p-accordion-content>
         </p-accordion-panel>
-        <p-accordion-panel value="4">
+        <p-accordion-panel [value]="4">
           <p-accordion-header class="lg:tw-text-2xl"
             >¿Cómo visualizar y editar mis cobranzas?</p-accordion-header
           >
@@ -170,7 +170,7 @@
             </ol>
           </p-accordion-content>
         </p-accordion-panel>
-        <p-accordion-panel value="5">
+        <p-accordion-panel [value]="5">
           <p-accordion-header class="lg:tw-text-2xl"
             >¿Qué pasa si mi cliente no es cliente
             Interbank?</p-accordion-header
@@ -190,7 +190,7 @@
             </p>
           </p-accordion-content>
         </p-accordion-panel>
-        <p-accordion-panel value="6">
+        <p-accordion-panel [value]="6">
           <p-accordion-header class="lg:tw-text-2xl"
             >¿Cómo se calcula el cobro de comisiones en canales
             digitales?</p-accordion-header

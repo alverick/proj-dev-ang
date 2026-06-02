@@ -320,7 +320,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.ref.onClose.subscribe((action: string) => {
       if (action === 'more') {
         void this.router.navigate([internalFullRoutingNames.HELP], {
-          state: { section: sectionCommissions },
+          queryParams: { section: sectionCommissions },
+          replaceUrl: true,
         });
       }
       if (action === 'hide') {
