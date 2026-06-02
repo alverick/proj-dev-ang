@@ -7,6 +7,7 @@ import { type ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideNgIdleKeepalive } from '@ng-idle/keepalive';
 import { provideEffects } from '@ngrx/effects';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
@@ -109,5 +110,6 @@ export const appConfig: ApplicationConfig = {
     AuthGuard,
     GtpOutputGuard,
     GtpInputGuard,
+    provideNgIdleKeepalive(),
   ],
 };

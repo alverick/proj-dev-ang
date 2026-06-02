@@ -1,14 +1,18 @@
 import { NgxLoggerLevel } from 'ngx-logger';
 
-import type { IEnvironment } from './constants';
-import { environmentDefault, serverUrl } from './constants';
+import {
+  environmentDefault,
+  type IEnvironment,
+  Recaptcha,
+  serverUrl,
+} from './constants';
 
 export const environment: IEnvironment = {
   ...environmentDefault,
   development: false,
   production: true,
   END_POINT: serverUrl.prod,
-  recaptcha: '6LcLkqsrAAAAAGecQmU5cy0JCRr484i5Np6cIGpC',
+  recaptcha: Recaptcha.legacyProd,
   logLevel: NgxLoggerLevel.OFF,
   serverLogLevel: NgxLoggerLevel.ERROR,
   adobe:
