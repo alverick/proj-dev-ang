@@ -12,78 +12,65 @@ import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { authFullRoutingNames } from '../../features/auth/auth-routing.names';
-import { LoginService } from '../services/login.service';
 import { StorageService } from '../services/storage.service';
-import { swalAlert } from '../utils/helpers/popups';
 
-@Injectable()
+export type LogoutReason = 'expired' | 'server-error';
+
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthInterceptorService implements HttpInterceptor {
   private readonly router = inject(Router);
-  private readonly login = inject(LoginService);
   private readonly storage = inject(StorageService);
 
   intercept(
-    req: HttpRequest<any>,
+    req: HttpRequest<unknown>,
     next: HttpHandler,
-  ): Observable<HttpEvent<any>> {
-    if (!req.url.includes('notification')) {
-      this.login.refresh();
-    }
-    const token: string = sessionStorage.getItem('tk');
+  ): Observable<HttpEvent<unknown>> {
+    const token: string | null = sessionStorage.getItem('tk');
 
-    let request = req;
-
-    const headers = {
+    const headers: Record<string, string> = {
       'Cache-Control': 'no-cache',
       Pragma: 'no-cache',
       Expires: 'Sat, 01 Jan 2000 00:00:00 GMT',
       'Ocp-Apim-Subscription-Key': environment.OCP_KEY,
-      'Ocp-Apim-Trace': `true`,
+      'Ocp-Apim-Trace': 'true',
     };
 
     if (token) {
       headers['Authorization'] = `bearer ${token}`;
     }
-    request = req.clone({
-      setHeaders: headers,
-    });
 
-    const stringNotAllowed = ['notification', 'https://pro.ip-api.com'];
+    const request = req.clone({ setHeaders: headers });
+
+    const ignoredUrls: string[] = ['https://pro.ip-api.com'];
 
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
-        const urlNotAllowed = stringNotAllowed.filter((str) =>
-          request.url.includes(str),
+        const isIgnoredUrl = ignoredUrls.some((url) =>
+          request.url.includes(url),
         );
 
-        if (urlNotAllowed.length < 1) {
-          if (err.status === 401) {
-            this.storage.removeCurrentSession();
-            void swalAlert.fire({
-              title: 'Su sesión ha sido cerrada por inactividad',
-              showCloseButton: true,
-              showConfirmButton: true,
-              confirmButtonText: 'Cerrar',
-              allowOutsideClick: false,
-              willClose: () => {
-                void this.router.navigate([authFullRoutingNames.LOGIN]);
-              },
-            });
-          } else if (err.status !== 400) {
-            void swalAlert.fire({
-              title: 'Ha ocurrido un error en el servidor',
-              showCloseButton: true,
-              showConfirmButton: true,
-              confirmButtonText: 'Cerrar',
-              allowOutsideClick: false,
-              willClose: () => {
-                void this.router.navigate([authFullRoutingNames.LOGIN]);
-              },
-            });
-          }
+        if (isIgnoredUrl || !this.storage.isAuthenticated()) {
+          return throwError(() => err);
         }
+
+        if (err.status === 401) {
+          this.navigateToLoginWithReason('expired');
+        } else if (err.status !== 400) {
+          this.navigateToLoginWithReason('server-error');
+        }
+
         return throwError(() => err);
       }),
     );
+  }
+
+  private navigateToLoginWithReason(reason: LogoutReason): void {
+    this.storage.removeCurrentSession();
+    void this.router.navigate([authFullRoutingNames.LOGIN], {
+      queryParams: { reason: reason },
+      replaceUrl: true,
+    });
   }
 }
