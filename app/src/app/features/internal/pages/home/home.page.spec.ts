@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgZone } from '@angular/core';
+import { EventEmitter, NgZone } from '@angular/core';
 import {
   type ComponentFixture,
   fakeAsync,
@@ -75,10 +75,10 @@ describe('HomePage', () => {
   let dynamicDialogService: DynamicDialogService;
   let homeService: HomeService;
   let loginService: LoginService;
-  let fileLoad: LoadFileService;
   let settings: SettingsStorageService;
   let storageService: StorageService;
   let ngZone: NgZone;
+  let fileLoad: LoadFileService;
 
   const mockUser: User = {
     ruc: '2000000000938',
@@ -209,18 +209,8 @@ describe('HomePage', () => {
       dialogComponentRefMap: new Map(),
       destroy: new Subject(),
     };
-    const mockExcelService = {
-      service: null,
-      statusUpload: false,
-    };
     const mockLoginService = {
       refresh: jest.fn(),
-    };
-    const mockLoadFileService = {
-      onClose: new Subject(),
-      verify: jest.fn(),
-      close: jest.fn(),
-      isRunning: jest.fn().mockReturnValue(false),
     };
     const mockLoadBarService = {
       show: jest.fn(),
@@ -235,6 +225,39 @@ describe('HomePage', () => {
       getSettingAndSave: jest.fn().mockReturnValue(false),
     };
 
+    const mockExcelService = {
+      statusUpload: false,
+      GetLastProcess: jest.fn().mockReturnValue(of({})),
+      errores: [],
+      StatusExcel: jest.fn().mockReturnValue(of({})),
+      idProcess: '123',
+      service: null,
+      http: jest.fn(),
+      URI_API: 'api/',
+      GetProcessStatus: jest.fn(),
+      DeleteProcess: jest.fn(),
+      GetErrorsProcess: jest.fn(),
+    };
+
+    const mockRouter = {
+      navigate: jest.fn(),
+      navigateByUrl: jest.fn(),
+      events: of(),
+      url: '/home',
+      getCurrentNavigation: jest.fn(),
+      routerState: { snapshot: { url: '/home' } },
+    };
+
+    fileLoad = MockService(LoadFileService, {
+      onClose: new EventEmitter(),
+      verify: jest.fn(),
+      close: jest.fn(),
+      isRunning: jest.fn().mockReturnValue(false),
+      componentRef: null,
+      cancel: true,
+      verifyStatus: jest.fn(),
+    });
+
     await TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]), HomePage, HttpClientModule],
       providers: [
@@ -246,9 +269,10 @@ describe('HomePage', () => {
         { provide: DynamicDialogService, useValue: mockDynamicDialogService },
         { provide: ExcelService, useValue: mockExcelService },
         { provide: LoginService, useValue: mockLoginService },
-        { provide: LoadFileService, useValue: mockLoadFileService },
+        { provide: LoadFileService, useValue: fileLoad },
         { provide: LoadBarService, useValue: mockLoadBarService },
         { provide: MovementsService, useValue: mockMovementsService },
+        { provide: Router, useValue: mockRouter },
         {
           provide: SettingsStorageService,
           useValue: mockSettingsStorageService,
@@ -263,6 +287,7 @@ describe('HomePage', () => {
     component = fixture.componentInstance;
     store = TestBed.inject(Store);
     jest.spyOn(store, 'dispatch');
+    jest.spyOn(store, 'select').mockReturnValue(of());
     router = TestBed.inject(Router);
     shepherdService = TestBed.inject(ShepherdService);
     dynamicDialogService = TestBed.inject(DynamicDialogService);
@@ -272,21 +297,15 @@ describe('HomePage', () => {
     fileLoad = TestBed.inject(LoadFileService);
     settings = TestBed.inject(SettingsStorageService);
     ngZone = TestBed.inject(NgZone);
-
+    jest.spyOn(fileLoad.onClose, 'subscribe');
+    jest.spyOn(component, 'consultaDeuda');
     fixture.detectChanges();
   });
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
   it('should call ngOnInit and initialize data', () => {
-    jest
-      .spyOn((component as any).fileLoad.onClose, 'subscribe')
-      .mockImplementation(jest.fn());
-    jest.spyOn(component, 'consultaDeuda');
-    component.ngOnInit();
-
     expect(fileLoad.onClose.subscribe).toHaveBeenCalled();
     expect(fileLoad.verify).toHaveBeenCalled();
     expect(storageService.getCurrentUser).toHaveBeenCalled();
