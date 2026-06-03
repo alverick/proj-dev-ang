@@ -8,8 +8,8 @@ import { Subject, Subscription, timer } from 'rxjs';
 export class SessionService {
   private readonly idle = inject(Idle);
 
-  private readonly SESSION_DURATION_MINUTES = 5;
-  private readonly DEFAULT_TIMEOUT = 60; // 1 minute warning modal countdown
+  private readonly SESSION_DURATION_MINUTES = 15;
+  private readonly DEFAULT_TIMEOUT = 60;
   private readonly DEFAULT_IDLE =
     this.SESSION_DURATION_MINUTES * 60 - this.DEFAULT_TIMEOUT;
 
