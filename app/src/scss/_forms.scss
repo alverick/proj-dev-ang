@@ -1,5 +1,6 @@
 :root {
   --font-family: 'Geometria', 'Helvetica Neue', sans-serif;
+  --p-message-error-background: #fbccda;
 }
 
 @layer custom {
@@ -72,7 +73,7 @@
 
     &.self-width {
       .p-overlay {
-        .p-select-option{
+        .p-select-option {
           white-space: normal;
           padding: 0.429rem 0.857rem;
         }
@@ -824,6 +825,14 @@
       color: var(--ibk-white);
       background: var(--primary-green-2);
       border: 1px solid var(--primary-green-2);
+    }
+    .p-message.p-message-error {
+      .p-message-text {
+        font-size: 12px;
+        font-weight: normal;
+        color: var(--ibk-black);
+        padding-left: 20px;
+      }
     }
   }
 

@@ -104,6 +104,11 @@
               [showCancelButton]="false"
               (onSelect)="selectFiled($event)"
               (onRemove)="removeFiled()"
+              maxFileSize="5242880"
+              invalidFileTypeMessageSummary=""
+              invalidFileTypeMessageDetail="El formato del archivo no es válido. Solo se permiten archivos Excel (.xlsx, .xls)"
+              invalidFileSizeMessageSummary=""
+              invalidFileSizeMessageDetail="El archivo supera el tamaño permitido. El tamaño máximo es de 5MB"
               accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             >
               <ng-template let-file pTemplate="file">
