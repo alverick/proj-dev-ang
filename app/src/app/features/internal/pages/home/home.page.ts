@@ -55,7 +55,6 @@ import {
   LoadFileService,
   type ModalCloseData,
 } from '../../../../shared/services/load-file.service';
-import { LoginService } from '../../../../shared/services/login.service';
 import { StorageService } from '../../../../shared/services/storage.service';
 import {
   type ActionEventProperties,
@@ -207,7 +206,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private readonly homeService: HomeService,
     public transactionService: TransactionService,
     public excelService: ExcelService,
-    private readonly loginService: LoginService,
     private readonly fileLoad: LoadFileService,
     private readonly barLoad: LoadBarService,
     private readonly movementsService: MovementsService,
@@ -231,7 +229,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.fileLoad.onClose.subscribe(this.onClose());
     this.fileLoad.verify(this.fileLoadContainer);
     this.user = this.storageService.getCurrentUser();
-    this.loginService.refresh();
     this.homeService.getServices(true).subscribe((value) => {
       this.services = value;
       this.serviceSelected = value[0];
@@ -323,7 +320,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.ref.onClose.subscribe((action: string) => {
       if (action === 'more') {
         void this.router.navigate([internalFullRoutingNames.HELP], {
-          state: { section: sectionCommissions },
+          queryParams: { section: sectionCommissions },
+          replaceUrl: true,
         });
       }
       if (action === 'hide') {

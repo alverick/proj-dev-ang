@@ -320,10 +320,12 @@ describe('LoginService', () => {
       };
 
       Date.now = jest.fn(() => now.getTime());
-      storageServiceMock.getCurrentSession.mockReturnValue(initialSession);
+      storageServiceMock.getCurrentSession
+        .mockReturnValueOnce(initialSession)
+        .mockReturnValueOnce(initialSession);
       httpClientMock.get.mockReturnValue(of(mockRefreshResponse));
 
-      service.refresh();
+      service.refresh().subscribe(); // Add a subscription to trigger the observable chain
       flush();
 
       expect(storageServiceMock.getCurrentSession).toHaveBeenCalledTimes(2);

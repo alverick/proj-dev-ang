@@ -6,6 +6,12 @@ export const serverUrl = {
   uat: 'https://apis.uat.interbank.pe/eureca/api',
   prod: 'https://apis.interbank.pe/eureca/api',
 };
+export const Recaptcha = {
+  dev: '6Ldocp4rAAAAAE26XlG3fIe2b_0hBhE3LrLRXGJn',
+  hmr: '6Ldocp4rAAAAAE26XlG3fIe2b_0hBhE3LrLRXGJn',
+  legacyProd: '6LcLkqsrAAAAAGecQmU5cy0JCRr484i5Np6cIGpC',
+  uat: '6Ldpcp4rAAAAAErayT0V1vXFOih8hbzr5ZltvUP_',
+} as const;
 
 /**
  * Defines the environment configuration settings for the application.
@@ -94,7 +100,7 @@ export type IEnvironment = {
    * @example "adobe-client-id-12345"
    */
   adobe: string;
-  recaptcha: string;
+  recaptcha: (typeof Recaptcha)[keyof typeof Recaptcha] | null;
   dynatrace: string;
   hotjarSiteId: string;
   hotjarVersion: string;
@@ -107,7 +113,7 @@ export const environmentDefault: IEnvironment = {
   END_POINT: serverUrl.local,
   OCP_KEY: '',
   adobe: '',
-  recaptcha: '',
+  recaptcha: null,
   dynatrace: '',
   logLevel: NgxLoggerLevel.WARN,
   serverLogLevel: NgxLoggerLevel.OFF,

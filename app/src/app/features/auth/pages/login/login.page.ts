@@ -1,12 +1,18 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject, type OnInit, viewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  type OnInit,
+  viewChild,
+} from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LetDirective } from '@ngrx/component';
 import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie-service';
@@ -21,7 +27,9 @@ import { type Password, PasswordModule } from 'primeng/password';
 import { Ripple } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
-import { first } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { filter, first, take, takeUntil } from 'rxjs/operators';
+import { SweetAlertOptions } from 'sweetalert2';
 
 import { environment } from '../../../../../environments/environment';
 import { internalFullRoutingNames } from '../../../../app-routing.collection';
@@ -35,7 +43,7 @@ import { RespuestaLogin } from '../../../../shared/models/respuestaLogin.model';
 import { EncryptionService } from '../../../../shared/services/encryption.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import { RecaptchaProviderService } from '../../../../shared/services/recaptcha-provider.service';
-import { StorageService } from '../../../../shared/services/storage.service';
+import { SessionService } from '../../../../shared/services/session.service';
 import {
   type ActionEventProperties,
   AdobeEvent,
@@ -47,7 +55,11 @@ import { appConfigFeature } from '../../../../store/reducers/app-config.reducer'
 import { authFullRoutingNames } from '../../auth-routing.names';
 import { LayoutFormComponent } from '../../components/layout-form/layout-form.component';
 
-const userData = environment.credentials[0];
+let userData: string[] | undefined;
+
+if (!environment.production) {
+  userData = environment.credentials[0];
+}
 
 interface LoginForm {
   ruc: string;
@@ -78,15 +90,17 @@ interface LoginForm {
     InputGroupAddon,
   ],
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit, OnDestroy {
   private readonly formBuilder = inject(FormBuilder);
   private readonly loginService = inject(LoginService);
   private readonly router = inject(Router);
   private readonly cookieService = inject(CookieService);
-  private readonly storageService = inject(StorageService);
+  private readonly sessionService = inject(SessionService);
   private readonly tracking = inject(TrackingService);
   private readonly store = inject(Store);
   private readonly messageService = inject(MessageService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly destroy$ = new Subject<void>();
 
   public loginForm: ModelFormGroup<LoginForm>;
 
@@ -107,7 +121,21 @@ export class LoginPage implements OnInit {
 
   encryptionService = inject(EncryptionService);
 
-  ngOnInit() {
+  private readonly logoutAlertsConfig: Record<string, SweetAlertOptions> = {
+    expired: {
+      title: 'Superaste el límite de tiempo de inactividad',
+      text: 'Vuelve a iniciar sesión',
+      icon: 'warning',
+    },
+    'server-error': {
+      title: 'Ha ocurrido un error en el servidor',
+      icon: 'error',
+    },
+  };
+
+  ngOnInit(): void {
+    this.checkLogoutReason();
+
     this.loginForm = this.formBuilder.group({
       ruc: ['', rucValidators],
       psw: ['', [Validators.required, Validators.maxLength(25)]],
@@ -115,7 +143,7 @@ export class LoginPage implements OnInit {
     });
     const rucStr = this.cookieService.check(companyDocumentStorageName)
       ? this.cookieService.get(companyDocumentStorageName)
-      : userData[0];
+      : userData?.[0];
     if (isNotNilOrEmpty(rucStr)) {
       this.checkStatusLoginForm(rucStr);
     }
@@ -129,7 +157,11 @@ export class LoginPage implements OnInit {
       })
       .then((ruc) => {
         this.loginForm.patchValue({ ruc, rememberMe: true });
-        if (isNotNilOrEmpty(userData[0]) && isNotNilOrEmpty(userData[1])) {
+        if (
+          userData &&
+          isNotNilOrEmpty(userData[0]) &&
+          isNotNilOrEmpty(userData[1])
+        ) {
           this.loginForm.patchValue({
             ruc: userData[0],
             psw: userData[1],
@@ -176,7 +208,6 @@ export class LoginPage implements OnInit {
     try {
       this.token = await this.recaptcha.getToken('submit_form');
     } catch (err) {
-      console.error('reCAPTCHA failed', err);
     }
 
     this.loginService
@@ -271,6 +302,8 @@ export class LoginPage implements OnInit {
         expire,
       );
     }
+
+    this.sessionService.startTracking(value.exp);
 
     window.sessionStorage.setItem('username', value.id);
     void this.router.navigate([internalFullRoutingNames.HOME]);
@@ -406,5 +439,37 @@ export class LoginPage implements OnInit {
 
   sendAdobeTrack(action?: Partial<ActionEventProperties>) {
     this.tracking.trackEvent(AdobeEvent.login, action);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private checkLogoutReason(): void {
+    this.route.queryParams
+      .pipe(
+        filter(
+          (params: Record<string, unknown>) =>
+            !!params && typeof params['reason'] === 'string',
+        ),
+        take(1),
+        takeUntil(this.destroy$),
+      )
+      .subscribe((params) => {
+        const reason = params['reason'] as string;
+
+        const alertConfig = this.logoutAlertsConfig[reason];
+
+        if (alertConfig) {
+          void swalAlert.fire(alertConfig);
+        }
+
+        void this.router.navigate([], {
+          queryParams: { reason: null },
+          queryParamsHandling: 'merge',
+          replaceUrl: true,
+        });
+      });
   }
 }

@@ -4,13 +4,17 @@ import { Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MockProvider } from 'ng-mocks';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 
 import { AppComponent } from './app.component';
 import { FabWhatsappComponent } from './shared/components/fab-whatsapp/fab-whatsapp.component';
 import { ValidationDefaultsComponent } from './shared/components/validation-defaults/validation-defaults.component';
 import { AdobeLaunchProviderService, TrackingService } from './shared/services';
+import { DynatraceProviderService } from './shared/services/dynatrace-provider.service';
 import { HotjarProviderService } from './shared/services/hotjar-provider.service';
+import { LoginService } from './shared/services/login.service';
+import { SessionService } from './shared/services/session.service';
+import { StorageService } from './shared/services/storage.service';
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -36,7 +40,23 @@ describe('AppComponent', () => {
         MockProvider(AdobeLaunchProviderService),
         MockProvider(HotjarProviderService),
         MockProvider(HotjarProviderService),
+        MockProvider(DynatraceProviderService),
+        MockProvider(LoginService),
         MockProvider(TrackingService),
+        {
+          provide: SessionService,
+          useValue: {
+            sessionWarning$: of(0),
+            requestBackendTokenRefresh$: of(null),
+            sessionTimedOut$: of(null),
+            scheduleNextBackgroundRefresh: jest.fn(),
+            rescueUiSession: jest.fn(),
+            stopTracking: jest.fn(),
+            startTracking: jest.fn(),
+            destroyService: jest.fn(),
+          },
+        },
+        MockProvider(StorageService),
         { provide: Router, useValue: { events: routerEvents$.asObservable() } },
         { provide: Store, useValue: storeMock },
       ],

@@ -1,14 +1,17 @@
 import { NgxLoggerLevel } from 'ngx-logger';
 
-import type { IEnvironment } from './constants';
-import { environmentDefault, serverUrl } from './constants';
+import {
+  environmentDefault,
+  type IEnvironment,
+  Recaptcha,
+  serverUrl,
+} from './constants';
 
 export const environment: IEnvironment = {
   ...environmentDefault,
   hmr: true,
-  END_POINT: serverUrl.local,
+  END_POINT: serverUrl.dev,
+  recaptcha: Recaptcha.hmr,
   logLevel: NgxLoggerLevel.TRACE,
   serverLogLevel: NgxLoggerLevel.OFF,
-  dynatrace:
-    'https://dok.js-cdn.dynatrace.com/jstag/18ecc485038/bf02472ovk/a8a689599f93b815_complete.js',
 };

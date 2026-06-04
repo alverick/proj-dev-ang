@@ -5,7 +5,7 @@ import {
 } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { type Observable, throwError } from 'rxjs';
+import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
@@ -25,8 +25,6 @@ export class LoginService {
 
   private readonly URI_API: string = environment.END_POINT;
   public errores: number;
-
-  private callingRefresh = false;
 
   login(ruc: string, psw: string, token: string): Observable<RespuestaLogin> {
     this.notify.clear();
@@ -75,17 +73,18 @@ export class LoginService {
     );
   }
 
-  refresh(): void {
-    if (this.callingRefresh === false) {
-      const now = new Date();
-      const storage = this.storage.getCurrentSession();
-      if (storage) {
-        const exp = new Date(storage.expire);
-        const rfs = new Date(storage.refresh);
-        if (now > rfs && now < exp) {
-          this.callingRefresh = true;
-          const url = `${this.URI_API}/login`;
-          this.http.get(url, {}).subscribe((r: RespuestaLogin) => {
+  refresh(): Observable<RespuestaLogin> {
+    const now = new Date();
+    const storage = this.storage.getCurrentSession();
+
+    if (storage) {
+      const exp = new Date(storage.expire);
+      const rfs = new Date(storage.refresh);
+
+      if (now > rfs && now < exp) {
+        const url = `${this.URI_API}/login`;
+        return this.http.get<RespuestaLogin>(url, {}).pipe(
+          tap((r: RespuestaLogin) => {
             const storageSession = this.storage.getCurrentSession();
             this.storage.setCurrentSession({
               user: storageSession.user,
@@ -95,14 +94,12 @@ export class LoginService {
               refresh: r.rfs,
               prfl: r.prfl,
             });
-            this.callingRefresh = false;
-            return r;
-          });
-        } else {
-          this.callingRefresh = false;
-        }
+          }),
+          catchError((err: HttpErrorResponse) => throwError(() => err)),
+        );
       }
     }
+    return of({} as RespuestaLogin);
   }
 
   public getCompanyDataUpdate(data: any): Observable<any> {

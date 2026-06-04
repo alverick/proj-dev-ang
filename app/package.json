@@ -35,6 +35,8 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@hotjar/browser": "^1.0.9",
     "@newrelic/browser-agent": "^1.288.1",
+    "@ng-idle/core": "^16.0.0",
+    "@ng-idle/keepalive": "^16.0.0",
     "@ngrx/component": "^20.1.0",
     "@ngrx/data": "^20.1.0",
     "@ngrx/effects": "^20.1.0",
@@ -70,7 +72,6 @@
     "zone.js": "~0.15.1"
   },
   "devDependencies": {
-    "@angular-builders/custom-webpack": "^20.0.0",
     "@angular-devkit/build-angular": "^20.3.12",
     "@angular-devkit/core": "^20.3.12",
     "@angular-devkit/schematics": "^20.3.12",
