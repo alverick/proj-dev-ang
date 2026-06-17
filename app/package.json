@@ -132,6 +132,8 @@
       "rrweb-cssom": "0.8.0",
       "cssstyle": "5.3.1"
     },
-    "picomatch": "^4.0.4"
+    "picomatch": "^4.0.4",
+    "esbuild": "^0.28.1",
+    "vite": "^7.3.5"
   }
 }
