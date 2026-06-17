@@ -7,6 +7,7 @@
     "start:web": "ng serve --port 4700",
     "start:hmr": "ng serve --configuration hmr --hmr",
     "build": "ng build",
+    "postbuild": "tsx obfuscate.ts",
     "build:stats": "ng build --stats-json",
     "analyze": "webpack-bundle-analyzer dist/EurekaAngularProy/stats-latest.json",
     "test": "cross-env NODE_OPTIONS=--max_old_space_size=8192 npx jest",
@@ -100,6 +101,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-sonarjs": "^4.0.0",
     "eslint-plugin-unused-imports": "^4.1.4",
+    "javascript-obfuscator": "^5.4.3",
     "jest": "^29.7.0",
     "jest-junit": "^16.0.0",
     "jest-preset-angular": "^14.2.4",
@@ -117,6 +119,7 @@
     "stylelint-config-tailwindcss": "^0.0.7",
     "stylelint-scss": "^6.7.0",
     "tailwindcss": "^3.4.18",
+    "tsx": "^4.22.4",
     "typescript": "~5.8.3",
     "webpack-build-notifier": "^3.1.0",
     "webpack-bundle-analyzer": "^4.10.2"
