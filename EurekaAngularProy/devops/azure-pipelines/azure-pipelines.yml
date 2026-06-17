@@ -131,7 +131,7 @@ stages:
               command: custom
               workingDir: app
               verbose: false
-              customCommand: 'run build -- --configuration ${{variables.mode}}'
+              customCommand: 'run build -- --configuration=${{variables.mode}}'
 
           - script: |
               echo Creating Directory
