@@ -129,12 +129,9 @@
     ]
   },
   "overrides": {
-    "jest-environment-jsdom": {
-      "jsdom": "27.0.1",
-      "rrweb-cssom": "0.8.0",
-      "cssstyle": "5.3.1"
-    },
+    "http-proxy-middleware": "^3.0.7",
     "picomatch": "^4.0.4",
+    "piscina": "^5.2.0",
     "esbuild": "^0.28.1",
     "vite": "^7.3.5"
   }
