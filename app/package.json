@@ -66,24 +66,24 @@
     "ramda": "^0.30.1",
     "ramda-adjunct": "^5.1.0",
     "rxjs": "~7.8.0",
-    "sweetalert2": "^11.26.3",
+    "sweetalert2": "^11.26.25",
     "tailwindcss-animated": "^1.1.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^20.3.28",
-    "@angular-devkit/core": "^20.3.28",
-    "@angular-devkit/schematics": "^20.3.28",
+    "@angular-devkit/core": "^20.3.30",
+    "@angular-devkit/schematics": "^20.3.30",
     "@angular-eslint/builder": "^20.6.0",
     "@angular-eslint/eslint-plugin": "^20.6.0",
     "@angular-eslint/eslint-plugin-template": "^20.6.0",
     "@angular-eslint/schematics": "^20.6.0",
     "@angular-eslint/template-parser": "^20.6.0",
-    "@angular/cli": "^20.3.28",
+    "@angular/cli": "^20.3.30",
     "@angular/compiler-cli": "^20.3.25",
     "@angularclass/hmr": "^3.0.0",
-    "@compodoc/compodoc": "^1.1.25",
+    "@compodoc/compodoc": "^1.2.1",
     "@ngrx/eslint-plugin": "^20.1.0",
     "@ngrx/schematics": "^20.1.0",
     "@types/dompurify": "^3.0.5",
@@ -129,13 +129,7 @@
     ]
   },
   "overrides": {
-    "jest-environment-jsdom": {
-      "jsdom": "27.0.1",
-      "rrweb-cssom": "0.8.0",
-      "cssstyle": "5.3.1"
-    },
-    "picomatch": "^4.0.4",
-    "esbuild": "^0.28.1",
-    "vite": "^7.3.5"
+    "http-proxy-middleware": "^3.0.7",
+    "picomatch": "^4.0.4"
   }
 }
