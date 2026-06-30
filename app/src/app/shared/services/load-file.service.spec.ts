@@ -1,7 +1,9 @@
 import {
   type ComponentRef,
   InjectionToken,
+  signal,
   type ViewContainerRef,
+  type WritableSignal,
 } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
@@ -70,7 +72,7 @@ describe('LoadFileService', () => {
       providers: [
         LoadFileService,
         MockProvider(ExcelService, {
-          statusUpload: false,
+          isProcessActive: signal(false),
           idProcess: 123,
           errores: [],
           GetLastProcess: jest.fn(() => {
@@ -79,6 +81,8 @@ describe('LoadFileService', () => {
           StatusExcel: jest.fn(() =>
             of({ ...processStatusMock, status: processStatus.validating }),
           ),
+          startUpload: jest.fn(),
+          resetProcessState: jest.fn(),
         }),
         MockProvider(Router, {
           url: internalFullRoutingNames.HOME,
@@ -111,13 +115,13 @@ describe('LoadFileService', () => {
     });
 
     it('should return true after component is created via verify', () => {
-      (excelServiceMock as any).statusUpload = true;
+      (excelServiceMock.isProcessActive as WritableSignal<boolean>).set(true);
       service.verify(viewContainerRefMock);
       expect(service.isRunning()).toBe(true);
     });
 
     it('should return false after close is called', () => {
-      (excelServiceMock as any).statusUpload = true;
+      (excelServiceMock.isProcessActive as WritableSignal<boolean>).set(true);
       service.verify(viewContainerRefMock);
       expect(service.isRunning()).toBe(true);
 
@@ -129,7 +133,7 @@ describe('LoadFileService', () => {
 
   describe('close', () => {
     it('should destroy componentRef, set it to null, and set cancel flag if running', () => {
-      (excelServiceMock as any).statusUpload = true;
+      (excelServiceMock.isProcessActive as WritableSignal<boolean>).set(true);
       service.verify(viewContainerRefMock);
       expect(service.isRunning()).toBe(true);
       (service as any).cancel = false;
@@ -160,8 +164,8 @@ describe('LoadFileService', () => {
       expect(viewContainerRefMock.clear).toHaveBeenCalledTimes(1);
     });
 
-    it('should create component and call verifyStatus if excelService.statusUpload is true', () => {
-      (excelServiceMock as any).statusUpload = true;
+    it('should create component and call verifyStatus if excelService.isProcessActive() is true', () => {
+      (excelServiceMock.isProcessActive as WritableSignal<boolean>).set(true);
       const verifyStatusSpy = jest.spyOn(service as any, 'verifyStatus');
 
       service.verify(viewContainerRefMock);
@@ -173,8 +177,8 @@ describe('LoadFileService', () => {
       verifyStatusSpy.mockRestore();
     });
 
-    it('should call GetLastProcess if excelService.statusUpload is false', fakeAsync(() => {
-      (excelServiceMock as any).statusUpload = false;
+    it('should call GetLastProcess if excelService.isProcessActive() is false', fakeAsync(() => {
+      (excelServiceMock.isProcessActive as WritableSignal<boolean>).set(false);
       jest
         .mocked(excelServiceMock.GetLastProcess)
         .mockReturnValue(
@@ -187,12 +191,13 @@ describe('LoadFileService', () => {
       expect(excelServiceMock.GetLastProcess).toHaveBeenCalledTimes(1);
     }));
 
-    it('should create component and call verifyStatus if statusUpload is false and GetLastProcess returns a running status', fakeAsync(() => {
-      (excelServiceMock as any).statusUpload = false;
+    it('should create component and call verifyStatus if isProcessActive() is false and GetLastProcess returns a running status', fakeAsync(() => {
+      const runningStatus = { ...lastProcessStatusMock, status: processStatus.validating, id: 456 };
+      (excelServiceMock.isProcessActive as WritableSignal<boolean>).set(false);
       jest
         .mocked(excelServiceMock.GetLastProcess)
         .mockReturnValue(
-          of({ ...lastProcessStatusMock, status: processStatus.validating }),
+          of(runningStatus),
         );
       const verifyStatusSpy = jest.spyOn(service as any, 'verifyStatus');
 
@@ -202,6 +207,7 @@ describe('LoadFileService', () => {
       tick(0);
 
       expect(excelServiceMock.GetLastProcess).toHaveBeenCalledTimes(1);
+      expect(excelServiceMock.startUpload).toHaveBeenCalledWith(runningStatus.id);
       expect(viewContainerRefMock.createComponent).toHaveBeenCalledTimes(1);
       expect(verifyStatusSpy).toHaveBeenCalledTimes(1);
       expect(service.isRunning()).toBe(true);
@@ -212,8 +218,8 @@ describe('LoadFileService', () => {
       verifyStatusSpy.mockRestore();
     }));
 
-    it('should NOT create component if statusUpload is false and GetLastProcess returns a final status', fakeAsync(() => {
-      (excelServiceMock as any).statusUpload = false;
+    it('should NOT create component if isProcessActive() is false and GetLastProcess returns a final status', fakeAsync(() => {
+      (excelServiceMock.isProcessActive as WritableSignal<boolean>).set(false);
       jest
         .mocked(excelServiceMock.GetLastProcess)
         .mockReturnValue(
@@ -225,6 +231,7 @@ describe('LoadFileService', () => {
       tick();
 
       expect(excelServiceMock.GetLastProcess).toHaveBeenCalledTimes(1);
+      expect(excelServiceMock.startUpload).not.toHaveBeenCalled();
       expect(viewContainerRefMock.createComponent).not.toHaveBeenCalled();
       expect(verifyStatusSpy).not.toHaveBeenCalled();
       expect(service.isRunning()).toBe(false);
@@ -233,7 +240,7 @@ describe('LoadFileService', () => {
     }));
 
     it('should handle error from GetLastProcess gracefully', fakeAsync(() => {
-      (excelServiceMock as any).statusUpload = false;
+      (excelServiceMock.isProcessActive as WritableSignal<boolean>).set(false);
       const error = new Error('Failed to get last process');
       jest
         .mocked(excelServiceMock.GetLastProcess)
@@ -258,7 +265,7 @@ describe('LoadFileService', () => {
     const delay = 2000;
 
     beforeEach(() => {
-      (excelServiceMock as any).statusUpload = true;
+      (excelServiceMock.isProcessActive as WritableSignal<boolean>).set(true);
 
       jest.spyOn(service.onClose, 'emit');
     });
@@ -334,7 +341,7 @@ describe('LoadFileService', () => {
       tick(delay * 5);
     }));
 
-    it('should stop polling on FAILED status', fakeAsync(() => {
+    it('should stop polling on FAILED status and call resetProcessState', fakeAsync(() => {
       const finalStatus: ProcessStatus = {
         status: processStatus.failed,
         advance: 50,
@@ -357,7 +364,7 @@ describe('LoadFileService', () => {
 
       expect(mockComponentRef.destroy).toHaveBeenCalledTimes(1);
       expect(service.onClose.emit).toHaveBeenCalledWith(expectedEmit);
-      expect((excelServiceMock as any).statusUpload).toBe(false);
+      expect(excelServiceMock.resetProcessState).toHaveBeenCalledTimes(1);
 
       tick(delay);
       expect(excelServiceMock.StatusExcel).toHaveBeenCalledTimes(1);

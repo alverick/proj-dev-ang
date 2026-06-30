@@ -108,7 +108,7 @@ export class DialogComponent implements OnInit {
       xls: ['', Validators.required],
     });
     this.dialogRef.onClose.subscribe(() => {
-      if (!this.excelService.statusUpload) {
+      if (!this.excelService.isProcessActive()) {
         this.excelService.errores = [];
       }
     });
@@ -294,8 +294,8 @@ export class DialogComponent implements OnInit {
   }
 
   async openSnackBar() {
-    if (this.excelService.statusUpload) {
-      this.messageUploadExcel = this.excelService.statusUpload;
+    if (this.excelService.isProcessActive()) {
+      this.messageUploadExcel = this.excelService.isProcessActive();
       return;
     }
 
@@ -318,34 +318,25 @@ export class DialogComponent implements OnInit {
     this.progress.status = 'Subiendo';
     this.progress.mode = 'indeterminate';
     this.progress.value = 0;
+    this.excelService.startUpload();
     if (this.confirmUser) {
       this.confirmUser = false;
-      this.excelService.confirmUser(this.uploaderFiles).subscribe(() => {
-        this.verifyStatus();
+      this.excelService.confirmUser(this.uploaderFiles).subscribe({
+        next: () => {
+          this.verifyStatus();
+        },
+        error: (err: HttpErrorResponse) => {
+          this.handleUploadError(err, actionStep);
+        },
       });
     } else {
       this.excelService.UploadExcel(this.uploaderFiles).subscribe({
         next: (value) => {
-          this.excelService.idProcess = value.idProcess;
+          this.excelService.startUpload(value.idProcess);
           this.verifyStatus();
         },
         error: (err: HttpErrorResponse) => {
-          this.excelService.statusUpload = false;
-          let message = err.message || 'Ha ocurrido un error';
-          if (err.status === 400) {
-            message = 'El nombre del archivo no es correcto';
-            this.excelService.errores = [
-              {
-                description: 'El nombre del archivo no es correcto',
-                row: 0,
-              },
-            ];
-          }
-          this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
-            ...actionStep,
-            state: 'Intento de envio',
-            typeError: message,
-          });
+          this.handleUploadError(err, actionStep);
         },
       });
     }
@@ -431,7 +422,7 @@ export class DialogComponent implements OnInit {
     value: ProcessStatus,
     actionStep: Partial<ActionEventProperties>,
   ) {
-    this.excelService.statusUpload = false;
+    this.excelService.resetProcessState();
     this.rowsAccepted = value.rowsUploaded;
     this.rowsRejected = value.rowsRejected;
     this.excelService.errores = value.errors;
@@ -449,7 +440,7 @@ export class DialogComponent implements OnInit {
   }
 
   private handleFailedStatus(actionStep: Partial<ActionEventProperties>) {
-    this.excelService.statusUpload = false;
+    this.excelService.resetProcessState();
 
     const obsClose = new Observable<void>((observer) => {
       this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
@@ -475,8 +466,7 @@ export class DialogComponent implements OnInit {
 
   private handleCompletedStatus(actionStep: Partial<ActionEventProperties>) {
     this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
-    this.excelService.statusUpload = false;
-    this.excelService.errores = [];
+    this.excelService.resetProcessState();
 
     const obsClose = new Observable<void>((observer) => {
       const msg =
@@ -517,6 +507,25 @@ export class DialogComponent implements OnInit {
     };
 
     this.progress.status = phaseMapping[value.status] || 'Procesando';
+  }
+
+  private handleUploadError(
+    err: HttpErrorResponse,
+    actionStep: Partial<ActionEventProperties>,
+  ) {
+    this.excelService.resetProcessState();
+    let message = err.message || 'Ha ocurrido un error';
+    if (err.status === 400) {
+      message = 'El nombre del archivo no es correcto';
+      this.excelService.errores = [
+        { description: 'El nombre del archivo no es correcto', row: 0 },
+      ];
+    }
+    this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
+      ...actionStep,
+      state: 'Intento de envio',
+      typeError: message,
+    });
   }
 
   private initializeProgress() {
