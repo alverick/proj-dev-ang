@@ -32,7 +32,7 @@ export class LoadFileService {
 
   public verify(container: ViewContainerRef) {
     container.clear();
-    if (this.excelService.statusUpload) {
+    if (this.excelService.isProcessActive()) {
       this.componentRef = container.createComponent(LoadFileComponent);
       this.verifyStatus();
     } else {
@@ -46,6 +46,7 @@ export class LoadFileService {
           ];
 
           if (!finalStatuses.includes(process.status)) {
+            this.excelService.startUpload(process.id);
             this.componentRef = container.createComponent(LoadFileComponent);
             this.verifyStatus();
           }
@@ -117,7 +118,7 @@ export class LoadFileService {
               rowsRejected: rowsRejected,
             };
             this.onClose.emit(closeObj);
-            this.excelService.statusUpload = status === processStatus.rejected;
+            this.excelService.resetProcessState();
           } else {
             this.componentRef.instance.progress.mode = 'determinate';
             this.componentRef.instance.progress.value = advance;

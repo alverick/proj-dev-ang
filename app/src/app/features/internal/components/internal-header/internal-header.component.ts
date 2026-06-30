@@ -134,7 +134,7 @@ export class InternalHeaderComponent implements OnInit {
     this.loginService.logout().subscribe(() => {
       void this.router.navigate([authFullRoutingNames.LOGIN]);
     });
-    this.excelser.statusUpload = false;
+    this.excelser.resetProcessState();
     this.isExpanded = false;
     this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Navigation',

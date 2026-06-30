@@ -1,94 +1,91 @@
 <div class="content p-0">
   @if (!!excelService.service) {
-    @if (!excelService.statusUpload && !ready) {
-      <div class="paso">
-        PASO 1 DE 2
-        <button (click)="right()">
-          <img
-            class="pl-3 tw-inline tw-cursor-pointer"
-            src="/assets/images/arrow-right.svg"
-            alt="Right"
-          />
-        </button>
-      </div>
-    }
-    @if (!excelService.statusUpload && ready) {
-      <div class="paso">
-        PASO 2 DE 2
-        <button (click)="left()">
-          <img
-            class="pl-3 tw-inline tw-cursor-pointer"
-            src="/assets/images/arrow-left.svg"
-            alt="Left"
-          />
-        </button>
-      </div>
-    }
-
-    @if (!excelService.statusUpload && !ready) {
-      <div>
-        <div class="landing">
-          <div class="text tw-mx-auto tw-max-w-[36rem] tw-text-balance tw-pb-4">
-            Descarga la plantilla donde podrás llenar la información de los
-            cobros de tus clientes.
-          </div>
-          <i class="fa fa-file-excel"></i>
-        </div>
-        <img
-          class="pb-3 img-excel tw-inline"
-          src="/assets/images/excel.svg"
-          alt="excel"
-        />
-        @if (useAmountLimits) {
-          <cs-message-alert
-            mode="info"
-            class="tw-mx-auto tw-mt-6 tw-block md:tw-w-96"
-            >Monto máximo permitido por cobro
-            {{
-              limitAmountMax | currency: excelService.service.currencySymbol
-            }}</cs-message-alert
-          >
-        }
-        <div class="text-center tw-mt-6">
-          <button
-            class="btn-eureca-green"
-            type="button"
-            (click)="downloadXlsTemplate()"
-          >
-            Descargar la plantilla
-          </button>
-          <br />
-          <button
-            class="btn-outline-green tw-mt-2"
-            type="button"
-            (click)="gotoUploadTemplate()"
-          >
-            Ya tengo la plantilla
-          </button>
-        </div>
-      </div>
-    }
-    @if (excelService.statusUpload) {
+    @if (excelService.isProcessActive()) {
       <div class="progress-text">
         {{ progress.status }}
       </div>
-    }
-    @if (excelService.statusUpload) {
       <p-progressBar
         [mode]="progress.mode"
         [value]="progress.value"
         styleClass="tw-h-2 tw-text-[8px] tw-my-4"
       />
-    }
-  }
-  @if (!excelService.statusUpload && ready) {
-    <div class="landing">
-      @if (!!excelService.service) {
-        <div class="text tw-mx-auto tw-max-w-[36rem] tw-text-balance tw-pb-4">
-          Selecciona el archivo y sube la plantilla con la información de los
-          cobros de tus clientes.
+    } @else {
+      @if (!ready) {
+        <div class="paso">
+          PASO 1 DE 2
+          <button (click)="right()">
+            <img
+              class="pl-3 tw-inline tw-cursor-pointer"
+              src="/assets/images/arrow-right.svg"
+              alt="Right"
+            />
+          </button>
         </div>
-        @if (!excelService.statusUpload && ready) {
+
+        <div>
+          <div class="landing">
+            <div
+              class="text tw-mx-auto tw-max-w-[36rem] tw-text-balance tw-pb-4"
+            >
+              Descarga la plantilla donde podrás llenar la información de los
+              cobros de tus clientes.
+            </div>
+            <i class="fa fa-file-excel"></i>
+          </div>
+          <img
+            class="pb-3 img-excel tw-inline"
+            src="/assets/images/excel.svg"
+            alt="excel"
+          />
+
+          @if (useAmountLimits) {
+            <cs-message-alert
+              mode="info"
+              class="tw-mx-auto tw-mt-6 tw-block md:tw-w-96"
+            >
+              Monto máximo permitido por cobro
+              {{
+                limitAmountMax | currency: excelService.service.currencySymbol
+              }}
+            </cs-message-alert>
+          }
+
+          <div class="text-center tw-mt-6">
+            <button
+              class="btn-eureca-green"
+              type="button"
+              (click)="downloadXlsTemplate()"
+            >
+              Descargar la plantilla
+            </button>
+            <br />
+            <button
+              class="btn-outline-green tw-mt-2"
+              type="button"
+              (click)="gotoUploadTemplate()"
+            >
+              Ya tengo la plantilla
+            </button>
+          </div>
+        </div>
+      } @else {
+        <div class="paso">
+          PASO 2 DE 2
+          <button (click)="left()">
+            <img
+              class="pl-3 tw-inline tw-cursor-pointer"
+              src="/assets/images/arrow-left.svg"
+              alt="Left"
+            />
+          </button>
+        </div>
+
+        <div class="landing">
+          <div class="text tw-mx-auto tw-max-w-[36rem] tw-text-balance tw-pb-4">
+            Selecciona el archivo y sube la plantilla con la información de los
+            cobros de tus clientes.
+          </div>
+
           <div class="pt-1 tw-w-full">
             <p-fileupload
               #createUploader
@@ -131,93 +128,97 @@
             </p-fileupload>
             <br />
           </div>
-        }
-      }
-      @if (excelService.errores?.length > 0 && cuadro_errores === true) {
-        <div class="errores">
-          <div class="header">
-            <div class="texto tw-mb-4">
-              Se encontraron los siguientes errores:
-            </div>
-            <div class="resumen">
-              @if (rowsAccepted > 0) {
-                <span class="bien"
-                  ><img
-                    class="tw-inline"
-                    src="/assets/images/ok.svg"
-                    alt="Ok"
-                  />
-                  {{ rowsAccepted }}</span
-                >
-              }
-              @if (rowsRejected > 0) {
-                <span class="mal"
-                  ><img
-                    class="tw-inline"
-                    src="/assets/images/cancel.svg"
-                    alt="Cancel"
-                  />
-                  {{ rowsRejected }}</span
-                >
-              }
-            </div>
-            <div class="clear-float"></div>
-          </div>
-          <div
-            class="list tw-overflow-auto tw-border tw-text-left"
-            [ngClass]="{
-              'tw-border-extended-dark-yellow-1': confirmUser,
-              'tw-border-extended-watermelon-1': !confirmUser,
-            }"
-          >
-            @for (err of excelService.errores; track err) {
-              <div class="err-item tw-mb-1 tw-flex tw-gap-1">
-                @if (err.code === 0) {
-                  <i
-                    class="pi pi-times-circle tw-text-extended-watermelon-1"
-                  ></i>
-                }
-                @if (err.code === 1) {
-                  <i
-                    class="pi pi-exclamation-triangle tw-text-extended-dark-yellow-1"
-                  ></i>
-                }
-                @if (err.row > 0) {
-                  <span
-                    ><strong class="resaltado">Fila {{ err.row }}</strong> :
-                  </span>
-                }
-                {{ err.description }}
+
+          @if (excelService.errores.length > 0 && cuadro_errores) {
+            <div class="errores">
+              <div class="header">
+                <div class="texto tw-mb-4">
+                  Se encontraron los siguientes errores:
+                </div>
+                <div class="resumen">
+                  @if (rowsAccepted > 0) {
+                    <span class="bien">
+                      <img
+                        class="tw-inline"
+                        src="/assets/images/ok.svg"
+                        alt="Ok"
+                      />
+                      {{ rowsAccepted }}
+                    </span>
+                  }
+                  @if (rowsRejected > 0) {
+                    <span class="mal">
+                      <img
+                        class="tw-inline"
+                        src="/assets/images/cancel.svg"
+                        alt="Cancel"
+                      />
+                      {{ rowsRejected }}
+                    </span>
+                  }
+                </div>
+                <div class="clear-float"></div>
               </div>
-            }
-          </div>
-          <div class="footer tw-my-4">
-            @if (confirmUser) {
-              Confirma la carga de tu plantilla o revisa las observaciones y
-              vuélvelo a subir
-            } @else {
-              Corrige los errores y vuelve a subir la plantilla
-            }
-          </div>
+
+              <div
+                class="list tw-overflow-auto tw-border tw-text-left"
+                [ngClass]="{
+                  'tw-border-extended-dark-yellow-1': confirmUser,
+                  'tw-border-extended-watermelon-1': !confirmUser,
+                }"
+              >
+                @for (err of excelService.errores; track err) {
+                  <div class="err-item tw-mb-1 tw-flex tw-gap-1">
+                    @if (err.code === 0) {
+                      <i
+                        class="pi pi-times-circle tw-text-extended-watermelon-1"
+                      ></i>
+                    }
+                    @if (err.code === 1) {
+                      <i
+                        class="pi pi-exclamation-triangle tw-text-extended-dark-yellow-1"
+                      ></i>
+                    }
+                    @if (err.row > 0) {
+                      <span
+                        ><strong class="resaltado">Fila {{ err.row }}</strong>
+                        :</span
+                      >
+                    }
+                    {{ err.description }}
+                  </div>
+                }
+              </div>
+
+              <div class="footer tw-my-4">
+                {{
+                  confirmUser
+                    ? 'Confirma la carga de tu plantilla o revisa las observaciones y vuélvelo a subir'
+                    : 'Corrige los errores y vuelve a subir la plantilla'
+                }}
+              </div>
+            </div>
+          }
+
+          @if (
+            (uploaderFiles.length > 0 && excelService.errores.length === 0) ||
+            confirmUser
+          ) {
+            <div class="text-center">
+              <button
+                pButton
+                pRipple
+                csSingleClick
+                icon="pi pi-upload"
+                class="tw-transition-colors"
+                type="button"
+                (singleClick)="openSnackBar()"
+                label="Subir plantilla"
+              ></button>
+            </div>
+          }
         </div>
       }
-      @if (
-        (uploaderFiles.length > 0 && excelService.errores?.length === 0) ||
-        confirmUser
-      ) {
-        <div class="text-center">
-          <button
-            pButton
-            pRipple
-            csSingleClick
-            icon="pi pi-upload"
-            class="tw-transition-colors"
-            type="button"
-            (singleClick)="openSnackBar()"
-            label="Subir plantilla"
-          ></button>
-        </div>
-      }
-    </div>
+    }
   }
 </div>

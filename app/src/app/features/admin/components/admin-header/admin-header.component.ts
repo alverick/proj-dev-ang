@@ -45,6 +45,6 @@ export class AdminHeaderComponent {
     this.loginService.logout().subscribe(() => {
       void this.router.navigate([authFullRoutingNames.LOGIN]);
     });
-    this.excel.statusUpload = false;
+    this.excel.resetProcessState();
   }
 }

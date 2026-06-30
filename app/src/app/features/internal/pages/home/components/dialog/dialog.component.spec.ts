@@ -1,3 +1,4 @@
+import { signal, type WritableSignal } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, UntypedFormBuilder } from '@angular/forms';
 import type * as ExcelJS from 'exceljs';
@@ -77,9 +78,8 @@ class TestDialogComponent extends DialogComponent {
 describe('DialogComponent', () => {
   let component: TestDialogComponent;
   let fixture: ComponentFixture<TestDialogComponent>;
-  let excelService: jest.Mocked<
-    ExcelService & { StatusExcel: () => Subject<any> }
-  >;
+  let excelService: jest.Mocked<ExcelService>;
+  let isProcessActiveSignal: WritableSignal<boolean>;
   let dialogRef: DynamicDialogRef;
   let config: DynamicDialogConfig;
 
@@ -103,6 +103,7 @@ describe('DialogComponent', () => {
     }) as ExcelJS.Row;
 
   beforeEach(async () => {
+    isProcessActiveSignal = signal(false);
     await TestBed.configureTestingModule({
       imports: [
         TestDialogComponent,
@@ -119,7 +120,7 @@ describe('DialogComponent', () => {
             name: 'Test Service',
             currencySymbol: 'USD',
           },
-          statusUpload: false,
+          isProcessActive: isProcessActiveSignal,
           errores: [],
         }),
         MockProvider(DynamicDialogRef, {
@@ -137,9 +138,7 @@ describe('DialogComponent', () => {
 
     fixture = TestBed.createComponent(TestDialogComponent);
     component = fixture.componentInstance;
-    excelService = TestBed.inject(ExcelService) as jest.Mocked<
-      ExcelService & { StatusExcel: () => Subject<any> }
-    >;
+    excelService = TestBed.inject(ExcelService) as jest.Mocked<ExcelService>;
     dialogRef = TestBed.inject(DynamicDialogRef);
     config = TestBed.inject(DynamicDialogConfig);
     fixture.detectChanges();
@@ -162,7 +161,7 @@ describe('DialogComponent', () => {
   });
 
   it('should reset errors when dialog is closed without upload', () => {
-    excelService.statusUpload = false;
+    isProcessActiveSignal.set(false);
     excelService.errores = [{ description: 'test error', row: 1 }];
     component.ngOnInit();
     dialogRef.close();
@@ -504,8 +503,7 @@ describe('DialogComponent', () => {
     //     );
     //     component.callVerifyStatus();
     //     statusSubject.next(mockStatus);
-    //
-    //     expect(excelService.statusUpload).toBe(false);
+    //     expect(excelService.resetProcessState).toHaveBeenCalled();
     //     expect(component.rowsAccepted).toBe(5);
     //     expect(component.rowsRejected).toBe(3);
     //     expect(excelService.errores).toEqual(mockStatus.errors);
@@ -638,8 +636,8 @@ describe('DialogComponent', () => {
     });
 
     describe('openSnackBar', () => {
-      it('should show messageUploadExcel when statusUpload is true', async () => {
-        excelService.statusUpload = true;
+      it('should show messageUploadExcel when isProcessActive() is true', async () => {
+        isProcessActiveSignal.set(true);
         await component.openSnackBar();
         expect(component.messageUploadExcel).toBe(true);
       });
@@ -689,7 +687,7 @@ describe('DialogComponent', () => {
       //
       //   await component.openSnackBar();
       //
-      //   expect(excelService.statusUpload).toBe(false);
+      //   expect(excelService.isProcessActive()).toBe(false);
       //   expect(excelService.errores).toEqual([
       //     {
       //       description: 'El nombre del archivo no es correcto',
