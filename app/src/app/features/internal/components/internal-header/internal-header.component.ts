@@ -18,7 +18,6 @@ import { Ripple } from 'primeng/ripple';
 
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
-import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import {
   type MessagesType,
@@ -57,7 +56,6 @@ export class InternalHeaderComponent implements OnInit {
   private readonly router = inject(Router);
   notify = inject(NotifyService);
   private readonly loginService = inject(LoginService);
-  private readonly excelser = inject(ExcelService);
   afiliacionService = inject(AfiliacionService);
   private readonly storage = inject(StorageService);
   private readonly tracking = inject(TrackingService);
@@ -134,7 +132,6 @@ export class InternalHeaderComponent implements OnInit {
     this.loginService.logout().subscribe(() => {
       void this.router.navigate([authFullRoutingNames.LOGIN]);
     });
-    this.excelser.resetProcessState();
     this.isExpanded = false;
     this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Navigation',

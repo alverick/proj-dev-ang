@@ -1,5 +1,5 @@
 import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { effect, inject, Injectable, signal } from '@angular/core';
 import { type Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { type StatusValues } from '../constants/process';
 import { type CompanyServices } from '../models/company';
 import { type IErrorObj } from '../models/error.model';
+import { LoginService } from './login.service';
 
 export interface ProcessStatus {
   status: StatusValues;
@@ -38,6 +39,17 @@ export class ExcelService {
   public service: Partial<CompanyServices> = null;
   public idProcess = 0;
   public errores: IErrorObj[] = [];
+
+  constructor() {
+    const loginService = inject(LoginService);
+
+    effect(() => {
+      const isLoggedIn = loginService.isAuthenticated();
+      if (!isLoggedIn) {
+        this.resetProcessState();
+      }
+    });
+  }
 
   startUpload(id?: number) {
     if (id !== undefined) {
