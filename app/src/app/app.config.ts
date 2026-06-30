@@ -28,7 +28,6 @@ import { primeng } from './shared/lang/es';
 import { AdobeLaunchProviderService, CompanyService } from './shared/services';
 import { DynatraceProviderService } from './shared/services/dynatrace-provider.service';
 import { EncryptionService } from './shared/services/encryption.service';
-import { ExcelService } from './shared/services/excel.service';
 import { HotjarProviderService } from './shared/services/hotjar-provider.service';
 import { NotifyService } from './shared/services/notify.service';
 import { StorageService } from './shared/services/storage.service';
@@ -106,7 +105,6 @@ export const appConfig: ApplicationConfig = {
     StorageService,
     CompanyService,
     LogoutGuard,
-    ExcelService,
     AuthGuard,
     GtpOutputGuard,
     GtpInputGuard,
