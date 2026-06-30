@@ -37,12 +37,15 @@ export class LoadFileService {
       this.verifyStatus();
     } else {
       this.excelService.GetLastProcess().subscribe({
-        next: (d) => {
-          if (
-            d.status !== 'COMPLETED' &&
-            d.status !== 'REJECTED' &&
-            d.status !== 'FAILED'
-          ) {
+        next: (process) => {
+          const finalStatuses: StatusValues[] = [
+            processStatus.completed,
+            processStatus.rejected,
+            processStatus.failed,
+            processStatus.confirmUser,
+          ];
+
+          if (!finalStatuses.includes(process.status)) {
             this.componentRef = container.createComponent(LoadFileComponent);
             this.verifyStatus();
           }
@@ -118,9 +121,9 @@ export class LoadFileService {
           } else {
             this.componentRef.instance.progress.mode = 'determinate';
             this.componentRef.instance.progress.value = advance;
-            if (status == 'VALIDATING') {
+            if (status == processStatus.validating) {
               this.componentRef.instance.progress.status = `Validando (${phase}/3)`;
-            } else if (status == 'SAVING') {
+            } else if (status == processStatus.saving) {
               this.componentRef.instance.progress.status = `Grabando (${phase}/2)`;
             }
           }
