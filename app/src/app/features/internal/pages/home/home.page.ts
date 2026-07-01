@@ -365,7 +365,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         });
       } else if (m.status === processStatus.rejected) {
         this.fileLoad.close();
-        this.excelService.statusUpload = false;
+        this.excelService.resetProcessState();
         const dialogRef = this.dynamicDialogService.open(
           DialogComponent,
           this.dialogConfig,

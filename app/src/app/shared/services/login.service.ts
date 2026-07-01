@@ -3,7 +3,7 @@ import {
   HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -25,6 +25,9 @@ export class LoginService {
 
   private readonly URI_API: string = environment.END_POINT;
   public errores: number;
+
+  readonly #isAuthenticated = signal<boolean>(true);
+  public readonly isAuthenticated = this.#isAuthenticated.asReadonly();
 
   login(ruc: string, psw: string, token: string): Observable<RespuestaLogin> {
     this.notify.clear();
@@ -57,6 +60,7 @@ export class LoginService {
               this.notify.iniciar();
             }
             this.store.dispatch(AppConfigActions.resetConfig());
+            this.#isAuthenticated.set(true);
           }
           return r;
         }),
@@ -69,6 +73,7 @@ export class LoginService {
     return this.http.post(url, {}).pipe(
       tap(() => {
         this.storage.removeCurrentSession();
+        this.#isAuthenticated.set(false);
       }),
     );
   }

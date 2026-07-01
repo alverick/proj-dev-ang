@@ -12,6 +12,7 @@ import {
 } from '../../shared/services';
 import { AfiliacionService } from '../../shared/services/afiliacion.service';
 import { DynamicDialogService } from '../../shared/services/dynamic-dialog.service';
+import { ExcelService } from '../../shared/services/excel.service';
 import { HomeService } from '../../shared/services/home.service';
 import { LoadBarService } from '../../shared/services/load-bar.service';
 import { LoadFileService } from '../../shared/services/load-file.service';
@@ -52,6 +53,7 @@ export const INTERNAL_ROUTES: Routes = [
       SettingsStorageService,
       CompanyAccountsResolver,
       HomeService,
+      ExcelService,
     ],
     children: [
       {

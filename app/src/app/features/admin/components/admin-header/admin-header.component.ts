@@ -5,7 +5,6 @@ import type { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
-import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import { authFullRoutingNames } from '../../../auth/auth-routing.names';
 import { adminFullRoutingNames } from '../../admin-routing.names';
@@ -17,7 +16,6 @@ import { adminFullRoutingNames } from '../../admin-routing.names';
 })
 export class AdminHeaderComponent {
   private readonly loginService = inject(LoginService);
-  private readonly excel = inject(ExcelService);
   private readonly router = inject(Router);
 
   items: MenuItem[] = [
@@ -45,6 +43,5 @@ export class AdminHeaderComponent {
     this.loginService.logout().subscribe(() => {
       void this.router.navigate([authFullRoutingNames.LOGIN]);
     });
-    this.excel.statusUpload = false;
   }
 }
