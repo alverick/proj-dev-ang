@@ -201,6 +201,7 @@
                           [currencySymbol]="rowData.currency"
                           [useLimits]="useAmountLimits"
                           required
+                          autocomplete="off"
                         ></p-inputNumber>
                         @if (amount.dirty || amount.touched) {
                           <div
