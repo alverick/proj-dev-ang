@@ -49,14 +49,14 @@ stages:
           - task: NodeTool@0
             displayName: 'Install Node.js'
             inputs:
-              versionSpec: '18.x'
+              versionSpec: '20.x'
 
           - task: Npm@1
             displayName: 'Install angular'
             inputs:
               command: custom
               verbose: false
-              customCommand: 'install -g @angular/cli@17'
+              customCommand: 'install -g @angular/cli@20'
 
           - task: Npm@1
             displayName: 'Install npm'
@@ -137,12 +137,12 @@ stages:
               echo Creating Directory
               mkdir -p Deploy/ClientApp/dist
               echo Move Directory Deploy
-              cp -a dist/EurekaAngularProy/. Deploy/ClientApp/dist/
+              cp -a dist/EurekaAngularProy-${{variables.mode}}/browser/. Deploy/ClientApp/dist/
               ls Deploy/ClientApp/dist/
             workingDirectory: app
             displayName: 'Create directory'
 
-          - upload: app/dist/EurekaAngularProy
+          - upload: app/dist/EurekaAngularProy-${{variables.mode}}/browser
             displayName: 'Publish dist'
             artifact: web-cobrosimple
 
