@@ -1,0 +1,22 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: eureca-frontend
+  title: EURECA FRONTEND
+  description: |
+    Proyecto de frontend de cobro simple
+  annotations:
+    backstage.io/techdocs-ref: dir:./
+    dev.azure.com/project: dopjeu2eurcpv01
+    dev.azure.com/build-definition: eureca-frontend	
+  tags:
+  - entorno:unknown
+  - framework-version:20
+  - framework:Angular
+  - language-version: 5.8
+  - language:TypeScritp
+spec:
+  type: frontend
+  lifecycle: production
+  owner: group:default/cse
+  system: CSE
