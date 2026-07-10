@@ -13,7 +13,7 @@ metadata:
   - entorno:cloud
   - framework-version:20
   - framework:angular
-  - language-version:5.8
+  - language-version:5-8
   - language:typeScritp
 spec:
   type: frontend
