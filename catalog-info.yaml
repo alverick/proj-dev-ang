@@ -7,16 +7,18 @@ metadata:
     Proyecto de frontend de cobro simple
   annotations:
     backstage.io/techdocs-ref: dir:./
-    dev.azure.com/project: dopjeu2eurcpv01
-    dev.azure.com/build-definition: eureca-frontend	
+    github.com/project-slug: ibkpe-org/eureca-frontend
+    sonarqube.org/project-key: cse-pe.interbank:cse-eureca-frontend
   tags:
-  - entorno:unknown
+  - entorno:cloud
   - framework-version:20
-  - framework:Angular
-  - language-version: 5.8
-  - language:TypeScritp
+  - framework:angular
+  - language-version:5.8
+  - language:typeScritp
 spec:
   type: frontend
   lifecycle: production
-  owner: group:default/cse
-  system: CSE
+  owner: group:default/cse-cobro-simple-eureca
+  system: cse
+  dependsOn:
+    - component:default/eureca-backend
