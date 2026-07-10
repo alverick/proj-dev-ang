@@ -14,7 +14,7 @@ metadata:
   - framework-version:20
   - framework:angular
   - language-version:5-8
-  - language:typeScritp
+  - language:typescritp
 spec:
   type: frontend
   lifecycle: production
