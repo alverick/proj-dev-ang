@@ -422,6 +422,13 @@ export class DialogComponent implements OnInit {
     value: ProcessStatus,
     actionStep: Partial<ActionEventProperties>,
   ) {
+    if (value.status === processStatus.confirmUser) {
+      this.confirmUser = true;
+      this.excelService.pauseForConfirmation();
+    } else {
+      this.excelService.resetProcessState();
+    }
+
     this.rowsAccepted = value.rowsUploaded;
     this.rowsRejected = value.rowsRejected;
     this.excelService.errores = value.errors;
@@ -430,15 +437,8 @@ export class DialogComponent implements OnInit {
     this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
       ...actionStep,
       state: 'Intento de envio',
-      typeError: 'REJECTED',
+      typeError: value.status,
     });
-
-    if (value.status === processStatus.confirmUser) {
-      this.confirmUser = true;
-      this.excelService.pauseForConfirmation();
-    } else {
-      this.excelService.resetProcessState();
-    }
   }
 
   private handleFailedStatus(actionStep: Partial<ActionEventProperties>) {
