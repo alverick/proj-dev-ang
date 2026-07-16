@@ -212,6 +212,7 @@ describe('HomePage', () => {
     const mockExcelService = {
       service: null,
       statusUpload: false,
+      resetProcessState: jest.fn(),
     };
     const mockLoginService = {
       refresh: jest.fn(),
