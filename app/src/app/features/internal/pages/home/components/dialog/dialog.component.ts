@@ -355,7 +355,7 @@ export class DialogComponent implements OnInit {
     return isEmptyRow;
   }
 
-  protected verifyStatus() {
+  public verifyStatus() {
     this.ready = true;
     const actionStep: Partial<ActionEventProperties> = {
       category: 'Home filtro',
@@ -422,7 +422,6 @@ export class DialogComponent implements OnInit {
     value: ProcessStatus,
     actionStep: Partial<ActionEventProperties>,
   ) {
-    this.excelService.resetProcessState();
     this.rowsAccepted = value.rowsUploaded;
     this.rowsRejected = value.rowsRejected;
     this.excelService.errores = value.errors;
@@ -436,6 +435,9 @@ export class DialogComponent implements OnInit {
 
     if (value.status === processStatus.confirmUser) {
       this.confirmUser = true;
+      this.excelService.pauseForConfirmation();
+    } else {
+      this.excelService.resetProcessState();
     }
   }
 
@@ -532,6 +534,21 @@ export class DialogComponent implements OnInit {
     this.progress.mode = 'determinate';
     this.progress.value = 0;
     this.progress.status = 'Validando (0/3)';
+  }
+
+  public callHandleStatus(
+    value: ProcessStatus,
+    actionStep: Partial<ActionEventProperties>,
+  ) {
+    this.handleStatus(value, actionStep);
+  }
+
+  public callIsProcessing(status: ProcessStatus): boolean {
+    return this.isProcessing(status);
+  }
+
+  public callHandleInProgressStatus(value: ProcessStatus) {
+    this.handleInProgressStatus(value);
   }
 
   right() {

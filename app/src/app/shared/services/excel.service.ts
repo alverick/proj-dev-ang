@@ -64,6 +64,10 @@ export class ExcelService {
     this.errores = [];
   }
 
+  pauseForConfirmation() {
+    this.#isProcessActive.set(false);
+  }
+
   UploadExcel(files: File[]) {
     this.errores = [];
     const url = `${this.URI_API}/debt/load/${this.service.name}`;
